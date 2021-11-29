@@ -1,0 +1,17 @@
+General:
+  Help:
+    Description: "Displays all Bot Commands"
+    Usage: "help"
+    Aliases: []
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+  Ping:
+    Description: "Displays Bot Pings"
+    Usage: "ping"
+    Aliases: []
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true

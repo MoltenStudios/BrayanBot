@@ -1,0 +1,45 @@
+General:
+  Help:
+    Embeds: 
+      - Title: 'Command Info - {command-name}'
+        Description: |-
+          {command-description}
+
+          **Usage**
+          > `{command-usage}`
+          **Aliases**
+          > {command-aliases}
+          **Slash Command**: \{command-isSlashEnabled}
+        Footer: '{user-tag}'
+        FooterTag: '{user-tag}'
+        Timestamp: true
+  Ping:
+    Embeds:
+      - Author: '{bot-tag}''s Ping'
+        AuthorIcon: '{bot-pfp}'
+        Description: |-
+          **Bot latency**: {bot-latency}
+          **API latency**: {api-latency}
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
+
+Presets:
+  NoPermission:
+    Embeds:
+      - Title: Unable to run command
+        Description: |-
+          You do not have enough permission  to run this command
+
+          **Permissions**
+          > {roles}
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
+  Error:
+    Embeds:
+      - Title: Unable to perform action
+        Description: '> {error}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
