@@ -11,8 +11,8 @@ let commandStructure = {
         Usage: String,
         Aliases: Array,
         Permission: Array,
-        SlashCommand: { 
-            Enabled: Boolean 
+        SlashCommand: {
+            Enabled: Boolean
         }
     },
     slashData: SlashCommandBuilder,
@@ -31,28 +31,30 @@ module.exports = {
             command.commandData.Aliases.forEach(alias => {
                 client.Aliases.set(alias, command.name)
             })
-            if(command.commandData.SlashCommand && command.commandData.SlashCommand.Enabled) {
+            if (command.commandData.SlashCommand && command.commandData.SlashCommand.Enabled) {
                 client.SlashCmdsData.push(command.slashData)
                 client.SlashCmds.push(command)
             }
-        } catch(e) {
+        } catch (e) {
             Utils.logError(e)
         }
     },
     init: () => {
         fs.readdirSync('./Commands').forEach(async (dir) => {
             fs.readdir(`./Commands/${dir}`, (e, files) => {
-                if(e) return Utils.logError(e);
+                if (e) return Utils.logError(e);
                 let jsFiles = files.filter(f => f.split(".").pop() == 'js');
-                if(jsFiles.length <= 0) return;
+                if (jsFiles.length <= 0) return;
                 jsFiles.forEach(file => {
                     try {
                         module.exports.set(require(`../../Commands/${dir}/${file}`))
-                    } catch(e) {
+                    } catch (e) {
                         Utils.logError(e)
                     }
                 })
             })
         })
+
+        return true;
     }
 }
