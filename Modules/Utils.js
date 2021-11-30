@@ -1,43 +1,68 @@
 const Discord = require('discord.js'),
     chalk = require('chalk'),
     moment = require('moment'),
-    { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js'),
-    embedSettingsStructure = {
-        configPath: Object,
-        variables: [
-            { searchFor: RegExp, replaceWith: String }
+    { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js');
+
+const rowStructure = [
+    {
+        Type: "Button" | "SelectMenu",
+        Style: "Link" | "Random" | "Primary" | "Secondary" | "Danger",
+        Link: String,
+        Label: String,
+        Emoji: String,
+        CustomID: String,
+        Placeholder: String,
+        Description: String,
+        MaxSelect: String,
+        MinSelect: String,
+        Options: [
+            {
+                Default: Boolean,
+                Label: String,
+                Description: String,
+                Value: String,
+                Emoji: String,
+            }
+        ]
+    }
+];
+const componentsStructure = {
+    1: rowStructure,
+    2: rowStructure,
+    3: rowStructure,
+    4: rowStructure,
+    5: rowStructure,
+}
+const messageStructure = {
+    configPath: {
+        Content: String,
+        Embeds: [
+            {
+                Author: String,
+                AuthorIcon: String,
+                URL: String,
+                Title: String,
+                Description: String,
+                Fields: [
+                    {
+                        Name: String,
+                        Value: String,
+                        Inline: Boolean
+                    }
+                ],
+                Footer: String,
+                FooterIcon: String,
+                Thumbnail: String,
+                Image: String,
+                Color: String,
+                Timestamp: Boolean
+            }
         ]
     },
-    messageStructure = {
-        configPath: {
-            Content: String,
-            Embeds: [
-                {
-                    Author: String,
-                    AuthorIcon: String,
-                    URL: String,
-                    Title: String,
-                    Description: String,
-                    Fields: [
-                        {
-                            Name: String,
-                            Value: String,
-                            Inline: Boolean
-                        }
-                    ],
-                    Footer: String,
-                    FooterIcon: String,
-                    Thumbnail: String,
-                    Image: String,
-                    Color: String,
-                    Timestamp: Boolean
-                }
-            ]
-        },
-        variables: [
-            { searchFor: RegExp, replaceWith: String }
-        ]
-    };
+    variables: [
+        { searchFor: RegExp, replaceWith: String }
+    ]
+};
 
 module.exports = {
     builder: require('@discordjs/builders'),
@@ -298,9 +323,9 @@ module.exports = {
     },
     /**
      * 
-     * @param {Object} buttonOptions 
-     * @param {String} customID 
-     * @returns {Discord.MessageButton}
+     * @param {componentsStructure} components 
+     * @param {Boolean} isDisabled 
+     * @returns
      */
     parseComponents: (components, isDisabled) => {
         let validButtonStyles = [
