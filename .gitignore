@@ -15,3 +15,5 @@ node_modules/
 # Extra Files
 config.yml
 package-lock.json
+Addons/
+Addon_Configs/
