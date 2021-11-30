@@ -14,26 +14,27 @@ module.exports = {
     _priority: 1,
     _customConfigData: {
         Test: "test",
-    },
-    run: async (bot, config) => {
-        const customConfig = getConfig("Test")
-        CommandHandler.set({
-            name: 'test',
-            type: 'test',
-            commandData: {
-                Description: 'test',
-                Usage: 'test',
-                Aliases: [],
-                Permission: [
-                    'Developer'
-                ],
-                SlashCommand: {
-                    Enabled: false
-                }
-            },
-            slashData: new SlashCommandBuilder(),
-            run: (bot, message, args, config) => { },
-            runSlash: (bot, interaction) => { }
-        })
     }
+}
+module.exports.run = async (bot, customConfig) => {
+    CommandHandler.set({
+        name: 'test',
+        type: 'Utility',
+        commandData: {
+            Description: 'Test Command to test stuff.',
+            Usage: 'test',
+            Aliases: [],
+            Permission: [
+                'Developer'
+            ],
+            SlashCommand: {
+                Enabled: true
+            }
+        },
+        slashData: new SlashCommandBuilder()
+            .setName('test')
+            .setDescription("Test Command to test stuff."),
+        run: (bot, message, args, config) => { },
+        runSlash: (bot, interaction) => { }
+    })
 }
