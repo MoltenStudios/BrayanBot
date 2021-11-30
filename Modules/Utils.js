@@ -1,6 +1,7 @@
 const Discord = require('discord.js'),
     chalk = require('chalk'),
     moment = require('moment'),
+    { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js'),
     embedSettingsStructure = {
         configPath: Object,
         variables: [
@@ -301,63 +302,115 @@ module.exports = {
      * @param {String} customID 
      * @returns {Discord.MessageButton}
      */
-    parseButton: (buttonOptions, customID) => {
-        let Text = buttonOptions.Text || buttonOptions.text
-        let Emoji = buttonOptions.Emoji || buttonOptions.emoji
-        let CustomID = customID || buttonOptions.CustomID || buttonOptions.customid || null
-        let isEnabled = buttonOptions.Enabled || buttonOptions.Enabled
+    parseComponents: (components, isDisabled) => {
+        let validButtonStyles = [
+            "primary", "secondary", "success", "danger", "link",
+            "blurple", "grey", "green", "red", "url",
+            1, 2, 3, 4, 5, "1", "2", "3", "4", "5"
+        ],
+            colors = ["PRIMARY", "SECONDARY", "SUCCESS", "DANGER"],
+            rows = {
+                1: new MessageActionRow(),
+                2: new MessageActionRow(),
+                3: new MessageActionRow(),
+                4: new MessageActionRow(),
+                5: new MessageActionRow()
+            }, i, y;
 
-        let Color;
-        if (typeof buttonOptions.Color == 'string' || typeof buttonOptions.color == 'string') {
-            switch (buttonOptions.Color.toLowerCase() || buttonOptions.color.toLowerCase()) {
-                case 'blurple':
-                case 'primary': {
-                    Color = 1
-                    break;
-                }
+        for (i = 1; i <= 5; i++) {
+            let rowComponents = components[i]
+            if (rowComponents) {
+                for (y = 0; y < rowComponents.length; y++) {
+                    const component = rowComponents[y];
 
-                case 'grey':
-                case 'secondary': {
-                    Color = 2
-                    break;
-                }
-
-                case 'green':
-                case 'success': {
-                    Color = 3
-                    break;
-                }
-                case 'red':
-                case 'danger': {
-                    Color = 4
-                    break;
-                }
-                case 'url':
-                case 'link': {
-                    Color = 5
-                    break;
+                    if (component.Type) {
+                        switch (component.Type.toLowerCase()) {
+                            case "button": {
+                                if (component.Style.toLowerCase() == "random" || validButtonStyles.includes(component.Style.toLowerCase())) {
+                                    if (component.Style.toLowerCase() == "link") {
+                                        if (!component.Link) {
+                                            module.exports.logError(`A link is required for button to work.`)
+                                        } else if (!component.Label && !component.Emoji) {
+                                            module.exports.logError(`Label or Emoji is required for button to work.`)
+                                        } else {
+                                            let button = new MessageButton()
+                                                .setStyle("LINK")
+                                                .setURL(component.Link || component.URL)
+                                            if (component.Label) button.setLabel(component.Label)
+                                            if (component.Emoji) button.setEmoji(component.Emoji)
+                                            if (isDisabled) button.setDisabled(true)
+                                            rows[i].addComponents([button])
+                                        }
+                                    } else {
+                                        if (!component.CustomID) {
+                                            module.exports.logError(`CustomID is required for button to work.`)
+                                        } else if (!component.Label && !component.Emoji) {
+                                            module.exports.logError(`Label or Emoji is required for button to work.`)
+                                        } else {
+                                            let button = new MessageButton()
+                                                .setCustomId(component.CustomID);
+                                            if (component.Style.toLowerCase() == "random") {
+                                                button.setStyle(colors[Math.floor((Math.random() * colors.length))])
+                                            } else if (["primary", "blurple", 1, "1"].includes(component.Style.toLowerCase())) {
+                                                button.setStyle("PRIMARY")
+                                            } else if (["secondary", "grey", 2, "2"].includes(component.Style.toLowerCase())) {
+                                                button.setStyle("SECONDARY")
+                                            } else if (["success", "green", 3, "3"].includes(component.Style.toLowerCase())) {
+                                                button.setStyle("SUCCESS")
+                                            } else if (["danger", "red", 4, "4"].includes(component.Style.toLowerCase())) {
+                                                button.setStyle("DANGER")
+                                            }
+                                            if (component.Label) button.setLabel(component.Label)
+                                            if (component.Emoji) button.setEmoji(component.Emoji)
+                                            if (isDisabled) button.setDisabled(true)
+                                            rows[i].addComponents([button])
+                                        }
+                                    }
+                                } else {
+                                    module.exports.logError(`Invalid Button Style: ${component.Style}`)
+                                }
+                                break;
+                            }
+                            case 'selectmenu': {
+                                if (!component.CustomID) {
+                                    module.exports.logError(`CustomID is required for SelectMenu to work.`)
+                                } else if (!Array.isArray(component.Options) || component.Options > 0) {
+                                    module.exports.logError(`SelectMenu atleast needs 1 option to work.`)
+                                } else {
+                                    if (!component.MaxSelect) component.MaxSelect = 0
+                                    if (!component.MinSelect) component.MinSelect = 0
+                                    let menu = new MessageSelectMenu()
+                                        .setCustomId(component.CustomID)
+                                        .addOptions(component.Options.map(x => {
+                                            let data = { value: x.Value }
+                                            if (x.Default) data.default = x.Default
+                                            if (x.Label) data.label = x.Label
+                                            if (x.Description) data.description = x.Description
+                                            if (x.Emoji) data.emoji = x.Emoji
+                                            return data;
+                                        }))
+                                    if (component.Placeholder) menu.setPlaceholder(component.Placeholder)
+                                    if (component.MaxSelect) menu.setMaxValues(component.MaxSelect)
+                                    if (component.MinSelect) menu.setMinValues(component.MinSelect)
+                                    if (isDisabled) menu.setDisabled(true)
+                                    rows[i].addComponents([menu])
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-        } else {
-            Color = buttonOptions.Color || buttonOptions.color
         }
 
-        if (!CustomID) {
-            module.exports.logError(`Variable CustomID was not passed.`)
-            return false;
+        let finalComponents = []
+        for (let x = 1; x <= 5; x++) {
+            if (rows[x].components.length > 0 && rows[x].components.length <= 5) {
+                finalComponents.push(rows[x])
+            }
         }
-        if (Array.isArray(Text)) Text = Text[Math.floor(Math.random() * Text.length)]
-        if (Array.isArray(Color)) Color = Color[Math.floor(Math.random() * Color.length)]
-        if (Array.isArray(Emoji)) Emoji = Emoji[Math.floor(Math.random() * Emoji.length)]
+        return finalComponents;
 
-        let button = new Discord.MessageButton()
-            .setCustomId(CustomID)
-        if (Text) button.setLabel(Text)
-        if (Color) button.setStyle(Color)
-        if (Emoji) button.setEmoji(Emoji)
-        if (isEnabled) button.setDisabled(!isEnabled)
-
-        return button;
     },
     /**
      * 
