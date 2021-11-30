@@ -21,7 +21,7 @@ module.exports = async (bot) => {
 
     await Utils.logInfo(`${bot.Commands.size} Command(s) Loaded.`)
     await Utils.logInfo(`${bot.Events.length} Event(s) Loaded.`)
-    await require('../Modules/Handlers/AddonHandler').init()
+
     const rest = new REST({ version: '9' }).setToken(config.Settings.Token);
     try {
         await rest.put(Routes.applicationGuildCommands(bot.user.id, config.Settings.ServerID), {
