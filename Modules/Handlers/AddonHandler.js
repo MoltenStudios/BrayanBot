@@ -68,7 +68,7 @@ module.exports = {
                                         }
 
                                         // Loading Addon
-                                        await addon.run(client, config)
+                                        await addon.run(client, addon._customConfigData)
 
                                         // Addon Loading Logging
                                         if (typeof addon._log == 'string' && !addon._author) {
