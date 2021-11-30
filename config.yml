@@ -1,5 +1,5 @@
 Settings:  
-  Token: "asd.asd.asd"
+  Token: "BOT-TOKEN"
   Prefix: "-"
-  ServerID: "823793848429838346"
-  DevMode: true
+  ServerID: "YOUR-SERVER-ID"
+  DevMode: false # This option will reset every addon configs.
