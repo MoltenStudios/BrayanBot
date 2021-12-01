@@ -27,7 +27,7 @@
   "author": "@Zorino#1110",
   "license": "Apache-2.0",
   "devDependencies": {
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   },
   "repository": {
     "type": "git",
