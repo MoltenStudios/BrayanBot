@@ -475,5 +475,31 @@ module.exports = {
             return message.mentions.members.first() || module.exports.parseUser(argument, message.guild)
         }
 
+    },
+    getUserBadges: (member) => {
+        let badges = {
+            BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
+            BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
+            DISCORD_EMPLOYEE: "Discord Staff",
+            DISCORD_NITRO: "Discord Nitro",
+            EARLY_SUPPORTER: "Early Supporter",
+            HOUSE_BALANCE: "HypeSquad Balance",
+            HOUSE_BRAVERY: "HypeSquad Bravery",
+            HOUSE_BRILLIANCE: "HypeSquad Brilliance",
+            HYPESQUAD_EVENTS: "HypeSquad Events",
+            EARLY_VERIFIED_BOT_DEVELOPER: "Early Verified Bot Developer",
+            PARTNERED_SERVER_OWNER: "Partnered Server Owner",
+            DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
+            VERIFIED_BOT: "Verified Bot",
+            TEAM_USER: "Team User"
+        },
+            data = [],
+            flags = member.user.flags.toArray();
+        flags.forEach((flag, i) => {
+            if(badges[flag]) {
+                data.push(badges[flag])
+            }
+        })
+        return data;
     }
 }
