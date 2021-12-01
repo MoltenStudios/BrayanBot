@@ -36,6 +36,7 @@ Presets:
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true
+        Color: "#edd100"
   Error:
     Embeds:
       - Title: Unable to perform action
@@ -43,3 +44,4 @@ Presets:
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true
+        Color: "#ff0800"
