@@ -16,3 +16,5 @@ node_modules/
 config.yml
 Addons/
 Addon_Configs/
+database.db
+database.sqlite
