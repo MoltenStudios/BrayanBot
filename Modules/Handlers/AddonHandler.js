@@ -40,8 +40,8 @@ module.exports = {
                                     const addon = require(`../../Addons/${addonFiles[y]}`);
                                     if (addon && typeof addon.run == 'function') {
                                         // Custom Config
+                                        let fsPath = `./Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`
                                         if (addon._customConfigData) {
-                                            let fsPath = `./Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`
                                             if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
                                             if (fs.existsSync(fsPath)) {
                                                 // DevMode
@@ -50,7 +50,8 @@ module.exports = {
                                         }
 
                                         // Executing Addon
-                                        await addon.run(client, addon._customConfigData)
+                                        // addon._customConfigData
+                                        await addon.run(client, YAML.parse(fs.readFileSync(fsPath, 'utf-8'), { prettyErrors: true }))
 
                                         // Addon Logging
                                         if (typeof addon._log == 'string' && !addon._author) {
