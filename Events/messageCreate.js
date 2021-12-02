@@ -9,7 +9,7 @@ module.exports = async (bot, message) => {
         let msgArray = message.content.split(" "),
             command = msgArray[0].toLowerCase(),
             args = msgArray.slice(1),
-            hasPermission = false
+            permissions = []
 
         let commands = Commands.get(command.slice(config.Settings.Prefix.length))
             || Commands.get(Aliases.get(command.slice(config.Settings.Prefix.length)))
@@ -21,18 +21,18 @@ module.exports = async (bot, message) => {
                     commands.commandData.Permission[0] = "@everyone"
                 }
                 if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone")) {
-                    hasPermission = true
+                    permissions.push(true)
                 } else {
                     for (const role of commands.commandData.Permission) {
-                        if (!Utils.hasRole(message.member, role, true)) {
-                            if (!hasPermission == true) hasPermission = false
+                        if (Utils.hasRole(message.member, role, true)) {
+                            permissions.push(true)
                         } else {
-                            hasPermission = true
+                            permissions.push(false)
                         }
                     }
                 }
             }
-            if (hasPermission) {
+            if (permissions.includes(true)) {
                 commands.run(bot, message, args, config)
             } else {
                 message.reply({
