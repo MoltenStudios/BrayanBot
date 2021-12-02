@@ -1,7 +1,7 @@
 const Discord = require('discord.js'),
     Utils = require('../../Modules/Utils'),
     { lang, config, commands } = require('../../index'),
-    { SlashCommandBuilder } = require('@discordjs/builders'),
+    { SlashCommandBuilder } = Utils.builder,
     moment = require('moment');
 
 module.exports = {
