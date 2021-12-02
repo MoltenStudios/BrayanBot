@@ -21,19 +21,19 @@ module.exports = async (bot) => {
     await Utils.logInfo('                                                                          ');
     await Utils.logInfo('#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#');
 
-    await Utils.logInfo(`${bot.Commands.size} Command(s) Loaded.`)
-    await Utils.logInfo(`${bot.Events.length} Event(s) Loaded.`)
+    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command(s) Loaded.`)
+    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event(s) Loaded.`)
     const rest = new REST({ version: '9' }).setToken(config.Settings.Token);
     try {
         await rest.put(Routes.applicationGuildCommands(bot.user.id, config.Settings.ServerID), {
             body: SlashCmdsData
         });
-        await Utils.logInfo(`${SlashCmdsData.length} Slash Command(s) Loaded.`)
+        await Utils.logInfo(`${chalk.bold(SlashCmdsData.length)} Slash Command(s) Loaded.`)
     } catch (error) {
         Utils.logError(error);
     }
 
-    await Utils.logInfo(`Logged in as: ${bot.user.tag}`)
+    await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`)
     bot.guilds.cache.size > 1 ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} server(s). | ${chalk.hex("##ff596d")(`Brayan Bot is not made for multiple servers.`)}`) : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server(s).`)
     await Utils.logInfo(`Bot Ready!`);
 
