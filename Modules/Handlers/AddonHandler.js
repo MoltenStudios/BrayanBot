@@ -1,15 +1,16 @@
-const { client, config, lang, commands } = require("../../index"),
-    { commandStructure } = require('./CommandHandler'),
-    Utils = require("../Utils"),
-    fs = require('fs'),
+const fs = require('fs'),
     YAML = require("yaml"),
+    chalk = require('chalk'),
+    Utils = require("../Utils"),
     { SlashCommandBuilder } = require('@discordjs/builders'),
-    chalk = require('chalk')
+    { client, config, lang, commands } = require("../../index");
 
 module.exports = {
     getConfig: (name) => {
         if (fs.existsSync('./Addon_Configs') && fs.existsSync(`./Addon_Configs/${name}.yml`)) {
             return YAML.parse(fs.readFileSync(`./Addon_Configs/${name}.yml`, 'utf-8'));
+        } else {
+            return false;
         }
     },
     init: async () => {
@@ -17,28 +18,20 @@ module.exports = {
             fs.readdir('Addons', async (err, files) => {
                 files = files.filter(f => f.split(".").pop() == 'js')
                 if (files) {
-                    let priority = {
-                        "0": [],
-                        "1": [],
-                        "2": [],
-                        "3": [],
-                    }, index
+
+                    // Priority Sorting
+                    let priority = { "0": [], "1": [], "2": [], "3": [], }, index
                     for (index = 0; index < files.length; index++) {
                         let f = require(`../../Addons/${files[index]}`)
                         if (f._priority) {
-                            if (f._priority == 1) {
-                                priority[0].push(files[index])
-                            } else if (f._priority == 2) {
-                                priority[1].push(files[index])
-                            } else if (f._priority == 3) {
-                                priority[2].push(files[index])
-                            } else {
-                                priority[3].push(files[index])
-                            }
-                        } else {
-                            priority[3].push(files[index])
-                        }
+                            if (f._priority == 1) priority[0].push(files[index])
+                            else if (f._priority == 2) priority[1].push(files[index])
+                            else if (f._priority == 3) priority[2].push(files[index])
+                            else priority[3].push(files[index])
+                        } else priority[3].push(files[index])
                     }
+
+                    // Priority Executing 
                     for (index = 0; index <= 5; index++) {
                         let addonFiles = priority[index]
                         if (addonFiles) {
@@ -48,29 +41,18 @@ module.exports = {
                                     if (addon && typeof addon.run == 'function') {
                                         // Custom Config
                                         if (addon._customConfigData) {
-                                            let data = {
-                                                fsPath: `./Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`,
-                                                path: `../../Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`,
-                                                isDevelopmentMode: config.Settings.DevMode
-                                            }
-
-                                            if (!fs.existsSync('./Addon_Configs')) {
-                                                await fs.mkdirSync('./Addon_Configs')
-                                            }
-
-                                            if (fs.existsSync(data.fsPath)) {
-                                                if (data.isDevelopmentMode) {
-                                                    fs.writeFileSync(data.fsPath, YAML.stringify(addon._customConfigData))
-                                                }
-                                            } else {
-                                                fs.writeFileSync(data.fsPath, YAML.stringify(addon._customConfigData))
-                                            }
+                                            let fsPath = `./Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`
+                                            if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
+                                            if (fs.existsSync(fsPath)) {
+                                                // DevMode
+                                                if (config.Settings.DevMode) fs.writeFileSync(fsPath, YAML.stringify(addon._customConfigData))
+                                            } else fs.writeFileSync(fsPath, YAML.stringify(addon._customConfigData))
                                         }
 
-                                        // Loading Addon
+                                        // Executing Addon
                                         await addon.run(client, addon._customConfigData)
 
-                                        // Addon Loading Logging
+                                        // Addon Logging
                                         if (typeof addon._log == 'string' && !addon._author) {
                                             Utils.logInfo(addon._log)
                                         } else if (addon._log && typeof addon._author == 'string') {
@@ -91,9 +73,8 @@ module.exports = {
             })
         } else {
             fs.mkdirSync('./Addons')
+            await module.exports.init()
         }
-
-        return true
     },
     addonStructure: {
         _name: String,
