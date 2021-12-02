@@ -1,5 +1,5 @@
 require('console-stamp')(console, { format: ':date(HH:MM:ss).bold.grey' });
-if (process.versions.node < 16.6) return require('./Modules/Utils').logError(`Zeltux Requires Node.js version 16.6.0 or Higher.`)
+if (process.versions.node < 16.6) return require('./Modules/Utils').logError(`BryanBot Requires Node.js version 16.6.0 or Higher.`)
 const fs = require('fs'),
     YAML = require('yaml'),
     Discord = require('discord.js'),
