@@ -15,3 +15,12 @@ General:
       - "@everyone"
     SlashCommand:
       Enabled: true
+  ServerInfo:
+    Description: "View Server's Information"
+    Usage: "serverinfo"
+    Aliases: 
+      - "guildinfo"
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true

@@ -23,6 +23,48 @@ General:
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true
+  ServerInfo:
+    Embeds:
+      - Title: "💭 Server info - {guild-name} [1/2]"
+        Description: |-
+          • **Name**: {guild-name}
+          • **Guild ID**: {guild-id}
+          • **Created-At**: {guild-createdat}
+        Fields:
+          - Name: 👑 Server Owner
+            Value: |-
+              • **Account**: {guild-owner-mention} | {guild-owner-tag}
+              • **ID**: {guild-owner-id}
+              • **Created At**: {guild-owner-createdat}
+          - Name: ⬆️ Server Boost status 
+            Value: |-
+              • **Boosts**: {guild-boosts} Boosts
+              • **Guild-Level**: Level {guild-level}
+        Thumbnail: '{guild-icon}'
+        Timestamp: true
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
+      - Title: "💭 Server info - {guild-name} [2/2]"
+        Fields:
+          - Name: 📊 Server Stats
+            Value: |-
+              • **Total Channels**: {guild-total-channels}
+              • **Total Roles**: {guild-total-roles}
+              • **Total Emojis**: {guild-total-emojis}
+          - Name: 👪 Server Member Stats
+            Value: |-
+              • **Total Humans**: {guild-members}
+              • **Total Bots**: {guild-bots}
+              • **Total Members**: {guild-total-members}
+          - Name: 🤵 Member Status
+            Value: |-
+              • **Online Humans**: {guild-online-humans}
+              • **Idle Humans**: {guild-idle-humans}
+              • **DND Humans**: {guild-dnd-humans}
+              • **Offline Humans**: {guild-offline-humans}
+        Timestamp: true
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
 
 Presets:
   NoPermission:
