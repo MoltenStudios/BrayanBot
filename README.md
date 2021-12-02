@@ -19,7 +19,8 @@ BrayanBot servers as base discord.js bot, on which developers can build their ow
 BrayanBot is fully modular, it allows you to install verified Third-Party Addons to extend its functionality. As per your requirements, you can use addons to turn it into the type of bot you need! Addons can be added to turn it into a full-fledged discord bot created by our ever-growing community of developers.
 
 Current Addon Developers:
-- Lloyd: [Discord](https://discord.gg/PCNMS37CYk)
+- Lloyd#4414: [Discord](https://discord.gg/PCNMS37CYk)
+- 59L#3852: [Discord](https://discord.gg/4kgVwXfNPV)
 
 ## 🚧 Prerequisites
 - [Node.js 16.6+](https://nodejs.org/en/download/)
