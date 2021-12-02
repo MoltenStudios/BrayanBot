@@ -51,8 +51,9 @@ module.exports = async (bot, interaction) => {
             interaction.reply({ content: "This command no longer exists.", ephemeral: true })
         }
     } else if (interaction.isButton()) {
-
+        bot.emit('interactionCreate-Button', interaction);
+    } else if (interaction.isSelectMenu()) {
+        bot.emit('interactionCreate-SelectMenu', interaction);
     }
-    else if (interaction.isSelectMenu()) { }
 }
 module.exports.once = false
