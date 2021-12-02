@@ -375,14 +375,12 @@ module.exports = {
                             if (component.CustomID) component.CustomID = component.CustomID.replace(variable.searchFor, variable.replaceWith)
                             if (component.Style) component.Style = component.Style.replace(variable.searchFor, variable.replaceWith)
                             if (component.Placeholder) component.Placeholder = component.Placeholder.replace(variable.searchFor, variable.replaceWith)
-                            if (component.MaxSelect) component.MaxSelect = component.MaxSelect.replace(variable.searchFor, variable.replaceWith)
-                            if (component.MinSelect) component.MinSelect = component.MinSelect.replace(variable.searchFor, variable.replaceWith)
                             if (component.Options) {
                                 component.Options.forEach((options, i) => {
-                                    if (optionsDefault) optionsDefault = optionsDefault.replace(variable.searchFor, variable.replaceWith)
-                                    if (optionsLabel) optionsLabel = optionsLabel.replace(variable.searchFor, variable.replaceWith)
-                                    if (optionsDescription) optionsDescription = optionsDescription.replace(variable.searchFor, variable.replaceWith)
-                                    if (optionsEmoji) optionsEmoji = optionsEmoji.replace(variable.searchFor, variable.replaceWith)
+                                    if (options.Value) options.Value = options.Value.replace(variable.searchFor, variable.replaceWith)
+                                    if (options.Label) options.Label = options.Label.replace(variable.searchFor, variable.replaceWith)
+                                    if (options.Description) options.Description = options.Description.replace(variable.searchFor, variable.replaceWith)
+                                    if (options.Emoji) options.Emoji = options.Emoji.replace(variable.searchFor, variable.replaceWith)
                                 })
                             }
                         })
