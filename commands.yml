@@ -24,3 +24,12 @@ General:
       - "@everyone"
     SlashCommand:
       Enabled: true
+  Avatar:
+    Description: "Displays user's avatar"
+    Usage: "avatar <user>"
+    Aliases:
+      - "av"
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true

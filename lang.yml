@@ -65,7 +65,19 @@ General:
         Timestamp: true
         Footer: "{user-tag}"
         FooterIcon: "{user-pfp}"
-
+  Avatar:
+    Embeds:
+      - AuthorIcon: '{avatar}'
+        Author: '{req-user-tag}'
+        Image: '{avatar}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+    Components:
+      "1": 
+        - Type: "Button"
+          Style: "Link"
+          Label: "Avatar"
+          Link: "{link}"
 Presets:
   NoPermission:
     Embeds:
