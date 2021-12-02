@@ -57,7 +57,8 @@ const messageStructure = {
                 Color: String,
                 Timestamp: Boolean
             }
-        ]
+        ],
+        Components: componentsStructure
     },
     variables: [
         { searchFor: RegExp, replaceWith: String }
@@ -294,6 +295,10 @@ module.exports = {
                 }
             }
         }
+
+        if (settings.configPath.Components && typeof settings.configPath.Components == "object") {
+            messageData.components = module.exports.parseComponents(settings.configPath.Components, Variables, false)
+        }
         if (Variables && typeof Variables === 'object') {
             Variables.forEach(variable => {
                 if (messageData.content)
@@ -341,7 +346,7 @@ module.exports = {
      * @param {Boolean} isDisabled 
      * @returns
      */
-    parseComponents: (components, isDisabled) => {
+    parseComponents: (components, variables, isDisabled) => {
         let validButtonStyles = [
             "primary", "secondary", "success", "danger", "link",
             "blurple", "grey", "green", "red", "url",
@@ -355,12 +360,33 @@ module.exports = {
                 4: new MessageActionRow(),
                 5: new MessageActionRow()
             }, i, y;
-
         for (i = 1; i <= 5; i++) {
             let rowComponents = components[i]
             if (rowComponents) {
                 for (y = 0; y < rowComponents.length; y++) {
                     const component = rowComponents[y];
+
+                    // Variables
+                    if (variables && Array.isArray(variables) && variables[0]) {
+                        variables.forEach((variable, i) => {
+                            if (component.Label) component.Label = component.Label.replace(variable.searchFor, variable.replaceWith)
+                            if (component.Emoji) component.Emoji = component.Emoji.replace(variable.searchFor, variable.replaceWith)
+                            if (component.Link) component.Link = component.Link.replace(variable.searchFor, variable.replaceWith)
+                            if (component.CustomID) component.CustomID = component.CustomID.replace(variable.searchFor, variable.replaceWith)
+                            if (component.Style) component.Style = component.Style.replace(variable.searchFor, variable.replaceWith)
+                            if (component.Placeholder) component.Placeholder = component.Placeholder.replace(variable.searchFor, variable.replaceWith)
+                            if (component.MaxSelect) component.MaxSelect = component.MaxSelect.replace(variable.searchFor, variable.replaceWith)
+                            if (component.MinSelect) component.MinSelect = component.MinSelect.replace(variable.searchFor, variable.replaceWith)
+                            if (component.Options) {
+                                component.Options.forEach((options, i) => {
+                                    if (optionsDefault) optionsDefault = optionsDefault.replace(variable.searchFor, variable.replaceWith)
+                                    if (optionsLabel) optionsLabel = optionsLabel.replace(variable.searchFor, variable.replaceWith)
+                                    if (optionsDescription) optionsDescription = optionsDescription.replace(variable.searchFor, variable.replaceWith)
+                                    if (optionsEmoji) optionsEmoji = optionsEmoji.replace(variable.searchFor, variable.replaceWith)
+                                })
+                            }
+                        })
+                    }
 
                     if (component.Type) {
                         switch (component.Type.toLowerCase()) {
