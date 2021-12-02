@@ -1,7 +1,7 @@
 const Discord = require('discord.js'),
     chalk = require('chalk'),
     moment = require('moment'),
-    { MessageActionRow, MessageButton, MessageSelectMenu } = require('discord.js');
+    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord;
 
 const rowStructure = [
     {
@@ -93,8 +93,9 @@ module.exports = {
      * @param {Number} max 
      * @returns 
      */
-    getRandom: (max) => {
-        return (Math.floor(Math.random() * Math.floor(max)))
+    getRandom: (array) => {
+        let random = Math.floor(Math.random() * array.length);
+        return array[random];
     },
     /**
      * 
@@ -110,15 +111,16 @@ module.exports = {
      * @param {Discord.Guild} guild 
      * @param {String} type 
      * @param {Boolean} notify 
-     * @returns 
+     * @returns {Discord.Channel}
      */
     findChannel: (name, guild, type = 'GUILD_TEXT', notify = true) => {
         let channel = guild.channels.cache.find(c => (c.name.toLowerCase() == name.toLowerCase() || c.id == name) && c.type.toLowerCase() == type.toLowerCase());
-        if (!channel) {
-            if (notify) module.exports.logError(`${name} ${type} was not found in the ${guild.name} guild`);
-            channel = false;
+        if (channel) {
+            return channel;
+        } else {
+            module.exports.logError(`${name} ${type} was not found in the ${guild.name} guild`)
+            return false;
         }
-        return channel;
     },
     /**
      * @param {String} name 
@@ -128,10 +130,14 @@ module.exports = {
      */
     findRole: (name, guild, notify = true) => {
         let role = guild.roles.cache.find(r => r.name.toLowerCase() == name.toLowerCase() || r.id == name);
-        if (!role) {
-            if (notify) return module.exports.logError(`${name} role was not found in the ${guild.name} guild`);
+        if (role) {
+            return role;
+        } else {
+            if (notify) {
+                module.exports.logError(`${name} role was not found in the ${guild.name} guild`);
+                return false;
+            }
         }
-        return role;
     },
     /**
      * 
@@ -142,7 +148,15 @@ module.exports = {
      */
     hasRole: (member, name, notify = true) => {
         let role = module.exports.findRole(name, member.guild, notify)
-        return (role ? (member.roles.cache.has(role.id) ? true : false) : false)
+        if (role) {
+            if (member.roles.cache.has(role.id)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     },
     /**
      * 
@@ -467,6 +481,7 @@ module.exports = {
      * 
      * @param {Discord.Message} message 
      * @param {String} argument 
+     * @returns {Discord.GuildMember}
      */
     parseUserFromMessage: (message, argument, messageMember = true) => {
         if (messageMember) {
@@ -474,8 +489,12 @@ module.exports = {
         } else {
             return message.mentions.members.first() || module.exports.parseUser(argument, message.guild)
         }
-
     },
+    /**
+     * 
+     * @param {Discord.GuildMember} member 
+     * @returns {Array}
+     */
     getUserBadges: (member) => {
         let badges = {
             BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
@@ -496,7 +515,7 @@ module.exports = {
             data = [],
             flags = member.user.flags.toArray();
         flags.forEach((flag, i) => {
-            if(badges[flag]) {
+            if (badges[flag]) {
                 data.push(badges[flag])
             }
         })
