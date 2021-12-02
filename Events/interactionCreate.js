@@ -7,7 +7,7 @@ module.exports = async (bot, interaction) => {
     // Slash Command Executing
     if (interaction.isCommand()) {
         const command = SlashCmds.find(x => x.slashData.name.toLowerCase() == interaction.commandName.toLowerCase());
-        if (command) {
+        if (command && typeof command.runSlash == "function") {
             if (command.commandData.Permission) {
                 if (typeof command.commandData.Permission == 'string')
                     command.commandData.Permission = [command.Permission]

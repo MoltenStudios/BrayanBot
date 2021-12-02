@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 module.exports = async (bot, message) => {
     const { config, Commands, lang, Aliases } = bot;
 
-    if (message.content.startsWith(config.Settings.Prefix) && typeof command.run == "function") {
+    if (message.content.startsWith(config.Settings.Prefix)) {
         let msgArray = message.content.split(" "),
             command = msgArray[0].toLowerCase(),
             args = msgArray.slice(1),
@@ -13,7 +13,7 @@ module.exports = async (bot, message) => {
 
         let commands = Commands.get(command.slice(config.Settings.Prefix.length))
             || Commands.get(Aliases.get(command.slice(config.Settings.Prefix.length)))
-        if (commands) {
+        if (commands && typeof commands.run == "function") {
             if (commands.commandData.Permission) {
                 if (typeof commands.commandData.Permission == 'string') {
                     commands.commandData.Permission = [commands.Permission]
