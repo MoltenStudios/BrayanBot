@@ -83,32 +83,8 @@ module.exports = {
     addonStructure: {
         _name: String,
         _log: String || Function,
-        _author: String,
+        _author: String || Object,
         _customConfigData: Object,
-        _commands: [
-            {
-                name: String,
-                type: String,
-                commandData: {
-                    Description: String,
-                    Usage: String,
-                    Aliases: Array,
-                    Permission: Array,
-                    SlashCommand: {
-                        Enabled: Boolean
-                    }
-                },
-                slashData: SlashCommandBuilder,
-                run: Function,
-                runSlash: Function
-            }
-        ],
-        _events: [
-            {
-                name: String,
-                run: Function
-            }
-        ],
         run: Function
     }
 }
