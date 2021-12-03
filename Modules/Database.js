@@ -1,7 +1,7 @@
 const sqlite = require('better-sqlite3'),
-    fs = require('fs'),
+    chalk = require('chalk')
+fs = require('fs'),
     { client, config, lang, commands } = require('../index.js');
-const Utils = require('./Utils.js');
 
 module.exports = {
     /**
@@ -27,13 +27,13 @@ module.exports = {
      */
     createTable: async (db, tableName, values) => {
         return new Promise(async (resolve, reject) => {
+            const Utils = require('./Utils.js')
             if (!db || !tableName || !values) {
                 Utils.logWarning(`Not enough parameters passed in createTable function.`)
             } else if (db && tableName && values) {
                 try {
-                    Utils.logInfo(`Setting up Database. (${tableName})`)
                     db.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${values})`).run()
-                    Utils.logInfo(`Database Ready. (${tableName})`)
+                    Utils.logInfo(`${chalk.bold(tableName)} Table Ready. (${chalk.bold(db.name.replace("Database/", ""))})`)
                 } catch (err) {
                     Utils.logWarning(`An error occured while setting up database. (${tableName})`)
                     reject(err);
