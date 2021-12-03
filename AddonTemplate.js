@@ -2,7 +2,8 @@ const { getConfig } = require('../Modules/Handlers/AddonHandler'),
     CommandHandler = require('../Modules/Handlers/CommandHandler'),
     EventHandler = require('../Modules/Handlers/EventHandler'),
     { SlashCommandBuilder } = require('@discordjs/builders'),
-    Utils = require('../Modules/Utils')
+    Utils = require('../Modules/Utils'),
+    { MessageButton, MessageActionRow } = require('discord.js')
 
 module.exports = {
     _name: "Test",
@@ -12,29 +13,67 @@ module.exports = {
         color: "#FFE400"
     },
     _priority: 1,
-    _customConfigData: {
-        Test: "test",
+    _customConfigs: {
+        "main": {
+            type: "yml",
+            path: `./Addon_Configs/{addon-name}/Main.yml`,
+            data: {
+                Enabled: true,
+                Permission: "@everyone"
+            }
+        },
+        "lang": {
+            type: "json",
+            path: `./Addon_Configs/{addon-name}/Lang.json`,
+            data: {
+                Message: {
+                    Content: "👋 Hello from Lang",
+                }
+            }
+        }
     }
 }
+
 module.exports.run = async (bot, customConfig) => {
+    const { main: addonConfig, lang: addonLang } = customConfig;
     CommandHandler.set({
         name: 'test',
-        type: 'Utility',
+        type: 'test',
         commandData: {
-            Description: 'Test Command to test stuff.',
+            Description: 'test',
             Usage: 'test',
             Aliases: [],
-            Permission: [
-                'Developer'
-            ],
+            Permission: [],
             SlashCommand: {
                 Enabled: true
             }
         },
         slashData: new SlashCommandBuilder()
-            .setName('test')
-            .setDescription("Test Command to test stuff."),
-        run: (bot, message, args, config) => { },
-        runSlash: (bot, interaction) => { }
+            .setName('test').setDescription('test')
+            .addMentionableOption(option => option.setName('mentionable4').setDescription('Mention something')),
+        run: (bot, message, args, config) => {
+            if (!Utils.hasRole(message.member, addonConfig.Permission, true)) {
+                message.channel.send("no permission")
+            } else {
+                message.channel.send(Utils.setupMessage({
+                    configPath: addonLang.Message,
+                    variables: [
+                        ...Utils.userVariables(message.member, 'user')
+                    ]
+                }, false))
+            }
+        },
+        runSlash: (bot, interaction, options) => {
+            if (!Utils.hasRole(interaction.member, addonConfig.Permission, true)) {
+                interaction.reply("no permission")
+            } else {
+                interaction.reply(Utils.setupMessage({
+                    configPath: addonLang.Message,
+                    variables: [
+                        ...Utils.userVariables(interaction.member, 'user')
+                    ]
+                }, true))
+            }
+        }
     })
 }
