@@ -8,6 +8,7 @@ module.exports = {
     wait: require('util').promisify(setTimeout),
     database: require('./Database'),
     parseComponents: require('./Utils/parseComponents'),
+    parseSlashCommands: require('./Utils/parseSlashCommand'),
     setupMessage: require('./Utils/setupMessage'),
     logInfo: (text) => {
         console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text)
