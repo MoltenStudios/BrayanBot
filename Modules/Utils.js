@@ -191,12 +191,16 @@ module.exports = {
         })
         return data;
     },
-    getChannel: (channel = null, guild, channelType) => {
-        if (!typeof channel === "string") return undefined
-        else {
+    getChannel: (channel = null, guild) => {
+        if (typeof channel === "string") {
             const ch = guild.channels.cache.find(rl => [rl.name.toLowerCase(), rl.id].includes(channel.toLowerCase()))
-            if (ch) return ch
-            else return undefined
+            if (ch) {
+                return ch
+            } else {
+                return undefined
+            }
+        } else {
+            return undefined
         }
     },
     /**
