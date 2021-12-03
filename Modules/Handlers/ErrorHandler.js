@@ -4,6 +4,7 @@ const { client, config, lang, commands } = require("../../index"),
 
 module.exports = {
     init: () => {
+        /*
         process.on('uncaughtException', async (error) => {
         }).on('unhandledRejection', async (reason, promise) => {
             if(reason.toString() == "Error [TOKEN_INVALID]: An invalid token was provided.") {
@@ -22,5 +23,6 @@ module.exports = {
                 Utils.logError(`An error occured, You can view the error in errors.txt`)
             })
         })
+        */
     }
 }
