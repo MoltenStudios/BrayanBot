@@ -35,25 +35,18 @@ module.exports = async (bot, message) => {
             if (permissions.includes(true)) {
                 commands.run(bot, message, args, config)
             } else {
-                message.reply({
-                    embeds: [
-                        Utils.setupEmbed({
-                            configPath: lang.Presets.NoPermission,
-                            variables: [
-                                {
-                                    searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map(x => {
-                                        let role = Utils.findRole(x, message.guild, true)
-                                        if (role) return roleMention(role.id)
-                                    }).join(", ")
-                                },
-                                ...Utils.userVariables(message.member)
-                            ]
-                        })
-                    ],
-                    allowedMentions: {
-                        repliedUser: false
-                    }
-                })
+                message.reply(Utils.setupMessage({
+                    configPath: lang.Presets.NoPermission,
+                    variables: [
+                        {
+                            searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map(x => {
+                                let role = Utils.findRole(x, message.guild, true)
+                                if (role) return roleMention(role.id)
+                            }).join(", ")
+                        },
+                        ...Utils.userVariables(message.member)
+                    ]
+                }))
             }
         }
     }
