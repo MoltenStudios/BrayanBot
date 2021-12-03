@@ -86,9 +86,9 @@ module.exports = (components, variables, isDisabled) => {
                             if (component.Style.toLowerCase() == "random" || validButtonStyles.includes(component.Style.toLowerCase())) {
                                 if (component.Style.toLowerCase() == "link") {
                                     if (!component.Link) {
-                                        Utils.logError(`A link is required for button to work.`)
+                                        Utils.logError(`[Utils] [parseComponents] A link is required for button to work.`)
                                     } else if (!component.Label && !component.Emoji) {
-                                        Utils.logError(`Label or Emoji is required for button to work.`)
+                                        Utils.logError(`[Utils] [parseComponents] Label or Emoji is required for button to work.`)
                                     } else {
                                         let button = new MessageButton()
                                             .setStyle("LINK")
@@ -100,9 +100,9 @@ module.exports = (components, variables, isDisabled) => {
                                     }
                                 } else {
                                     if (!component.CustomID) {
-                                        Utils.logError(`CustomID is required for button to work.`)
+                                        Utils.logError(`[Utils] [parseComponents] CustomID is required for button to work.`)
                                     } else if (!component.Label && !component.Emoji) {
-                                        Utils.logError(`Label or Emoji is required for button to work.`)
+                                        Utils.logError(`[Utils] [parseComponents]Label or Emoji is required for button to work.`)
                                     } else {
                                         let button = new MessageButton()
                                             .setCustomId(component.CustomID);
@@ -124,15 +124,15 @@ module.exports = (components, variables, isDisabled) => {
                                     }
                                 }
                             } else {
-                                Utils.logError(`Invalid Button Style: ${component.Style}`)
+                                Utils.logError(`[Utils] [parseComponents] Invalid Button Style: ${component.Style}`)
                             }
                             break;
                         }
                         case 'selectmenu': {
                             if (!component.CustomID) {
-                                Utils.logError(`CustomID is required for SelectMenu to work.`)
+                                Utils.logError(`[Utils] [parseComponents] CustomID is required for SelectMenu to work.`)
                             } else if (!Array.isArray(component.Options) || component.Options > 0) {
-                                Utils.logError(`SelectMenu atleast needs 1 option to work.`)
+                                Utils.logError(`[Utils] [parseComponents] SelectMenu atleast needs 1 option to work.`)
                             } else {
                                 if (!component.MaxSelect) component.MaxSelect = 0
                                 if (!component.MinSelect) component.MinSelect = 0
