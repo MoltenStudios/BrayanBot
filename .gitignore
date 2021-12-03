@@ -17,5 +17,5 @@ disposal
 config.yml
 Addons/
 Addon_Configs/
-database.db
-database.sqlite
+*.db
+*.sqlite
