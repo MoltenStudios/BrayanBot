@@ -7,10 +7,7 @@ const Discord = require('discord.js'),
 module.exports = {
     name: "serverinfo",
     type: 'general',
-    commandData: commands.General.ServerInfo,
-    slashData: new SlashCommandBuilder()
-        .setName("serverinfo")
-        .setDescription(commands.General.ServerInfo.Description)
+    commandData: commands.General.ServerInfo
 }
 
 /**

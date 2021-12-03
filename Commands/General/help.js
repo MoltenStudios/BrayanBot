@@ -8,10 +8,6 @@ module.exports = {
     name: "help",
     type: 'general',
     commandData: commands.General.Help,
-    slashData: new SlashCommandBuilder()
-        .setName("help")
-        .setDescription(commands.General.Help.Description)
-        .addStringOption(o => o.setName('command').setDescription("Command for info"))
 }
 
 /**

@@ -7,11 +7,7 @@ const Discord = require('discord.js'),
 module.exports = {
     name: "avatar",
     type: 'general',
-    commandData: commands.General.Avatar,
-    slashData: new SlashCommandBuilder()
-        .setName("avatar")
-        .setDescription(commands.General.Avatar.Description)
-        .addUserOption(u => u.setName("target").setDescription("User Mention"))
+    commandData: commands.General.Avatar
 }
 
 /**

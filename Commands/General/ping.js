@@ -7,10 +7,7 @@ const Discord = require('discord.js'),
 module.exports = {
     name: "ping",
     type: 'general',
-    commandData: commands.General.Ping,
-    slashData: new SlashCommandBuilder()
-        .setName("ping")
-        .setDescription(commands.General.Ping.Description)
+    commandData: commands.General.Ping
 }
 
 /**
