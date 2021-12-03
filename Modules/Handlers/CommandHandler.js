@@ -22,7 +22,7 @@ let commandStructure = {
 module.exports = {
     /**
      * 
-     * @param {Object} commandStructure 
+     * @param {commandStructure} command 
      */
     set: (command) => {
         try {
