@@ -33,19 +33,43 @@ module.exports = {
                                     const addon = require(`../../Addons/${addonFiles[y]}`);
                                     if (addon && typeof addon.run == 'function') {
                                         // Custom Config
-                                        let fsPath = `./Addon_Configs/${addon._name ? addon._name : file.replace('.js', '')}.yml`,
-                                            customConfig = {};
-                                        if (addon._customConfigData) {
+                                        let customConfig = {}, addonName = addon._name ? addon._name : file.replace('.js', '')
+                                        if (addon._customConfigs && typeof addon._customConfigs == "object") {
+                                            let configs = Object.entries(addon._customConfigs),
+                                                generateConfig = (path, data, type) => {
+                                                    if (["yml", "yaml"].includes(type.toLowerCase())) {
+                                                        fs.writeFileSync(path, YAML.stringify(data, {
+                                                            indent: 2,
+                                                            prettyErrors: true
+                                                        }))
+                                                    } else if (["json"].includes(type.toLowerCase())) {
+                                                        fs.writeFileSync(path, JSON.stringify(data, null, 4))
+                                                    } else {
+                                                        fs.writeFileSync(path, data)
+                                                    }
+                                                }
                                             if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
-                                            if (fs.existsSync(fsPath)) {
-                                                // DevMode
-                                                if (config.Settings.DevMode) fs.writeFileSync(fsPath, YAML.stringify(addon._customConfigData))
-                                            } else fs.writeFileSync(fsPath, YAML.stringify(addon._customConfigData))
+                                            if (!fs.existsSync(`./Addon_Configs/${addonName}`)) await fs.mkdirSync(`./Addon_Configs/${addonName}`)
+                                            configs.forEach((addonConfig) => {
+                                                let [name, thing] = addonConfig,
+                                                    { type, path, data } = thing;
+                                                path = path.replace(/{addon-name}/g, addonName).toString()
 
-                                            customConfig = YAML.parse(fs.readFileSync(fsPath, 'utf-8'), { prettyErrors: true })
-                                        } else if (!addon._customConfigData && fs.existsSync(fsPath)) {
-                                            fs.unlinkSync(fsPath)
+                                                if (fs.existsSync(path)) {
+                                                    if (config.Settings.DevMode)
+                                                        generateConfig(path, data, type)
+                                                    if (["yml", "yaml"].includes(type.toLowerCase()))
+                                                        customConfig[name] = YAML.parse(fs.readFileSync(path, 'utf-8'), { prettyErrors: true })
+                                                    else if (["json"].includes(type.toLowerCase()))
+                                                        customConfig[name] = JSON.parse(fs.readFileSync(path, 'utf-8'))
+                                                    else
+                                                        customConfig[name] = fs.readFileSync(path, 'utf-8')
+                                                } else {
+                                                    generateConfig(path, data, type)
+                                                }
+                                            })
                                         }
+
                                         // Executing Addon
                                         await addon.run(client, customConfig)
 
@@ -61,6 +85,7 @@ module.exports = {
                                         Utils.logWarning(`Unable to execute ${addon._name ? addon._name : file.replace('.js', '')} addon ${addon._author ? `by ${addon._author}` : ''}`)
                                     }
                                 } catch (e) {
+                                    console.log(e)
                                     Utils.logError(e)
                                 }
                             }
