@@ -6,6 +6,13 @@ const fs = require('fs'),
     { client, config, lang, commands } = require("../../index");
 
 module.exports = {
+        getYAMLConfig: (addonName, addonConfig) => {
+        if (fs.existsSync('./Addon_Configs') && fs.existsSync(`./Addon_Configs/${addonName}/${addonConfig}.yml`)) {
+            return YAML.parse(fs.readFileSync(`./Addon_Configs/${addonName}/${addonConfig}.yml`, 'utf-8'));
+        } else {
+            return false;
+        }
+    },
     init: async () => {
         if (fs.existsSync('./Addons')) {
             fs.readdir('Addons', async (err, files) => {
