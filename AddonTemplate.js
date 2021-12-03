@@ -45,12 +45,36 @@ module.exports.run = async (bot, customConfig) => {
             Aliases: [],
             Permission: [],
             SlashCommand: {
-                Enabled: true
+                Enabled: true,
+                Data: {
+                    Name: "test",
+                    Description: "test",
+                    Options: [
+                        {
+                            Type: "User",
+                            Name: "mention",
+                            Description: "mention user :D",
+                            Required: true
+                        },
+                        {
+                            Type: "String",
+                            Name: "input",
+                            Description: "input :D",
+                            Choices: [
+                                {
+                                    Name: "Option 1",
+                                    Value: "option_1"
+                                },
+                                {
+                                    Name: "Option 2",
+                                    Value: "option_2"
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         },
-        slashData: new SlashCommandBuilder()
-            .setName('test').setDescription('test')
-            .addMentionableOption(option => option.setName('mentionable4').setDescription('Mention something')),
         run: (bot, message, args, config) => {
             if (!Utils.hasRole(message.member, addonConfig.Permission, true)) {
                 message.channel.send("no permission")
