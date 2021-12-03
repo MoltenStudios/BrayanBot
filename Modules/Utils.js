@@ -190,5 +190,10 @@ module.exports = {
             }
         })
         return data;
+    },
+        getChannel: (channel, guild, channelType) => {
+        const getChannel = guild.channels.cache.find(c => (c.name.toLowerCase() == channel.toLowerCase() || c.id == channel) && c.type.toLowerCase() == channelType.toLowerCase());
+        if (getChannel) return channel
+        else return false
     }
 }
