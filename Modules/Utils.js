@@ -210,7 +210,7 @@ module.exports = {
      */
     parseSlashArgs: function (options) {
         if (typeof options !== "object" && options.length <= 0) {
-            return module.exports.logError("[Utils] [parseSlashArgs] Invalid Choices were provided.");
+            return module.exports.logError("[Utils] [parseSlashArgs] Invalid Options were provided.");
         }
 
         let args = {}
