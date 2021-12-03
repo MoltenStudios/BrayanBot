@@ -1,3 +1,9 @@
+DisabledCommands:
+  - "ping"
+  - "serverinfo"
+  - "avatar"
+  
+
 General:
   Help:
     Description: "Displays all Bot Commands"

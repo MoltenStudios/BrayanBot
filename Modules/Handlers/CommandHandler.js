@@ -19,7 +19,6 @@ let commandStructure = {
     run: Function,
     runSlash: Function
 }
-
 module.exports = {
     /**
      * 
@@ -27,13 +26,16 @@ module.exports = {
      */
     set: (command) => {
         try {
-            client.Commands.set(command.name, command)
-            command.commandData.Aliases.forEach(alias => {
-                client.Aliases.set(alias, command.name)
-            })
-            if (command.commandData.SlashCommand && command.commandData.SlashCommand.Enabled) {
-                client.SlashCmdsData.push(command.slashData)
-                client.SlashCmds.push(command)
+            let enableWhenDisabled = commands.DisabledCommands
+            if (!enableWhenDisabled.includes(command.name.toLowerCase())) {
+                client.Commands.set(command.name, command)
+                command.commandData.Aliases.forEach(alias => {
+                    client.Aliases.set(alias, command.name)
+                })
+                if (command.commandData.SlashCommand && command.commandData.SlashCommand.Enabled) {
+                    client.SlashCmdsData.push(command.slashData)
+                    client.SlashCmds.push(command)
+                }
             }
         } catch (e) {
             Utils.logError(e)
