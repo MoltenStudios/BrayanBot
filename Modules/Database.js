@@ -12,7 +12,7 @@ module.exports = {
     getDatabase: async (fileName = config.Settings.Storage) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const db = new sqlite(fileName || "database.db");
+                const db = new sqlite(`Database/${fileName}` || "database.db");
                 resolve(db)
             } catch (e) {
                 reject(e)
@@ -27,9 +27,9 @@ module.exports = {
      */
     createTable: async (db, tableName, values) => {
         return new Promise(async (resolve, reject) => {
-            if(!db || !tableName || !values) {
+            if (!db || !tableName || !values) {
                 Utils.logWarning(`Not enough parameters passed in createTable function.`)
-            } else if(db && tableName && values) {
+            } else if (db && tableName && values) {
                 try {
                     Utils.logInfo(`Setting up Database. (${tableName})`)
                     db.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${values})`).run()
