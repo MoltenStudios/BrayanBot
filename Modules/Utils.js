@@ -205,36 +205,37 @@ module.exports = {
     },
     /**
      * 
-     * @param {choices} array 
+     * @param {Array} choices
      * @returns {Object}
      */
-    parseSlashArgs: function (choices) {
-        if (typeof choices !== "object" && choices.length <= 0) {
+    parseSlashArgs: function (options) {
+        if (typeof options !== "object" && options.length <= 0) {
             return module.exports.logError("[Utils] [parseSlashArgs] Invalid Choices were provided.");
         }
 
         let args = {}
-        choices.forEach(c => {
+        options.forEach(c => {
             let { type, value, name } = c
             args[name] = {
-                type: type,
+                type
             }
-
-            if (["USER"].includes(type)) {
-                args[name].user = c.user
-                args[name].member = c.member
-
-            }
-            else if (["STRING", "NUMBER", "INTEGER", "BOOLEAN"].includes(type)) {
-                args[name].content = value
+            if (["STRING", "NUMBER", "INTEGER", "BOOLEAN"].includes(type)) {
+                if (value) args[name].content = value
             } else if (["CHANNEL"].includes(type)) {
-                args[name].channel = c.channel
+                if (c.channel) args[name].channel = c.channel
             } else if (["ROLE"].includes(type)) {
-                args[name].role = c.role
+                if (c.role) args[name].role
+            } else if (["USER"].includes(type)) {
+                if (c.user) args[name].user = c.user
+                if (c.member) args[name].member = c.member
+            } else if (["MENTIONABLE".includes(type)]) {
+                if (c.user) args[name].user = c.user
+                if (c.member) args[name].member = c.member
+                if (c.role) args[name].role
             } else {
                 return module.exports.logWarning("[Utils] [parseSlashArgs] Invalid Choice Type. Type: " + type)
             }
         })
-        return args
+        return args;
     }
 }
