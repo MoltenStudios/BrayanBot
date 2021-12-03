@@ -198,5 +198,37 @@ module.exports = {
             if (ch) return ch
             else return undefined
         }
+    },
+    /**
+     * 
+     * @param {choices} array 
+     * @returns {Object}
+     */
+    parseSlashArgs: function (choices) {
+        if (typeof choices !== "object" && choices.length <= 0) return module.exports.logError("[Utils] [parseSlashArgs] Invalid Choices were provided.");
+
+        let args = {}
+        choices.forEach(c => {
+            let { type, value, name } = c
+            args[name] = {
+                type: type,
+            }
+
+            if (["USER"].includes(type)) {
+                args[name].user = c.user
+                args[name].member = c.member
+
+            }
+            else if (["STRING", "NUMBER", "INTEGER", "BOOLEAN"].includes(type)) {
+                args[name].content = value
+            } else if (["CHANNEL"].includes(type)) {
+                args[name].channel = c.channel
+            } else if (["ROLE"].includes(type)) {
+                args[name].role = c.role
+            } else {
+                return module.exports.logWarning("[Utils] [parseSlashArgs] Invalid Choice Type. Type: " + type)
+            }
+        })
+        return args
     }
 }
