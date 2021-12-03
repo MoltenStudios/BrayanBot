@@ -14,10 +14,10 @@ module.exports = async (bot) => {
 
     await Utils.logInfo('#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#');
     await Utils.logInfo('                                                                          ');
-    await Utils.logInfo(`                    • Brayan Bot ${packageJSON.version} is now Online! •       `);
+    await Utils.logInfo(`                    • ${chalk.bold(`Brayan Bot v${packageJSON.version}`)} is now Online! •       `);
     await Utils.logInfo('                                                                          ');
     await Utils.logInfo('          • Join our Discord Server for any Issues/Custom Bots •          ');
-    await Utils.logInfo('                     https://discord.gg/EgeZxGg6ev                        ');
+    await Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://discord.gg/EgeZxGg6ev`))}                        `);
     await Utils.logInfo('                                                                          ');
     await Utils.logInfo('#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#');
 
