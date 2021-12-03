@@ -114,7 +114,7 @@ module.exports.runSlash = async (bot, interaction) => {
             const c = _commands[index];
             fields.push({
                 Name: `${Utils.formatFirstLetter(c[0])} Commands`,
-                Value: c[1].map(x => `\`${config.Settings.Prefix}${x.name}\``).join(", ")
+                Value: c[1].map(x => `\`/${x.name}\``).join(", ")
             })
         }
         interaction.editReply(Utils.setupMessage({
