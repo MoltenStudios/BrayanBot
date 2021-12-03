@@ -81,7 +81,7 @@ module.exports = {
         if (channel) {
             return channel;
         } else {
-            module.exports.logError(`${name} ${type} was not found in the ${guild.name} guild`)
+            module.exports.logError(`[Utils] [findChannel] ${name} ${type} was not found in the ${guild.name} guild`)
             return false;
         }
     },
@@ -97,7 +97,7 @@ module.exports = {
             return role;
         } else {
             if (notify) {
-                module.exports.logError(`${name} role was not found in the ${guild.name} guild`);
+                module.exports.logError(`[Utils] [findRole] ${name} role was not found in the ${guild.name} guild`);
                 return false;
             }
         }
@@ -209,7 +209,9 @@ module.exports = {
      * @returns {Object}
      */
     parseSlashArgs: function (choices) {
-        if (typeof choices !== "object" && choices.length <= 0) return module.exports.logError("[Utils] [parseSlashArgs] Invalid Choices were provided.");
+        if (typeof choices !== "object" && choices.length <= 0) {
+            return module.exports.logError("[Utils] [parseSlashArgs] Invalid Choices were provided.");
+        }
 
         let args = {}
         choices.forEach(c => {
