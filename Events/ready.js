@@ -10,7 +10,7 @@ const { REST } = require('@discordjs/rest'),
  * @param {Discord.Interaction} interaction 
  */
 module.exports = async (bot) => {
-    const { SlashCmds, SlashCmdsData, config } = bot;
+    let { SlashCmds, SlashCmdsData, config } = bot;
 
     await Utils.logInfo('#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#');
     await Utils.logInfo('                                                                          ');
@@ -24,12 +24,14 @@ module.exports = async (bot) => {
     await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command(s) Loaded.`)
     await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event(s) Loaded.`)
     const rest = new REST({ version: '9' }).setToken(config.Settings.Token);
+    SlashCmdsData = SlashCmdsData.filter((x) => typeof x == "object");
     try {
         await rest.put(Routes.applicationGuildCommands(bot.user.id, config.Settings.ServerID), {
             body: SlashCmdsData
         });
         await Utils.logInfo(`${chalk.bold(SlashCmdsData.length)} Slash Command(s) Loaded.`)
     } catch (error) {
+        console.log(error)
         Utils.logError(error);
     }
 

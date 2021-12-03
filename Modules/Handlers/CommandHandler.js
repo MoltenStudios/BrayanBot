@@ -12,10 +12,10 @@ let commandStructure = {
         Aliases: Array,
         Permission: Array,
         SlashCommand: {
-            Enabled: Boolean
+            Enabled: Boolean,
+            Data: Object
         }
     },
-    slashData: SlashCommandBuilder,
     run: Function,
     runSlash: Function
 }
@@ -33,11 +33,15 @@ module.exports = {
                     client.Aliases.set(alias, command.name)
                 })
                 if (command.commandData.SlashCommand && command.commandData.SlashCommand.Enabled) {
-                    client.SlashCmdsData.push(command.slashData)
-                    client.SlashCmds.push(command)
+                    let slashD = Utils.parseSlashCommands(command.commandData.SlashCommand.Data)
+                    if (slashD && slashD.name && slashD.description) {
+                        client.SlashCmdsData.push(slashD)
+                        client.SlashCmds.push(command)
+                    }
                 }
             }
         } catch (e) {
+            console.log((e));
             Utils.logError(e)
         }
     },
