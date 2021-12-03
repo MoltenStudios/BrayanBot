@@ -91,7 +91,7 @@ module.exports = (data) => {
                                 description: option.Description,
                                 required: option.Required ? true : false,
                                 channel_types: option.ChannelTypes && Array.isArray(option.ChannelTypes) ? [] : null,
-                                choices: option.Choices && Array.isArray(option.Choices) ? [] : null
+                                choices: []
                             };
 
                             if (option.Type) {
@@ -113,13 +113,12 @@ module.exports = (data) => {
                                     Utils.logError(`[Utils] [SlashCommandCreator] Invalid ${chalk.bold("Option.Type")} property.`)
                                 }
                             }
-                            if (option.Choices && Array.isArray(option.Choices) && ["String", 3, "integer", 4, "number", 10].includes(option.Type.toLowerCase())) {
+                            if (option.Choices && Array.isArray(option.Choices) && ["string", 3, "integer", 4, "number", 10].includes(option.Type.toLowerCase())) {
                                 option.Choices.forEach((choice) => {
                                     if (!choice.Name)
                                         Utils.logError(`[Utils] [SlashCommandCreator] A ${chalk.bold("Name")} is required to build Slash Command's option's choice.`)
                                     if (!choice.Value)
                                         Utils.logError(`[Utils] [SlashCommandCreator] A ${chalk.bold("Value")} is required to build Slash Command's option's choice.`)
-
                                     if (choice.Name && choice.Value) {
                                         optionData.choices.push({
                                             name: choice.Name,
