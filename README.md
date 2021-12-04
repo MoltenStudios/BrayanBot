@@ -20,7 +20,6 @@ BrayanBot is fully modular, it allows you to install verified Third-Party Addons
 
 Current Addon Developers:
 - Lloyd#4414: [Discord](https://discord.gg/PCNMS37CYk)
-- 59L#3852: [Discord](https://discord.gg/F2Z2J3K65p)
 
 ## 🚧 Prerequisites
 - [Node.js 16.6+](https://nodejs.org/en/download/)
