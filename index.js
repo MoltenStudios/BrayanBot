@@ -1,9 +1,5 @@
 require('console-stamp')(console, { format: ':date(HH:MM:ss).bold.grey' });
-<<<<<<< HEAD
 if (process.versions.node < 16.6) return require('./Modules/Utils').logError(`BrayanBot Requires Node.js version 16.6.0 or Higher.`)
-=======
-if (process.versions.node < 16.6) return require('./Modules/Utils').logError(`BryanBot Requires Node.js version 16.6.0 or Higher.`)
->>>>>>> cd446dd0c85ce04f9453be742325c059026ca1f6
 const fs = require('fs'),
     YAML = require('yaml'),
     Discord = require('discord.js'),
