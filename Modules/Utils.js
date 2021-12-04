@@ -43,15 +43,20 @@ module.exports = {
      * @returns {Array}
      */
     userVariables: (user, prefix) => {
-        return [
-            { searchFor: new RegExp(`{${prefix || "user"}-id}`, 'g'), replaceWith: user.id },
-            { searchFor: new RegExp(`{${prefix || "user"}-displayname}`, 'g'), replaceWith: user.displayName },
-            { searchFor: new RegExp(`{${prefix || "user"}-username}`, 'g'), replaceWith: user.user.username },
-            { searchFor: new RegExp(`{${prefix || "user"}-tag}`, 'g'), replaceWith: user.user.tag },
-            { searchFor: new RegExp(`{${prefix || "user"}-mention}`, 'g'), replaceWith: '<@' + user.id + '>' },
-            { searchFor: new RegExp(`{${prefix || "user"}-pfp}`, 'g'), replaceWith: user.user.displayAvatarURL({ dynamic: true }) },
-            { searchFor: new RegExp(`{${prefix || "user"}-createdat}`, 'g'), replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a") },
-        ]
+        if (!user) {
+            module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
+            return []
+        } else {
+            return [
+                { searchFor: new RegExp(`{${prefix || "user"}-id}`, 'g'), replaceWith: user.id },
+                { searchFor: new RegExp(`{${prefix || "user"}-displayname}`, 'g'), replaceWith: user.displayName },
+                { searchFor: new RegExp(`{${prefix || "user"}-username}`, 'g'), replaceWith: user.user.username },
+                { searchFor: new RegExp(`{${prefix || "user"}-tag}`, 'g'), replaceWith: user.user.tag },
+                { searchFor: new RegExp(`{${prefix || "user"}-mention}`, 'g'), replaceWith: '<@' + user.id + '>' },
+                { searchFor: new RegExp(`{${prefix || "user"}-pfp}`, 'g'), replaceWith: user.user.displayAvatarURL({ dynamic: true }) },
+                { searchFor: new RegExp(`{${prefix || "user"}-createdat}`, 'g'), replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a") },
+            ]
+        }
     },
     /**
      * 
@@ -60,14 +65,19 @@ module.exports = {
      * @returns {Array}
      */
     botVariables: (bot, prefix) => {
-        return [
-            { searchFor: new RegExp(`{${prefix || "bot"}-id}`, 'g'), replaceWith: bot.id },
-            { searchFor: new RegExp(`{${prefix || "bot"}-displayname}`, 'g'), replaceWith: bot.displayName },
-            { searchFor: new RegExp(`{${prefix || "bot"}-username}`, 'g'), replaceWith: bot.user.username },
-            { searchFor: new RegExp(`{${prefix || "bot"}-tag}`, 'g'), replaceWith: bot.user.tag },
-            { searchFor: new RegExp(`{${prefix || "bot"}-mention}`, 'g'), replaceWith: '<@' + bot.id + '>' },
-            { searchFor: new RegExp(`{${prefix || "bot"}-pfp}`, 'g'), replaceWith: bot.user.displayAvatarURL({ dynamic: true }) },
-        ]
+        if (!bot) {
+            module.exports.logError(`[Utils] [botVariables] Invalid input for ${chalk.bold("bot")}.`);
+            return []
+        } else {
+            return [
+                { searchFor: new RegExp(`{${prefix || "bot"}-id}`, 'g'), replaceWith: bot.id },
+                { searchFor: new RegExp(`{${prefix || "bot"}-displayname}`, 'g'), replaceWith: bot.displayName },
+                { searchFor: new RegExp(`{${prefix || "bot"}-username}`, 'g'), replaceWith: bot.user.username },
+                { searchFor: new RegExp(`{${prefix || "bot"}-tag}`, 'g'), replaceWith: bot.user.tag },
+                { searchFor: new RegExp(`{${prefix || "bot"}-mention}`, 'g'), replaceWith: '<@' + bot.id + '>' },
+                { searchFor: new RegExp(`{${prefix || "bot"}-pfp}`, 'g'), replaceWith: bot.user.displayAvatarURL({ dynamic: true }) },
+            ]
+        }
     },
     /**
      * 
@@ -78,11 +88,15 @@ module.exports = {
      * @returns {Discord.Channel}
      */
     findChannel: (name, guild, type = 'GUILD_TEXT', notify = true) => {
+        if (!name) return module.exports.logError(`[Utils] [findChannel] Invalid input for channel ${chalk.bold(name)}.`);
+        if (!guild) return module.exports.logError(`[Utils] [findChannel] Invalid input for ${chalk.bold("guild")}.`);
         let channel = guild.channels.cache.find(c => (c.name.toLowerCase() == name.toLowerCase() || c.id == name) && c.type.toLowerCase() == type.toLowerCase());
         if (channel) {
             return channel;
         } else {
-            module.exports.logError(`[Utils] [findChannel] ${name} ${type} was not found in the ${guild.name} guild`)
+            if (notify) {
+                module.exports.logError(`[Utils] [findChannel] ${chalk.bold("name")} ${chalk.bold("type")} was not found in the ${chalk.bold("guild.name")} guild`)
+            }
             return false;
         }
     },
@@ -93,14 +107,16 @@ module.exports = {
      * @returns {Discord.Role}
      */
     findRole: (name, guild, notify = true) => {
+        if (!name) return module.exports.logError(`[Utils] [findRole] Invalid input for role name.`);
+        if (!guild) return module.exports.logError(`[Utils] [findRole] Invalid input for guild.`);
         let role = guild.roles.cache.find(r => r.name.toLowerCase() == name.toLowerCase() || r.id == name);
         if (role) {
             return role;
         } else {
             if (notify) {
-                module.exports.logError(`[Utils] [findRole] ${name} role was not found in the ${guild.name} guild`);
-                return false;
+                module.exports.logError(`[Utils] [findRole] ${chalk.bold(name)} role was not found in ${chalk.bold(guild.name)} guild`);
             }
+            return false;
         }
     },
     /**
@@ -111,6 +127,8 @@ module.exports = {
      * @returns {Boolean}
      */
     hasRole: (member, name, notify = true) => {
+        if (!member) return module.exports.logError(`[Utils] [hasRole] Invalid input for ${chalk.bold("member")}.`);
+        if (!name) return module.exports.logError(`[Utils] [hasRole] Invalid input for role ${chalk.bold("name")}.`);
         let permissions = []
         if (Array.isArray(name) && name[0]) {
             for (let index = 0; index < name.length; index++) {
@@ -154,6 +172,9 @@ module.exports = {
      * @returns {Discord.GuildMember}
      */
     parseUser: (argument, guild) => {
+        if (!argument) return module.exports.logError(`[Utils] [parseUser] Invalid input ${chalk.bold("argument")}.`);
+        if (!guild) return module.exports.logError(`[Utils] [parseUser] Invalid input for ${chalk.bold("guild")}.`);
+
         if (argument && guild) {
             const user = guild.members.cache.find(user => {
                 if (user.user.id.toLowerCase() == argument.toLowerCase()) {
@@ -180,6 +201,9 @@ module.exports = {
      * @returns {Discord.GuildMember}
      */
     parseUserFromMessage: (message, argument, messageMember = true) => {
+        if (!message) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("message")}.`);
+        if (!argument) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("argument")}.`);
+
         if (messageMember) {
             return message.mentions.members.first() || module.exports.parseUser(argument, message.guild) || message.member
         } else {
@@ -192,6 +216,7 @@ module.exports = {
      * @returns {Array}
      */
     getUserBadges: (member) => {
+        if (!member) return module.exports.logError(`[Utils] [getUserBadges] Invalid input ${chalk.bold("member")}.`);
         let badges = {
             BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
             BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
