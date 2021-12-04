@@ -1,6 +1,6 @@
 const sqlite = require('better-sqlite3'),
-    chalk = require('chalk')
-fs = require('fs'),
+    chalk = require('chalk'),
+    fs = require('fs'),
     { client, config, lang, commands } = require('../index.js');
 
 module.exports = {
@@ -12,6 +12,7 @@ module.exports = {
     getDatabase: async (fileName = config.Settings.Storage) => {
         return new Promise(async (resolve, reject) => {
             try {
+                if (!fs.existsSync("Database/")) await fs.mkdirSync("Database")
                 const db = new sqlite(`Database/${fileName}` || "database.db");
                 resolve(db)
             } catch (e) {
