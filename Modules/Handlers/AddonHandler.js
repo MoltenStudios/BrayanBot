@@ -6,7 +6,7 @@ const fs = require('fs'),
     { client, config, lang, commands } = require("../../index");
 
 module.exports = {
-        getYAMLConfig: (addonName, addonConfig) => {
+    getYAMLConfig: (addonName, addonConfig) => {
         if (fs.existsSync('./Addon_Configs') && fs.existsSync(`./Addon_Configs/${addonName}/${addonConfig}.yml`)) {
             return YAML.parse(fs.readFileSync(`./Addon_Configs/${addonName}/${addonConfig}.yml`, 'utf-8'));
         } else {
@@ -43,23 +43,27 @@ module.exports = {
                                         let customConfig = {}, addonName = addon._name ? addon._name : file.replace('.js', '')
                                         if (addon._customConfigs && typeof addon._customConfigs == "object") {
                                             let configs = Object.entries(addon._customConfigs),
-                                                generateConfig = (path, data, type) => {
+                                                generateConfig = async (path, data, type) => {
                                                     if (["yml", "yaml"].includes(type.toLowerCase())) {
-                                                        fs.writeFileSync(path, YAML.stringify(data, {
+                                                        await fs.writeFileSync(path, YAML.stringify(data, {
                                                             indent: 2,
                                                             prettyErrors: true
                                                         }))
                                                     } else if (["json"].includes(type.toLowerCase())) {
-                                                        fs.writeFileSync(path, JSON.stringify(data, null, 4))
+                                                        await fs.writeFileSync(path, JSON.stringify(data, null, 4))
                                                     } else {
-                                                        fs.writeFileSync(path, data)
+                                                        await fs.writeFileSync(path, data)
+                                                    }
+
+                                                    if (!fs.existsSync(path)) {
+                                                        await generateConfig(path, data, type)
                                                     }
                                                 }
                                             if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
                                             if (!fs.existsSync(`./Addon_Configs/${addonName}`)) await fs.mkdirSync(`./Addon_Configs/${addonName}`)
-                                            configs.forEach((addonConfig) => {
-                                                let [name, thing] = addonConfig,
-                                                    { type, path, data } = thing;
+                                            for (let index = 0; index < configs.length; index++) {
+                                                const addonConfig = configs[index];
+                                                let [name, thing] = addonConfig, { type, path, data } = thing;
                                                 path = path.replace(/{addon-name}/g, addonName).toString()
 
                                                 if (fs.existsSync(path)) {
@@ -72,9 +76,9 @@ module.exports = {
                                                     else
                                                         customConfig[name] = fs.readFileSync(path, 'utf-8')
                                                 } else {
-                                                    generateConfig(path, data, type)
+                                                    await generateConfig(path, data, type)
                                                 }
-                                            })
+                                            }
                                         }
 
                                         // Executing Addon
