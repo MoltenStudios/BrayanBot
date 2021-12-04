@@ -49,7 +49,7 @@ module.exports = async (bot, interaction) => {
                 }
             }
         } else {
-            let cmd = bot.guilds.cache.get(bot.config.GuildID).commands.cache.find(x => x.name.toLowerCase() == interaction.commandName.toLowerCase())
+            let cmd = interaction.guild.commands.cache.find(x => x.name.toLowerCase() == interaction.commandName.toLowerCase())
             if (cmd) cmd.delete()
             interaction.reply({ content: "This command no longer exists.", ephemeral: true })
         }
