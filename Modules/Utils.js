@@ -106,20 +106,45 @@ module.exports = {
     /**
      * 
      * @param {Discord.GuildMember} member 
-     * @param {String} name 
+     * @param {String | Array} name 
      * @param {Boolean} notify 
      * @returns {Boolean}
      */
     hasRole: (member, name, notify = true) => {
-        let role = module.exports.findRole(name, member.guild, notify)
-        if (role) {
-            if (member.roles.cache.has(role.id)) {
-                return true;
+        let permissions = []
+        if (Array.isArray(name) && name[0]) {
+            for (let index = 0; index < name.length; index++) {
+                const roleName = name[index];
+                let role = module.exports.findRole(roleName, member.guild, notify)
+                if (role) {
+                    if (member.roles.cache.has(role.id)) {
+                        permissions.push(true)
+                    } else {
+                        permissions.push(false)
+                    }
+                } else {
+                    permissions.push(false)
+                }
+            }
+        } else if (typeof name == "string") {
+            let role = module.exports.findRole(name, member.guild, notify)
+            if (role) {
+                if (member.roles.cache.has(role.id)) {
+                    permissions.push(true)
+                } else {
+                    permissions.push(false)
+                }
             } else {
-                return false;
+                permissions.push(false)
             }
         } else {
-            return false;
+            module.exports.logError(`[Utils] [hasRole] Invalid type of ${chalk.bold("name")} property.`)
+        }
+
+        if (permissions.includes(true)) {
+            return true
+        } else {
+            return false
         }
     },
     /**
