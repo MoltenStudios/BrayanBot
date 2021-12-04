@@ -91,27 +91,4 @@ module.exports = {
 											console.log(`${chalk.hex(addon._author.color || "##007bff").bold(`[${addon._author.name}]`)} ${chalk.bold(addon._name ? addon._name : file.replace('.js', ''))} addon loaded`)
 										}
 									} else {
-										Utils.logWarning(`Unable to execute ${addon._name ? addon._name : file.replace('.js', '')} addon ${addon._author ? `by ${addon._author}` : ''}`)
-									}
-								} catch (e) {
-									console.log(e)
-									Utils.logError(e)
-								}
-							}
-						}
-					}
-				}
-			})
-		} else {
-			fs.mkdirSync('./Addons')
-			await module.exports.init()
-		}
-	},
-	addonStructure: {
-		_name: String,
-		_log: String || Function,
-		_author: String || Object,
-		_customConfigData: Object,
-		run: Function
-	}
-}
+										Utils.logWarning(`Unable to execute ${addon.
