@@ -1,7 +1,8 @@
 const Discord = require('discord.js'),
     chalk = require('chalk'),
     moment = require('moment'),
-    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord;
+    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
+    hastebin = require("hastebin-gen");
 
 module.exports = {
     builder: require('@discordjs/builders'),
@@ -288,5 +289,17 @@ module.exports = {
             }
         })
         return args;
+    },
+    paste: (data, url = "https://paste.zorino.in", extension) => {
+        return new Promise(async (resolve, reject) => {
+            let data = {}
+            if (url) data.url = url;
+            if (extension) data.extension = extension
+            hastebin("code", data).then(haste => {
+                resolve(haste)
+            }).catch(error => {
+                reject(error);
+            });
+        })
     }
 }
