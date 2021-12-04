@@ -95,7 +95,7 @@ module.exports = {
             return channel;
         } else {
             if (notify) {
-                module.exports.logError(`[Utils] [findChannel] ${chalk.bold("name")} ${chalk.bold("type")} was not found in the ${chalk.bold("guild.name")} guild`)
+                module.exports.logError(`[Utils] [findChannel] ${chalk.bold("name")} was not found in the ${chalk.bold(guild.name)} guild`)
             }
             return false;
         }
