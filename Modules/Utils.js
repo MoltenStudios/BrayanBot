@@ -106,21 +106,37 @@ module.exports = {
     /**
      * 
      * @param {Discord.GuildMember} member 
-     * @param {String} name 
+     * @param {String | Array<String} name 
      * @param {Boolean} notify 
      * @returns {Boolean}
      */
     hasRole: (member, name, notify = true) => {
-        let role = module.exports.findRole(name, member.guild, notify)
-        if (role) {
-            if (member.roles.cache.has(role.id)) {
-                return true;
+        console.log(typeof name)
+        if (Array.isArray(name)) name.forEach(id => {
+            let role = module.exports.findRole(id, member.guild, notify)
+            if (role) {
+                if (member.roles.cache.has(role.id)) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
-        } else {
-            return false;
+        })
+        else {
+            let role = module.exports.findRole(name, member.guild, notify)
+            if (role) {
+                if (member.roles.cache.has(role.id)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
+        
     },
     /**
      * 
