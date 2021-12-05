@@ -2,7 +2,8 @@ const Discord = require('discord.js'),
     chalk = require('chalk'),
     moment = require('moment'),
     { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
-    hastebin = require("hastebin-gen");
+    hastebin = require("hastebin-gen"),
+    { client } = require('../index');
 
 module.exports = {
     builder: require('@discordjs/builders'),
@@ -300,6 +301,23 @@ module.exports = {
             }).catch(error => {
                 reject(error);
             });
+        })
+    },
+    /**
+     * 
+     * @param {Discord.Interaction} interaction 
+     * @returns 
+     */
+    sendPing: async (interaction) => {
+        return new Promise(async (resolve, reject) => {
+            await client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 6,
+                },
+            }).then((res) => resolve(res)).catch(err => {
+                if (err.message === "Unknown interaction") resolve(undefined)
+                else reject(err)
+            })
         })
     }
 }
