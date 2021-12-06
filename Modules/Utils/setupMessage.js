@@ -77,15 +77,15 @@ module.exports = (settings, ephemeral = false, components = null) => {
         embeds: settings.configPath.Embeds && Array.isArray(settings.configPath.Embeds) ? [] : null,
         ephemeral: ephemeral ? ephemeral : false,
         components: components ? components : null
-    },
-        Variables = settings.variables
+    }, Variables = settings.variables,
+        Embeds = settings.configPath.Embeds || settings.configPath.Embed
 
     if (Array.isArray(Variables)) {
         Variables.push({ searchFor: /{branding}/g, replaceWith: config.Embeds.Branding })
     }
-    if (settings.configPath.Embeds && Array.isArray(settings.configPath.Embeds)) {
-        for (let index = 0; index < settings.configPath.Embeds.length; index++) {
-            const embedSettings = settings.configPath.Embeds[index];
+    if (Embeds && Array.isArray(Embeds)) {
+        for (let index = 0; index < Embeds.length; index++) {
+            const embedSettings = Embeds[index];
             let Content = settings.content || embedSettings.content || embedSettings.Content,
                 Title = settings.title || embedSettings.title || embedSettings.Title,
                 Description = settings.description || embedSettings.description || embedSettings.Description,
