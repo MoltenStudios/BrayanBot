@@ -205,7 +205,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
         }
     }
 
-    if (settings.configPath.Components && typeof settings.configPath.Components == "object") {
+    if (messageData.components !== null && settings.configPath.Components && typeof settings.configPath.Components == "object") {
         messageData.components = parseComponents(settings.configPath.Components, Variables, false)
     }
     if (Variables && typeof Variables === 'object') {
