@@ -128,21 +128,29 @@ module.exports = (settings, ephemeral = false, components = null) => {
             }
 
             if (Fields) {
-                Fields.forEach(async (field, i) => {
-                    let data = {
-                        name: field.Name,
-                        value: field.Value,
-                        inline: field.Inline
-                    };
+                if (Array.isArray(Fields)) {
+                    Fields.forEach(async (field, i) => {
+                        let data = {
+                            name: field.Name,
+                            value: field.Value,
+                            inline: field.Inline
+                        };
 
+                        if (Variables && typeof Variables === 'object') {
+                            Variables.forEach((v) => {
+                                data.name = data.name.replace(v.searchFor, v.replaceWith);
+                                data.value = data.value.replace(v.searchFor, v.replaceWith);
+                            });
+                        }
+                        fields.push(data);
+                    });
+                } else if (typeof Fields == "string") {
                     if (Variables && typeof Variables === 'object') {
                         Variables.forEach((v) => {
-                            data.name = data.name.replace(v.searchFor, v.replaceWith);
-                            data.value = data.value.replace(v.searchFor, v.replaceWith);
+                            fields = fields.replace(v.searchFor, v.replaceWith);
                         });
                     }
-                    fields.push(data);
-                });
+                }
             }
 
             // Randomised General
