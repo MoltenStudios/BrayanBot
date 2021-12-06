@@ -86,19 +86,19 @@ module.exports = (settings, ephemeral = false, components = null) => {
     if (settings.configPath.Embeds && Array.isArray(settings.configPath.Embeds)) {
         for (let index = 0; index < settings.configPath.Embeds.length; index++) {
             const embedSettings = settings.configPath.Embeds[index];
-            let Content = embedSettings.content || embedSettings.Content,
-                Title = embedSettings.title || embedSettings.Title,
-                Description = embedSettings.description || embedSettings.Description,
-                Footer = embedSettings.footer || embedSettings.Footer,
-                FooterAvatarImage = embedSettings.footericon || embedSettings.FooterIcon,
-                Timestamp = embedSettings.timestamp || embedSettings.Timestamp,
-                Thumbnail = embedSettings.thumbnail || embedSettings.Thumbnail,
-                Author = embedSettings.author || embedSettings.Author,
-                AuthorAvatarImage = embedSettings.authoricon || embedSettings.AuthorIcon,
-                Color = embedSettings.color || embedSettings.Color || config.Embeds.Color || '2f3136',
-                Fields = embedSettings.fields || embedSettings.Fields,
-                Image = embedSettings.image || embedSettings.Image,
-                URL = embedSettings.url || embedSettings.URL,
+            let Content = settings.content || embedSettings.content || embedSettings.Content,
+                Title = settings.title || embedSettings.title || embedSettings.Title,
+                Description = settings.description || embedSettings.description || embedSettings.Description,
+                Footer = settings.footer || embedSettings.footer || embedSettings.Footer,
+                FooterAvatarImage = settings.footericon || embedSettings.footericon || embedSettings.FooterIcon,
+                Timestamp = settings.timestamp || embedSettings.timestamp || embedSettings.Timestamp,
+                Thumbnail = settings.thumbnail || embedSettings.thumbnail || embedSettings.Thumbnail,
+                Author = settings.author || embedSettings.author || embedSettings.Author,
+                AuthorAvatarImage = settings.authoricon || embedSettings.authoricon || embedSettings.AuthorIcon,
+                Color = settings.icon || embedSettings.color || embedSettings.Color || config.Embeds.Color || '2f3136',
+                Fields = settings.fields || embedSettings.fields || embedSettings.Fields,
+                Image = settings.image || embedSettings.image || embedSettings.Image,
+                URL = settings.url || embedSettings.url || embedSettings.URL,
                 fields = [],
                 embed = new Discord.MessageEmbed();
 
