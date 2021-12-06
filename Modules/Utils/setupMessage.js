@@ -1,7 +1,8 @@
 const Discord = require('discord.js'),
     { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
     Utils = require('../Utils'),
-    parseComponents = require('./parseComponents');
+    parseComponents = require('./parseComponents'),
+    { config, lang, commands, client } = require('../../index')
 
 const rowStructure = [
     {
@@ -78,6 +79,10 @@ module.exports = (settings, ephemeral = false, components = null) => {
         components: components ? components : null
     },
         Variables = settings.variables
+
+    if (Array.isArray(Variables)) {
+        Variables.push({ searchFor: /{branding}/g, replaceWith: config.Embeds.Branding })
+    }
     if (settings.configPath.Embeds && Array.isArray(settings.configPath.Embeds)) {
         for (let index = 0; index < settings.configPath.Embeds.length; index++) {
             const embedSettings = settings.configPath.Embeds[index];
@@ -90,7 +95,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
                 Thumbnail = embedSettings.thumbnail || embedSettings.Thumbnail,
                 Author = embedSettings.author || embedSettings.Author,
                 AuthorAvatarImage = embedSettings.authoricon || embedSettings.AuthorIcon,
-                Color = embedSettings.color || embedSettings.Color || '2f3136',
+                Color = embedSettings.color || embedSettings.Color || config.Embeds.Color || '2f3136',
                 Fields = embedSettings.fields || embedSettings.Fields,
                 Image = embedSettings.image || embedSettings.Image,
                 URL = embedSettings.url || embedSettings.URL,
