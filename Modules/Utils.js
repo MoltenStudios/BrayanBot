@@ -178,6 +178,7 @@ module.exports = {
         if (!guild) return module.exports.logError(`[Utils] [parseUser] Invalid input for ${chalk.bold("guild")}.`);
 
         if (argument && guild) {
+            argument = argument.replace(/([<@!]|[>])/g, '')
             const user = guild.members.cache.find(user => {
                 if (user.user.id.toLowerCase() == argument.toLowerCase()) {
                     return true;
