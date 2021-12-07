@@ -16,6 +16,7 @@
 		"erela.js": "^2.3.3",
 		"hastebin-gen": "^2.0.5",
 		"jimp": "^0.16.1",
+		"lavasfy": "^2.3.0",
 		"moment": "^2.29.1",
 		"mongoose": "^6.0.12",
 		"ms": "^2.1.3",
@@ -35,7 +36,13 @@
 		"type": "git",
 		"url": "git+https://github.com/DakshNamdev/BrayanBot.git"
 	},
-	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
+	"keywords": [
+		"discord",
+		"discord.js",
+		"node.js",
+		"discordbot",
+		"discord-bot"
+	],
 	"bugs": {
 		"url": "https://github.com/DakshNamdev/BrayanBot/issues"
 	},
