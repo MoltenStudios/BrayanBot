@@ -73,10 +73,10 @@ const rowStructure = [
  */
 module.exports = (settings, ephemeral = false, components = null) => {
     let Variables = [
-        ...settings.variable,
         { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding }
     ], Embeds, Content, Components, Ephemeral = false;
 
+    if (settings.variables) Variables = [...settings.variables, { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding }]
     if (settings.configPath.Private || settings.configPath.private || settings.configPath.Ephemeral || settings.configPath.ephemeral) Ephemeral = true
     if (settings.configPath.Content || settings.configPath.content) Content = settings.configPath.Content || settings.configPath.content
     if (settings.configPath.Embeds || settings.configPath.embeds) Embeds = settings.configPath.Embeds || settings.configPath.embeds
