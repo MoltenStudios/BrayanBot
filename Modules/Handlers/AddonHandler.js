@@ -96,11 +96,11 @@ module.exports = {
 
                                         // Addon Logging
                                         if (typeof addon._log == 'string' && !addon._author) {
-                                            console.log(chalk.hex("##007bff").bold("[INFO] ") + addon._log)
+                                            console.log(chalk.hex("#007bff").bold("[INFO] ") + addon._log)
                                         } else if (addon._log && typeof addon._author == 'string') {
-                                            console.log(`${chalk.hex(addon._author.color || "##007bff").bold(`[${addon._author ? addon._author : '[INFO]'}]`)} ${chalk.bold(addon._name ? addon._name : file.replace('.js', ''))} addon loaded`)
+                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author ? addon._author : '[INFO]'}]`)} ${chalk.bold(addon._name ? addon._name : file.replace('.js', ''))} addon loaded`)
                                         } else if (addon._log && typeof addon._author == 'object') {
-                                            console.log(`${chalk.hex(addon._author.color || "##007bff").bold(`[${addon._author.name}]`)} ${chalk.bold(addon._name ? addon._name : file.replace('.js', ''))} addon loaded`)
+                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author.name}]`)} ${chalk.bold(addon._name ? addon._name : file.replace('.js', ''))} addon loaded`)
                                         }
                                     } else {
                                         Utils.logWarning(`Unable to execute ${addon._name ? addon._name : file.replace('.js', '')} addon ${addon._author ? `by ${addon._author}` : ''}`)
