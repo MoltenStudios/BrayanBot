@@ -88,7 +88,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
         content: Content ? Content : null,
         embeds: Embeds && Array.isArray(Embeds) ? [] : null,
         ephemeral: ephemeral ? ephemeral : Ephemeral,
-        components: Components ? Utils.parseComponents(Components, Variables) : null
+        components: Components ? parseComponents(Components, Variables) : null
     }
 
     if (Embeds && Array.isArray(Embeds) && Embeds[0]) {
