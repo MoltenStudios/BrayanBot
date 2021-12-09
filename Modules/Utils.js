@@ -320,5 +320,21 @@ module.exports = {
                 else reject(err)
             })
         })
+    },
+    createMultipleConfigs: function (configs) {
+        if (typeof configs !== "object" && Object.entries(configs).length <= 0) {
+            return module.exports.logError("[Utils] [createMultipleConfigs] Invalid Configs were provided.");
+        }
+
+        let addon_configs = {}
+
+        configs = Object.entries(configs)
+
+        for (let index = 0; index < configs.length; index++) {
+            const addonConfig = configs[index]
+            let [name, thing] = addonConfig
+            addon_configs[name] = new module.exports.createCustomConfig(name, thing)
+        }
+        return addon_configs
     }
 }
