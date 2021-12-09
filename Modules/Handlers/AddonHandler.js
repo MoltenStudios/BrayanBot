@@ -50,46 +50,10 @@ module.exports = {
                                         // Custom Config
                                         let customConfig = {}, addonName = addon._name ? addon._name : file.replace('.js', '')
                                         if (addon._customConfigs && typeof addon._customConfigs == "object") {
-                                            let configs = Object.entries(addon._customConfigs)
-                                            const generateConfig = async (path, data, type, name) => {
-                                                if (["yml", "yaml"].includes(type.toLowerCase())) {
-                                                    await fs.writeFileSync(path, YAML.stringify(data, { indent: 2, prettyErrors: true }))
-                                                    customConfig[name] = data
-                                                } else if (["json"].includes(type.toLowerCase())) {
-                                                    await fs.writeFileSync(path, JSON.stringify(data, null, 4))
-                                                    customConfig[name] = data
-                                                } else {
-                                                    await fs.writeFileSync(path, data)
-                                                    customConfig[name] = data
-                                                }
-
-                                                if (!fs.existsSync(path)) {
-                                                    await generateConfig(path, data, type, name)
-                                                }
-                                            }
-
-
                                             if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
                                             if (!fs.existsSync(`./Addon_Configs/${addonName}`)) await fs.mkdirSync(`./Addon_Configs/${addonName}`)
-                                            for (let index = 0; index < configs.length; index++) {
-                                                const addonConfig = configs[index];
-                                                let [name, thing] = addonConfig, { type, path, data } = thing;
-                                                path = path.replace(/{addon-name}/g, addonName).toString()
-
-                                                if (fs.existsSync(path)) {
-                                                    if (config.Settings.DevMode) {
-                                                        await generateConfig(path, data, type, name)
-                                                    }
-                                                    if (["yml"].includes(type.toLowerCase()))
-                                                        customConfig[name] = YAML.parse(fs.readFileSync(path, 'utf-8'), { prettyErrors: true })
-                                                    else if (["json"].includes(type.toLowerCase()))
-                                                        customConfig[name] = JSON.parse(fs.readFileSync(path, 'utf-8'))
-                                                    else
-                                                        customConfig[name] = fs.readFileSync(path, 'utf-8')
-                                                } else {
-                                                    await generateConfig(path, data, type, name)
-                                                }
-                                            }
+                                            
+                                            customConfig = Utils.createMultipleConfigs(addon._customConfigs)
                                         }
                                         // Executing Addon
                                         await addon.run(client, customConfig)
