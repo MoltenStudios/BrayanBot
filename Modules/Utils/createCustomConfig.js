@@ -2,13 +2,6 @@ const fs = require("fs"),
     YAML = require("yaml"),
     { client, config, lang, commands } = require("../../index");
 
-/**
- * 
- * @param {componentsStructure} components 
- * @param {variablesStructure} variables 
- * @param {Boolean} isDisabled 
- * @returns 
- */
 module.exports = function (name, configData) {
     let addon_config = null
     const generateConfig = function (path, data, type, name) {

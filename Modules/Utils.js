@@ -326,14 +326,14 @@ module.exports = {
             return module.exports.logError("[Utils] [createMultipleConfigs] Invalid Configs were provided.");
         }
 
-        let addon_configs = {}
-
+        let addon_configs = {},
+            createCustomConfigs = require('./Utils/createCustomConfig')
         configs = Object.entries(configs)
 
         for (let index = 0; index < configs.length; index++) {
             const addonConfig = configs[index]
-            let [name, thing] = addonConfig
-            addon_configs[name] = new module.exports.createCustomConfig(name, thing)
+            let [name, configData] = addonConfig
+            addon_configs[name] = createCustomConfigs(name, configData)
         }
         return addon_configs
     }
