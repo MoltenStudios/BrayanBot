@@ -3,7 +3,7 @@ const Discord = require('discord.js'),
     Utils = require('../Utils'),
     parseComponents = require('./parseComponents'),
     { config, lang, commands, client } = require('../../index')
-
+    
 const rowStructure = [
     {
         Type: "Button" | "SelectMenu",
@@ -53,6 +53,9 @@ const rowStructure = [
                 FooterIcon: String,
                 Thumbnail: String,
                 Image: String,
+                Image: {
+                    url: String,
+                },
                 Color: String,
                 Timestamp: Boolean
             }
@@ -75,7 +78,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
     let Variables = [
         { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding }
     ], Embeds, Content, Components, Ephemeral = false;
-
     if (settings.variables) Variables = [...settings.variables, { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding }]
     if (settings.configPath.Private || settings.configPath.private || settings.configPath.Ephemeral || settings.configPath.ephemeral) Ephemeral = true
     if (settings.configPath.Content || settings.configPath.content) Content = settings.configPath.Content || settings.configPath.content
@@ -83,6 +85,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
     else if (settings.configPath.Embed || settings.configPath.embed) Embeds = settings.configPath.Embed || settings.configPath.embed
     if (components || settings.components || settings.configPath.Components || settings.configPath.components)
         Components = components || settings.components || settings.configPath.Components || settings.configPath.components
+    
 
     let messageData = {
         content: Content ? Content : null,
@@ -90,6 +93,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
         ephemeral: ephemeral ? ephemeral : Ephemeral,
         components: Components ? parseComponents(Components, Variables) : null
     }
+
 
     if (Embeds && Array.isArray(Embeds) && Embeds[0]) {
         for (let index = 0; index < Embeds.length; index++) {
@@ -115,14 +119,21 @@ module.exports = (settings, ephemeral = false, components = null) => {
                     if (Content) Content = Content.replace(variable.searchFor, variable.replaceWith)
                     if (Title) Title = Title.replace(variable.searchFor, variable.replaceWith);
                     if (Description) Description = Description.replace(variable.searchFor, variable.replaceWith);
+                    if (Image && !(typeof Image === 'object')) Image = Image.replace(variable.searchFor, variable.replaceWith);
                     if (Footer) Footer = Footer.replace(variable.searchFor, variable.replaceWith);
                     if (FooterAvatarImage) FooterAvatarImage = FooterAvatarImage.replace(variable.searchFor, variable.replaceWith);
                     if (Thumbnail) Thumbnail = Thumbnail.replace(variable.searchFor, variable.replaceWith);
                     if (Author) Author = Author.replace(variable.searchFor, variable.replaceWith);
                     if (AuthorAvatarImage) AuthorAvatarImage = AuthorAvatarImage.replace(variable.searchFor, variable.replaceWith);
-                    if (Image) Image = Image.replace(variable.searchFor, variable.replaceWith);
                     if (URL) URL = URL.replace(variable.searchFor, variable.replaceWith);
                 })
+            }
+            if (Image && typeof Image === 'object') {
+                    let data = {
+                        url: URL || url,
+                        image: Image || image
+                    }
+                    messageData.embeds.push(data);
             }
 
             if (Fields && Array.isArray(Fields)) {
@@ -165,9 +176,9 @@ module.exports = (settings, ephemeral = false, components = null) => {
             if (Array.isArray(Thumbnail)) Thumbnail = Thumbnail[Math.floor(Math.random() * Thumbnail.length)]
 
             if (!Title && !Author && !Description && !Fields) {
-                embed.setTitle('Error')
-                    .setDescription('Atleast 1 value is requried to build a embed')
-                messageData.embeds.push(embed)
+                // embed.setTitle('Error')
+                //     .setDescription('Atleast 1 value is requried to build a embed')
+                // messageData.embeds.push(embed)
             } else {
                 // General
                 if (Title) embed.setTitle(Title)
@@ -204,5 +215,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
             if (messageData.content) messageData.content = messageData.content.replace(variable.searchFor, variable.replaceWith)
         })
     }
-    return messageData;
+
+     return messageData
 }
