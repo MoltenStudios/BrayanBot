@@ -2,7 +2,7 @@ const fs = require("fs"),
     YAML = require("yaml"),
     { client, config, lang, commands } = require("../../index");
 
-module.exports = function (name, configData) {
+module.exports = function (name, configData, addonName) {
     let addon_config = null
     const generateConfig = function (path, data, type, name) {
         if (["yml", "yaml"].includes(type.toLowerCase())) {
@@ -35,7 +35,7 @@ module.exports = function (name, configData) {
         }
     }
     let { type, path, data } = configData;
-
+    path = path.replace(/{addon-name}/g, addonName)
     checkPath(path)
     if (fs.existsSync(path)) {
         if (config.Settings.DevMode) {

@@ -52,8 +52,8 @@ module.exports = {
                                         if (addon._customConfigs && typeof addon._customConfigs == "object") {
                                             if (!fs.existsSync('./Addon_Configs')) await fs.mkdirSync('./Addon_Configs')
                                             if (!fs.existsSync(`./Addon_Configs/${addonName}`)) await fs.mkdirSync(`./Addon_Configs/${addonName}`)
-                                            
-                                            customConfig = Utils.createMultipleConfigs(addon._customConfigs)
+
+                                            customConfig = Utils.createMultipleConfigs(addon._customConfigs, addonName)
                                         }
                                         // Executing Addon
                                         await addon.run(client, customConfig)
