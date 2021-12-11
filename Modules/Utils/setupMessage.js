@@ -84,13 +84,18 @@ module.exports = (settings, ephemeral = false, components = null) => {
     if (components || settings.components || settings.configPath.Components || settings.configPath.components)
         Components = components || settings.components || settings.configPath.Components || settings.configPath.components
 
+    if (Array.isArray(Content)) Content = Content[Math.floor(Math.random() * Content.length)]
+    if (Variables && typeof Variables === 'object') {
+        Variables.forEach(variable => {
+            if (Content) Content = Content.replace(variable.searchFor, variable.replaceWith)
+        })
+    }
     let messageData = {
         content: Content ? Content : null,
         embeds: Embeds && Array.isArray(Embeds) ? [] : null,
         ephemeral: ephemeral ? ephemeral : Ephemeral,
         components: Components ? parseComponents(Components, Variables) : null
     }
-
     if (Embeds && Array.isArray(Embeds) && Embeds[0]) {
         for (let index = 0; index < Embeds.length; index++) {
             const embedSettings = Embeds[index];
@@ -150,7 +155,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
             }
 
             // Randomised General
-            if (Array.isArray(Content)) Content = Content[Math.floor(Math.random() * Content.length)]
             if (Array.isArray(Title)) Title = Title[Math.floor(Math.random() * Title.length)]
             if (Array.isArray(Description)) Description = Description[Math.floor(Math.random() * Description.length)]
             // Randomised Authors
@@ -198,11 +202,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
 
     if (Components && typeof Components == "object") {
         messageData.components = parseComponents(Components, Variables, false)
-    }
-    if (Variables && typeof Variables === 'object') {
-        Variables.forEach(variable => {
-            if (messageData.content) messageData.content = messageData.content.replace(variable.searchFor, variable.replaceWith)
-        })
     }
     return messageData;
 }
