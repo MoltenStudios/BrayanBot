@@ -32,7 +32,9 @@ module.exports = async (bot, interaction) => {
                     : {}
 
                 if (permissions.includes(true) || permissions.length == 0) {
-                    command.runSlash(bot, interaction, options)
+                    let commandUsed = interaction.commandName,
+                        commandData = command
+                    command.runSlash(bot, interaction, options, { commandUsed, commandData })
                 } else {
                     interaction.reply(Utils.setupMessage({
                         configPath: lang.Presets.NoPermission,
