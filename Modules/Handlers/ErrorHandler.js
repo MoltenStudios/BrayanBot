@@ -1,10 +1,10 @@
 const { client, config, lang, commands } = require("../../index"),
-    Utils = require("../Utils"),
-    fs = require('fs')
+  Utils = require("../Utils"),
+  fs = require("fs");
 
 module.exports = {
-    init: () => {
-        /*
+  init: () => {
+    /*
         process.on('uncaughtException', async (error) => {
         }).on('unhandledRejection', async (reason, promise) => {
             if(reason.toString() == "Error [TOKEN_INVALID]: An invalid token was provided.") {
@@ -24,5 +24,5 @@ module.exports = {
             })
         })
         */
-    }
-}
+  },
+};

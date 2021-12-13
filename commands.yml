@@ -8,7 +8,7 @@ General:
       - "@everyone"
     SlashCommand:
       Enabled: true
-      Data: 
+      Data:
         Name: help
         Description: "Displays all Bot Commands"
         Options:
@@ -23,19 +23,19 @@ General:
       - "@everyone"
     SlashCommand:
       Enabled: true
-      Data: 
+      Data:
         Name: ping
         Description: "Displays Bot Pings"
   ServerInfo:
     Description: "View Server's Information"
     Usage: "serverinfo"
-    Aliases: 
+    Aliases:
       - "guildinfo"
     Permission:
       - "@everyone"
     SlashCommand:
       Enabled: true
-      Data: 
+      Data:
         Name: serverinfo
         Description: "View Server's Information"
   Avatar:
@@ -47,7 +47,7 @@ General:
       - "@everyone"
     SlashCommand:
       Enabled: true
-      Data: 
+      Data:
         Name: avatar
         Description: "Displays user's avatar"
         Options:

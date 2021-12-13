@@ -5,25 +5,25 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '36 20 * * 6'
-    
+    - cron: "36 20 * * 6"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Install Node v16
         uses: actions/setup-node@v2
         with:
           node-version: 16
           cache: npm
-          
+
       - name: Install dependencies
         run: npm ci
   analyze:
@@ -36,15 +36,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript' ]
+        language: ["javascript"]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: ${{ matrix.language }}
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1

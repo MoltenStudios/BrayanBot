@@ -1,7 +1,7 @@
 General:
   Help:
-    Embeds: 
-      - Title: 'Command Info - {command-name}'
+    Embeds:
+      - Title: "Command Info - {command-name}"
         Description: |-
           {command-description}
 
@@ -10,18 +10,18 @@ General:
           **Aliases**
           > {command-aliases}
           **Slash Command**: \{command-isSlashEnabled}
-        Footer: '{user-tag}'
-        FooterTag: '{user-tag}'
+        Footer: "{user-tag}"
+        FooterTag: "{user-tag}"
         Timestamp: true
   Ping:
     Embeds:
-      - Author: '{bot-tag}''s Ping'
-        AuthorIcon: '{bot-pfp}'
+      - Author: "{bot-tag}'s Ping"
+        AuthorIcon: "{bot-pfp}"
         Description: |-
           **Bot latency**: {bot-latency}
           **API latency**: {api-latency}
-        Footer: '{user-tag}'
-        FooterIcon: '{user-pfp}'
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
         Timestamp: true
   ServerInfo:
     Embeds:
@@ -36,11 +36,11 @@ General:
               • **Account**: {guild-owner-mention} | {guild-owner-tag}
               • **ID**: {guild-owner-id}
               • **Created At**: {guild-owner-createdat}
-          - Name: ⬆️ Server Boost status 
+          - Name: ⬆️ Server Boost status
             Value: |-
               • **Boosts**: {guild-boosts} Boosts
               • **Guild-Level**: Level {guild-level}
-        Thumbnail: '{guild-icon}'
+        Thumbnail: "{guild-icon}"
         Timestamp: true
         Footer: "{user-tag}"
         FooterIcon: "{user-pfp}"
@@ -67,13 +67,13 @@ General:
         FooterIcon: "{user-pfp}"
   Avatar:
     Embeds:
-      - AuthorIcon: '{avatar}'
-        Author: '{req-user-tag}'
-        Image: '{avatar}'
-        Footer: '{user-tag}'
-        FooterIcon: '{user-pfp}'
+      - AuthorIcon: "{avatar}"
+        Author: "{req-user-tag}"
+        Image: "{avatar}"
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
     Components:
-      "1": 
+      "1":
         - Type: "Button"
           Style: "Link"
           Label: "Avatar"
@@ -87,15 +87,15 @@ Presets:
 
           **Permissions**
           > {roles}
-        Footer: '{user-tag}'
-        FooterIcon: '{user-pfp}'
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
         Timestamp: true
         Color: "#edd100"
   Error:
     Embeds:
       - Title: Unable to perform action
-        Description: '> {error}'
-        Footer: '{user-tag}'
-        FooterIcon: '{user-pfp}'
+        Description: "> {error}"
+        Footer: "{user-tag}"
+        FooterIcon: "{user-pfp}"
         Timestamp: true
         Color: "#ff0800"
