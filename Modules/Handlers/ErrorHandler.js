@@ -1,6 +1,6 @@
 const { client, config, lang, commands } = require("../../index"),
     Utils = require("../Utils"),
-    fs = require('fs')
+    fs = require("fs");
 
 module.exports = {
     init: () => {
@@ -24,5 +24,5 @@ module.exports = {
             })
         })
         */
-    }
-}
+    },
+};
