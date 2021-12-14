@@ -5,28 +5,28 @@ const Discord = require("discord.js"),
     { config, lang, commands, client } = require("../../index");
 
 const rowStructure = [
-        {
-            Type: "Button" | "SelectMenu",
-            Style: "Link" | "Random" | "Primary" | "Secondary" | "Danger",
-            Link: String,
-            Label: String,
-            Emoji: String,
-            CustomID: String,
-            Placeholder: String,
-            Description: String,
-            MaxSelect: String,
-            MinSelect: String,
-            Options: [
-                {
-                    Default: Boolean,
-                    Label: String,
-                    Description: String,
-                    Value: String,
-                    Emoji: String,
-                },
-            ],
-        },
-    ],
+    {
+        Type: "Button" | "SelectMenu",
+        Style: "Link" | "Random" | "Primary" | "Secondary" | "Danger",
+        Link: String,
+        Label: String,
+        Emoji: String,
+        CustomID: String,
+        Placeholder: String,
+        Description: String,
+        MaxSelect: String,
+        MinSelect: String,
+        Options: [
+            {
+                Default: Boolean,
+                Label: String,
+                Description: String,
+                Value: String,
+                Emoji: String,
+            },
+        ],
+    },
+],
     componentsStructure = {
         1: rowStructure,
         2: rowStructure,
@@ -73,8 +73,8 @@ const rowStructure = [
  */
 module.exports = (settings, ephemeral = false, components = null) => {
     let Variables = [
-            { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding },
-        ],
+        { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding },
+    ],
         Embeds,
         Content,
         Components,
@@ -131,9 +131,9 @@ module.exports = (settings, ephemeral = false, components = null) => {
         for (let index = 0; index < Embeds.length; index++) {
             const embedSettings = Embeds[index];
             let Content =
-                    settings.content ||
-                    embedSettings.content ||
-                    embedSettings.Content,
+                settings.content ||
+                embedSettings.content ||
+                embedSettings.Content,
                 Title =
                     settings.title ||
                     embedSettings.title ||
@@ -280,17 +280,13 @@ module.exports = (settings, ephemeral = false, components = null) => {
                 Author = Author[Math.floor(Math.random() * Author.length)];
             if (Array.isArray(AuthorAvatarImage))
                 AuthorAvatarImage =
-                    AuthorAvatarImage[
-                        Math.floor(Math.random() * AuthorAvatarImage.length)
-                    ];
+                    AuthorAvatarImage[Math.floor(Math.random() * AuthorAvatarImage.length)];
             // Randomised Footers
             if (Array.isArray(Footer))
                 Footer = Footer[Math.floor(Math.random() * Footer.length)];
             if (Array.isArray(FooterAvatarImage))
                 FooterAvatarImage =
-                    FooterAvatarImage[
-                        Math.floor(Math.random() * FooterAvatarImage.length)
-                    ];
+                    FooterAvatarImage[Math.floor(Math.random() * FooterAvatarImage.length)];
             // Random Others
             if (Array.isArray(Color))
                 Color = Color[Math.floor(Math.random() * Color.length)];
