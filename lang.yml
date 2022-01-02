@@ -25,7 +25,7 @@ General:
               Timestamp: true
     ServerInfo:
         Embeds:
-            - Title: "💭 Server info - {guild-name} [1/2]"
+            - Title: "💭 Server Info - {guild-name} [1/2]"
               Description: |-
                   • **Name**: {guild-name}
                   • **Guild ID**: {guild-id}

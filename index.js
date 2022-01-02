@@ -8,7 +8,7 @@ const installModules = async () => {
             install = (name) => {
                 console.log(
                     `\x1b[34m[Module Installer]`,
-                    `\x1b[37mInstalling ${`\x1b[1m${nodeModulesArray.length}\x1b[0m`}\x1b[37m modules, Please wait while we install modules. This may take few minutes.`
+                    `\x1b[37mInstalling ${`\x1b[1m${nodeModulesArray.length}\x1b[0m`}\x1b[37m modules, Please wait while we install modules. This may take a few minutes.`
                 );
                 return new Promise(async (resolve, reject) => {
                     childProcess.exec(
@@ -56,7 +56,7 @@ installModules().then(() => {
         if (require("fs").existsSync("node_modules")) {
             console.log(
                 `\x1b[34m[Module Installer]`,
-                `\x1b[37mModules installed, please restart bot.`
+                `\x1b[37mModules installed, please restart the bot.`
             );
             process.exit(0);
         } else {

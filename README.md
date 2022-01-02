@@ -28,16 +28,7 @@ Current Addon Developers:
 
 -   [Node.js 16.6+](https://nodejs.org/en/download/)
 -   [Discord.js](https://www.npmjs.com/package/discord.js/v/13.3.1)
--   [Discord Bot Hosting](https://revivenode.com/discord.html) / [Linux Machine]() / [Windows Server]()
-
-## 🖥️ Installation
-
-1. Clone this repo by `git clone https://github.com/DakshNamdev/BrayanBot.git`
-2. Move into the bot's directory with `cd BrayanBot`
-3. Run `npm install` or `yarn install` to install the necessary packages required to run the bot
-4. Rename `example.config.yml` to `config.yml`
-5. Configure `config.yml`
-6. Run `npm run start` or `yarn start` to start the bot
+-   [Discord Bot Hosting](https://revivenode.com/discord.html) / [Linux Machine](https://github.com/DakshNamdev/BrayanBot/wiki/Hosting) / [Windows Server](https://github.com/DakshNamdev/BrayanBot/wiki/Hosting)
 
 ## 👋 Join the community!
 

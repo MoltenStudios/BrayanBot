@@ -1,11 +1,11 @@
 # BrayanBot Dockerfile v0.1.0
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
-# Node 17 image
+# Node 16 image
 
 FROM node:16
 
-# Set working directory
+# Set working directory and copy files into that directory
 WORKDIR ./
 COPY . .
 
