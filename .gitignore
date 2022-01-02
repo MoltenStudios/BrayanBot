@@ -9,7 +9,6 @@ npm-debug.log*
 
 # NPM & Yarn
 node_modules/
-package-lock.json 
 yarn.lock
 
 # Optional npm cache directory
