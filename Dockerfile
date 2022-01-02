@@ -3,16 +3,16 @@
 #  - NotAShelf <me@notashelf.dev> 
 # Node 17 image
 
-FROM node:17.3.0
+FROM node:16
 
 # Set working directory
 WORKDIR ./
+COPY . .
 
 # Update npm to at least npm 8,
 # then install dependencies
-RUN npm i -g npm@8 typescript && \
-    npm i --save-dev && \
-    npm run build
+RUN npm install -g npm@8 && npm install
 
 # Start BrayanBot
-CMD npm run start
+CMD [ "npm", "start" ]
+
