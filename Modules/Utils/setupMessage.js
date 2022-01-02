@@ -309,12 +309,22 @@ module.exports = (settings, ephemeral = false, components = null) => {
                 if (Description) embed.setDescription(Description);
                 // Author
                 if (Author && AuthorAvatarImage)
-                    embed.setAuthor(Author, AuthorAvatarImage);
-                else if (Author) embed.setAuthor(Author);
+                    embed.setAuthor({
+                        name: Author,
+                        iconURL: AuthorAvatarImage
+                    });
+                else if (Author) embed.setAuthor({
+                    name: Author
+                });
                 // Footers
                 if (Footer && FooterAvatarImage)
-                    embed.setFooter(Footer, FooterAvatarImage);
-                else if (Footer) embed.setFooter(Footer);
+                    embed.setFooter({
+                        text: Footer,
+                        iconURL: FooterAvatarImage
+                    });
+                else if (Footer) embed.setFooter({
+                    text: Footer
+                });
                 // Images
                 if (Image) embed.setImage(Image);
                 if (Thumbnail) embed.setThumbnail(Thumbnail);
