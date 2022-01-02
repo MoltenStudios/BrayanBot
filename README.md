@@ -12,6 +12,8 @@
   </a>
 </h1>
 
+## 📢 About BrayanBot
+
 BrayanBot servers as base discord.js bot, on which developers can build their own add-ons. It is fully customizable - meaning with add-ons it can be turned into a moderation bot, music bot, ticket bot, and so on! You can enable/disable the features to your liking. It is a self-hosted bot - you need to host and maintain your own instance.
 
 ## 🧩 Addons
@@ -26,15 +28,16 @@ Current Addon Developers:
 
 -   [Node.js 16.6+](https://nodejs.org/en/download/)
 -   [Discord.js](https://www.npmjs.com/package/discord.js/v/13.3.1)
--   [Discord Bot Hosting](https://revivenode.com/discord.html) / Linux Machine / Windows Server
+-   [Discord Bot Hosting](https://revivenode.com/discord.html) / [Linux Machine]() / [Windows Server]()
 
 ## 🖥️ Installation
 
 1. Clone this repo by `git clone https://github.com/DakshNamdev/BrayanBot.git`
-2. Run `npm install` to install the necessary packages required to run the bot
-3. Rename `example.config.yml` to `config.yml`
-4. Configure `config.yml`
-5. Run `npm run start` to start the bot
+2. Move into the bot's directory with `cd BrayanBot`
+3. Run `npm install` or `yarn install` to install the necessary packages required to run the bot
+4. Rename `example.config.yml` to `config.yml`
+5. Configure `config.yml`
+6. Run `npm run start` or `yarn start` to start the bot
 
 ## 👋 Join the community!
 
