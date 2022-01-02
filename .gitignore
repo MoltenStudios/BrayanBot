@@ -1,10 +1,16 @@
+# IDE
+.history/
+.vscode/
+
 # Logs
 logs
 *.log
 npm-debug.log*
 
-# Dependency directories
+# NPM & Yarn
 node_modules/
+package-lock.json 
+yarn.lock
 
 # Optional npm cache directory
 .npm
