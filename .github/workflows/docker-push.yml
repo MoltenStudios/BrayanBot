@@ -1,4 +1,4 @@
-name: ci
+name: Create Docker Image
 
 on:
   push:
