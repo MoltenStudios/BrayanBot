@@ -28,7 +28,7 @@ Current Addon Developers:
 
 -   [Node.js 16.6+](https://nodejs.org/en/download/)
 -   [Discord.js](https://www.npmjs.com/package/discord.js/v/13.3.1)
--   [Discord Bot Hosting](https://revivenode.com/discord.html) / [Linux Machine]() / [Windows Server]()
+-   [Discord Bot Hosting](https://revivenode.com/discord.html) / [Linux Machine](wiki/installation) / [Windows Server]()
 
 ## 👋 Join the community!
 
