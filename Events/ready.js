@@ -41,8 +41,8 @@ module.exports = async (bot) => {
         "#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#"
     );
 
-    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command(s) Loaded.`);
-    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event(s) Loaded.`);
+    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s" } Loaded.`);
+    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s" } Loaded.`);
     const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
     SlashCmdsData = SlashCmdsData.filter((x) => typeof x == "object");
     try {
@@ -56,7 +56,7 @@ module.exports = async (bot) => {
             }
         );
         await Utils.logInfo(
-            `${chalk.bold(SlashCmdsData.length)} Slash Command(s) Loaded.`
+            `${chalk.bold(SlashCmdsData.length)} Slash Command${SlashCmdsData.length == 1 ? "" : "s" } Loaded.`
         );
     } catch (error) {
         console.log(error);
@@ -68,12 +68,12 @@ module.exports = async (bot) => {
         ? Utils.logWarning(
               `Currently in ${chalk.bold(
                   bot.guilds.cache.size
-              )} server(s). | ${chalk.hex("##ff596d")(
+              )} servers. | ${chalk.hex("##ff596d")(
                   `Brayan Bot is not made for multiple servers.`
               )}`
           )
         : Utils.logInfo(
-              `Currently in ${chalk.bold(bot.guilds.cache.size)} server(s).`
+              `Currently in ${chalk.bold(bot.guilds.cache.size)} server.`
           );
     await Utils.logInfo(`Bot Ready!`);
 };
