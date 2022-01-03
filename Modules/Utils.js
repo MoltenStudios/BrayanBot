@@ -2,7 +2,7 @@ const Discord = require("discord.js"),
     chalk = require("chalk"),
     moment = require("moment"),
     { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
-    hastebin = require("hastebin-gen"),
+    axios = require("axios"),
     { client } = require("../index");
 
 module.exports = {
@@ -437,18 +437,17 @@ module.exports = {
         });
         return args;
     },
-    paste: (data, url = "https://paste.zorino.in", extension) => {
+    paste: (data, url = "https://paste.zorino.in", extension, raw) => {
         return new Promise(async (resolve, reject) => {
-            let data = {};
-            if (url) data.url = url;
-            if (extension) data.extension = extension;
-            hastebin("code", data)
-                .then((haste) => {
-                    resolve(haste);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
+        axios.post(`${url}/documents`, data)
+            .then(({ data }) => {
+            if (raw) url += "/raw";
+            if (extension) data.key += `.${extension}`;
+            resolve(`${url}/${data.key}`);
+            })
+            .catch((error) => {
+            reject(error);
+            });
         });
     },
     /**
