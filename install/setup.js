@@ -1,18 +1,18 @@
 // Default configuration
-const config = 
+const config =
 {
-    "Settings": {
-      "Token": "BOT-TOKEN",
-      "Prefix": "-",
-      "ServerID": "YOUR-SERVER-ID",
-      "Storage": "database.db",
-      "DevMode": false
-    },
-    "Embeds": {
-      "Branding": "Brayan Bot",
-      "Color": "2f3136"
-    }
-  }
+	"Settings": {
+		"Token": "BOT-TOKEN",
+		"Prefix": "-",
+		"ServerID": "YOUR-SERVER-ID",
+		"Storage": "database.db",
+		"DevMode": false
+	},
+	"Embeds": {
+		"Branding": "Brayan Bot",
+		"Color": "2f3136"
+	}
+}
 
 function getConfirmSchema(description) {
 	return {
@@ -62,20 +62,20 @@ function doSetup() {
 				type: 'string',
 				default: config.Settings.Token,
 				required: true,
-                message: 'You must input a valid Bot Token'
+				message: 'You must input a valid Bot Token'
 			},
 			prefix: {
 				description: 'Your Bot Prefix',
 				type: 'string',
 				default: config.Settings.Prefix,
 				//	pattern: /^[-_!]$/gim, // regex to limit prefix options
-			    //	message: 'Must be a - , _ , or !'
+				//	message: 'Must be a - , _ , or !'
 				required: false,
 			},
 			serverID: {
 				description: `Your Server ID.`,
 				type: 'integer',
-                default: config.Settings.ServerID,
+				default: config.Settings.ServerID,
 				required: true,
 				message: 'You must input a valid server ID.'
 			},
@@ -96,17 +96,8 @@ function doSetup() {
 				description: `Color for your embeds. (Example: ${config.Embeds.Color})`,
 				type: 'string',
 				default: config.Embeds.Color,
-				required: false 
-
+				required: false
 			}
-			// spaceReplace: {
-			//	description: 'Character to replace spaces in filenames with (must be a hyphen -, underscore _, or use ! to remove spaces)',
-			//	type: 'string',
-			//	default: config.spaceReplace,
-			//	required: false,
-			//	pattern: /^[-_!]$/gim,
-			//	message: 'Must be a - , _ , or !'
-			//},
 		}
 	};
 
@@ -132,7 +123,7 @@ function doSetup() {
 		// Complete & exit
 		.then(() => log.blank().success('Setup complete').callback(() => process.exit(0)))
 		.catch((err) => log.blank().error(err).callback(() => process.exit(1)));
-        
+
 }
 
 module.exports = {
@@ -152,14 +143,14 @@ const yaml = require('js-yaml');
 
 (async function main() {
 
-    try {
+	try {
 
-        let configJson = await fs.readFile("./install/config.json", "utf-8")
-        let doc = yaml.load(configJson)
-        let configYaml = yaml.dump(doc)
-        await fs.writeFile("./config.yaml", configYaml, "utf-8")
-    } catch (error) {
-        console.log(error)
-    }
+		let configJson = await fs.readFile("./install/config.json", "utf-8")
+		let doc = yaml.load(configJson)
+		let configYaml = yaml.dump(doc)
+		await fs.writeFile("./config.yaml", configYaml, "utf-8")
+	} catch (error) {
+		console.log(error)
+	}
 
 })()
