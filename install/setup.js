@@ -157,7 +157,7 @@ const yaml = require('js-yaml');
         let configJson = await fs.readFile("./install/config.json", "utf-8")
         let doc = yaml.load(configJson)
         let configYaml = yaml.dump(doc)
-        await fs.writeFile("./config.yml", configYaml, "utf-8")
+        await fs.writeFile("./config.yaml", configYaml, "utf-8")
     } catch (error) {
         console.log(error)
     }
