@@ -1,18 +1,24 @@
-# BrayanBot Dockerfile v0.1.0
+# BrayanBot Dockerfile v0.1.1
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
-# Node 16 image
+# Node 16
 
-FROM node:16
+FROM node:16.6.0
 
-# Set working directory and copy files into that directory
-WORKDIR ./
-COPY . .
+# Set working directory 
+WORKDIR /opt/brayanbot
+# and copy files into that directory (config.yml, modules etc.)
+COPY . ./
 
-# Update npm to at least npm 8,
-# then install dependencies
-RUN npm install -g npm@8 && npm install
+RUN npm install -g npm@8 && npm install --save-dev
 
-# Start BrayanBot
-CMD [ "npm", "start" ]
+# Ensure these directories & files exist for compose volumes
+RUN touch /opt/brayanbot/config.yml && \
+    touch /opt/brayanbot/lang.yml && \
+    touch /opt/brayanbot/commands.yml
+
+# Create a config.yml based on example config 
+# and then start BrayanBot
+
+CMD npm start
 

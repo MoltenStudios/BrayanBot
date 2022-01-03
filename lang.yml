@@ -83,7 +83,7 @@ Presets:
         Embeds:
             - Title: Unable to run command
               Description: |-
-                  You do not have enough permission  to run this command
+                  You do not have enough permissions to run this command
 
                   **Permissions**
                   > {roles}

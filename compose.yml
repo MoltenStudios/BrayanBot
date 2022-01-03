@@ -1,0 +1,31 @@
+# BrayanBot Docker compose.yaml v0.1.1
+# authors:
+#  - NotAShelf <me@notashelf.dev> 
+
+services:
+  brayanbot:
+    build: .
+    command: npm start
+    container_name: brayanbot
+    restart: unless-stopped
+    volumes:
+      - ./Addons:/opt/brayanbot/Addons
+      - ./Modules:/opt/brayanbot/Modules
+      - ./Events:/opt/brayanbot/Events
+      - ./Commands:/opt/brayanbot/Commands
+      - type: bind
+        source: ./example.config.yml
+        target: /opt/brayanbot/config.yml
+      - type: bind
+        source: ./lang.yml
+        target: /opt/brayanbot/lang.yml
+      - type: bind
+        source: ./commands.yml
+        target: /opt/brayanbot/commands.yml
+    tmpfs: /tmp # temp files such as uploads are stored here
+    working_dir: /opt/brayanbot
+    tty: true
+    environment:
+      - NODE_ENV=production # for production
+      - LOG_LEVEL=debug # debug, info, warn, error
+      - FORCE_COLOR=3 # force color output

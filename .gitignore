@@ -24,3 +24,5 @@ Addons/
 Addon_Configs/
 *.db
 *.sqlite
+*.bak
+config.json
