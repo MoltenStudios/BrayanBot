@@ -33,7 +33,7 @@ function getConfirmSchema(description) {
 function doSetup() {
 	const path = (...paths) => require('path').join(process.cwd(), ...paths);
 	const TLog = require('@tycrek/log');
-	const fs = require('fs-extra');
+	const fsExtra = require('fs-extra');
 	const prompt = require('prompt');
 
 	const log = new TLog({ level: 'debug', timestamp: { enabled: false } });
@@ -68,6 +68,8 @@ function doSetup() {
 				description: 'Your Bot Prefix',
 				type: 'string',
 				default: config.Settings.Prefix,
+				//	pattern: /^[-_!]$/gim, // regex to limit prefix options
+			    //	message: 'Must be a - , _ , or !'
 				required: false,
 			},
 			serverID: {
@@ -81,6 +83,7 @@ function doSetup() {
 				description: `Name of your storage file. (Example: ${config.Settings.Storage})`,
 				type: 'string',
 				default: config.Settings.Storage,
+				// pattern: ^.*\.(db)$,
 				require: false,
 			},
 			branding: {
@@ -93,7 +96,8 @@ function doSetup() {
 				description: `Color for your embeds. (Example: ${config.Embeds.Color})`,
 				type: 'string',
 				default: config.Embeds.Color,
-				required: false
+				required: false 
+
 			}
 			// spaceReplace: {
 			//	description: 'Character to replace spaces in filenames with (must be a hyphen -, underscore _, or use ! to remove spaces)',
@@ -107,7 +111,7 @@ function doSetup() {
 	};
 
 	// Schema for confirm prompt. User must enter 'y' or 'n' (case-insensitive)
-	const confirmSchema = getConfirmSchema('\nIs the above information correct? (y/n)');
+	const confirmPrompt = getConfirmSchema('\nIs the above information correct? (y/n)');
 
 	log.blank().blank().blank().blank()
 		.info('[=== BrayanBot Setup ===]').blank();
@@ -122,8 +126,8 @@ function doSetup() {
 			.blank())
 
 		// Confirm
-		.then(() => prompt.get(confirmSchema))
-		.then(({ confirm }) => (confirm ? fs.writeJson(path('config.json'), results, { spaces: 4 }) : log.error('Setup aborted').callback(process.exit, 1)))
+		.then(() => prompt.get(confirmPrompt))
+		.then(({ confirm }) => (confirm ? fsExtra.writeJson(path('config.json'), results, { spaces: 4 }) : log.error('Setup aborted').callback(process.exit, 1)))
 
 		// Complete & exit
 		.then(() => log.blank().success('Setup complete').callback(() => process.exit(0)))
@@ -142,6 +146,7 @@ if (require.main === module) {
 	doSetup();
 }
 
+
 const { promises: fs } = require("fs")
 const yaml = require('js-yaml');
 
@@ -149,26 +154,12 @@ const yaml = require('js-yaml');
 
     try {
 
-        let configJson = await fs.readFile("./config.json", "utf-8")
-        let doc = yaml.safeLoad(configJson)
-        let configYaml = yaml.safeDump(doc)
-        await fs.writeFile("./config.yaml", configYaml, "utf-8")
-
-
+        let configJson = await fs.readFile("./install/config.json", "utf-8")
+        let doc = yaml.load(configJson)
+        let configYaml = yaml.dump(doc)
+        await fs.writeFile("./config.yml", configYaml, "utf-8")
     } catch (error) {
         console.log(error)
     }
 
 })()
-
-/*{
-	description: 'Enter your password',     // Prompt displayed to the user. If not supplied name will be used.
-	type: 'string',                 // Specify the type of input to expect.
-	pattern: /^\w+$/,                  // Regular expression that input must be valid against.
-	message: 'Password must be letters', // Warning message to display if validation fails.
-	hidden: true,                        // If true, characters entered will either not be output to console or will be outputed using the `replace` string.
-	replace: '*',                        // If `hidden` is set it will replace each hidden character with the specified string.
-	default: 'lamepassword',             // Default value to use if no value is entered.
-	required: true,                  // If true, value entered must be non-empty.
-	before: function (value) { return 'v' + value; } // Runs before node-prompt callbacks. It modifies user's input
-}*/
