@@ -6,6 +6,7 @@ const config =
 		"Prefix": "-",
 		"ServerID": "YOUR-SERVER-ID",
 		"Storage": "database.db",
+		"MultiGuild": false
 		"DevMode": false
 	},
 	"Embeds": {
