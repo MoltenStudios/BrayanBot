@@ -46,15 +46,30 @@ module.exports = async (bot) => {
     const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
     SlashCmdsData = SlashCmdsData.filter((x) => typeof x == "object");
     try {
-        await rest.put(
-            Routes.applicationGuildCommands(
-                bot.user.id,
-                config.Settings.ServerID
-            ),
-            {
-                body: SlashCmdsData,
+        if (config.Settings.MultiGuild) {
+            for (let _guild of bot.guilds.cache) {
+                let guild = _guild[1]
+                await rest.put(
+                    Routes.applicationGuildCommands(
+                        bot.user.id,
+                        guild.id
+                    ),
+                    {
+                        body: SlashCmdsData,
+                    }
+                );
             }
-        );
+        } else {
+            await rest.put(
+                Routes.applicationGuildCommands(
+                    bot.user.id,
+                    config.Settings.ServerID
+                ),
+                {
+                    body: SlashCmdsData,
+                }
+            );
+        }
         await Utils.logInfo(
             `${chalk.bold(SlashCmdsData.length)} Slash Command${SlashCmdsData.length == 1 ? "" : "s" } Loaded.`
         );
