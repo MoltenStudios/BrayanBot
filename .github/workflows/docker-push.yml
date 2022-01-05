@@ -1,4 +1,6 @@
-name: Create Docker Image
+# We would like to keep our Docker image up to date, but we are lazy. How do we do it? We use Github Actions!
+name: Docker Image CI
+
 
 on:
   push:
