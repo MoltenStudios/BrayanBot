@@ -6,6 +6,7 @@ const config =
 		"Prefix": "-",
 		"ServerID": "YOUR-SERVER-ID",
 		"Storage": "database.db",
+		"MultiGuild": false,
 		"DevMode": false
 	},
 	"Embeds": {
@@ -39,15 +40,15 @@ function doSetup() {
 	const log = new TLog({ level: 'debug', timestamp: { enabled: false } });
 
 	// Override default configs with existing configs to allow migrating configs
-	// Now that's a lot of configs!
-	try {
-		const existingConfig = require('../config.json');
-		Object.entries(existingConfig).forEach(([key, value]) => {
-			Object.prototype.hasOwnProperty.call(config, key) && (config[key] = value); // skipcq: JS-0093
-		});
-	} catch (ex) {
-		if (ex.code !== 'MODULE_NOT_FOUND' && !ex.toString().includes('Unexpected end')) log.error(ex);
-	}
+	// Disabled for now. Wİll find a better way to do it.
+	// try {
+	//	const existingConfig = require('../config.json');
+	//	Object.entries(existingConfig).forEach(([key, value]) => {
+	//		Object.prototype.hasOwnProperty.call(config, key) && (config[key] = value); // skipcq: JS-0093
+	//	});
+	//} catch (ex) {
+	//	if (ex.code !== 'MODULE_NOT_FOUND' && !ex.toString().includes('Unexpected end')) log.error(ex);
+	//}
 
 	// Disabled the annoying "prompt: " prefix and removes colours
 	prompt.message = '';
@@ -72,7 +73,7 @@ function doSetup() {
 				//	message: 'Must be a - , _ , or !'
 				required: false,
 			},
-			serverID: {
+			serverId: {
 				description: `Your Server ID.`,
 				type: 'integer',
 				default: config.Settings.ServerID,
@@ -84,6 +85,12 @@ function doSetup() {
 				type: 'string',
 				default: config.Settings.Storage,
 				// pattern: ^.*\.(db)$,
+				require: false,
+			},
+			multiGuild: {
+				description: 'Would you like to enable Multi Guild support? (Not recommended)',
+				type: 'boolean',
+				default: config.Settings.MultiGuild,
 				require: false,
 			},
 			branding: {
