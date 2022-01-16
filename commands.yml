@@ -38,6 +38,22 @@ General:
             Data:
                 Name: serverinfo
                 Description: "View Server's Information"
+    UserInfo:
+        Description: "View a User's Information"
+        Usage: "userinfo"
+        Aliases:
+            - "uinfo"
+        Permission:
+            - "@everyone"
+        SlashCommand:
+            Enabled: true
+            Data:
+                Name: userinfo
+                Description: "View a User's Information"
+                Options:
+                    - Type: "User"
+                      Name: "user"
+                      Description: "User Mention"
     Avatar:
         Description: "Displays user's avatar"
         Usage: "avatar <user>"
