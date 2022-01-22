@@ -9,3 +9,6 @@ Settings:
 Embeds:
     Branding: "Brayan Bot"
     Color: "2f3136"
+
+Misc:
+    Version: "v1.0.0"
