@@ -93,18 +93,6 @@ module.exports = {
                         "MMMM Do YYYY, h:mm a"
                     ),
                 },
-                {
-                    searchFor: new RegExp(`{${prefix || "user"}-joindat}`,"g"),
-                    replaceWith: moment(user.joinedAt).format("MMMM Do YYYY, h:mm a"),
-                },
-                {
-                    searchFor: new RegExp(`{${prefix || "user"}-roles}`,"g"),
-                    replaceWith: user.roles.cache.map(r => r.toString()).join(", ").replace(", @everyone", ""),
-                },
-                {
-                    searchFor: new RegExp(`{${prefix || "user"}-rolecount}`,"g"),
-                    replaceWith: user.roles.cache.size,
-                },
             ];
         }
     },

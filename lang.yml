@@ -65,21 +65,6 @@ General:
               Timestamp: true
               Footer: "{user-tag}"
               FooterIcon: "{user-pfp}"
-    UserInfo:
-        Embeds:
-            - Title: "🙋‍♂️User Info - {user-tag}"
-              Description: |-
-                  **User**: {user-mention}
-              Fields:
-                  - Name: Registered
-                    Value: "{user-createdat}"
-                  - Name: Joined
-                    Value: "{user-joindat}"
-                  - Name: "Roles ({user-rolecount})"
-                    Value: "{user-roles}"
-              Thumbnail: "{user-pfp}"
-              Timestamp: true
-              Footer: "ID: {user-id}"
     Avatar:
         Embeds:
             - AuthorIcon: "{avatar}"
