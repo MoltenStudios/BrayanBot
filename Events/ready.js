@@ -41,37 +41,22 @@ module.exports = async (bot) => {
         "#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#"
     );
 
-    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s" } Loaded.`);
-    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s" } Loaded.`);
+    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
+    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s"} Loaded.`);
     const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
     SlashCmdsData = SlashCmdsData.filter((x) => typeof x == "object");
     try {
-        if (config.Settings.MultiGuild) {
-            for (let _guild of bot.guilds.cache) {
-                let guild = _guild[1]
-                await rest.put(
-                    Routes.applicationGuildCommands(
-                        bot.user.id,
-                        guild.id
-                    ),
-                    {
-                        body: SlashCmdsData,
-                    }
-                );
+        await rest.put(
+            Routes.applicationGuildCommands(
+                bot.user.id,
+                config.Settings.ServerID
+            ),
+            {
+                body: SlashCmdsData,
             }
-        } else {
-            await rest.put(
-                Routes.applicationGuildCommands(
-                    bot.user.id,
-                    config.Settings.ServerID
-                ),
-                {
-                    body: SlashCmdsData,
-                }
-            );
-        }
+        );
         await Utils.logInfo(
-            `${chalk.bold(SlashCmdsData.length)} Slash Command${SlashCmdsData.length == 1 ? "" : "s" } Loaded.`
+            `${chalk.bold(SlashCmdsData.length)} Slash Command${SlashCmdsData.length == 1 ? "" : "s"} Loaded.`
         );
     } catch (error) {
         console.log(error);
@@ -81,15 +66,15 @@ module.exports = async (bot) => {
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
     bot.guilds.cache.size > 1
         ? Utils.logWarning(
-              `Currently in ${chalk.bold(
-                  bot.guilds.cache.size
-              )} servers. | ${chalk.hex("##ff596d")(
-                  `Brayan Bot is not made for multiple servers.`
-              )}`
-          )
+            `Currently in ${chalk.bold(
+                bot.guilds.cache.size
+            )} servers. | ${chalk.hex("##ff596d")(
+                `Brayan Bot is not made for multiple servers.`
+            )}`
+        )
         : Utils.logInfo(
-              `Currently in ${chalk.bold(bot.guilds.cache.size)} server.`
-          );
+            `Currently in ${chalk.bold(bot.guilds.cache.size)} server.`
+        );
     await Utils.logInfo(`Bot Ready!`);
 };
 module.exports.once = true;

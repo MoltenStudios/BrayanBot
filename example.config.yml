@@ -3,7 +3,6 @@ Settings:
     Prefix: "-"
     ServerID: "YOUR-SERVER-ID"
     Storage: "database.db"
-    MultiGuild: true
     DevMode: false # This option will reset every addon configs.
 
 Embeds:
