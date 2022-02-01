@@ -3,6 +3,7 @@ const { REST } = require("@discordjs/rest"),
     Discord = require("discord.js"),
     Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"),
+    fsUtils = require("nodejs-fs-utils"),
     chalk = require("chalk");
 /**
  *
@@ -41,6 +42,11 @@ module.exports = async (bot) => {
         "#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#"
     );
 
+    let fSize = fsUtils.fsizeSync('./', {
+        skipErrors: true,
+        countFolders: true
+    })
+
     await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
     await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s"} Loaded.`);
     const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
@@ -64,17 +70,10 @@ module.exports = async (bot) => {
     }
 
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
+    await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
     bot.guilds.cache.size > 1
-        ? Utils.logWarning(
-            `Currently in ${chalk.bold(
-                bot.guilds.cache.size
-            )} servers. | ${chalk.hex("##ff596d")(
-                `Brayan Bot is not made for multiple servers.`
-            )}`
-        )
-        : Utils.logInfo(
-            `Currently in ${chalk.bold(bot.guilds.cache.size)} server.`
-        );
+        ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`Brayan Bot is not made for multiple servers.`)}`)
+        : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server.`);
     await Utils.logInfo(`Bot Ready!`);
 };
 module.exports.once = true;

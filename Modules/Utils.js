@@ -359,21 +359,21 @@ module.exports = {
                 `[Utils] [getUserBadges] Invalid input ${chalk.bold("member")}.`
             );
         let badges = {
-                BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
-                BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
-                DISCORD_EMPLOYEE: "Discord Staff",
-                DISCORD_NITRO: "Discord Nitro",
-                EARLY_SUPPORTER: "Early Supporter",
-                HOUSE_BALANCE: "HypeSquad Balance",
-                HOUSE_BRAVERY: "HypeSquad Bravery",
-                HOUSE_BRILLIANCE: "HypeSquad Brilliance",
-                HYPESQUAD_EVENTS: "HypeSquad Events",
-                EARLY_VERIFIED_BOT_DEVELOPER: "Early Verified Bot Developer",
-                PARTNERED_SERVER_OWNER: "Partnered Server Owner",
-                DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
-                VERIFIED_BOT: "Verified Bot",
-                TEAM_USER: "Team User",
-            },
+            BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
+            BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
+            DISCORD_EMPLOYEE: "Discord Staff",
+            DISCORD_NITRO: "Discord Nitro",
+            EARLY_SUPPORTER: "Early Supporter",
+            HOUSE_BALANCE: "HypeSquad Balance",
+            HOUSE_BRAVERY: "HypeSquad Bravery",
+            HOUSE_BRILLIANCE: "HypeSquad Brilliance",
+            HYPESQUAD_EVENTS: "HypeSquad Events",
+            EARLY_VERIFIED_BOT_DEVELOPER: "Early Verified Bot Developer",
+            PARTNERED_SERVER_OWNER: "Partnered Server Owner",
+            DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
+            VERIFIED_BOT: "Verified Bot",
+            TEAM_USER: "Team User",
+        },
             data = [],
             flags = member.user.flags.toArray();
         flags.forEach((flag, i) => {
@@ -431,7 +431,7 @@ module.exports = {
             } else {
                 return module.exports.logWarning(
                     "[Utils] [parseSlashArgs] Invalid Choice Type. Type: " +
-                        type
+                    type
                 );
             }
         });
@@ -439,15 +439,15 @@ module.exports = {
     },
     paste: (data, url = "https://paste.zorino.in", extension, raw) => {
         return new Promise(async (resolve, reject) => {
-        axios.post(`${url}/documents`, data)
-            .then(({ data }) => {
-            if (raw) url += "/raw";
-            if (extension) data.key += `.${extension}`;
-            resolve(`${url}/${data.key}`);
-            })
-            .catch((error) => {
-            reject(error);
-            });
+            axios.post(`${url}/documents`, data)
+                .then(({ data }) => {
+                    if (raw) url += "/raw";
+                    if (extension) data.key += `.${extension}`;
+                    resolve(`${url}/${data.key}`);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
         });
     },
     /**
@@ -503,4 +503,20 @@ module.exports = {
             await callback(array[index], index, array);
         }
     },
+    /**
+     * 
+     * @param {Number} bytes 
+     * @param {String} seperator 
+     * @returns {Number}
+     */
+    bytesToSize: (bytes, seperator = " ") => {
+        // This code is not written by any collobrators from BrayanBot
+        // This code was taken from github gist
+        // -> https://gist.github.com/lanqy/5193417?permalink_comment_id=2793883#gistcomment-2793883
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+        if (bytes == 0) return 'n/a'
+        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10)
+        if (i === 0) return `${bytes}${seperator}${sizes[i]}`
+        return `${(bytes / (1024 ** i)).toFixed(1)}${seperator}${sizes[i]}`
+    }
 };
