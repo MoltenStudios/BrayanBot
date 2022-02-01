@@ -1,10 +1,8 @@
 const Discord = require("discord.js"),
     chalk = require("chalk"),
     moment = require("moment"),
-    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
     axios = require("axios"),
     { client } = require("../index");
-
 module.exports = {
     builder: require("@discordjs/builders"),
     wait: require("util").promisify(setTimeout),
@@ -497,7 +495,11 @@ module.exports = {
         }
         return addon_configs;
     },
-    // zorino idk what to put here
+    /**
+     * 
+     * @param {Array} array 
+     * @param {Function} callback 
+     */
     asyncForEach: async (array, callback) => {
         for (let index = 0; index < array.length; index++) {
             await callback(array[index], index, array);
