@@ -18,7 +18,7 @@ module.exports = {
  * @param {Object} config
  */
 module.exports.run = async (bot, message, args, config) => {
-    const user = Utils.parseUserFromMessage(message, args[0]);
+    const user = Utils.parseUserFromMessage(message, args[0] ? args[0] : message.author.id, true);
     const avatar = user.user
         .displayAvatarURL({ dynamic: true })
         .endsWith("?size=2048")
