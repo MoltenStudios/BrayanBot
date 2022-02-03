@@ -170,7 +170,7 @@ module.exports = {
             if (notify) {
                 module.exports.logError(
                     `[Utils] [findChannel] ${chalk.bold(
-                        "name"
+                        name
                     )} was not found in the ${chalk.bold(guild.name)} guild`
                 );
             }
