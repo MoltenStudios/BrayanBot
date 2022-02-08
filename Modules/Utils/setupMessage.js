@@ -324,7 +324,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
                                     }
                                     if (Label) button.setLabel(Label);
                                     if (Emoji) button.setEmoji(Emoji);
-                                    if (isDisabled) button.setDisabled(true);
+                                    if (Disabled) button.setDisabled(true);
 
                                     rows[i].addComponents([button]);
                                 }
