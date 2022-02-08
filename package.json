@@ -37,17 +37,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/DakshNamdev/BrayanBot.git"
+		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
 	},
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"bugs": {
-		"url": "https://github.com/DakshNamdev/BrayanBot/issues"
+		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
 	},
-	"homepage": "https://github.com/DakshNamdev/BrayanBot#readme"
+	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme"
 }
