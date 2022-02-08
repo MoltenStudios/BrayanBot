@@ -7,7 +7,6 @@ module.exports = {
     builder: require("@discordjs/builders"),
     wait: require("util").promisify(setTimeout),
     database: require("./Database"),
-    parseComponents: require("./Utils/parseComponents"),
     parseSlashCommands: require("./Utils/parseSlashCommand"),
     setupMessage: require("./Utils/setupMessage"),
     logInfo: (text) => {
