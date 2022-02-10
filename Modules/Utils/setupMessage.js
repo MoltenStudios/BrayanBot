@@ -259,7 +259,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
                         Link = comp.Link || comp.link || comp.URL || comp.url,
                         Label = comp.Label || comp.label,
                         Emoji = comp.Emoji || comp.emoji,
-                        Disabled = comp.Disbled || comp.disbled || false,
+                        Disabled = comp.Disabled || comp.disabled || false,
                         CustomID = comp.CustomID || comp.customid,
                         Placeholder = comp.Placeholder || comp.placeholder,
                         Description = comp.Description || comp.description,
