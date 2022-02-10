@@ -6,13 +6,15 @@ const config =
 		"Prefix": "-",
 		"ServerID": "YOUR-SERVER-ID",
 		"Storage": "database.db",
-		"MultiGuild": false,
 		"DevMode": false
 	},
 	"Embeds": {
 		"Branding": "Brayan Bot",
 		"Color": "2f3136"
-	}
+	},
+	"Misc": {
+		"Version" : "v1.0.0",
+	},
 }
 
 function getConfirmSchema(description) {
@@ -85,12 +87,6 @@ function doSetup() {
 				type: 'string',
 				default: config.Settings.Storage,
 				// pattern: ^.*\.(db)$,
-				require: false,
-			},
-			multiGuild: {
-				description: 'Would you like to enable Multi Guild support? (Not recommended)',
-				type: 'boolean',
-				default: config.Settings.MultiGuild,
 				require: false,
 			},
 			branding: {
