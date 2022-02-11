@@ -23,6 +23,15 @@ General:
               Footer: "{user-tag}"
               FooterIcon: "{user-pfp}"
               Timestamp: true
+    Uptime:
+        Embeds:
+            - Author: "{bot-tag}'s Uptime"
+              AuthorIcon: "{bot-pfp}"
+              Description: |-
+                  **Current Uptime**: {uptime}
+              Footer: "{user-tag}"
+              FooterIcon: "{user-pfp}"
+              Timestamp: true
     ServerInfo:
         Embeds:
             - Title: "💭 Server Info - {guild-name} [1/2]"
