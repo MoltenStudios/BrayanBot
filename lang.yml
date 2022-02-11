@@ -28,7 +28,7 @@ General:
             - Author: "{bot-tag}'s Uptime"
               AuthorIcon: "{bot-pfp}"
               Description: |-
-                  **Current Uptime**: {uptime}
+                  > **Current Uptime**: {uptime}
               Footer: "{user-tag}"
               FooterIcon: "{user-pfp}"
               Timestamp: true

@@ -1,21 +1,7 @@
-const Discord = require("discord.js"),
+const Discord = require("discord.js"), ms = require("ms"),
     Utils = require("../../Modules/Utils"),
-    { lang, config, commands } = require("../../index"),
-    { SlashCommandBuilder } = require("@discordjs/builders"),
-    moment = require("moment");
-    
-// Receive client uptime in miliseconds 
-// and break the number into days, hours, minutes and seconds
-const duration = (ms) => {
-    const sec = Math.floor((ms / 1000) % 60).toString();
-    const min = Math.floor((ms / (1000 * 60)) % 60).toString();
-    const hrs = Math.floor((ms / (1000 * 60 * 60)) % 60).toString();
-    const days = Math.floor((ms / (1000 * 60 * 60 * 24)) % 60).toString();
-    return days.padStart(1, "0") + " " + "days" + " " +
-        hrs.padStart(2, "0") + " " + "hours"  + " " +
-        min.padStart(2, "0") + " " + "minutes" + " " +
-        sec.padStart(2, "0") + " " + "seconds" + " ";
-};
+    { lang, config, commands } = require("../../index");
+
 
 module.exports = {
     name: "uptime",
@@ -31,27 +17,14 @@ module.exports = {
  * @param {Object} config
  */
 module.exports.run = async (bot, message, args, config) => {
-    message.channel
-        .send({
-            embeds: [
-                {
-                    title: "Fetching uptime...",
-                },
-            ],
-        })
-        .then(async (msg) => {
-            msg.delete();
-            msg.channel.send(
-                Utils.setupMessage({
-                    configPath: lang.General.Uptime,
-                    variables: [
-                        ...Utils.userVariables(message.member),
-                        ...Utils.botVariables(bot),
-                        { searchFor: /{uptime}/g, replaceWith: duration(bot.uptime) },
-                    ],
-                })
-            );
-        });
+    message.reply(Utils.setupMessage({
+        configPath: lang.General.Uptime,
+        variables: [
+            ...Utils.userVariables(message.member),
+            ...Utils.botVariables(bot),
+            { searchFor: /{uptime}/g, replaceWith: ms(bot.uptime, { long: true }) },
+        ],
+    }));
 };
 
 /**
@@ -60,17 +33,12 @@ module.exports.run = async (bot, message, args, config) => {
  * @param {Discord.Interaction} interaction
  */
 module.exports.runSlash = async (bot, interaction) => {
-    interaction.reply(
-        Utils.setupMessage(
-            {
-                configPath: lang.General.Uptime,
-                variables: [
-                    ...Utils.userVariables(interaction.member),
-                    ...Utils.botVariables(bot),
-                    { searchFor: /{uptime}/g, replaceWith: duration(bot.uptime) },
-                ],
-            },
-            true
-        )
-    );
+    interaction.reply(Utils.setupMessage({
+        configPath: lang.General.Uptime,
+        variables: [
+            ...Utils.userVariables(interaction.member),
+            ...Utils.botVariables(bot),
+            { searchFor: /{uptime}/g, replaceWith: ms(bot.uptime, { long: true }) },
+        ],
+    }));
 };
