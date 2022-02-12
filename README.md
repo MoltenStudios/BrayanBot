@@ -41,5 +41,5 @@ Need help? Join our [Discord Server](https://brayanbot.dev/discord)!
 Contributions of any kind are welcome! Please feel free to submit them to the repository via pull requests.
 
 <a href="https://github.com/BrayanbotDev/BrayanBot/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=DakshNamdev/BrayanBot" width="150"/>
+  <img src="https://contributors-img.web.app/image?repo=BrayanbotDev/BrayanBot" width="150"/>
 </a>
