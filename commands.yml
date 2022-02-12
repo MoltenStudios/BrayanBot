@@ -26,6 +26,17 @@ General:
             Data:
                 Name: ping
                 Description: "Displays Bot Pings"
+    Uptime:
+        Description: "View Your Bot's Current Uptime"
+        Usage: "uptime"
+        Aliases: []
+        Permission:
+            - "@everyone"
+        SlashCommand:
+            Enabled: true
+            Data:
+                Name: uptime
+                Description: "View Your Bot's Current Uptime"
     ServerInfo:
         Description: "View Server's Information"
         Usage: "serverinfo"

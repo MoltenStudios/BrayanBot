@@ -6,10 +6,8 @@ module.exports = function (name, configData, addonName) {
     let addon_config = null;
     const generateConfig = function (path, data, type, name) {
         if (["yml", "yaml"].includes(type.toLowerCase())) {
-            fs.writeFileSync(
-                path,
-                YAML.stringify(data, { indent: 2, prettyErrors: true })
-            );
+            data = (YAML.stringify(data, { indent: 2, prettyErrors: true })).replace(/("|')?~(\d+)?("|')?:\s("|')?.+("|')?/g, match => "# " + match.replace(/("|')?~(\d+)?("|')?:\s/g, '').replace(/("|')/g, ''))
+            fs.writeFileSync(path, data);
             addon_config = data;
         } else if (["json"].includes(type.toLowerCase())) {
             fs.writeFileSync(path, JSON.stringify(data, null, 4));
