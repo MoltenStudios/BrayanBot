@@ -1,7 +1,6 @@
 Settings:
     Token: "BOT-TOKEN"
     Prefix: "-"
-    ServerID: "YOUR-SERVER-ID"
     Storage: "database.db"
     DevMode: false # This option will reset every addon configs.
 
