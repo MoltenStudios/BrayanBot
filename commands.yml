@@ -1,67 +1,67 @@
 DisabledCommands: []
 General:
-    Help:
+  Help:
+    Description: "Displays all Bot Commands"
+    Usage: "help"
+    Aliases: []
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: help
         Description: "Displays all Bot Commands"
-        Usage: "help"
-        Aliases: []
-        Permission:
-            - "@everyone"
-        SlashCommand:
-            Enabled: true
-            Data:
-                Name: help
-                Description: "Displays all Bot Commands"
-                Options:
-                    - Type: "string"
-                      Name: "command"
-                      Description: "Command for info"
-    Ping:
+        Options:
+          - Type: "string"
+            Name: "command"
+            Description: "Command for info"
+  Ping:
+    Description: "Displays Bot Pings"
+    Usage: "ping"
+    Aliases: []
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: ping
         Description: "Displays Bot Pings"
-        Usage: "ping"
-        Aliases: []
-        Permission:
-            - "@everyone"
-        SlashCommand:
-            Enabled: true
-            Data:
-                Name: ping
-                Description: "Displays Bot Pings"
-    Uptime:
+  Uptime:
+    Description: "View Your Bot's Current Uptime"
+    Usage: "uptime"
+    Aliases: []
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: uptime
         Description: "View Your Bot's Current Uptime"
-        Usage: "uptime"
-        Aliases: []
-        Permission:
-            - "@everyone"
-        SlashCommand:
-            Enabled: true
-            Data:
-                Name: uptime
-                Description: "View Your Bot's Current Uptime"
-    ServerInfo:
+  ServerInfo:
+    Description: "View Server's Information"
+    Usage: "serverinfo"
+    Aliases:
+      - "guildinfo"
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: serverinfo
         Description: "View Server's Information"
-        Usage: "serverinfo"
-        Aliases:
-            - "guildinfo"
-        Permission:
-            - "@everyone"
-        SlashCommand:
-            Enabled: true
-            Data:
-                Name: serverinfo
-                Description: "View Server's Information"
-    Avatar:
+  Avatar:
+    Description: "Displays user's avatar"
+    Usage: "avatar <user>"
+    Aliases:
+      - "av"
+    Permission:
+      - "@everyone"
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: avatar
         Description: "Displays user's avatar"
-        Usage: "avatar <user>"
-        Aliases:
-            - "av"
-        Permission:
-            - "@everyone"
-        SlashCommand:
-            Enabled: true
-            Data:
-                Name: avatar
-                Description: "Displays user's avatar"
-                Options:
-                    - Type: "User"
-                      Name: "target"
-                      Description: "User Mention"
+        Options:
+          - Type: "User"
+            Name: "target"
+            Description: "User Mention"
