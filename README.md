@@ -34,12 +34,12 @@ Current Addon Developers:
 
 BrayanBot is driven by the awesome community of third-party developers, which makes it more functional and enjoyable for everyone. If you are looking into building your own Add-ons for Brayan, consider looking into the documentation to get started!
 
-Need help? Join our [Discord Server](https://discord.gg/EgeZxGg6ev)!
+Need help? Join our [Discord Server](https://brayanbot.dev/discord)!
 
 ## ✨ Contributing
 
 Contributions of any kind are welcome! Please feel free to submit them to the repository via pull requests.
 
-<a href="https://github.com/DakshNamdev/BrayanBot/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=DakshNamdev/BrayanBot" width="150"/>
+<a href="https://github.com/BrayanbotDev/BrayanBot/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=BrayanbotDev/BrayanBot" width="150"/>
 </a>

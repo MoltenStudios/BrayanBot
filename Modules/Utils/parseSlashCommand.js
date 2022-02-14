@@ -44,7 +44,7 @@ module.exports = (data) => {
             name: undefined,
             description: undefined,
             options: [],
-            default_permission: undefined,
+            default_permission: false,
         };
         if (!Name) Utils.logError(`[Utils] [SlashCommandCreator] A ${chalk.bold("Name")} is required to build Slash Command.`);
         if (!Description) Utils.logError(`[Utils] [SlashCommandCreator] A ${chalk.bold("Description")} is required to build Slash Command.`);

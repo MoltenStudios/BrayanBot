@@ -13,7 +13,7 @@ const config =
 		"Color": "2f3136"
 	},
 	"Misc": {
-		"Version" : "v1.0.0",
+		"Version": "v1.0.0",
 	},
 }
 
@@ -74,13 +74,6 @@ function doSetup() {
 				//	pattern: /^[-_!]$/gim, // regex to limit prefix options
 				//	message: 'Must be a - , _ , or !'
 				required: false,
-			},
-			serverId: {
-				description: `Your Server ID.`,
-				type: 'integer',
-				default: config.Settings.ServerID,
-				required: true,
-				message: 'You must input a valid server ID.'
 			},
 			storage: {
 				description: `Name of your storage file. (Example: ${config.Settings.Storage})`,
