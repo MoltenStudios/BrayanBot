@@ -116,10 +116,25 @@ function doSetup() {
 		.then(() => prompt.get(confirmPrompt))
 		.then(({ confirm }) => (confirm ? fsExtra.writeJson(path('config.json'), results, { spaces: 4 }) : log.error('Setup aborted').callback(process.exit, 1)))
 
-		// Complete & exit
-		.then(() => log.blank().success('Setup complete').callback(() => process.exit(0)))
-		.catch((err) => log.blank().error(err).callback(() => process.exit(1)));
+		// Convert config.json to config.yml, confirm and exit
+		.then(() => {
+		const { promises: fs } = require("fs")
+		const yaml = require('js-yaml');
+		(async function main() {
 
+			try {
+
+				let configJson = await fs.readFile("./install/config.json", "utf-8")
+				let doc = yaml.load(configJson)
+				let configYaml = yaml.dump(doc)
+				await fs.writeFile("./config.yaml", configYaml, "utf-8")
+				.then(() => log.blank().success('Setup complete').callback(() => process.exit(0)))
+				.catch((err) => log.blank().error(err).callback(() => process.exit(1)))
+			} catch (error) {
+				console.log(error)
+			}
+		})();
+	})
 }
 
 module.exports = {
@@ -132,21 +147,3 @@ module.exports = {
 if (require.main === module) {
 	doSetup();
 }
-
-
-const { promises: fs } = require("fs")
-const yaml = require('js-yaml');
-
-(async function main() {
-
-	try {
-
-		let configJson = await fs.readFile("./install/config.json", "utf-8")
-		let doc = yaml.load(configJson)
-		let configYaml = yaml.dump(doc)
-		await fs.writeFile("./config.yaml", configYaml, "utf-8")
-	} catch (error) {
-		console.log(error)
-	}
-
-})()
