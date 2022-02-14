@@ -112,7 +112,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
                 Thumbnail = settings.thumbnail || embedSettings.thumbnail || embedSettings.Thumbnail,
                 Author = settings.author || embedSettings.author || embedSettings.Author,
                 AuthorAvatarImage = settings.authoricon || embedSettings.authoricon || embedSettings.AuthorIcon,
-                Color = settings.icon || embedSettings.color || embedSettings.Color || config.Embeds.Color || "2f3136",
+                Color = settings.color || embedSettings.color || embedSettings.Color || config.Embeds.Color || "2f3136",
                 Fields = settings.fields || embedSettings.fields || embedSettings.Fields,
                 Image = settings.image || embedSettings.image || embedSettings.Image,
                 URL = settings.url || embedSettings.url || embedSettings.URL,
