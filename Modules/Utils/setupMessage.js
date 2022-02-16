@@ -149,7 +149,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
                     let data = {
                         name: field.Name || field.name,
                         value: field.Value || field.value,
-                        inline: field.Inline || field.inline,
+                        inline: !!field.Inline || !!field.inline,
                     };
 
                     if (Variables && typeof Variables === "object") {
