@@ -69,6 +69,9 @@ const rowStructure = [
  * @returns
  */
 module.exports = (settings, ephemeral = false, components = null) => {
+    if (!settings || !settings.configPath)
+        return Utils.logWarning(`[Utils] [setupMessage] Invalid ${chalk.bold("configPath")}. Got undefined`)
+
     let Variables = [
         { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding },
     ], Embeds, Content, Components, Ephemeral = false;
