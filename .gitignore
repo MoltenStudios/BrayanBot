@@ -23,6 +23,7 @@ config.yml
 config.json
 Addons/
 Addon_Configs/
+EvoTickets/
 *.db
 *.sqlite
 *.bak
