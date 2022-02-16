@@ -23,6 +23,8 @@
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
 		"prompt": "^1.2.0",
+		"request": "^2.88.2",
+		"request-promise": "^4.2.6",
 		"yaml": "^1.10.2"
 	},
 	"scripts": {
@@ -39,7 +41,13 @@
 		"type": "git",
 		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
 	},
-	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
+	"keywords": [
+		"discord",
+		"discord.js",
+		"node.js",
+		"discordbot",
+		"discord-bot"
+	],
 	"bugs": {
 		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
 	},
