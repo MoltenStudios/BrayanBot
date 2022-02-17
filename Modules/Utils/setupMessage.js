@@ -1,4 +1,4 @@
-const Discord = require("discord.js"),
+const Discord = require("discord.js"), chalk = require("chalk"),
     { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
     { config, lang, commands, client } = require("../../index");
 
