@@ -1,6 +1,5 @@
 const Discord = require("discord.js"),
     { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
-    Utils = require("../Utils"),
     { config, lang, commands, client } = require("../../index");
 
 const rowStructure = [
@@ -69,6 +68,7 @@ const rowStructure = [
  * @returns
  */
 module.exports = (settings, ephemeral = false, components = null) => {
+    const Utils = require("../Utils");
     if (!settings || !settings.configPath)
         return Utils.logWarning(`[Utils] [setupMessage] Invalid ${chalk.bold("configPath")}. Got undefined`)
 
@@ -301,7 +301,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
                                     } else {
                                         let button = new MessageButton()
                                             .setStyle("LINK").setURL(Link);
-
                                         if (Label) button.setLabel(Label);
                                         if (Emoji) button.setEmoji(Emoji);
                                         if (Disabled) button.setDisabled(true);
@@ -336,7 +335,6 @@ module.exports = (settings, ephemeral = false, components = null) => {
                             }
                             break;
                         }
-
                         case 'selectmenu': {
                             if (!CustomID) {
                                 Utils.logError(`[Utils] [setupMessage] CustomID is required for SelectMenu to work.`);
@@ -366,6 +364,11 @@ module.exports = (settings, ephemeral = false, components = null) => {
 
                                 rows[i].addComponents([menu]);
                             }
+                        }
+
+                        default: {
+                            Utils.logError(`[Utils] [setupMessage] Invalid Component Type`);
+                            break;
                         }
                     }
                 })
