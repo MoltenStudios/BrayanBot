@@ -364,6 +364,8 @@ module.exports = (settings, ephemeral = false, components = null) => {
 
                                 rows[i].addComponents([menu]);
                             }
+
+                            break;
                         }
 
                         default: {
