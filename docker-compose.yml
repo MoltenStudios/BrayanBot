@@ -9,6 +9,7 @@ services:
     container_name: brayanbot
     restart: unless-stopped
     volumes:
+      - ./Addon_Configs:/opt/brayanbot/Addon_Configs
       - ./Addons:/opt/brayanbot/Addons
       - ./Modules:/opt/brayanbot/Modules
       - ./Events:/opt/brayanbot/Events
