@@ -2,39 +2,31 @@ const fs = require("fs"),
     YAML = require("yaml"),
     chalk = require("chalk"),
     Utils = require("../Utils"),
-    { SlashCommandBuilder } = require("@discordjs/builders"),
     { client, config, lang, commands } = require("../../index");
 
 module.exports = {
     getConfig: (name, config, extension = "yml") => {
-        if (
-            fs.existsSync("./Addon_Configs") &&
-            fs.existsSync(`./Addon_Configs/${name}/${config}.${extension}`)
-        ) {
-            return YAML.parse(
-                fs.readFileSync(
-                    `./Addon_Configs/${name}/${config}.${extension}`,
-                    "utf-8"
-                )
-            );
+        if (fs.existsSync("./Addon_Configs") && fs.existsSync(`./Addon_Configs/${name}/${config}.${extension}`)) {
+            return YAML.parse(fs.readFileSync(`./Addon_Configs/${name}/${config}.${extension}`, "utf-8"));
         } else {
             return false;
         }
     },
-    getYAMLConfig: (name, config) => {
-        if (
-            fs.existsSync("./Addon_Configs") &&
-            fs.existsSync(`./Addon_Configs/${name}/${config}.yml`)
-        ) {
-            return YAML.parse(
-                fs.readFileSync(
-                    `./Addon_Configs/${name}/${config}.yml`,
-                    "utf-8"
-                )
-            );
-        } else {
-            return false;
+    getConfigs: (name, extension = "yml") => {
+        let configs = {}
+
+        if (fs.existsSync("./Addon_Configs") && fs.existsSync(`./Addon_Configs/${name}/`)) {
+            let allFiles = fs.readdirSync(`./Addon_Configs/${name}/`)
+            let filtredFiles = allFiles.filter((f) => f.split(".").pop() == extension)
+            if (filtredFiles && filtredFiles[0]) {
+                filtredFiles.forEach(x => {
+                    if (fs.readFileSync(`./Addon_Configs/${name}/${x}`, { encoding: "utf-8" }))
+                        configs[x.replace(`.${extension}`, "").toLowerCase()] =
+                            YAML.parse(fs.readFileSync(`./Addon_Configs/${name}/${x}`, "utf-8"))
+                })
+            }
         }
+        return configs;
     },
     init: async () => {
         if (fs.existsSync("./Addons")) {
@@ -76,7 +68,7 @@ module.exports = {
                                         if (
                                             addon._customConfigs &&
                                             typeof addon._customConfigs ==
-                                                "object"
+                                            "object"
                                         ) {
                                             if (
                                                 !fs.existsSync(
@@ -113,7 +105,7 @@ module.exports = {
                                                 chalk
                                                     .hex("#007bff")
                                                     .bold("[INFO] ") +
-                                                    addon._log
+                                                addon._log
                                             );
                                         } else if (
                                             addon._log &&
@@ -123,22 +115,21 @@ module.exports = {
                                                 `${chalk
                                                     .hex(
                                                         addon._author.color ||
-                                                            "#007bff"
+                                                        "#007bff"
                                                     )
                                                     .bold(
-                                                        `[${
-                                                            addon._author
-                                                                ? addon._author
-                                                                : "[INFO]"
+                                                        `[${addon._author
+                                                            ? addon._author
+                                                            : "[INFO]"
                                                         }]`
                                                     )} ${chalk.bold(
-                                                    addon._name
-                                                        ? addon._name
-                                                        : file.replace(
-                                                              ".js",
-                                                              ""
-                                                          )
-                                                )} addon loaded`
+                                                        addon._name
+                                                            ? addon._name
+                                                            : file.replace(
+                                                                ".js",
+                                                                ""
+                                                            )
+                                                    )} addon loaded`
                                             );
                                         } else if (
                                             addon._log &&
@@ -148,30 +139,28 @@ module.exports = {
                                                 `${chalk
                                                     .hex(
                                                         addon._author.color ||
-                                                            "#007bff"
+                                                        "#007bff"
                                                     )
                                                     .bold(
                                                         `[${addon._author.name}]`
                                                     )} ${chalk.bold(
-                                                    addon._name
-                                                        ? addon._name
-                                                        : file.replace(
-                                                              ".js",
-                                                              ""
-                                                          )
-                                                )} addon loaded`
+                                                        addon._name
+                                                            ? addon._name
+                                                            : file.replace(
+                                                                ".js",
+                                                                ""
+                                                            )
+                                                    )} addon loaded`
                                             );
                                         }
                                     } else {
                                         Utils.logWarning(
-                                            `Unable to execute ${
-                                                addon._name
-                                                    ? addon._name
-                                                    : file.replace(".js", "")
-                                            } addon ${
-                                                addon._author
-                                                    ? `by ${addon._author}`
-                                                    : ""
+                                            `Unable to execute ${addon._name
+                                                ? addon._name
+                                                : file.replace(".js", "")
+                                            } addon ${addon._author
+                                                ? `by ${addon._author}`
+                                                : ""
                                             }`
                                         );
                                     }

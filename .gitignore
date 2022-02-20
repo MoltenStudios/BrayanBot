@@ -20,9 +20,14 @@ yarn.lock
 # Extra Files
 disposal
 config.yml
+config.json
 Addons/
 Addon_Configs/
+EvoTickets/
 *.db
 *.sqlite
 *.bak
-config.json
+
+# Github
+.github/
+README.md
