@@ -8,7 +8,7 @@ mkdir -p ./Commands
 mkdir -p ./Events
 
 
-# Ensure that onfig.yml, lang.yml and commands.yml exist
+# Ensure that config.yml, lang.yml and commands.yml exist
 for value in config.yml lang.yml commands.yml
 do
 	if [ ! -f $value ]; then
