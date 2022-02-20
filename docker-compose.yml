@@ -9,12 +9,13 @@ services:
     container_name: brayanbot
     restart: unless-stopped
     volumes:
+      - ./Addon_Configs:/opt/brayanbot/Addon_Configs
       - ./Addons:/opt/brayanbot/Addons
       - ./Modules:/opt/brayanbot/Modules
       - ./Events:/opt/brayanbot/Events
       - ./Commands:/opt/brayanbot/Commands
       - type: bind
-        source: ./example.config.yml
+        source: ./config.yml
         target: /opt/brayanbot/config.yml
       - type: bind
         source: ./lang.yml
@@ -22,7 +23,9 @@ services:
       - type: bind
         source: ./commands.yml
         target: /opt/brayanbot/commands.yml
-    tmpfs: /tmp # temp files such as uploads are stored here
+      - type: bind
+        source: ./Addon_Configs
+        target: /opt/brayanbot/Addon_Configs
     working_dir: /opt/brayanbot
     tty: true
     environment:
