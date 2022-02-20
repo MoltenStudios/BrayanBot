@@ -69,6 +69,12 @@ installModules().then(() => {
             }
         }
     }
+    const { inspect } = require('util')
+    const sendError = require('./Modules/Errors');
+    process.on('unhandledRejection', async function (error, data ) {
+        const text = inspect(data) || "";
+            sendError(error.toString(), text)
+    })
     require("console-stamp")(console, { format: ":date(HH:MM:ss).bold.grey" });
     if (process.versions.node < 16.6)
         return require("./Modules/Utils").logError(
