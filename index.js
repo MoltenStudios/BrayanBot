@@ -50,21 +50,23 @@ const installModules = async () => {
 };
 
 installModules().then(() => {
-    try {
-        require.resolve("console-stamp");
-    } catch (e) {
-        if (require("fs").existsSync("node_modules")) {
-            console.log(
-                `\x1b[34m[Module Installer]`,
-                `\x1b[37mModules installed, please restart the bot.`
-            );
-            process.exit(0);
-        } else {
-            console.log(
-                `\x1b[34m[Module Installer]`,
-                `\x1b[37mModules are not installed.`
-            );
-            process.exit(0);
+    if (!process.argv.includes("--no-install")) {
+        try {
+            require.resolve("console-stamp");
+        } catch (e) {
+            if (require("fs").existsSync("node_modules")) {
+                console.log(
+                    `\x1b[34m[Module Installer]`,
+                    `\x1b[37mModules installed, please restart the bot.`
+                );
+                process.exit(0);
+            } else {
+                console.log(
+                    `\x1b[34m[Module Installer]`,
+                    `\x1b[37mModules are not installed.`
+                );
+                process.exit(0);
+            }
         }
     }
     require("console-stamp")(console, { format: ":date(HH:MM:ss).bold.grey" });
@@ -80,10 +82,10 @@ installModules().then(() => {
     module.exports["client"] = client;
     ["config.yml", "commands.yml", "lang.yml"].forEach(
         (x) =>
-            (module.exports[x.replace(".yml", "")] = YAML.parse(
-                fs.readFileSync(x, "utf-8"),
-                { prettyErrors: true }
-            ))
+        (module.exports[x.replace(".yml", "")] = YAML.parse(
+            fs.readFileSync(x, "utf-8"),
+            { prettyErrors: true }
+        ))
     );
     ["config", "lang", "commands"].forEach(
         (x) => (client[x] = module.exports[x])
