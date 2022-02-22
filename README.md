@@ -1,7 +1,7 @@
 <h1 align="center">
   BrayanBot
   <br>
-  <a href="https://zorino.in/discord">
+  <a href="https://brayanbot.dev/discord">
     <img border="0" alt="Discord" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
   </a>
   <a href="https://www.javascript.com/">
