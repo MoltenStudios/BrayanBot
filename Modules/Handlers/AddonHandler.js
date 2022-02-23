@@ -1,7 +1,5 @@
-const fs = require("fs"),
-    YAML = require("yaml"),
-    chalk = require("chalk"),
-    Utils = require("../Utils"),
+const fs = require("fs"), YAML = require("yaml"),
+    chalk = require("chalk"), Utils = require("../Utils"),
     { client, config, lang, commands } = require("../../index");
 
 module.exports = {
@@ -165,8 +163,11 @@ module.exports = {
                                         );
                                     }
                                 } catch (e) {
-                                    console.log(e);
-                                    Utils.logError(e);
+                                    if (process.argv.includes("--show-errors")) {
+                                        Utils.logError(e.stack);
+                                    } else {
+                                        Utils.logError(`An unexpected error occured from ${chalk.bold(addonFiles[y])} addon, please contact the developer.`)
+                                    }
                                 }
                             }
                         }
