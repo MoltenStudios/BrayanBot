@@ -9,8 +9,12 @@ const config =
 		"DevMode": false
 	},
 	"Embeds": {
-		"Branding": "Brayan Bot",
 		"Color": "2f3136"
+	},
+	"Branding": {
+		"Name": "BrayanBot",
+		"Logo": "https://avatars.githubusercontent.com/u/99198112?s=200&v=4",
+		"Link": "https://brayanbot.dev",
 	},
 	"Misc": {
 		"Version": "v1.0.0",
@@ -82,10 +86,22 @@ function doSetup() {
 				// pattern: ^.*\.(db)$,
 				require: false,
 			},
-			branding: {
-				description: `The name that will show up on the embed footer. (Example: ${config.Embeds.Branding})`,
+			brandname: {
+				description: `Your brand/server name used by {brand-name} variable(in embeds). (Example: ${config.Branding.Name})`,
 				type: 'string',
-				default: config.Embeds.Branding,
+				default: config.Branding.Name,
+				required: false
+			},
+			brandlogo: {
+				description: `Your brand/server logo used by {brand-logo} variable(in embeds). (Example: ${config.Branding.Logo})`,
+				type: 'string',
+				default: config.Branding.Logo,
+				required: false
+			},
+			brandlink: {
+				description: `Your brand/server link used by {brand-link} variable(in embeds). (Example: ${config.Branding.Link})`,
+				type: 'string',
+				default: config.Branding.Link,
 				required: false
 			},
 			color: {

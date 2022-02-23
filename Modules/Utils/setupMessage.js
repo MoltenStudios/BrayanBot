@@ -73,7 +73,9 @@ module.exports = (settings, ephemeral = false, components = null) => {
         return Utils.logWarning(`[Utils] [setupMessage] Invalid ${chalk.bold("configPath")}. Got undefined`)
 
     let Variables = [
-        { searchFor: /{branding}/g, replaceWith: config.Embeds.Branding },
+        { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
+        { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
+        { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
     ], Embeds, Content, Components, Ephemeral = false;
 
     if (settings.variables && Array.isArray(settings.variables))
