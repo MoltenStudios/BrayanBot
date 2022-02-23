@@ -13,9 +13,7 @@ module.exports = async (bot, message) => {
 
         let commands =
             Commands.get(command.slice(config.Settings.Prefix.length)) ||
-            Commands.get(
-                Aliases.get(command.slice(config.Settings.Prefix.length))
-            );
+            Commands.get(Aliases.get(command.slice(config.Settings.Prefix.length)));
         if (commands && typeof commands.run == "function") {
             if (commands.commandData.Permission) {
                 if (typeof commands.commandData.Permission == "string") {
@@ -23,10 +21,7 @@ module.exports = async (bot, message) => {
                 } else if (!commands.commandData.Permission[0]) {
                     commands.commandData.Permission[0] = "@everyone";
                 }
-                if (
-                    commands.commandData.Permission.includes("@everyone") ||
-                    commands.commandData.Permission.includes("everyone")
-                ) {
+                if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone")) {
                     permissions.push(true);
                 } else {
                     for (const role of commands.commandData.Permission) {
@@ -41,26 +36,19 @@ module.exports = async (bot, message) => {
             if (permissions.includes(true)) {
                 commands.run(bot, message, args, config);
             } else {
-                message.reply(
-                    Utils.setupMessage({
-                        configPath: lang.Presets.NoPermission,
-                        variables: [
-                            {
-                                searchFor: /{roles}/g,
-                                replaceWith:
-                                    commands.commandData.Permission.map((x) => {
-                                        let role = Utils.findRole(
-                                            x,
-                                            message.guild,
-                                            true
-                                        );
-                                        if (role) return roleMention(role.id);
-                                    }).join(", "),
-                            },
-                            ...Utils.userVariables(message.member),
-                        ],
-                    })
-                );
+                message.reply(Utils.setupMessage({
+                    configPath: lang.Presets.NoPermission,
+                    variables: [
+                        {
+                            searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map((x) => {
+                                let role = Utils.findRole(x, message.guild, true
+                                );
+                                if (role) return roleMention(role.id);
+                            }).join(", "),
+                        },
+                        ...Utils.userVariables(message.member),
+                    ],
+                }));
             }
         }
     }

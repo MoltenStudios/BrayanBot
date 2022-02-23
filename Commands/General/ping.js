@@ -18,32 +18,23 @@ module.exports = {
  * @param {Object} config
  */
 module.exports.run = async (bot, message, args, config) => {
-    message.channel
-        .send({
-            embeds: [
-                {
-                    title: "Calculating ping..",
-                },
+    message.channel.send({
+        embeds: [
+            { title: "Calculating ping.." },
+        ],
+    }).then(async (msg) => {
+        const ping = msg.createdTimestamp - message.createdTimestamp;
+        msg.delete();
+        msg.channel.send(Utils.setupMessage({
+            configPath: lang.General.Ping,
+            variables: [
+                ...Utils.userVariables(message.member),
+                ...Utils.botVariables(bot),
+                { searchFor: /{bot-latency}/g, replaceWith: ping },
+                { searchFor: /{api-latency}/g, replaceWith: bot.ws.ping, },
             ],
-        })
-        .then(async (msg) => {
-            const ping = msg.createdTimestamp - message.createdTimestamp;
-            msg.delete();
-            msg.channel.send(
-                Utils.setupMessage({
-                    configPath: lang.General.Ping,
-                    variables: [
-                        ...Utils.userVariables(message.member),
-                        ...Utils.botVariables(bot),
-                        { searchFor: /{bot-latency}/g, replaceWith: ping },
-                        {
-                            searchFor: /{api-latency}/g,
-                            replaceWith: bot.ws.ping,
-                        },
-                    ],
-                })
-            );
-        });
+        }));
+    });
 };
 
 /**
@@ -52,18 +43,13 @@ module.exports.run = async (bot, message, args, config) => {
  * @param {Discord.Interaction} interaction
  */
 module.exports.runSlash = async (bot, interaction) => {
-    interaction.reply(
-        Utils.setupMessage(
-            {
-                configPath: lang.General.Ping,
-                variables: [
-                    ...Utils.userVariables(interaction.member),
-                    ...Utils.botVariables(bot),
-                    { searchFor: /{bot-latency}/g, replaceWith: "Unknown" },
-                    { searchFor: /{api-latency}/g, replaceWith: bot.ws.ping },
-                ],
-            },
-            true
-        )
-    );
+    interaction.reply(Utils.setupMessage({
+        configPath: lang.General.Ping,
+        variables: [
+            ...Utils.userVariables(interaction.member),
+            ...Utils.botVariables(bot),
+            { searchFor: /{bot-latency}/g, replaceWith: "Unknown" },
+            { searchFor: /{api-latency}/g, replaceWith: bot.ws.ping },
+        ],
+    }));
 };
