@@ -6,7 +6,6 @@ module.exports = {
     init: () => {
         process.on('uncaughtException', module.exports.uncaughtException);
         process.on('unhandledRejection', module.exports.unhandledRejection);
-        thi()
     },
     uncaughtException: async (error, source) => {
         const lines = "-".repeat(error.stack.split("\n").map(m => m.length).sort((a, b) => b - a)[0]);
