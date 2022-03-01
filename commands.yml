@@ -6,6 +6,7 @@ General:
     Aliases: []
     Permission:
       - "@everyone"
+    AllowedChannels: false
     SlashCommand:
       Enabled: true
       Data:
@@ -21,6 +22,7 @@ General:
     Aliases: []
     Permission:
       - "@everyone"
+    AllowedChannels: false
     SlashCommand:
       Enabled: true
       Data:
@@ -32,6 +34,7 @@ General:
     Aliases: []
     Permission:
       - "@everyone"
+    AllowedChannels: false
     SlashCommand:
       Enabled: true
       Data:
@@ -44,6 +47,7 @@ General:
       - "guildinfo"
     Permission:
       - "@everyone"
+    AllowedChannels: false
     SlashCommand:
       Enabled: true
       Data:
@@ -56,6 +60,7 @@ General:
       - "av"
     Permission:
       - "@everyone"
+    AllowedChannels: false
     SlashCommand:
       Enabled: true
       Data:

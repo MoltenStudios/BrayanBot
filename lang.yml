@@ -1,7 +1,7 @@
 General:
   Help:
     Embeds:
-      - Title: "Command Info - {command-name}"
+      - Title: 'Command Info - {command-name}'
         Description: |-
           {command-description}
 
@@ -10,37 +10,36 @@ General:
           **Aliases**
           > {command-aliases}
           **Slash Command**: \{command-isSlashEnabled}
-        Footer: "{user-tag}"
-        FooterTag: "{user-tag}"
+        Footer: '{user-tag}'
+        FooterTag: '{user-tag}'
         Timestamp: true
   Ping:
     Embeds:
-      - Author: "{bot-tag}'s Ping"
-        AuthorIcon: "{bot-pfp}"
+      - Author: '{bot-tag}''s Ping'
+        AuthorIcon: '{bot-pfp}'
         Description: |-
           **Bot latency**: {bot-latency}
           **API latency**: {api-latency}
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
         Timestamp: true
   Uptime:
     Embeds:
-      - Author: "{bot-tag}'s Uptime"
-        AuthorIcon: "{bot-pfp}"
-        Description: |-
-          > **Current Uptime**: {uptime}
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+      - Author: '{bot-tag}''s Uptime'
+        AuthorIcon: '{bot-pfp}'
+        Description: '> **Current Uptime**: {uptime}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
         Timestamp: true
   ServerInfo:
     Embeds:
-      - Title: "💭 Server Info - {guild-name} [1/2]"
+      - Title: "\U0001F4AD Server Info - {guild-name} [1/2]"
         Description: |-
           • **Name**: {guild-name}
           • **Guild ID**: {guild-id}
           • **Created-At**: {guild-createdat}
         Fields:
-          - Name: 👑 Server Owner
+          - Name: "\U0001F451 Server Owner"
             Value: |-
               • **Account**: {guild-owner-mention} | {guild-owner-tag}
               • **ID**: {guild-owner-id}
@@ -49,44 +48,45 @@ General:
             Value: |-
               • **Boosts**: {guild-boosts} Boosts
               • **Guild-Level**: Level {guild-level}
-        Thumbnail: "{guild-icon}"
+        Thumbnail: '{guild-icon}'
         Timestamp: true
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
-      - Title: "💭 Server info - {guild-name} [2/2]"
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+      - Title: "\U0001F4AD Server info - {guild-name} [2/2]"
         Fields:
-          - Name: 📊 Server Stats
+          - Name: "\U0001F4CA Server Stats"
             Value: |-
               • **Total Channels**: {guild-total-channels}
               • **Total Roles**: {guild-total-roles}
               • **Total Emojis**: {guild-total-emojis}
-          - Name: 👪 Server Member Stats
+          - Name: "\U0001F46A Server Member Stats"
             Value: |-
               • **Total Humans**: {guild-members}
               • **Total Bots**: {guild-bots}
               • **Total Members**: {guild-total-members}
-          - Name: 🤵 Member Status
+          - Name: "\U0001F935 Member Status"
             Value: |-
               • **Online Humans**: {guild-online-humans}
               • **Idle Humans**: {guild-idle-humans}
               • **DND Humans**: {guild-dnd-humans}
               • **Offline Humans**: {guild-offline-humans}
         Timestamp: true
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
   Avatar:
     Embeds:
-      - AuthorIcon: "{avatar}"
-        Author: "{req-user-tag}"
-        Image: "{avatar}"
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+      - AuthorIcon: '{avatar}'
+        Author: '{req-user-tag}'
+        Image: '{avatar}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
     Components:
-      "1":
-        - Type: "Button"
-          Style: "Link"
-          Label: "Avatar"
-          Link: "{link}"
+      '1':
+        - Type: Button
+          Style: Link
+          Label: Avatar
+          Link: '{link}'
+
 Presets:
   NoPermission:
     Embeds:
@@ -94,17 +94,33 @@ Presets:
         Description: |-
           You do not have enough permissions to run this command
 
-          **Permissions**
-          > {roles}
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+          ** **
+        Fields:
+          - Name: Allowed Roles
+            Value: '> {roles}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
         Timestamp: true
-        Color: "#edd100"
+        Color: '#edd100'
+  NonCommandChannel:
+    Embeds:
+      - Title: Unable to execute command
+        Description: |-
+          > This command is disabled for this channel.
+
+          ** **
+        Fields:
+          - Name: Allowed Channels
+            Value: '> {channels}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
+        Color: '#ff0800'
   Error:
     Embeds:
       - Title: Unable to perform action
-        Description: "> {error}"
-        Footer: "{user-tag}"
-        FooterIcon: "{user-pfp}"
+        Description: '> {error}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
         Timestamp: true
-        Color: "#ff0800"
+        Color: '#ff0800'
