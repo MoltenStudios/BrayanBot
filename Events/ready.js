@@ -21,7 +21,7 @@ module.exports = async (bot) => {
     await Utils.logInfo(`                    • ${chalk.bold(`Brayan Bot v${packageJSON.version}`)} is now Online! •       `);
     await Utils.logInfo("                                                                          ");
     await Utils.logInfo("          • Join our Discord Server for any Issues/Custom Bots •          ");
-    await Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://discord.gg/G4AV33KeqF`))}                        `);
+    await Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://brayanbot.dev/discprd`))}                        `);
     await Utils.logInfo("                                                                          ");
     await Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
     await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
