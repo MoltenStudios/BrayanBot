@@ -5,8 +5,12 @@ Settings:
   DevMode: false # This option will reset every addon configs.
 
 Embeds:
-  Branding: "Brayan Bot"
   Color: "2f3136"
 
+Branding:
+  Name: "BrayanBot"
+  Logo: "https://avatars.githubusercontent.com/u/99198112?s=200&v=4"
+  Link: "https://brayanbot.dev"
+
 Misc:
-  Version: "v1.0.0"
+  Version: "v1.0.1"

@@ -6,11 +6,7 @@ module.exports = async (bot, interaction) => {
     let permissions = [];
     // Slash Command Executing
     if (interaction.isCommand()) {
-        const command = SlashCmds.find(
-            (x) =>
-                x.commandData.SlashCommand.Data.Name.toLowerCase() ==
-                interaction.commandName.toLowerCase()
-        );
+        const command = SlashCmds.find((x) => x.commandData.SlashCommand.Data.Name.toLowerCase() == interaction.commandName.toLowerCase());
         if (command && typeof command.runSlash == "function") {
             if (command.commandData.Permission) {
                 if (typeof command.commandData.Permission == "string") {
@@ -32,53 +28,32 @@ module.exports = async (bot, interaction) => {
                 }
 
                 let options =
-                    interaction.options && interaction.options._hoistedOptions
-                        ? Utils.parseSlashArgs(
-                              interaction.options._hoistedOptions
-                          )
-                        : {};
+                    interaction.options && interaction.options._hoistedOptions ? Utils.parseSlashArgs(interaction.options._hoistedOptions) : {};
 
                 if (permissions.includes(true) || permissions.length == 0) {
                     let commandUsed = interaction.commandName,
                         commandData = command;
-                    command.runSlash(bot, interaction, options, {
-                        commandUsed,
-                        commandData,
-                    });
+                    command.runSlash(bot, interaction, options, { commandUsed, commandData, });
                 } else {
-                    interaction.reply(
-                        Utils.setupMessage(
+                    interaction.reply(Utils.setupMessage({
+                        configPath: lang.Presets.NoPermission,
+                        variables: [
                             {
-                                configPath: lang.Presets.NoPermission,
-                                variables: [
-                                    {
-                                        searchFor: /{roles}/g,
-                                        replaceWith:
-                                            command.commandData.Permission.map(
-                                                (r) => {
-                                                    let role = Utils.findRole(
-                                                        r,
-                                                        interaction.guild,
-                                                        true
-                                                    );
-                                                    if (role)
-                                                        return `<@&${role.id}>`;
-                                                }
-                                            ).join(", "),
-                                    },
-                                    ...Utils.userVariables(interaction.member),
-                                ],
+                                searchFor: /{roles}/g,
+                                replaceWith: command.commandData.Permission.map((r) => {
+                                    let role = Utils.findRole(r, interaction.guild, true);
+                                    if (role)
+                                        return `<@&${role.id}>`;
+                                }).join(", "),
                             },
-                            true
-                        )
-                    );
+                            ...Utils.userVariables(interaction.member),
+                        ],
+                    }, true));
                 }
             }
         } else {
             let cmd = interaction.guild.commands.cache.find(
-                (x) =>
-                    x.name.toLowerCase() ==
-                    interaction.commandName.toLowerCase()
+                (x) => x.name.toLowerCase() == interaction.commandName.toLowerCase()
             );
             if (cmd) cmd.delete();
             interaction.reply({

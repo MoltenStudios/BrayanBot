@@ -34,94 +34,60 @@ module.exports.run = async (bot, message, args, config) => {
             const c = _commands[index];
             fields.push({
                 Name: `${Utils.formatFirstLetter(c[0])} Commands`,
-                Value: c[1]
-                    .map((x) => `\`${config.Settings.Prefix}${x.name}\``)
-                    .join(", "),
+                Value: c[1].map((x) => `\`${config.Settings.Prefix}${x.name}\``).join(", "),
             });
         }
-        message.reply(
-            Utils.setupMessage(
-                {
-                    configPath: {
-                        Embeds: [
-                            {
-                                Title: "💁‍♂️ Help Menu",
-                                Description:
-                                    "> User `-help <command>` to view more information about command",
-                                Fields: fields,
-                                Footer: "{user-tag}",
-                                FooterTag: "{user-tag}",
-                                Thumbnail: "{bot-pfp}",
-                                Timestamp: true,
-                            },
-                        ],
+        message.reply(Utils.setupMessage({
+            configPath: {
+                Embeds: [
+                    {
+                        Title: "💁‍♂️ Help Menu",
+                        Description:
+                            "> User `-help <command>` to view more information about command",
+                        Fields: fields,
+                        Footer: "{user-tag}",
+                        FooterTag: "{user-tag}",
+                        Thumbnail: "{bot-pfp}",
+                        Timestamp: true,
                     },
-                    variables: [
-                        ...Utils.userVariables(message.member),
-                        ...Utils.botVariables(bot),
-                    ],
-                },
-                true
-            )
-        );
+                ],
+            },
+            variables: [
+                ...Utils.userVariables(message.member),
+                ...Utils.botVariables(bot),
+            ],
+        }, true));
     } else {
         let command = args[0].toLowerCase(),
-            cmd = cmds.find(
-                (x) => x.name.toLowerCase() == command.toLowerCase()
-            );
+            cmd = cmds.find((x) => x.name.toLowerCase() == command.toLowerCase());
         if (cmd) {
-            message.reply(
-                Utils.setupMessage(
+            message.reply(Utils.setupMessage({
+                configPath: lang.General.Help,
+                variables: [
+                    ...Utils.userVariables(message.member),
+                    ...Utils.botVariables(bot),
+                    { searchFor: /{command-name}/g, replaceWith: cmd.name, },
+                    { searchFor: /{command-description}/g, replaceWith: cmd.commandData.Description, },
+                    { searchFor: /{command-usage}/g, replaceWith: cmd.commandData.Usage, },
                     {
-                        configPath: lang.General.Help,
-                        variables: [
-                            ...Utils.userVariables(message.member),
-                            ...Utils.botVariables(bot),
-                            {
-                                searchFor: /{command-name}/g,
-                                replaceWith: cmd.name,
-                            },
-                            {
-                                searchFor: /{command-description}/g,
-                                replaceWith: cmd.commandData.Description,
-                            },
-                            {
-                                searchFor: /{command-usage}/g,
-                                replaceWith: cmd.commandData.Usage,
-                            },
-                            {
-                                searchFor: /{command-aliases}/g,
-                                replaceWith:
-                                    cmd.commandData.Aliases.length > 0
-                                        ? cmd.commandData.Aliases.join(", ")
-                                        : "None",
-                            },
-                            {
-                                searchFor: /{command-isSlashEnabled}/g,
-                                replaceWith: cmd.commandData.SlashCommand
-                                    .Enabled
-                                    ? "✅"
-                                    : "❌",
-                            },
-                        ],
+                        searchFor: /{command-aliases}/g,
+                        replaceWith: cmd.commandData.Aliases.length > 0 ? cmd.commandData.Aliases.join(", ") : "None",
                     },
-                    true
-                )
-            );
+                    {
+                        searchFor: /{command-isSlashEnabled}/g,
+                        replaceWith: cmd.commandData.SlashCommand.Enabled ? "✅" : "❌",
+                    },
+                ],
+            }, true));
         } else {
-            message.reply(
-                Utils.setupMessage({
-                    configPath: lang.General.Help,
-                    variables: [
-                        ...Utils.userVariables(message.member),
-                        ...Utils.botVariables(bot),
-                        {
-                            searchFor: /{error}/g,
-                            replaceWith: `Unable to find \`${command}\` command`,
-                        },
-                    ],
-                })
-            );
+            message.reply(Utils.setupMessage({
+                configPath: lang.General.Help,
+                variables: [
+                    ...Utils.userVariables(message.member),
+                    ...Utils.botVariables(bot),
+                    { searchFor: /{error}/g, replaceWith: `Unable to find \`${command}\` command`, },
+                ],
+            }));
         }
     }
 };
@@ -154,88 +120,52 @@ module.exports.runSlash = async (bot, interaction) => {
                 Value: c[1].map((x) => `\`/${x.name}\``).join(", "),
             });
         }
-        interaction.editReply(
-            Utils.setupMessage(
-                {
-                    configPath: {
-                        Embeds: [
-                            {
-                                Title: "💁‍♂️ Help Menu",
-                                Description:
-                                    "> User `-help <command>` to view more information about command",
-                                Fields: fields,
-                                Footer: "{user-tag}",
-                                FooterTag: "{user-tag}",
-                                Thumbnail: "{bot-pfp}",
-                                Timestamp: true,
-                            },
-                        ],
+        interaction.editReply(Utils.setupMessage({
+            configPath: {
+                Embeds: [
+                    {
+                        Title: "💁‍♂️ Help Menu",
+                        Description:
+                            "> User `-help <command>` to view more information about command",
+                        Fields: fields,
+                        Footer: "{user-tag}",
+                        FooterTag: "{user-tag}",
+                        Thumbnail: "{bot-pfp}",
+                        Timestamp: true,
                     },
-                    variables: [
-                        ...Utils.userVariables(interaction.member),
-                        ...Utils.botVariables(bot),
-                    ],
-                },
-                true
-            )
-        );
+                ],
+            },
+            variables: [
+                ...Utils.userVariables(interaction.member),
+                ...Utils.botVariables(bot),
+            ],
+        }, true));
     } else {
         let cmd = cmds.find(
             (x) => x.name.toLowerCase() == command.toLowerCase()
         );
         if (cmd) {
-            interaction.editReply(
-                Utils.setupMessage(
-                    {
-                        configPath: lang.General.Help,
-                        variables: [
-                            ...Utils.userVariables(interaction.member),
-                            ...Utils.botVariables(bot),
-                            {
-                                searchFor: /{command-name}/g,
-                                replaceWith: cmd.name,
-                            },
-                            {
-                                searchFor: /{command-description}/g,
-                                replaceWith: cmd.commandData.Description,
-                            },
-                            {
-                                searchFor: /{command-usage}/g,
-                                replaceWith: cmd.commandData.Usage,
-                            },
-                            {
-                                searchFor: /{command-aliases}/g,
-                                replaceWith:
-                                    cmd.commandData.Aliases.length > 0
-                                        ? cmd.commandData.Aliases.join(", ")
-                                        : "None",
-                            },
-                            {
-                                searchFor: /{command-isSlashEnabled}/g,
-                                replaceWith: cmd.commandData.SlashCommand
-                                    .Enabled
-                                    ? "✅"
-                                    : "❌",
-                            },
-                        ],
-                    },
-                    true
-                )
-            );
+            interaction.editReply(Utils.setupMessage({
+                configPath: lang.General.Help,
+                variables: [
+                    ...Utils.userVariables(interaction.member),
+                    ...Utils.botVariables(bot),
+                    { searchFor: /{command-name}/g, replaceWith: cmd.name, },
+                    { searchFor: /{command-description}/g, replaceWith: cmd.commandData.Description, },
+                    { searchFor: /{command-usage}/g, replaceWith: cmd.commandData.Usage, },
+                    { searchFor: /{command-aliases}/g, replaceWith: cmd.commandData.Aliases.length > 0 ? cmd.commandData.Aliases.join(", ") : "None", },
+                    { searchFor: /{command-isSlashEnabled}/g, replaceWith: cmd.commandData.SlashCommand.Enabled ? "✅" : "❌", },
+                ],
+            }, true));
         } else {
-            interaction.editReply(
-                Utils.setupMessage({
-                    configPath: lang.General.Help,
-                    variables: [
-                        ...Utils.userVariables(interaction.member),
-                        ...Utils.botVariables(bot),
-                        {
-                            searchFor: /{error}/g,
-                            replaceWith: `Unable to find \`${command}\` command`,
-                        },
-                    ],
-                })
-            );
+            interaction.editReply(Utils.setupMessage({
+                configPath: lang.General.Help,
+                variables: [
+                    ...Utils.userVariables(interaction.member),
+                    ...Utils.botVariables(bot),
+                    { searchFor: /{error}/g, replaceWith: `Unable to find \`${command}\` command`, },
+                ],
+            }));
         }
     }
 };

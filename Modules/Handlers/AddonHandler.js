@@ -1,7 +1,5 @@
-const fs = require("fs"),
-    YAML = require("yaml"),
-    chalk = require("chalk"),
-    Utils = require("../Utils"),
+const fs = require("fs"), YAML = require("yaml"),
+    chalk = require("chalk"), Utils = require("../Utils"),
     { client, config, lang, commands } = require("../../index");
 
 module.exports = {
@@ -56,117 +54,38 @@ module.exports = {
                             for (let y = 0; y < addonFiles.length; y++) {
                                 try {
                                     const addon = require(`../../Addons/${addonFiles[y]}`);
-                                    if (
-                                        addon &&
-                                        typeof addon.run == "function"
-                                    ) {
+                                    if (addon && typeof addon.run == "function") {
                                         // Custom Config
                                         let customConfig = {},
-                                            addonName = addon._name
-                                                ? addon._name
-                                                : file.replace(".js", "");
-                                        if (
-                                            addon._customConfigs &&
-                                            typeof addon._customConfigs ==
-                                            "object"
-                                        ) {
-                                            if (
-                                                !fs.existsSync(
-                                                    "./Addon_Configs"
-                                                )
-                                            )
-                                                await fs.mkdirSync(
-                                                    "./Addon_Configs"
-                                                );
-                                            if (
-                                                !fs.existsSync(
-                                                    `./Addon_Configs/${addonName}`
-                                                )
-                                            )
-                                                await fs.mkdirSync(
-                                                    `./Addon_Configs/${addonName}`
-                                                );
+                                            addonName = addon._name ? addon._name : file.replace(".js", "");
+                                        if (addon._customConfigs && typeof addon._customConfigs == "object") {
+                                            if (!fs.existsSync("./Addon_Configs"))
+                                                await fs.mkdirSync("./Addon_Configs");
+                                            if (!fs.existsSync(`./Addon_Configs/${addonName}`))
+                                                await fs.mkdirSync(`./Addon_Configs/${addonName}`);
 
-                                            customConfig =
-                                                Utils.createMultipleConfigs(
-                                                    addon._customConfigs,
-                                                    addonName
-                                                );
+                                            customConfig = Utils.createMultipleConfigs(addon._customConfigs, addonName);
                                         }
                                         // Executing Addon
                                         await addon.run(client, customConfig);
 
                                         // Addon Logging
-                                        if (
-                                            typeof addon._log == "string" &&
-                                            !addon._author
-                                        ) {
-                                            console.log(
-                                                chalk
-                                                    .hex("#007bff")
-                                                    .bold("[INFO] ") +
-                                                addon._log
-                                            );
-                                        } else if (
-                                            addon._log &&
-                                            typeof addon._author == "string"
-                                        ) {
-                                            console.log(
-                                                `${chalk
-                                                    .hex(
-                                                        addon._author.color ||
-                                                        "#007bff"
-                                                    )
-                                                    .bold(
-                                                        `[${addon._author
-                                                            ? addon._author
-                                                            : "[INFO]"
-                                                        }]`
-                                                    )} ${chalk.bold(
-                                                        addon._name
-                                                            ? addon._name
-                                                            : file.replace(
-                                                                ".js",
-                                                                ""
-                                                            )
-                                                    )} addon loaded`
-                                            );
-                                        } else if (
-                                            addon._log &&
-                                            typeof addon._author == "object"
-                                        ) {
-                                            console.log(
-                                                `${chalk
-                                                    .hex(
-                                                        addon._author.color ||
-                                                        "#007bff"
-                                                    )
-                                                    .bold(
-                                                        `[${addon._author.name}]`
-                                                    )} ${chalk.bold(
-                                                        addon._name
-                                                            ? addon._name
-                                                            : file.replace(
-                                                                ".js",
-                                                                ""
-                                                            )
-                                                    )} addon loaded`
-                                            );
+                                        if (typeof addon._log == "string" && !addon._author) {
+                                            console.log(chalk.hex("#007bff").bold("[INFO] ") + addon._log);
+                                        } else if (addon._log && typeof addon._author == "string") {
+                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author ? addon._author : "[INFO]"}]`)} ${chalk.bold(addon._name ? addon._name : file.replace(".js", ""))} addon loaded`);
+                                        } else if (addon._log && typeof addon._author == "object") {
+                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author.name}]`)} ${chalk.bold(addon._name ? addon._name : file.replace(".js", ""))} addon loaded`);
                                         }
                                     } else {
-                                        Utils.logWarning(
-                                            `Unable to execute ${addon._name
-                                                ? addon._name
-                                                : file.replace(".js", "")
-                                            } addon ${addon._author
-                                                ? `by ${addon._author}`
-                                                : ""
-                                            }`
-                                        );
+                                        Utils.logWarning(`Unable to execute ${addon._name ? addon._name : file.replace(".js", "")} addon ${addon._author ? `by ${addon._author}` : ""}`);
                                     }
                                 } catch (e) {
-                                    console.log(e);
-                                    Utils.logError(e);
+                                    if (process.argv.includes("--show-errors")) {
+                                        Utils.logError(e.stack);
+                                    } else {
+                                        Utils.logError(`An unexpected error occured from ${chalk.bold(addonFiles[y])} addon, please contact the developer.`)
+                                    }
                                 }
                             }
                         }

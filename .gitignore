@@ -18,12 +18,13 @@ yarn.lock
 .node_repl_history
 
 # Extra Files
-disposal
+errors.txt
 config.yml
 config.json
 Addons/
 Addon_Configs/
 EvoTickets/
+disposal/
 *.db
 *.sqlite
 *.bak

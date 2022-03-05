@@ -19,27 +19,20 @@ module.exports = {
  */
 module.exports.run = async (bot, message, args, config) => {
     const user = Utils.parseUserFromMessage(message, args[0] ? args[0] : message.author.id, true);
-    const avatar = user.user
-        .displayAvatarURL({ dynamic: true })
-        .endsWith("?size=2048")
+    const avatar = user.user.displayAvatarURL({ dynamic: true }).endsWith("?size=2048")
         ? user.user.displayAvatarURL({ dynamic: true })
         : `${user.user.displayAvatarURL({ dynamic: true })}?size=2048`;
 
-    message.channel.send(
-        Utils.setupMessage({
-            configPath: lang.General.Avatar,
-            variables: [
-                {
-                    searchFor: /{link}/g,
-                    replaceWith: user.user.displayAvatarURL({ dynamic: true }),
-                },
-                { searchFor: /{avatar}/g, replaceWith: avatar },
-                ...Utils.userVariables(user, "req-user"),
-                ...Utils.userVariables(message.member),
-                ...Utils.botVariables(bot),
-            ],
-        })
-    );
+    message.channel.senUtils.setupMessage({
+        configPath: lang.General.Avatar,
+        variables: [
+            { searchFor: /{link}/g, replaceWith: user.user.displayAvatarURL({ dynamic: true }), },
+            { searchFor: /{avatar}/g, replaceWith: avatar },
+            ...Utils.userVariables(user, "req-user"),
+            ...Utils.userVariables(message.member),
+            ...Utils.botVariables(bot),
+        ],
+    });
 };
 
 /**
@@ -52,30 +45,22 @@ module.exports.runSlash = async (bot, interaction) => {
     const user = interactionUser
         ? Utils.parseUser(interactionUser.id, interaction.guild)
         : interaction.member;
-    const avatar = user.user
-        .displayAvatarURL({ dynamic: true })
-        .endsWith("?size=2048")
+    const avatar = user.user.displayAvatarURL({ dynamic: true }).endsWith("?size=2048")
         ? user.user.displayAvatarURL({ dynamic: true })
         : `${user.user.displayAvatarURL({ dynamic: true })}?size=2048`;
 
-    interaction.reply(
-        Utils.setupMessage(
+    interaction.reply(Utils.setupMessage({
+        configPath: lang.General.Avatar,
+        variables: [
             {
-                configPath: lang.General.Avatar,
-                variables: [
-                    {
-                        searchFor: /{link}/g,
-                        replaceWith: user.user.displayAvatarURL({
-                            dynamic: true,
-                        }),
-                    },
-                    { searchFor: /{avatar}/g, replaceWith: avatar },
-                    ...Utils.userVariables(user, "req-user"),
-                    ...Utils.userVariables(interaction.member),
-                    ...Utils.botVariables(bot),
-                ],
+                searchFor: /{link}/g, replaceWith: user.user.displayAvatarURL({
+                    dynamic: true,
+                }),
             },
-            true
-        )
-    );
+            { searchFor: /{avatar}/g, replaceWith: avatar },
+            ...Utils.userVariables(user, "req-user"),
+            ...Utils.userVariables(interaction.member),
+            ...Utils.botVariables(bot),
+        ],
+    }, true));
 };

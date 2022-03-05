@@ -1,6 +1,6 @@
 {
 	"name": "brayan-bot",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "An Advanced Discord Bot Node.js Discord.js-v13",
 	"main": "index.js",
 	"dependencies": {
@@ -29,7 +29,7 @@
 	},
 	"scripts": {
 		"setup": "node install/setup.js",
-		"dev": "nodemon index.js --show-full-errors --no-install -e js",
+		"dev": "nodemon index.js --show-errors --no-install -e js",
 		"start": "node index.js"
 	},
 	"author": "@Zorino#1110",
@@ -41,13 +41,7 @@
 		"type": "git",
 		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
 	},
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"bugs": {
 		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
 	},
