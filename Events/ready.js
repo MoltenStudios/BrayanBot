@@ -1,7 +1,7 @@
 const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
     Discord = require("discord.js"), Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
-    chalk = require("chalk");
+    chalk = require("chalk"), axios = require('axios').default;
 
 /**
  *
@@ -40,13 +40,12 @@ module.exports = async (bot) => {
                     const element2 = commandYMLData.commandData.Permission[i];
                     if (element2.toLowerCase() !== "@everyone") {
                         let role = await Utils.findRole(element2, guild, true)
-                        if (role) {
-                            cmdPerms.push({
-                                id: role.id,
-                                type: "ROLE",
-                                permission: true
-                            })
-                        }
+                        if (role) cmdPerms.push({
+                            id: role.id,
+                            type: "ROLE",
+                            permission: true
+                        })
+
                     }
                 }
                 fullPermissions.push({
@@ -56,13 +55,11 @@ module.exports = async (bot) => {
             } else {
                 fullPermissions.push({
                     id: element.id,
-                    permissions: [
-                        {
-                            id: guild.id,
-                            type: "ROLE",
-                            permission: true
-                        }
-                    ]
+                    permissions: [{
+                        id: guild.id,
+                        type: "ROLE",
+                        permission: true
+                    }]
                 })
             }
         }
@@ -77,6 +74,40 @@ module.exports = async (bot) => {
         }
     })
 
+    await axios({
+        baseURL: "https://api.github.com",
+        url: "repos/BrayanbotDev/BrayanBot/releases/latest",
+        method: "GET"
+    }).then(async ({ data }) => {
+        if (data) {
+            let { tag_name: tagName, target_commitish: repo } = data;
+            if (!data.draft && repo == "main") {
+                let newVersion = tagName.trim().replace(/^[=v]+/, '').split("."),
+                    curVersion = packageJSON.version.split("."),
+                    versions = [true, true, true]
+                for (let i = 0; i < newVersion.length; i++)
+                    if (newVersion[i] > curVersion[i]) versions[i] = false
+
+                if (versions[0] == false) {
+                    Utils.logWarning(`You are running on older version of ${chalk.bold("BrayanBot")}, please update your bot to apply any ${chalk.bold("Major")} changes.`)
+                } else if (versions[1] == false) {
+                    Utils.logWarning(`You are running on older version of ${chalk.bold("BrayanBot")}, please update your bot to apply any ${chalk.bold("Minor")} changes.`)
+                } else if (versions[2] == false) {
+                    Utils.logWarning(`You are running on older version of ${chalk.bold("BrayanBot")}, please update your bot to apply any ${chalk.bold("Patch")} changes.`)
+                } else if (versions[0] == true && versions[1] == true && versions[2] == true) {
+                    Utils.logInfo(`You are running latest version of ${chalk.bold("BrayanBot")}!`)
+                }
+            }
+        }
+    }).catch(async (e) => {
+        if (e.response && e.response.status == 404) {
+            Utils.logWarning(`Unable to fetch latest BrayanBot releases.`)
+        } else if (e.response && e.response.data && e.response.data.message.includes("rate limit")) {
+            Utils.logWarning("Skipping Github Version check due to rate limits.")
+        } else {
+            Utils.logError(`[Update-Checker] ${e}`)
+        }
+    })
 
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
     await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
