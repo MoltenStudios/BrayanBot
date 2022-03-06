@@ -74,6 +74,11 @@ module.exports = async (bot) => {
         }
     })
 
+    const { app } = require('../Modules/Handlers/ExpressHandler')
+    app.listen(config.WebServer.Port || 80, () => {
+        Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
+    })
+
     await axios({
         baseURL: "https://api.github.com",
         url: "repos/BrayanbotDev/BrayanBot/releases/latest",
