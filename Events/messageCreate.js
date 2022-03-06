@@ -45,7 +45,7 @@ module.exports = async (bot, message) => {
             }
             if (commands.commandData.Permission) {
                 if (typeof commands.commandData.Permission == "string") {
-                    commands.commandData.Permission = [commands.Permission];
+                    commands.commandData.Permission = [commands.commandData.Permission];
                 } else if (!commands.commandData.Permission[0]) {
                     commands.commandData.Permission = [];
                     commands.commandData.Permission.push("@everyone");
