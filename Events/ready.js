@@ -1,8 +1,8 @@
 const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
+    { app } = require('../Modules/Handlers/ExpressHandler'),
     Discord = require("discord.js"), Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
     chalk = require("chalk"), axios = require('axios').default;
-
 /**
  *
  * @param {Discord.Client} bot
@@ -24,8 +24,8 @@ module.exports = async (bot) => {
     await Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://brayanbot.dev/discord`))}                        `);
     await Utils.logInfo("                                                                          ");
     await Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
-    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
     await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s"} Loaded.`);
+    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
 
     await rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
@@ -74,7 +74,6 @@ module.exports = async (bot) => {
         }
     })
 
-    const { app } = require('../Modules/Handlers/ExpressHandler')
     app.listen(config.WebServer.Port || 80, () => {
         Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
     })
