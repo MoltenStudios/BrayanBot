@@ -26,7 +26,7 @@ module.exports = {
         }
         return configs;
     },
-    init: async () => {
+    init: () => new Promise(async (resolve, reject) => {
         if (fs.existsSync("./Addons")) {
             fs.readdir("Addons", async (err, files) => {
                 files = files.filter((f) => f.split(".").pop() == "js");
@@ -90,13 +90,15 @@ module.exports = {
                             }
                         }
                     }
+
+                    resolve()
                 }
             });
         } else {
             fs.mkdirSync("./Addons");
-            await module.exports.init();
+            resolve(await module.exports.init());
         }
-    },
+    }),
     addonStructure: {
         _name: String,
         _log: String || Function,
