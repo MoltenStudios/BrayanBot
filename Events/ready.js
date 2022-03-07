@@ -36,6 +36,9 @@ module.exports = async (bot) => {
                 commandYMLData = SlashCmds.find(x => x.name.toLowerCase() == element.name.toLowerCase()),
                 cmdPerms = [];
             if (!commandYMLData.commandData.Permission.includes("@everyone")) {
+                if (typeof commandYMLData.commandData.Permission == "string") {
+                    commandYMLData.commandData.Permission = [commandYMLData.commandData.Permission]
+                }
                 for (let i = 0; i < commandYMLData.commandData.Permission.length; i++) {
                     const element2 = commandYMLData.commandData.Permission[i];
                     if (element2.toLowerCase() !== "@everyone") {
