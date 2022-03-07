@@ -10,12 +10,9 @@ module.exports = async (bot, interaction) => {
         if (command && typeof command.runSlash == "function") {
             if (command.commandData.Permission) {
                 if (typeof command.commandData.Permission == "string") {
-                    if (Utils.hasRole(interaction.member, role, true)) {
-                        permissions.push(true);
-                    } else {
-                        permissions.push(false);
-                    }
-                } else if (command.commandData.Permission[0]) {
+                    command.commandData.Permission = [command.commandData.Permission]
+                }
+                if (command.commandData.Permission[0]) {
                     for (const role of command.commandData.Permission) {
                         if (Utils.hasRole(interaction.member, role, true)) {
                             permissions.push(true);
