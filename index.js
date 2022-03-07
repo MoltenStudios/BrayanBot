@@ -12,7 +12,7 @@ const installModules = async () => {
         for (let index = 0; index < rawModules.length; index++) {
             let [module, version] = rawModules[index];
             version = version.replace("^", "");
-            let moduleName = `${module}@${version}`;
+            let moduleName = module == "chalk" ? `${module}@${version}` : `${module}@latest`;
             nodeModulesArray.push(moduleName);
             nodeModules += ` ${moduleName}`;
         }
@@ -24,7 +24,7 @@ const installModules = async () => {
                 }
             });
         } catch (e) {
-            console.log(`\x1b[34m[Module Installer]`, `\x1b[37mUnable to install modules, please run "${`\x1b[1mnpm i ${nodeModules}\x1b[0m`}" to install the module.`);
+            console.log(`\x1b[34m[Module Installer]`, `\x1b[37mUnable to install modules, please run "${`\x1b[1mnpm i \x1b[0m`}" to install the module.`);
         }
     }
 };
