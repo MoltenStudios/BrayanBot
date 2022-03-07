@@ -40,7 +40,6 @@
 		"setup": "node install/setup.js",
 		"dev": "nodemon index.js --show-errors --no-install -e js",
 		"start": "node index.js",
-		"install": "npm i",
 		"install:start": "npm i && node index.js --no-install",
 		"install:dev": "npm i && nodemon index.js --show-errors --no-install -e js"
 	},
@@ -50,13 +49,7 @@
 		"type": "git",
 		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
 	},
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"bugs": {
 		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
 	},
