@@ -23,7 +23,7 @@ module.exports.run = async (bot, message, args, config) => {
         ? user.user.displayAvatarURL({ dynamic: true })
         : `${user.user.displayAvatarURL({ dynamic: true })}?size=2048`;
 
-    message.channel.senUtils.setupMessage({
+    message.channel.send(Utils.setupMessage({
         configPath: lang.General.Avatar,
         variables: [
             { searchFor: /{link}/g, replaceWith: user.user.displayAvatarURL({ dynamic: true }), },
@@ -32,7 +32,7 @@ module.exports.run = async (bot, message, args, config) => {
             ...Utils.userVariables(message.member),
             ...Utils.botVariables(bot),
         ],
-    });
+    }));
 };
 
 /**
