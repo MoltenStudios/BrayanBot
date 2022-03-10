@@ -1,6 +1,5 @@
 const sqlite = require("better-sqlite3"),
-    chalk = require("chalk"), fs = require("fs"),
-    { client, config, lang } = require("../index.js");
+    chalk = require("chalk"), fs = require("fs");
 
 module.exports = {
     /**
@@ -8,8 +7,10 @@ module.exports = {
      * @param {String} fileName
      * @returns {sqlite}
      */
-    getDatabase: async (fileName = config.Settings.Storage) => new Promise(async (resolve, reject) => {
+    getDatabase: async (fileName) => new Promise(async (resolve, reject) => {
+        let { config } = require("../index.js");
         try {
+            if (!fileName) fileName = config.Settings.Storage
             if (!fs.existsSync("Database/")) await fs.mkdirSync("Database");
             const db = new sqlite(`Database/${fileName}` || "database.db");
             resolve(db);
@@ -24,7 +25,9 @@ module.exports = {
      * @param {String} values
      */
     createTable: async (db, tableName, values) => new Promise(async (resolve, reject) => {
-        const Utils = require("./Utils.js");
+        const Utils = require("./Utils.js"),
+            { config } = require("../index.js");
+
         if (!db) db = await module.exports.getDatabase();
         if (!tableName || !values) {
             Utils.logWarning(`Not enough parameters passed in createTable function.`);
