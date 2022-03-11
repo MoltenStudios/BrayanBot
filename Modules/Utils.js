@@ -331,7 +331,7 @@ module.exports = {
      */
     sendPing: async (interaction) => {
         return new Promise(async (resolve, reject) => {
-            await client.api.interactions(interaction.id, interaction.token).callback.post({
+            await interaction.client.api.interactions(interaction.id, interaction.token).callback.post({
                 data: { type: 6 },
             }).then((res) => resolve(res)).catch((err) => {
                 if (err.message === "Unknown interaction")
