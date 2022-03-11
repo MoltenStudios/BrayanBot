@@ -15,7 +15,7 @@ module.exports = {
             Utils.logError(`An unexpected error occured, please contact BrayanBot Support team at ${chalk.blue(chalk.underline(`https://discord.gg/G4AV33KeqF`))}`)
         }
 
-        let data = `${lines}\n[[ Occured at: ${moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')} ]]\n${lines}\n${error.toString()}${promiseText ? `\nMore Info: ${promiseText}` : ""}\n`
+        let data = `${lines}\n[[ Occured at: ${moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')} ]]\n${lines}\n${error.toString()}${source ? `\nMore Info: ${source}` : ""}\n`
         fs.appendFileSync("errors.txt", data, { encoding: "utf-8" });
 
         Utils.logInfo("Stopping bot..");
