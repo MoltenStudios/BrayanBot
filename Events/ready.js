@@ -77,9 +77,11 @@ module.exports = async (bot) => {
         }
     })
 
-    app.listen(config.WebServer.Port || 80, () => {
-        Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
-    })
+    if (config.WebServer && config.WebServer.Enabled) {
+        app.listen(config.WebServer.Port || 80, () => {
+            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
+        })
+    }
 
     await axios({
         baseURL: "https://api.github.com",
