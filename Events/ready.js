@@ -40,15 +40,25 @@ module.exports = async (bot) => {
                     commandYMLData.commandData.Permission = [commandYMLData.commandData.Permission]
                 }
                 for (let i = 0; i < commandYMLData.commandData.Permission.length; i++) {
-                    const element2 = commandYMLData.commandData.Permission[i];
-                    if (element2.toLowerCase() !== "@everyone") {
-                        let role = await Utils.findRole(element2, guild, true)
-                        if (role) cmdPerms.push({
+                    const perm = commandYMLData.commandData.Permission[i]
+                    const prole = !!Utils.findRole(perm, guild, false),
+                        puser = !!Utils.parseUser(perm, guild, false);
+                    if (!prole && !puser) return Utils.logError(`${chalk.bold(perm)} role nor user was not found in ${chalk.bold(guild.name)} guild`);
+                    if (prole) {
+                        const role = await Utils.findRole(perm, guild, true)
+                        cmdPerms.push({
                             id: role.id,
                             type: "ROLE",
                             permission: true
                         })
-
+                    }
+                    if (puser) {
+                        const user = Utils.parseUser(perm, guild, true)
+                        cmdPerms.push({
+                            id: user.id,
+                            type: "USER",
+                            permission: true
+                        })
                     }
                 }
                 fullPermissions.push({
