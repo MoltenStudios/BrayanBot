@@ -46,7 +46,7 @@ module.exports = {
                 next()
             })
 
-            config.WebServer.Ratelimit ? app.use(rateLimit({
+            config.WebServer.Ratelimit ? config.WebServer.Ratelimit.Enabled ? app.use(rateLimit({
                 windowMs: 1 * 60 * 1000,
                 max: config.WebServer.Ratelimit ? config.WebServer.Ratelimit.MaxRequests : 60,
                 keyGenerator: (req, res) => getIP(req),
@@ -72,7 +72,7 @@ module.exports = {
                         })
                     }
                 }
-            })) : "";
+            })) : "" : "";
 
             if (config.WebServer.Favicon && typeof config.WebServer.Favicon == "string")
                 if (fs.existsSync(path.join(__dirname, '../../WebServer', config.WebServer.Favicon)))
