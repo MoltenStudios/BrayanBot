@@ -24,8 +24,7 @@ module.exports.run = async (bot, message, args, config) => {
         ],
     }).then(async (msg) => {
         const ping = msg.createdTimestamp - message.createdTimestamp;
-        msg.delete();
-        msg.channel.send(Utils.setupMessage({
+        msg.edit(Utils.setupMessage({
             configPath: lang.General.Ping,
             variables: [
                 ...Utils.userVariables(message.member),
@@ -43,13 +42,25 @@ module.exports.run = async (bot, message, args, config) => {
  * @param {Discord.Interaction} interaction
  */
 module.exports.runSlash = async (bot, interaction) => {
-    interaction.reply(Utils.setupMessage({
-        configPath: lang.General.Ping,
-        variables: [
-            ...Utils.userVariables(interaction.member),
-            ...Utils.botVariables(bot),
-            { searchFor: /{bot-latency}/g, replaceWith: "Unknown" },
-            { searchFor: /{api-latency}/g, replaceWith: bot.ws.ping },
-        ],
-    }));
+    interaction.reply({
+            embeds: [
+                {
+                    title: "Calculating ping..",
+                },
+            ],
+            ephemeral: true,
+            fetchReply: true
+        })
+    .then(async (msg) => {
+        const ping = msg.createdTimestamp - interaction.createdTimestamp
+        interaction.editReply(Utils.setupMessage({
+            configPath: lang.General.Ping,
+            variables: [
+                ...Utils.userVariables(interaction.member),
+                ...Utils.botVariables(bot),
+                { searchFor: /{bot-latency}/g, replaceWith: ping },
+                { searchFor: /{api-latency}/g, replaceWith: bot.ws.ping },
+            ]
+        },true));
+    })
 };
