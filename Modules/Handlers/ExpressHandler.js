@@ -1,9 +1,9 @@
-const { client, config, lang, commands } = require("../../index"),
-    Utils = require("../Utils"), fs = require("fs"), chalk = require("chalk"),
+const Utils = require("../Utils"), fs = require("fs"), chalk = require("chalk"),
     path = require("path"), moment = require('moment'),
 
     express = require("express"), cors = require('cors'),
-    favicon = require("serve-favicon"), bodyParser = require("body-parser");
+    favicon = require("serve-favicon"), bodyParser = require("body-parser"),
+    rateLimit = require("express-rate-limit");
 
 module.exports = {
     app: express(),
@@ -19,6 +19,8 @@ module.exports = {
         return ip
     },
     init: async () => {
+        const { client, config } = require("../../index");
+
         if (config.WebServer && config.WebServer.Enabled) {
             const { app, getIP } = module.exports;
             const isValidUrl = (url) => {
@@ -35,6 +37,7 @@ module.exports = {
             app.use(bodyParser.json())
             app.use(express.static('./WebServer/'));
             app.use(bodyParser.urlencoded({ extended: false }))
+
             app.use((req, res, next) => {
                 if (config.Settings.DevMode)
                     console.log(chalk.hex("#03c6fc").bold("[WebS] ") + `${getIP(req)} » ${req.method} ${chalk.bold(req.url)}`)
@@ -42,6 +45,35 @@ module.exports = {
                 fs.appendFileSync("WebServerLog.txt", `${moment().format('MMMM Do YYYY, h:mm:ss a')} | ${getIP(req)} » ${req.method} ${req.url}\n`)
                 next()
             })
+
+            config.WebServer.Ratelimit ? app.use(rateLimit({
+                windowMs: 1 * 60 * 1000,
+                max: config.WebServer.Ratelimit ? config.WebServer.Ratelimit.MaxRequests : 60,
+                keyGenerator: (req, res) => getIP(req),
+                skip: (req, res) => {
+                    let allowedIPs = config.WebServer.Ratelimit.BypassIPs
+                        ? Array.isArray(config.WebServer.Ratelimit.BypassIPs)
+                            ? config.WebServer.Ratelimit.BypassIPs : [] : [];
+
+                    return allowedIPs.includes(getIP(req))
+                },
+                handler: (req, res, next) => {
+                    if (req.method == "GET") {
+                        if (config.Settings.DevMode)
+                            console.log(chalk.hex("#ffd900").bold("[RateLimit] ") + `${chalk.bold(getIP(req))} is being rate limited.`)
+                        return res.status(429).sendFile(path.join(__dirname, '../../WebServer/429.html'))
+                    } else {
+                        if (config.Settings.DevMode)
+                            console.log(chalk.hex("#ffd900").bold("[RateLimit] ") + `${chalk.bold(getIP(req))} is being rate limited.`)
+                        return res.status(429).send({
+                            StatusCode: 429,
+                            Error: "Too Many Requests",
+                            Message: "You are being rate limited. Please wait sometime before requesting again."
+                        })
+                    }
+                }
+            })) : "";
+
             if (config.WebServer.Favicon && typeof config.WebServer.Favicon == "string")
                 if (fs.existsSync(path.join(__dirname, '../../WebServer', config.WebServer.Favicon)))
                     app.use(favicon(path.join(__dirname, '../../WebServer', config.WebServer.Favicon)));

@@ -21,17 +21,18 @@
 		"yaml": "^1.10.2"
 	},
 	"optionalDependencies": {
-		"@twurple/api": "^5.0.18",
+		"express-rate-limit": "^6.3.0",
+		"request-promise": "^4.2.6",
 		"@twurple/auth": "^5.0.18",
+		"@twurple/api": "^5.0.18",
+		"serve-favicon": "^2.5.0",
 		"@tycrek/log": "^0.5.9",
 		"body-parser": "^1.19.2",
-		"canvas": "^2.8.0",
-		"cors": "^2.8.5",
-		"express": "^4.17.3",
 		"mongoose": "^6.1.4",
+		"express": "^4.17.3",
 		"prompt": "^1.2.0",
-		"request-promise": "^4.2.6",
-		"serve-favicon": "^2.5.0"
+		"canvas": "^2.8.0",
+		"cors": "^2.8.5"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.15"
