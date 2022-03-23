@@ -16,6 +16,11 @@ module.exports = async (bot) => {
             countFolders: true
         }), guild = bot.guilds.cache.first();
 
+    if (!guild) {
+        Utils.logError(`Currently in ${chalk.bold(0)} servers. | Bot is required to be in atleast ${chalk.bold(1)} server. Use the link below to invite the bot into your server.`)
+        Utils.logError(chalk.blue(`https://discord.com/api/oauth2/authorize?client_id=${bot.user.id}&permissions=8&scope=bot%20applications.commands`))
+        process.exit(0)
+    }
     await Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
     await Utils.logInfo("                                                                          ");
     await Utils.logInfo(`                    • ${chalk.bold(`Brayan Bot v${packageJSON.version}`)} is now Online! •       `);

@@ -50,7 +50,9 @@ installModules().then(() => {
 
     const fs = require("fs"), YAML = require("yaml"),
         Discord = require("discord.js"),
-        client = new Discord.Client({ intents: 32767 });
+        client = new Discord.Client({
+            intents: Object.keys(Discord.Intents.FLAGS).map(x => Discord.Intents.FLAGS[x])
+        });
 
     module.exports["client"] = client;
     ["config.yml", "commands.yml", "lang.yml"].forEach((x) => module.exports[x.replace(".yml", "")] = YAML.parse(fs.readFileSync(x, "utf-8"), { prettyErrors: true }));
