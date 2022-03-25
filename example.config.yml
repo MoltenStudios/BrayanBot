@@ -32,6 +32,13 @@ WebServer:
     - Type: "File"
       EndPoint: "/download"
       File: "assets/download.txt"
-
+  Ratelimit: 
+    # It's recommended to keep this enabled.
+    Enabled: true
+    # Max Requests can be made per 1 minute
+    MaxRequests: 1
+    # IPs included will bypass Rate Limiting
+    BypassIPs:
+      - "127.0.0.1" # http://localhost/ | http://127.0.0.1/
 Misc:
-  Version: "v1.0.1"
+  Version: "v1.1.0"
