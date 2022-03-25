@@ -1,35 +1,6 @@
-const installModules = async () => {
-    if (!process.argv.includes("--no-install")) {
-        let childProcess = require("child_process"),
-            package = require("./package.json"),
-            rawModules = Object.entries(package.dependencies),
-            nodeModulesArray = [], nodeModules = "", install = (name) => {
-                console.log(`\x1b[34m[Module Installer]`, `\x1b[37mInstalling ${`\x1b[1m${nodeModulesArray.length}\x1b[0m`}\x1b[37m modules, Please wait while we install modules. This may take a few minutes.`);
-                return new Promise(async (resolve, reject) => {
-                    childProcess.exec(`npm i ${name} --save`, async (err, stdout) => err ? reject(err) : resolve(stdout));
-                });
-            };
-        for (let index = 0; index < rawModules.length; index++) {
-            let [module, version] = rawModules[index];
-            version = version.replace("^", "");
-            let moduleName = module == "chalk" ? `${module}@${version}` : `${module}@latest`;
-            nodeModulesArray.push(moduleName);
-            nodeModules += ` ${moduleName}`;
-        }
-        try {
-            await install(nodeModules).then((res) => {
-                console.log(`\x1b[34m[Module Installer]`, `\x1b[37m${`\x1b[1m${nodeModulesArray.length}\x1b[0m`}\x1b[37m were installed. `);
-                if (process.argv.includes("--show-install-output")) {
-                    console.log(res);
-                }
-            });
-        } catch (e) {
-            console.log(`\x1b[34m[Module Installer]`, `\x1b[37mUnable to install modules, please run "${`\x1b[1mnpm i \x1b[0m`}" to install the module.`);
-        }
-    }
-};
-
 const installNodeModules = async () => new Promise(async (resolve, reject) => {
+    if (process.argv.includes("--no-install")) resolve();
+
     const showOutput = process.argv.includes("--show-install-output"),
         package = require("./package.json"),
         { spawn } = require("child_process"),
