@@ -93,6 +93,7 @@ module.exports = {
 
                 let Log = addon.log || addon._log;
                 let Author = addon.author || addon._author;
+                let Version = addon.version || addon._version;
                 let CustomConfig = addon.customConfigs || addon._customConfigs || {};
                 let Dependencies = addon.dependencies || addon._dependencies;
 
@@ -119,19 +120,19 @@ module.exports = {
                                         } else if (typeof Author == "object" && typeof Author.name == "string") {
                                             console.log(chalk.hex(Author.color || "#007bff").bold(`[${Author.name}] `) + _log);
                                         } else {
-                                            Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.`);
+                                            Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
                                         }
                                     } else if (typeof Log == "function") {
                                         await Log();
                                     } else {
-                                        Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.`);
+                                        Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
                                     }
                                 }
                             } else {
                                 Utils.logError(`[AddonHandler] Unable to execute addon ${chalk.bold(Name)} as no function was found.`);
                             }
                         } else if (installed == "no-install but dependencies") {
-                            Utils.logError(`[AddonHandler] ${chalk.bold(Name)} addon requires ${chalk.bold(Dependencies.length)} node modules to be installed. Please restart the bot with the ${chalk.bold("--no-install")} flag.`);
+                            Utils.logError(`[AddonHandler] ${chalk.bold(Name)} addon requires ${chalk.bold(Dependencies.length)} node modules to be installed. Please restart the bot without the ${chalk.bold("--no-install")} flag.`);
                         }
                     })
                 })
