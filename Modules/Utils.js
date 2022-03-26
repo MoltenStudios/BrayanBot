@@ -340,22 +340,22 @@ module.exports = {
             });
         });
     },
-    createMultipleConfigs: function (configs, addonName) {
-        if (typeof configs !== "object" && Object.entries(configs).length <= 0) {
-            return module.exports.logError("[Utils] [createMultipleConfigs] Invalid Configs were provided.");
+    createMultipleConfigs: async (configs, addonName) => new Promise(async (resolve, reject) => {
+        if (typeof configs !== "object" && Object.keys(configs).length <= 0) {
+            module.exports.logError("[Utils] [createMultipleConfigs] Invalid Configs were provided.");
+            resolve({});
         }
 
-        let addon_configs = {},
+        let addonConfigs = {}, configsEntries = Object.entries(configs),
             createCustomConfigs = require("./Utils/createCustomConfig");
-        configs = Object.entries(configs);
 
-        for (let index = 0; index < configs.length; index++) {
-            const addonConfig = configs[index];
+        for (let index = 0; index < configsEntries.length; index++) {
+            const addonConfig = configsEntries[index];
             let [name, configData] = addonConfig;
-            addon_configs[name] = createCustomConfigs(name, configData, addonName);
+            addonConfigs[name] = await createCustomConfigs(addonName, name, configData);
         }
-        return addon_configs;
-    },
+        resolve(addonConfigs);
+    }),
     /**
      * 
      * @param {Array} array 
