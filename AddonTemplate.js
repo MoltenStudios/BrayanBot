@@ -12,6 +12,7 @@ module.exports = {
         name: "Zorino",
         color: "#FFE400",
     },
+    _version: "1.0.0",
     _priority: 1,
     _customConfigs: {
         main: {
