@@ -19,25 +19,6 @@
     <img src="https://img.shields.io/github/workflow/status/brayanbotdev/brayanbot/CodeQL?label=test&logo=circleci&style=flat-square" />
 </div>
 
-<h3 align="center">Table of Contents</h3>
-
-<div align="center">
-<ul>
-  <li>📢 About BrayanBot</li>
-  <li>👋 Join the community!</li>
-  <li>🧩 Addons</li>
-  <li>✨ Contributing
-    <ul>
-      <li>Discussion & Suggestions</li>
-      <li>Code Contibutions</li>
-      <li>Translations</li>
-      <li>Bug Reports</li>
-    </ul>
-  </li>
-  <li>Our Awesome Contributors</li>
-</ul>
-
-
 <h2 align="center">📢 About BrayanBot</h2>
 
 ---
