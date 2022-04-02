@@ -20,14 +20,14 @@ We do have an unit test to cover most of BrayanBot's functionality and we always
 
 #### Submitting changes
 
-* If you're unable to find an open issue, [open a new one](https://github.com/DakshNamdev/BrayanBot/issues/new). Be sure to include a **title, a clear description of your idea or issue** and give as much relevant information as possible.
-* Open  a new [GitHub Pull Request to BrayanBot](https://github.com/DakshNamdev/BrayanBot/pulls) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Include the relevant issue number if applicable.
+* If you're unable to find an open issue, [open a new one](https://github.com/BrayanBotDev/BrayanBot/issues/new). Be sure to include a **title, a clear description of your idea or issue** and give as much relevant information as possible.
+* Open  a new [GitHub Pull Request to BrayanBot](https://github.com/BrayanBotDev/BrayanBot/pulls) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Include the relevant issue number if applicable.
 
 **Unsure where to begin contributing? You can start by looking through these issues labels:**
 
-* [Enhancement issues](https://github.com/DakshNamdev/BrayanBot/labels/enhancement) 
-* [Bug issues](https://github.com/DakshNamdev/BrayanBot/labels/bug) 
-* [Documentation issues](https://github.com/DakshNamdev/BrayanBot/labels/documentation)
+* [Enhancement issues](https://github.com/BrayanBotDev/BrayanBot/labels/enhancement) 
+* [Bug issues](https://github.com/BrayanBotDev/BrayanBot/labels/bug) 
+* [Documentation issues](https://github.com/BrayanBotDev/BrayanBot/labels/documentation)
 
 ### Use a Consistent Coding Style
 

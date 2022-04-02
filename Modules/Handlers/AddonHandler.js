@@ -1,3 +1,4 @@
+const e = require("express");
 const fs = require("fs"), YAML = require("yaml"),
     chalk = require("chalk"), Utils = require("../Utils"),
     { client, config, lang, commands } = require("../../index");
@@ -26,82 +27,120 @@ module.exports = {
         }
         return configs;
     },
-    init: async () => {
-        if (fs.existsSync("./Addons")) {
-            fs.readdir("Addons", async (err, files) => {
-                files = files.filter((f) => f.split(".").pop() == "js");
-                if (files) {
-                    // Priority Sorting
-                    let priority = { 0: [], 1: [], 2: [], 3: [] },
-                        index;
-                    for (index = 0; index < files.length; index++) {
-                        let f = require(`../../Addons/${files[index]}`);
-                        if (f._priority) {
-                            if (f._priority == 1)
-                                priority[0].push(files[index]);
-                            else if (f._priority == 2)
-                                priority[1].push(files[index]);
-                            else if (f._priority == 3)
-                                priority[2].push(files[index]);
-                            else priority[3].push(files[index]);
-                        } else priority[3].push(files[index]);
-                    }
+    /**
+     * 
+     * @param {String} addonName 
+     * @param {Array} dependencies 
+     * @returns 
+     */
+    installModules: async (addonName, dependencies) => new Promise(async (resolve, reject) => {
+        if (!dependencies || !Array.isArray(dependencies) || !dependencies[0]) return resolve(true);
 
-                    // Priority Executing
-                    for (index = 0; index <= 5; index++) {
-                        let addonFiles = priority[index];
-                        if (addonFiles) {
-                            for (let y = 0; y < addonFiles.length; y++) {
-                                try {
-                                    const addon = require(`../../Addons/${addonFiles[y]}`);
-                                    if (addon && typeof addon.run == "function") {
-                                        // Custom Config
-                                        let customConfig = {},
-                                            addonName = addon._name ? addon._name : file.replace(".js", "");
-                                        if (addon._customConfigs && typeof addon._customConfigs == "object") {
-                                            if (!fs.existsSync("./Addon_Configs"))
-                                                await fs.mkdirSync("./Addon_Configs");
-                                            if (!fs.existsSync(`./Addon_Configs/${addonName}`))
-                                                await fs.mkdirSync(`./Addon_Configs/${addonName}`);
+        let showOutput = process.argv.includes("--show-install-output"),
+            { spawn } = require("child_process"), modulesToInstall = [],
+            dependenciesInstaled = [];
 
-                                            customConfig = Utils.createMultipleConfigs(addon._customConfigs, addonName);
+        for (let index = 0; index < dependencies.length; index++) {
+            try {
+                require.resolve(dependencies[index])
+                dependenciesInstaled.push(dependencies[index]);
+            } catch (e) {
+                modulesToInstall.push(dependencies[index]);
+            }
+        }
+        dependenciesInstaled.forEach(x => dependencies = dependencies.filter(y => y != x));
+        if (!dependencies[0]) return resolve(true);
+
+        if (process.argv.includes("--no-install")) return resolve("no-install but dependencies");
+        Utils.logInfo(`Installing ${chalk.bold(dependencies.length)} node modules for ${chalk.bold(addonName)} addon`);
+
+        let data = await spawn(process.platform == "win32" ? "npm.cmd" : "npm", ["install", ...dependencies]);
+        data.stdout.on("data", (data) => {
+            showOutput ? Utils.logInfo(data.toString().trim()) : "";
+        })
+        data.stderr.on("data", (data) => {
+            showOutput ? Utils.logError(data.toString().trim()) : ""
+        })
+        data.on("exit", (code) => {
+            Utils.logInfo(`Installed ${chalk.bold(dependencies.length)} node modules for ${chalk.bold(addonName)} addon. Please restart the bot.`);
+            process.exit(0);
+        })
+    }),
+    init: () => new Promise(async (resolve, reject) => {
+        if (!fs.existsSync("Addons")) fs.mkdirSync("Addons");
+        if (!fs.existsSync("Addon_Configs")) await fs.mkdirSync("Addon_Configs");
+
+        let files = fs.readdirSync("Addons").filter(x => x.split(".").pop() == "js");
+        let priority = { 0: [], 1: [], 2: [], 3: [] };
+
+        files.forEach(file => {
+            let addon = require(`../../Addons/${file}`);
+            let _priority = addon.priority || addon._priority || 3;
+
+            if (_priority == 1) priority[0].push(file);
+            else if (_priority == 2) priority[1].push(file);
+            else if (_priority == 3) priority[2].push(file);
+            else priority[3].push(file);
+        })
+
+        for (let i = 0; i <= 5; i++) {
+            if (priority[i]) for (let index = 0; index < priority[i].length; index++) {
+                const addon = require(`../../Addons/${priority[i][index]}`);
+                if (!addon) continue;
+
+                let Name = addon.name || addon._name;
+                if (!Name) continue;
+
+                let Log = addon.log || addon._log;
+                let Author = addon.author || addon._author;
+                let Version = addon.version || addon._version;
+                let CustomConfig = addon.customConfigs || addon._customConfigs || {};
+                let Dependencies = addon.dependencies || addon._dependencies;
+
+                if (!fs.existsSync(`Addon_Configs/${Name}`)) fs.mkdirSync(`Addon_Configs/${Name}`);
+
+                await Utils.createMultipleConfigs(CustomConfig, Name).then(async (addonConfigs) => {
+                    await module.exports.installModules(Name, Dependencies).then(async (installed) => {
+                        if (installed == true) {
+                            let addonFunction = typeof addon == "function" ? addon
+                                : typeof addon.run == "function"
+                                    ? addon.run : false;
+
+                            if (typeof addonFunction == "function") {
+                                await addonFunction(client, addonConfigs);
+
+                                if (Log) {
+                                    if (typeof Log == "string" && Log.startsWith("_nonInfo")) {
+                                        console.log(Log.replace(/_nonInfo/g, ""));
+                                    } else if (typeof Log == "string") {
+                                        Utils.logInfo(Log);
+                                    } else if (Log && Author && typeof Author == "object") {
+                                        if (typeof Author == "string") {
+                                            console.log(chalk.hex("#007bff").bold(`[${Author}] `) + _log);
+                                        } else if (typeof Author == "object" && typeof Author.name == "string") {
+                                            console.log(chalk.hex(Author.color || "#007bff").bold(`[${Author.name}] `) + _log);
+                                        } else {
+                                            Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
                                         }
-                                        // Executing Addon
-                                        await addon.run(client, customConfig);
-
-                                        // Addon Logging
-                                        if (typeof addon._log == "string" && !addon._author) {
-                                            console.log(chalk.hex("#007bff").bold("[INFO] ") + addon._log);
-                                        } else if (addon._log && typeof addon._author == "string") {
-                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author ? addon._author : "[INFO]"}]`)} ${chalk.bold(addon._name ? addon._name : file.replace(".js", ""))} addon loaded`);
-                                        } else if (addon._log && typeof addon._author == "object") {
-                                            console.log(`${chalk.hex(addon._author.color || "#007bff").bold(`[${addon._author.name}]`)} ${chalk.bold(addon._name ? addon._name : file.replace(".js", ""))} addon loaded`);
-                                        }
+                                    } else if (typeof Log == "function") {
+                                        await Log();
                                     } else {
-                                        Utils.logWarning(`Unable to execute ${addon._name ? addon._name : file.replace(".js", "")} addon ${addon._author ? `by ${addon._author}` : ""}`);
-                                    }
-                                } catch (e) {
-                                    if (process.argv.includes("--show-errors")) {
-                                        Utils.logError(e.stack);
-                                    } else {
-                                        Utils.logError(`An unexpected error occured from ${chalk.bold(addonFiles[y])} addon, please contact the developer.`)
+                                        Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
                                     }
                                 }
+                            } else {
+                                Utils.logError(`[AddonHandler] Unable to execute addon ${chalk.bold(Name)} as no function was found.`);
                             }
+                        } else if (installed == "no-install but dependencies") {
+                            Utils.logError(`[AddonHandler] ${chalk.bold(Name)} addon requires ${chalk.bold(Dependencies.length)} node modules to be installed. Please restart the bot without the ${chalk.bold("--no-install")} flag.`);
                         }
-                    }
-                }
-            });
-        } else {
-            fs.mkdirSync("./Addons");
-            await module.exports.init();
+                    })
+                })
+            }
+
+            if (priority[i] == 4) resolve();
         }
-    },
-    addonStructure: {
-        _name: String,
-        _log: String || Function,
-        _author: String || Object,
-        _customConfigData: Object,
-        run: Function,
-    },
+
+        resolve()
+    })
 };

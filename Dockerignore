@@ -1,0 +1,12 @@
+## Dependencies ##
+node_modules
+package-lock.json
+yarn.lock
+
+## Github ##
+*/.github/
+*/workflows/
+
+## Config ##
+config.yml
+config.json

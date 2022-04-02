@@ -19,6 +19,7 @@ yarn.lock
 
 # Extra Files
 errors.txt
+WebServerLog.txt
 config.yml
 config.json
 Addons/

@@ -1,47 +1,74 @@
 {
 	"name": "brayan-bot",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "An Advanced Discord Bot Node.js Discord.js-v13",
 	"main": "index.js",
 	"dependencies": {
-		"@discordjs/rest": "^0.2.0-canary.0",
-		"@tycrek/log": "^0.5.9",
-		"axios": "^0.24.0",
-		"better-sqlite3": "^7.4.6",
-		"canvas": "^2.8.0",
+		"@discordjs/rest": "^0.3.0",
+		"axios": "^0.26.1",
+		"better-sqlite3": "^7.5.0",
 		"chalk": "^4.1.2",
-		"console-stamp": "^3.0.3",
+		"console-stamp": "^3.0.4",
 		"date-differ": "^1.0.1",
-		"discord-api-types": "^0.26.1",
-		"discord.js": "^13.5.0",
-		"fs-extra": "^10.0.0",
-		"jimp": "^0.16.1",
-		"js-yaml": "^4.1.0",
+		"discord-api-types": "^0.30.0",
+		"discord.js": "^13.6.0",
 		"moment": "^2.29.1",
-		"mongoose": "^6.1.4",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
-		"prompt": "^1.2.0",
-		"request": "^2.88.2",
-		"request-promise": "^4.2.6",
 		"yaml": "^1.10.2"
 	},
-	"scripts": {
-		"setup": "node install/setup.js",
-		"dev": "nodemon index.js --show-errors --no-install -e js",
-		"start": "node index.js"
+	"optionalDependencies": {
+		"@twurple/api": "^5.0.18",
+		"@twurple/auth": "^5.0.18",
+		"@tycrek/log": "^0.5.9",
+		"body-parser": "^1.19.2",
+		"canvas": "^2.9.1",
+		"cors": "^2.8.5",
+		"express": "^4.17.3",
+		"express-rate-limit": "^6.3.0",
+		"fs-extra": "^10.0.1",
+		"mongoose": "^6.2.9",
+		"prompt": "^1.2.2",
+		"request": "^2.88.2",
+		"request-promise": "^4.2.6",
+		"rss-parser": "^3.12.0",
+		"serve-favicon": "^2.5.0"
 	},
-	"author": "@Zorino#1110",
-	"license": "Apache-2.0",
 	"devDependencies": {
 		"nodemon": "^2.0.15"
 	},
+	"overrides": {
+		"request": {
+			"uuid": "^8.3.2",
+			"qs@<6.8.3": "6.8.1"
+		}
+	},
+	"scripts": {
+		"setup": "node Install/setup.js",
+		"dev": "nodemon index.js --show-errors --no-install -e js",
+		"start": "node index.js",
+		"install:start": "npm i && node index.js --no-install",
+		"install:dev": "npm i && nodemon index.js --show-errors --no-install -e js"
+	},
+	"author": "@Zorino#1110",
+	"maintainers": [
+		"@Zorino#1110",
+		"raf#0002",
+		"XCraftMan52#0661"
+	],
+	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
 	},
-	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
+	"keywords": [
+		"discord",
+		"discord.js",
+		"node.js",
+		"discordbot",
+		"discord-bot"
+	],
 	"bugs": {
 		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
 	},

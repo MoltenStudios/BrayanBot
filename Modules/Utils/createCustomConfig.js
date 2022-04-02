@@ -1,57 +1,39 @@
-const fs = require("fs"),
-    YAML = require("yaml"),
+const fs = require("fs"), YAML = require("yaml"), _path = require('path'),
     { client, config, lang, commands } = require("../../index");
 
-module.exports = function (name, configData, addonName) {
-    let addon_config = null;
-    const generateConfig = function (path, data, type, name) {
-        if (["yml", "yaml"].includes(type.toLowerCase())) {
-            data = (YAML.stringify(data, { indent: 2, prettyErrors: true })).replace(/("|')?~(\d+)?("|')?:\s("|')?.+("|')?/g, match => "# " + match.replace(/("|')?~(\d+)?("|')?:\s/g, '').replace(/("|')/g, ''))
-            fs.writeFileSync(path, data);
-            addon_config = data;
-        } else if (["json"].includes(type.toLowerCase())) {
-            fs.writeFileSync(path, JSON.stringify(data, null, 4));
-            addon_config = data;
-        } else {
-            fs.writeFileSync(path, data);
-            addon_config = data;
-        }
+module.exports = async (addonName, fileName, configData) => new Promise(async (resolve, reject) => {
+    const folderPath = _path.join(__dirname, '../../Addon_Configs/', addonName);
+    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
 
-        if (!fs.existsSync(path)) {
-            generateConfig(path, data, type, name);
-        }
-    };
-    const checkPath = function (path) {
-        const paths = path.split("/");
-        if (paths && paths.length >= 1) {
-            const dir = paths.slice(0, paths.length - 1).join("/");
-            if (!fs.existsSync(dir)) {
-                return fs.mkdir(dir, async (err) => {
-                    if (err) {
-                        return err;
-                    }
-                    return true;
-                });
-            } else return true;
-        }
-    };
-    let { type, path, data } = configData;
-    path = path.replace(/{addon-name}/g, addonName);
-    checkPath(path);
-    if (fs.existsSync(path)) {
-        if (config.Settings.DevMode) {
-            generateConfig(path, data, type, name);
-        }
-        if (["yml"].includes(type.toLowerCase())) {
-            addon_config = YAML.parse(fs.readFileSync(path, "utf-8"), {
-                prettyErrors: true,
-            });
-        } else if (["json"].includes(type.toLowerCase()))
-            addon_config = JSON.parse(fs.readFileSync(path, "utf-8"));
-        else addon_config = fs.readFileSync(path, "utf-8");
+    const { type, path, data } = configData;
+    let returnObject = {};
+
+    const fixFormat = () => {
+        let rawYAMl = YAML.stringify(data, {
+            indent: 2,
+            prettyErrors: true
+        })
+        return rawYAMl.replace(/("|')?~(\d+)?("|')?:\s("|')?.+("|')?/g, match => "# " + match.replace(/("|')?~(\d+)?("|')?:\s/g, '')
+            .replace(/("|')/g, ''))
+            .replace(/("|')?~(c(\d+|))?("|')?:\s("|')?.+(\n {2}.+|)("|')?/g, match => {
+                var comment = match.replace(/("|')?~(c(\d+|))?("|')?:\s/g, '');
+                return (match.includes("#") ? "" : "#") + comment.substring(comment.startsWith("\"") || comment.startsWith("'") ? 1 : 0, comment.endsWith("\"") || comment.endsWith("'") ? comment.length - 1 : undefined).replace(/.+\n\s+/g, m => m.replace(/\n\s+/g, " ").replace(/\\"/g, "\""));
+            }).replace(/("|')?~(l(\d+|))?("|')?:\s("|')?.+("|')?/g, "");
+    }, createFile = () => new Promise(async (resolve, reject) => {
+        await fs.promises.writeFile(_path.join(folderPath, `${fileName}.${type}`), fixFormat(), { encoding: "utf-8" });
+        resolve(data);
+    }), fileExist = () => fs.existsSync(_path.join(folderPath, `${fileName}.${type}`));
+
+    const doesExist = fileExist();
+
+    if (!doesExist) {
+        returnObject = await createFile();
+    } else if (doesExist && config.Settings.DevMode) {
+        returnObject = await createFile();
     } else {
-        generateConfig(path, data, type, name);
+        let rawData = fs.readFileSync(_path.join(folderPath, `${fileName}.${type}`), { encoding: "utf-8" });
+        returnObject = YAML.parse(rawData, { prettyErrors: true })
     }
-    if (addon_config && addon_config !== null) return addon_config;
-    else return undefined;
-};
+
+    resolve(returnObject);
+})

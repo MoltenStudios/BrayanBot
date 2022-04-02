@@ -1,0 +1,39 @@
+name: Dev Branch CI
+
+on:
+  push:
+    branches: [ "dev/*" ]
+
+
+jobs:
+  release-dev:
+    name: Dev Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      # Set Variables
+      - name: Set variables
+        id: vars
+        run: echo ::set-output name=version::${GITHUB_REF#refs/*\/dev/}
+
+      # Zip up everything excluding Dockerfile and docker-compose.yml
+      - name: Archive Source code
+        run: zip -r BrayanBot-${{ steps.vars.outputs.version }}-dev.zip *
+
+      # Download pterodactyl egg from xcraftman's repository
+      - name: Receive Pterodactyl Egg
+        run: wget -O pterodacytl-egg.json https://raw.githubusercontent.com/xcraftman52/Pterodactyl-eggs/master/bots/BrayanBot/egg-brayan-bot.json
+
+      # Create a prerelease
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ steps.vars.outputs.version }}-DEV"
+          prerelease: true
+          title: "Development Build (${{ steps.vars.outputs.version }})"
+          files: |
+            BrayanBot-*.zip
+            Dockerfile
+            docker-compose.yml
+            pterodacytl-egg.json

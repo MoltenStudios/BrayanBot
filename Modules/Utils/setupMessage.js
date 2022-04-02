@@ -1,6 +1,5 @@
 const Discord = require("discord.js"), chalk = require("chalk"),
-    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord,
-    { config, lang, commands, client } = require("../../index");
+    { MessageActionRow, MessageButton, MessageSelectMenu } = Discord;
 
 const rowStructure = [
     {
@@ -68,7 +67,9 @@ const rowStructure = [
  * @returns
  */
 module.exports = (settings, ephemeral = false, components = null) => {
-    const Utils = require("../Utils");
+    const { config, lang, commands, client } = require("../../index"),
+        Utils = require("../Utils");
+
     if (!settings || !settings.configPath)
         return Utils.logWarning(`[Utils] [setupMessage] Invalid ${chalk.bold("configPath")}. Got undefined`)
 

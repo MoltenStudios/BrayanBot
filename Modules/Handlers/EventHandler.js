@@ -1,16 +1,40 @@
 const { client, config, lang, commands } = require("../../index"),
-    fs = require("fs");
+    fs = require("fs"), path = require('path');
+
 module.exports = {
-    set: (name, parameter) => {
-        client.Events.push(name);
-        client.on(name, (...parameters) => parameter(client, ...parameters));
-    },
-    init: () => {
-        const eventFiles = fs.readdirSync("./Events").filter((file) => file.endsWith(".js"));
-        for (let i = 0; i < eventFiles.length; i++) {
-            const file = eventFiles[i];
-            const event = require(`../../Events/${file}`);
-            module.exports.set(file.replace(".js", ""), event);
+    EventListner: class EventListner {
+        /**
+         * @param {String} name 
+         * @param {Function} executeFunction 
+         */
+        constructor(name = null, executeFunction = () => { }) {
+            if (name && executeFunction && typeof executeFunction == "function") {
+                this.name = name;
+                this.executeFunction = executeFunction;
+
+                client.Events.push(name);
+                client.on(this.name, async (...params) => await executeFunction(client, ...params));
+            }
         }
     },
-};
+    EventEmitter: class EventEmitter {
+        /**
+         * @param {String} name 
+         * @param {Array} params
+         */
+        constructor(name = null, ...params) {
+            if (name && params.length > 0) client.emit(name, ...params);
+        }
+    },
+    set: (name, parameter) => new module.exports.EventListner(name, parameter),
+    init: () => {
+        const eventFiles = fs.readdirSync(path.join(__dirname, "../../Events"))
+            .filter((file) => file.endsWith(".js"));
+
+        for (let i = 0; i < eventFiles.length; i++) {
+            const file = require(`../../Events/${eventFiles[i]}`);
+            if (file) new module.exports.EventListner(eventFiles[i].replace(".js", ""), typeof file == "function" ? file
+                : typeof file.run == "function" ? file.run : () => { });
+        }
+    }
+}
