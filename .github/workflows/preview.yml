@@ -2,7 +2,7 @@ name: Dev Branch CI
 
 on:
   push:
-    branches: [ "dev*" ]
+    branches: [ "dev/*" ]
 
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     name: Dev Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v1
 
       # Set Variables
       - name: Set variables
