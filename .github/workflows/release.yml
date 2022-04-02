@@ -10,7 +10,7 @@ jobs:
     name: Public Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@latest
 
         # Set Variables
       - name: Set variables
