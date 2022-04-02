@@ -7,7 +7,7 @@ services:
     build: .
     command: npm start
     container_name: brayanbot
-    restart: unless-stopped # change this to always if you would like your bot to restart upon reboot
+    restart: unless-stopped
     volumes:
       - ./Addon_Configs:/opt/brayanbot/Addon_Configs
       - ./Addons:/opt/brayanbot/Addons

@@ -19,7 +19,7 @@ jobs:
 
       # Zip up everything excluding Dockerfile and docker-compose.yml
       - name: Archive Source code
-        run: zip -r BrayanBot-${{ steps.vars.outputs.version }}-dev.zip * -x Dockerfile docker-compose.yml
+        run: zip -r BrayanBot-${{ steps.vars.outputs.version }}-dev.zip *
 
       # Download pterodactyl egg from xcraftman's repository
       - name: Receive Pterodactyl Egg
