@@ -111,7 +111,7 @@ module.exports = {
 
                                 if (Log) {
                                     if (typeof Log == "string" && Log.startsWith("_nonInfo")) {
-                                        console.log(Utils.logInfo().replace(/_nonInfo/g, ""));
+                                        console.log(Log.replace(/_nonInfo/g, ""));
                                     } else if (typeof Log == "string") {
                                         Utils.logInfo(Log);
                                     } else if (typeof Log == "object" && Author) {
