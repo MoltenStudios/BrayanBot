@@ -114,7 +114,7 @@ module.exports = {
                                         console.log(Log.replace(/_nonInfo/g, ""));
                                     } else if (typeof Log == "string") {
                                         Utils.logInfo(Log);
-                                    } else if (typeof Log == "object" && Author) {
+                                    } else if (Log && Author && typeof Author == "object") {
                                         if (typeof Author == "string") {
                                             console.log(chalk.hex("#007bff").bold(`[${Author}] `) + _log);
                                         } else if (typeof Author == "object" && typeof Author.name == "string") {
