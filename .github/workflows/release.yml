@@ -29,9 +29,9 @@ jobs:
       - name: Generate Checksums
         run: |
           FILELIST=
-          md5sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore pterodacytl-egg.json > md5-checksums.txt
-          sha256sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore pterodacytl-egg.json > sha256-checksums.txt
-          sha512sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore pterodacytl-egg.json > sha512-checksums.txt
+          md5sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore > md5-checksums.txt
+          sha256sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore > sha256-checksums.txt
+          sha512sum BrayanBot-*.zip Dockerfile docker-compose.yml Dockerignore > sha512-checksums.txt
 
       # Release Public Build
       - uses: "marvinpinto/action-automatic-releases@latest"
