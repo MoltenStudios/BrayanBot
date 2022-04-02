@@ -1,4 +1,4 @@
-# BrayanBot Docker compose.yaml v0.1.1
+# BrayanBot Docker compose.yaml v0.1.2
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
 
@@ -7,7 +7,7 @@ services:
     build: .
     command: npm start
     container_name: brayanbot
-    restart: unless-stopped
+    restart: unless-stopped # change this to always if you would like your bot to restart upon reboot
     volumes:
       - ./Addon_Configs:/opt/brayanbot/Addon_Configs
       - ./Addons:/opt/brayanbot/Addons
