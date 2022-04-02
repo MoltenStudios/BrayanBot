@@ -10,7 +10,7 @@ jobs:
     name: Dev Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v3
 
       # Set Variables
       - name: Set variables
