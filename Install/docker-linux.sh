@@ -16,6 +16,8 @@ npm install @tycrek/log fs-extra prompt js-yaml
 mkdir -p ./Modules
 mkdir -p ./Commands
 mkdir -p ./Events
+mkdir -p ./Addons
+mkdir -p ./Addon_Configs
 
 
 # Ensure that config.yml, lang.yml and commands.yml exist
