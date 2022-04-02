@@ -12,7 +12,6 @@
 		"date-differ": "^1.0.1",
 		"discord-api-types": "^0.28.0",
 		"discord.js": "^13.6.0",
-		"fs-extra": "^10.0.1",
 		"moment": "^2.29.1",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
@@ -30,6 +29,7 @@
 		"cors": "^2.8.5",
 		"express": "^4.17.3",
 		"express-rate-limit": "^6.3.0",
+		"fs-extra": "^10.0.1",
 		"mongoose": "^6.2.9",
 		"prompt": "^1.2.2",
 		"request-promise": "^4.2.6",
@@ -39,13 +39,18 @@
 		"nodemon": "^2.0.15"
 	},
 	"scripts": {
-		"setup": "node install/setup.js",
+		"setup": "node Install/setup.js",
 		"dev": "nodemon index.js --show-errors --no-install -e js",
 		"start": "node index.js",
 		"install:start": "npm i && node index.js --no-install",
 		"install:dev": "npm i && nodemon index.js --show-errors --no-install -e js"
 	},
 	"author": "@Zorino#1110",
+	"maintainers": [
+		"@Zorino#1110",
+		"raf#0002",
+		"XCraftMan52#0661"
+	],
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
