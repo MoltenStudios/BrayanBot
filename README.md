@@ -42,7 +42,7 @@ BrayanBot is fully modular, it allows you to install verified Third-Party Addons
 <h4 align="center">Current Addon Developers:</h4>
 
 <li align="center">
-None yet :(
+Zorino#1110
 </li>
 
 
