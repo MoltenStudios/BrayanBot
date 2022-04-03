@@ -116,16 +116,16 @@ module.exports = {
                                         Utils.logInfo(Log);
                                     } else if (Log && Author && typeof Author == "object") {
                                         if (typeof Author == "string") {
-                                            console.log(chalk.hex("#007bff").bold(`[${Author}] `) + _log);
+                                            console.log(chalk.hex("#007bff").bold(`[${Author}] `) + Log);
                                         } else if (typeof Author == "object" && typeof Author.name == "string") {
-                                            console.log(chalk.hex(Author.color || "#007bff").bold(`[${Author.name}] `) + _log);
+                                            console.log(chalk.hex(Author.color || "#007bff").bold(`[${Author.name}] `) + `${chalk.bold(Name)} addon has been loaded. ${Version ? " Version: " + chalk.bold(Version) : ""}`);
                                         } else {
-                                            Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
+                                            Utils.logInfo(`${chalk.bold(Name)} addon has been loaded. ${Version ? " Version: " + chalk.bold(Version) : ""}`);
                                         }
                                     } else if (typeof Log == "function") {
                                         await Log();
                                     } else {
-                                        Utils.logInfo(`${chalk.bold(Name)} addon has been loaded.${Version ? " Version: " + chalk.bold(Version): ""}`);
+                                        Utils.logInfo(`${chalk.bold(Name)} addon has been loaded. ${Version ? " Version: " + chalk.bold(Version) : ""}`);
                                     }
                                 }
                             } else {
