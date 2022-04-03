@@ -22,14 +22,14 @@ jobs:
         run: zip -r BrayanBot.zip * -x Dockerfile docker-compose.yml Dockerignore
 
         # Download the pterodactyl egg from craftman's repository
-      # - name: Receive Pterodactyl Egg
-      #   run: wget -O pterodactyl-egg.json https://raw.githubusercontent.com/xcraftman52/Pterodactyl-eggs/master/bots/BrayanBot/egg-brayan-bot.json
+      - name: Receive Pterodactyl Egg
+        run: wget -O pterodactyl-egg.json https://cdn.discordapp.com/attachments/940967061566398515/960130923771351110/egg-brayan-bot-v17.json
 
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
         run: |
           FILELIST=
-          md5sum BrayanBot.zip Dockerfile docker-compose.yml Dockerignore > md5-checksums.txt
+          md5sum BrayanBot.zip pterodactyl-egg.json Dockerfile docker-compose.yml Dockerignore > md5-checksums.txt
           sha256sum BrayanBot.zip Dockerfile docker-compose.yml Dockerignore > sha256-checksums.txt
           sha512sum BrayanBot.zip Dockerfile docker-compose.yml Dockerignore > sha512-checksums.txt
 
@@ -41,6 +41,7 @@ jobs:
           title: "BrayanBot v${{ steps.vars.outputs.version }}"
           files: |
             BrayanBot.zip
+            pterodactyl-egg.json
             Dockerfile
             docker-compose.yml
             *-checksums.txt
