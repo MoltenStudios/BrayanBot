@@ -4,7 +4,9 @@
 
 services:
   brayanbot:
-    build: .
+    working_dir: /opt/brayanbot
+    # build: .
+    image: brayanbot/brayanbot
     command: npm start
     container_name: brayanbot
     restart: unless-stopped
@@ -26,7 +28,6 @@ services:
       - type: bind
         source: ./Addon_Configs
         target: /opt/brayanbot/Addon_Configs
-    working_dir: /opt/brayanbot
     tty: true
     environment:
       - NODE_ENV=production # for production

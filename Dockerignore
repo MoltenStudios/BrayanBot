@@ -10,3 +10,22 @@ yarn.lock
 ## Config ##
 config.yml
 config.json
+
+## BrayanBot ##
+config.yml
+config.json
+Addons/
+Addon_Configs/
+EvoTickets
+
+## Logs ##
+errors.txt
+WebServerLog.txt
+
+## Databases ##
+*.db
+*.sqlite
+
+## Misc ##
+disposal/
+*.bak
