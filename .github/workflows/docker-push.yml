@@ -1,4 +1,3 @@
-# We would like to keep our Docker image up to date, but we are lazy. How do we do it? We use Github Actions!
 name: Docker Image CI
 
 on:
@@ -54,7 +53,7 @@ jobs:
         OTHER_PUSH_ARGS=""
         if [[ "${GITHUB_ACTOR}" == "${GITHUB_REPOSITORY%/*}" ]]; then
           OTHER_PUSH_ARGS="${OTHER_PUSH_ARGS} --push"
-          OTHER_ARGS="${OTHER_ARGS} --platform linux/arm/v7,linux/arm64,linux/amd64 --cache-to type=registry,ref=${GITHUB_REPOSITORY}-cache,mode=max"
+          OTHER_ARGS="${OTHER_ARGS} --platform linux/arm/v7,linux/arm64,linux/amd64 --cache-to type=registry,ref=brayanbot-cache,mode=max"
         else
           OTHER_ARGS="${OTHER_ARGS} --load"
         fi
@@ -65,46 +64,46 @@ jobs:
             OTHER_TAGS+=("latest")
           fi
         fi
-        if ! docker buildx imagetools inspect ${GITHUB_REPOSITORY}-build-cache:latest > /dev/null 2>&1; then
+        if ! docker buildx imagetools inspect brayanbot-build-cache:latest > /dev/null 2>&1; then
           docker pull alpine:latest
-          docker tag alpine:latest ${GITHUB_REPOSITORY}-build-cache:latest
+          docker tag alpine:latest brayanbot-build-cache:latest
           if [[ "${GITHUB_ACTOR}" == "${GITHUB_REPOSITORY%/*}" ]]; then
-            docker push ${GITHUB_REPOSITORY}-build-cache:latest
+            docker push brayanbot-build-cache:latest
           fi
         fi
         OTHER_TAGS+=("${GITHUB_SHA}" "${REF}")
         MAIN_IMAGE_TAGS=""
         BUILD_IMAGE_TAGS=""
         for TAG in ${OTHER_TAGS[@]}; do
-          MAIN_IMAGE_TAGS="${MAIN_IMAGE_TAGS} -t ${GITHUB_REPOSITORY}:${TAG}"
-          BUILD_IMAGE_TAGS="${BUILD_IMAGE_TAGS} -t ${GITHUB_REPOSITORY}-build-image:${TAG}"
+          MAIN_IMAGE_TAGS="${MAIN_IMAGE_TAGS} -t brayanbot:${TAG}"
+          BUILD_IMAGE_TAGS="${BUILD_IMAGE_TAGS} -t brayanbot-build-image:${TAG}"
         done
         docker buildx build \
           --target release \
-          --cache-from ${GITHUB_REPOSITORY}-cache \
+          --cache-from brayanbot-cache \
           --build-arg VERSION=${REF} \
           --build-arg COMMIT=${GITHUB_SHA} \
           --build-arg DATE=${DATE} \
-          --build-arg REPOSITORY=${GITHUB_REPOSITORY} \
+          --build-arg REPOSITORY=brayanbot \
           ${MAIN_IMAGE_TAGS} ${OTHER_ARGS} ${OTHER_PUSH_ARGS} .
         if [[ "${OTHER_ARGS}" != *"--load"* ]]; then
           docker buildx build \
             --target release \
-            --cache-from ${GITHUB_REPOSITORY}-cache \
+            --cache-from brayanbot-cache \
             --build-arg VERSION=${REF} \
             --build-arg COMMIT=${GITHUB_SHA} \
             --build-arg DATE=${DATE} \
-            --build-arg REPOSITORY=${GITHUB_REPOSITORY} \
+            --build-arg REPOSITORY=brayanbot \
             ${MAIN_IMAGE_TAGS} --load .
         fi
         if [[ "${GITHUB_ACTOR}" == "${GITHUB_REPOSITORY%/*}" ]]; then
           docker buildx build \
             --target build-image \
-            --cache-from ${GITHUB_REPOSITORY}-cache \
+            --cache-from brayanbot-cache \
             --build-arg VERSION=${REF} \
             --build-arg COMMIT=${GITHUB_SHA} \
             --build-arg DATE=${DATE} \
-            --build-arg REPOSITORY=${GITHUB_REPOSITORY} \
+            --build-arg REPOSITORY=brayanbot \
             ${BUILD_IMAGE_TAGS} ${OTHER_ARGS} ${OTHER_PUSH_ARGS} .
         fi
         if [[ "${GITHUB_ACTOR}" == "${GITHUB_REPOSITORY%/*}" ]]; then
@@ -113,8 +112,8 @@ jobs:
             --build-arg VERSION=${REF} \
             --build-arg COMMIT=${GITHUB_SHA} \
             --build-arg DATE=${DATE} \
-            --build-arg REPOSITORY=${GITHUB_REPOSITORY} \
-            -t ${GITHUB_REPOSITORY}-build-cache:latest \
+            --build-arg REPOSITORY=brayanbot \
+            -t brayanbot-build-cache:latest \
             ${OTHER_PUSH_ARGS} .
         fi
-        docker run --rm ${GITHUB_REPOSITORY}:${GITHUB_SHA} -v
+        docker run --rm brayanbot:${GITHUB_SHA} -v
