@@ -96,8 +96,8 @@ Presets:
 
           ** **
         Fields:
-          - Name: Allowed Roles
-            Value: '> {roles}'
+          - Name: Allowed Roles and Users
+            Value: '> {perms}'
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true

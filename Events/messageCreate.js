@@ -1,6 +1,6 @@
 const Discord = require("discord.js"),
     Utils = require("../Modules/Utils"),
-    { roleMention } = require("@discordjs/builders");
+    { roleMention, userMention } = require("@discordjs/builders");
 
 module.exports = async (bot, message) => {
     const { config, Commands, lang, Aliases } = bot;
@@ -82,7 +82,7 @@ module.exports = async (bot, message) => {
                     configPath: lang.Presets.NoPermission,
                     variables: [
                         {
-                            searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map((x) => {
+                            searchFor: /{perms}/g, replaceWith: commands.commandData.Permission.map((x) => {
                                 if (!!Utils.findRole(x, message.guild, false)) {
                                     let role = Utils.findRole(x, message.guild, true);
                                     return roleMention(role.id);
