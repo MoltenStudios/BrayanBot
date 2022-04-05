@@ -7,8 +7,8 @@ const Utils = require("../Utils"), fs = require("fs"), chalk = require("chalk"),
 
 module.exports = {
     app: express(),
-    get: (endPoint, callBack) => client.Routes.set(endPoint, { method: "get", endPoint, callBack }),
-    post: (endPoint, callBack) => client.Routes.set(endPoint, { method: "post", endPoint, callBack }),
+    get: (endPoint, callBack) => require("../../index").client.Routes.set(endPoint, { method: "get", endPoint, callBack }),
+    post: (endPoint, callBack) => require("../../index").client.Routes.set(endPoint, { method: "post", endPoint, callBack }),
     getIP: (req) => {
         let ip = req.ip
             || req._remoteAddress
