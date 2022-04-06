@@ -7,6 +7,7 @@ General:
     Permission:
       - "@everyone"
     AllowedChannels: false
+    DeleteCommand: false
     SlashCommand:
       Enabled: true
       Data:
@@ -23,6 +24,7 @@ General:
     Permission:
       - "@everyone"
     AllowedChannels: false
+    DeleteCommand: false
     SlashCommand:
       Enabled: true
       Data:
@@ -35,6 +37,7 @@ General:
     Permission:
       - "@everyone"
     AllowedChannels: false
+    DeleteCommand: false
     SlashCommand:
       Enabled: true
       Data:
@@ -48,6 +51,7 @@ General:
     Permission:
       - "@everyone"
     AllowedChannels: false
+    DeleteCommand: false
     SlashCommand:
       Enabled: true
       Data:
@@ -61,6 +65,7 @@ General:
     Permission:
       - "@everyone"
     AllowedChannels: false
+    DeleteCommand: false
     SlashCommand:
       Enabled: true
       Data:

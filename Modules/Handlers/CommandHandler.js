@@ -10,6 +10,7 @@ let slashCommandOptionsStructure = [
         Description: String,
         Required: Boolean,
         ChannelTypes: Array,
+        DeleteCommand: true,
         Choices: [
             {
                 Name: String,
