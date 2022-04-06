@@ -48,7 +48,7 @@ module.exports = async (bot, message) => {
                 else if (!commands.commandData.Permission[0]) commands.commandData.Permission = ["@everyone"];
 
                 if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone"))
-                permissions.push(true);
+                    permissions.push(true);
                 else commands.commandData.Permission.forEach(permission => {
                     const permissionRole = !!Utils.findRole(permission, message.guild, false),
                         permissionUser = !!Utils.parseUser(permission, message.guild, false);
