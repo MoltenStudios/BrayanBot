@@ -1,6 +1,6 @@
 const Discord = require("discord.js"),
     Utils = require("../Modules/Utils"),
-    { roleMention } = require("@discordjs/builders");
+    { roleMention, userMention } = require("@discordjs/builders");
 
 /**
  * @param {Discord.Client} bot 
