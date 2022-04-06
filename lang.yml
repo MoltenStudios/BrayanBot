@@ -86,6 +86,22 @@ General:
           Style: Link
           Label: Avatar
           Link: '{link}'
+Admin:
+  Eval:
+    Embeds:
+      - Title: '{bot-username} Eval'
+        Fields:
+          - Name: ⬇️ | Input
+            Value: |-
+              ```js
+              {input}```
+          - Name: ⬆️ | Output
+            Value: |-
+              ```js
+              {output}```
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
 
 Presets:
   NoPermission:
