@@ -3,7 +3,7 @@ const Discord = require("discord.js"),
     { roleMention } = require("@discordjs/builders");
 
 /**
- * @param {Discord.CloseEvent} bot 
+ * @param {Discord.Client} bot 
  * @param {Discord.Message} message 
  */
 module.exports = async (bot, message) => {
