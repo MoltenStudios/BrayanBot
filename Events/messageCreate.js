@@ -3,8 +3,8 @@ const Discord = require("discord.js"),
     { roleMention, userMention } = require("@discordjs/builders");
 
 /**
- * @param {Discord.Client} bot
- * @param {Discord.Message} message
+ * @param {Discord.Client} bot 
+ * @param {Discord.Message} message 
  */
 module.exports = async (bot, message) => {
     const { config, Commands, lang, Aliases } = bot;
@@ -45,24 +45,24 @@ module.exports = async (bot, message) => {
             if (commands.commandData.Permission) {
                 if (typeof commands.commandData.Permission == "string")
                     commands.commandData.Permission = [commands.commandData.Permission];
-                    else if (!commands.commandData.Permission[0]) commands.commandData.Permission = ["@everyone"];
+                else if (!commands.commandData.Permission[0]) commands.commandData.Permission = ["@everyone"];
 
-                    if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone"))
-                    permissions.push(true);
-                    else commands.commandData.Permission.forEach(permission => {
-                        const permissionRole = !!Utils.findRole(permission, message.guild, false),
-                            permissionUser = !!Utils.parseUser(permission, message.guild, false);
-    
-                        if (!permissionRole && !permissionUser)
-                            return Utils.logError(`${chalk.bold(perm)} role/user was not found in ${chalk.bold(message.guild.name)} guild`);
-    
-                        if (permissionRole) Utils.hasRole(message.member, permission, true)
+                if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone"))
+                permissions.push(true);
+                else commands.commandData.Permission.forEach(permission => {
+                    const permissionRole = !!Utils.findRole(permission, message.guild, false),
+                        permissionUser = !!Utils.parseUser(permission, message.guild, false);
+
+                    if (!permissionRole && !permissionUser)
+                        return Utils.logError(`${chalk.bold(perm)} role/user was not found in ${chalk.bold(message.guild.name)} guild`);
+
+                    if (permissionRole) Utils.hasRole(message.member, permission, true)
+                        ? permissions.push(true) : permissions.push(false);
+
+                    if (permissionUser) {
+                        const parsedUser = Utils.parseUser(permission, message.guild, true)
+                        parsedUser && message.member == parsedUser.id
                             ? permissions.push(true) : permissions.push(false);
-    
-                        if (permissionUser) {
-                            const parsedUser = Utils.parseUser(permission, message.guild, true)
-                            parsedUser && message.member == parsedUser.id
-                                ? permissions.push(true) : permissions.push(false);
                     }
                 })
             }
