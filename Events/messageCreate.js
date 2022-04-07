@@ -1,5 +1,5 @@
 const Discord = require("discord.js"),
-    Utils = require("../Modules/Utils"),
+    Utils = require("../Modules/Utils"), chalk = require("chalk"),
     { roleMention, userMention } = require("@discordjs/builders");
 
 /**
