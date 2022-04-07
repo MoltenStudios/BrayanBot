@@ -54,7 +54,7 @@ module.exports = async (bot, message) => {
                         permissionUser = !!Utils.parseUser(permission, message.guild, false);
 
                     if (!permissionRole && !permissionUser)
-                        return Utils.logError(`${chalk.bold(perm)} role/user was not found in ${chalk.bold(message.guild.name)} guild`);
+                        return Utils.logError(`${chalk.bold(permission)} role/user was not found in ${chalk.bold(message.guild.name)} guild`);
 
                     if (permissionRole) Utils.hasRole(message.member, permission, true)
                         ? permissions.push(true) : permissions.push(false);
