@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
         ],
     }));
     // Send error message if input includes bot.token
-    if (input.includes("bot.token")) return message.reply(Utils.setupMessage({
+    if (input.includes("token")) return message.reply(Utils.setupMessage({
         configPath: lang.Presets.Error,
         variables: [
             { searchFor: /{error}/g, replaceWith: "You can't execute code, which includes bot token!" },
@@ -41,6 +41,15 @@ module.exports.run = async (bot, message, args) => {
     } catch (e) {
         var output = e;
     }
+    // Send error message if output includes token
+    if (output.toString().includes(bot.token)) return message.reply(Utils.setupMessage({
+        configPath: lang.Presets.Error,
+        variables: [
+            { searchFor: /{error}/g, replaceWith: "You can't execute code, which includes bot token!" },
+            ...Utils.userVariables(message.member),
+            ...Utils.botVariables(bot),
+        ],
+    }));
     // Send message with eval output
     message.reply(Utils.setupMessage({
         configPath: lang.Admin.Eval,
