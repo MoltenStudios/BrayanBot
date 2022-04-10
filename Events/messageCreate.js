@@ -50,19 +50,15 @@ module.exports = async (bot, message) => {
                 if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone"))
                     permissions.push(true);
                 else commands.commandData.Permission.forEach(permission => {
-                    const permissionRole = !!Utils.findRole(permission, message.guild, false),
-                        permissionUser = !!Utils.parseUser(permission, message.guild, false);
+                    const hasRole = Utils.hasRole(message.member, permission, false);
+                    const userPermission = Utils.parseUser(permission, message.guild);
 
-                    if (!permissionRole && !permissionUser)
-                        return Utils.logError(`${chalk.bold(permission)} role/user was not found in ${chalk.bold(message.guild.name)} guild`);
-
-                    if (permissionRole) Utils.hasRole(message.member, permission, true)
-                        ? permissions.push(true) : permissions.push(false);
-
-                    if (permissionUser) {
-                        const parsedUser = Utils.parseUser(permission, message.guild, true)
-                        parsedUser && message.member == parsedUser.id
-                            ? permissions.push(true) : permissions.push(false);
+                    if (hasRole) {
+                        permissions.push(true)
+                    } else if (userPermission && userPermission.id == message.member.id) {
+                        permissions.push(true)
+                    } else {
+                        Utils.logWarning(`Command ${chalk.bold(commands.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
                     }
                 })
             }
@@ -75,10 +71,8 @@ module.exports = async (bot, message) => {
                     ...Utils.userVariables(message.member),
                     {
                         searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map((x) => {
-                            if (!!Utils.findRole(x, message.guild, false)) {
-                                let role = Utils.findRole(x, message.guild, true);
-                                return roleMention(role.id);
-                            }
+                            let role = Utils.findRole(x, message.guild, true);
+                            if (role) return roleMention(role.id);
                         }).join(", "),
                     },
                 ],

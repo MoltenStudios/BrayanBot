@@ -8,41 +8,33 @@ module.exports = async (bot, interaction) => {
         const command = SlashCmds.find((x) => x.commandData.SlashCommand.Data.Name.toLowerCase() == interaction.commandName.toLowerCase());
         if (command && typeof command.runSlash == "function") {
             if (command.commandData.AllowedChannels) {
-                if (typeof command.commandData.AllowedChannels == "string") {
+                if (typeof command.commandData.AllowedChannels == "string")
                     command.commandData.AllowedChannels = [command.commandData.AllowedChannels];
-                }
-                var isAllowed = [],
-                    ids = [];
-                for (var index = 0; index < command.commandData.AllowedChannels.length; index++) {
-                    var ch = Utils.findChannel(command.commandData.AllowedChannels[index], interaction.guild, "GUILD_TEXT", true)
-                    if (ch) {
-                        ids.push(`<#${ch.id}>`)
-                        if (interaction.channel.id == ch.id) {
-                            isAllowed.push(true)
-                        }
+
+                let isAllowed = [], allowedChannels = [];
+                for (let index = 0; index < command.commandData.AllowedChannels.length; index++) {
+                    let channel = Utils.findChannel(command.commandData.AllowedChannels[index], interaction.guild, "GUILD_TEXT", true)
+                    if (channel) {
+                        allowedChannels.push(Utils.builder.channelMention(channel.id))
+                        if (interaction.channel.id == channel.id) isAllowed.push(true)
                     }
                 }
                 if (!isAllowed.includes(true)) {
                     return interaction.reply(Utils.setupMessage({
                         configPath: lang.Presets.NonCommandChannel,
                         variables: [
-                            { searchFor: /{channels}/g, replaceWith: ids.join(", ") },
+                            { searchFor: /{channels}/g, replaceWith: allowedChannels.join(", ") },
                             ...Utils.userVariables(interaction.member),
                         ],
                     }, true))
                 }
             }
-            //Define command options
-            let options =
-                    interaction.options && interaction.options._hoistedOptions ? Utils.parseSlashArgs(interaction.options._hoistedOptions) : {};
-            //Run slash command
-            let commandUsed = interaction.commandName,
-                commandData = command;
-            command.runSlash(bot, interaction, options, { commandUsed, commandData, });
+            let options = interaction.options && interaction.options._hoistedOptions ? Utils.parseSlashArgs(interaction.options._hoistedOptions) : {};
+            let commandUsed = interaction.commandName, commandData = command;
+            await command.runSlash(bot, interaction, options, { commandUsed, commandData });
         } else {
-            let cmd = interaction.guild.commands.cache.find(
-                (x) => x.name.toLowerCase() == interaction.commandName.toLowerCase()
-            );
+            let cmd = interaction.guild.commands.cache.find((x) =>
+                x.name.toLowerCase() == interaction.commandName.toLowerCase());
             if (cmd) cmd.delete();
             interaction.reply({
                 content: "This command no longer exists.",
