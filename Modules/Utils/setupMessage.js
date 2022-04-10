@@ -63,10 +63,12 @@ const rowStructure = [
  *
  * @param {messageStructure} settings
  * @param {boolean} ephemeral
+ * @param {boolean} tts
+ * @param {boolean} disableMentions
  * @param {componentsStructure} components
  * @returns
  */
-module.exports = (settings, ephemeral = false, components = null) => {
+module.exports = (settings, ephemeral = false, tts = false, disableMentions = false, components = null) => {
     const { config, lang, commands, client } = require("../../index"),
         Utils = require("../Utils");
 
@@ -77,7 +79,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
         { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
         { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
         { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
-    ], Embeds, Content, Components, Ephemeral = false;
+    ], Embeds, Content, Components, Ephemeral = false, TTS = false, DisableMentions = false;
 
     if (settings.variables && Array.isArray(settings.variables))
         settings.variables.forEach(x => Variables.push(x));
@@ -90,6 +92,10 @@ module.exports = (settings, ephemeral = false, components = null) => {
         Embeds = settings.configPath.Embed || settings.configPath.embed;
     if (components || settings.components || settings.configPath.Components || settings.configPath.components)
         Components = components || settings.components || settings.configPath.Components || settings.configPath.components;
+    if (tts || settings.configPath.TTS || settings.configPath.Tts || settings.configPath.tts)
+        TTS = true;
+    if (disableMentions || settings.configPath.DisableMentions || settings.configPath.disableMentions || settings.configPath.disablementions)
+        DisableMentions = true;
 
     if (Array.isArray(Content))
         Content = Content[Math.floor(Math.random() * Content.length)];
@@ -104,6 +110,7 @@ module.exports = (settings, ephemeral = false, components = null) => {
         content: Content ? Content : null,
         embeds: Embeds && Array.isArray(Embeds) ? [] : null,
         ephemeral: ephemeral ? ephemeral : Ephemeral,
+        tts: tts ? tts : TTS,
     };
 
     if (Embeds && Array.isArray(Embeds) && Embeds[0]) {
@@ -384,6 +391,11 @@ module.exports = (settings, ephemeral = false, components = null) => {
                 messageData.components.push(rows[x]);
     } else if (Components) {
         messageData.components = Components;
+    }
+
+    if (DisableMentions)
+    messageData.allowedMentions = {
+        parse: []
     }
 
     return messageData;
