@@ -55,7 +55,7 @@ module.exports.run = async (bot, message, args) => {
         configPath: lang.Admin.Eval,
         variables: [
             { searchFor: /{input}/g, replaceWith: input },
-            { searchFor: /{output}/g, replaceWith: output ? output : "Check console" },
+            { searchFor: /{output}/g, replaceWith: output },
             ...Utils.userVariables(message.member),
             ...Utils.botVariables(bot),
         ],
@@ -98,7 +98,7 @@ module.exports.runSlash = async (bot, interaction) => {
         configPath: lang.Admin.Eval,
         variables: [
             { searchFor: /{input}/g, replaceWith: input },
-            { searchFor: /{output}/g, replaceWith: output ? output : "Check console" },
+            { searchFor: /{output}/g, replaceWith: output },
             ...Utils.userVariables(interaction.member),
             ...Utils.botVariables(bot),
         ],
