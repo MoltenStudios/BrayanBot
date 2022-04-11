@@ -1,6 +1,6 @@
 const { client, config, lang, commands } = require("../../index"),
     Utils = require("../Utils"), fs = require("fs"),
-    path = require('path');
+    path = require('path'), Discord = require("discord.js");
 
 
 let slashCommandOptionsStructure = [
@@ -76,12 +76,27 @@ module.exports = {
         }
 
         /**
-         * @param {Function} run 
+         * @callback runLegacyCommands
+         * @param {Discord.Client} bot
+         * @param {Discord.Message} message
+         * @param {Array} args
+         */
+
+        /**
+         * 
+         * @param {runLegacyCommands} run 
          */
         setRun(run) { this.run = run; return this; }
 
         /**
-         * @param {Function} runSlash 
+         * @callback runSlashCommands
+         * @param {Discord.Client} bot
+         * @param {Discord.BaseCommandInteraction} interaction
+         * @param {Object} options
+         */
+
+        /**
+         * @param {runSlashCommands} runSlash 
          */
         setRunSlash(runSlash) { this.runSlash = runSlash; return this; }
 
