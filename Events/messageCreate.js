@@ -53,12 +53,13 @@ module.exports = async (bot, message) => {
                     const hasRole = Utils.hasRole(message.member, permission, false);
                     const userPermission = Utils.parseUser(permission, message.guild);
 
+                    if (!hasRole && !userPermission)
+                        Utils.logWarning(`Command ${chalk.bold(commands.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
+                    
                     if (hasRole) {
                         permissions.push(true)
                     } else if (userPermission && userPermission.id == message.member.id) {
                         permissions.push(true)
-                    } else {
-                        Utils.logWarning(`Command ${chalk.bold(commands.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
                     }
                 })
             }
@@ -70,9 +71,15 @@ module.exports = async (bot, message) => {
                 variables: [
                     ...Utils.userVariables(message.member),
                     {
-                        searchFor: /{roles}/g, replaceWith: commands.commandData.Permission.map((x) => {
-                            let role = Utils.findRole(x, message.guild, true);
-                            if (role) return roleMention(role.id);
+                        searchFor: /{perms}/g, replaceWith: commands.commandData.Permission.map((x) => {
+                            if (!!Utils.findRole(x, message.guild, false)) {
+                                let role = Utils.findRole(x, message.guild, true);
+                                if (role) return roleMention(role.id);
+                            }
+                            if (!!Utils.parseUser(x, message.guild)) {
+                                let user = Utils.parseUser(x, message.guild, true);
+                                if (user) return userMention(user.id);
+                            }
                         }).join(", "),
                     },
                 ],
