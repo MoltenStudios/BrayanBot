@@ -131,7 +131,7 @@ module.exports = (data) => {
                                     if (!choice.Value) Utils.logError(`[Utils] [SlashCommandCreator] A ${chalk.bold("Value")} is required to build Slash Command's option's choice.`);
                                     if (choice.Name && choice.Value) optionData.choices.push({
                                         name: choice.Name,
-                                        value: choice.Value.toLowerCase(),
+                                        value: typeof choice.Value == "string" ? choice.Value.toLowerCase() : parseInt(choice.Value),
                                     });
                                 });
 

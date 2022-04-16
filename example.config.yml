@@ -40,5 +40,3 @@ WebServer:
     # IPs included will bypass Rate Limiting
     BypassIPs:
       - "127.0.0.1" # http://localhost/ | http://127.0.0.1/
-Misc:
-  Version: "v1.1.0"

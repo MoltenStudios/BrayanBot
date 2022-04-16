@@ -1,13 +1,20 @@
 const { client, config, lang, commands } = require("../../index"),
-    fs = require("fs"), path = require('path');
+    fs = require("fs"), path = require('path'), Discord = require("discord.js");
 
 module.exports = {
     EventListner: class EventListner {
+
+        /**
+         * @callback executeFunction
+         * @param {Discord.Client} client
+         * @param {...} params
+         */
+
         /**
          * @param {String} name 
-         * @param {Function} executeFunction 
+         * @param {executeFunction} executeFunction 
          */
-        constructor(name = null, executeFunction = () => { }) {
+        constructor(name = null, executeFunction = (client) => { }) {
             if (name && executeFunction && typeof executeFunction == "function") {
                 this.name = name;
                 this.executeFunction = executeFunction;

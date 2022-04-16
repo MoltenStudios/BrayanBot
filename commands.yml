@@ -75,3 +75,21 @@ General:
           - Type: "User"
             Name: "target"
             Description: "User Mention"
+Admin:
+  Eval:
+    Description: "Runs JavaScript code"
+    Usage: "eval <code>"
+    Aliases: []
+    Permission:
+      - "Zorino#1110"
+    AllowedChannels: false
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: eval
+        Description: "Runs JavaScript code"
+        Options:
+          - Type: "String"
+            Name: "code"
+            Description: "JavaScript code"
+            Required: true

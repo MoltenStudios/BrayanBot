@@ -109,10 +109,10 @@ module.exports = {
      * @returns {Discord.Channel}
      */
     findChannel: (name, guild, type = "GUILD_TEXT", notify = true) => {
-        if (!name)
-            return module.exports.logError(`[Utils] [findChannel] Invalid input for channel ${chalk.bold(name)}.`);
-        if (!guild)
-            return module.exports.logError(`[Utils] [findChannel] Invalid input for ${chalk.bold("guild")}.`);
+        if (!name) return module.exports.logError(`[Utils] [findChannel] Invalid input for channel ${chalk.bold(name)}.`);
+        if (!guild) return module.exports.logError(`[Utils] [findChannel] Invalid input for ${chalk.bold("guild")}.`);
+        if (typeof name == "bigint" || typeof name == "number") name = name.toString();
+
         let channel = guild.channels.cache.find((c) => (c.name.toLowerCase() == name.toLowerCase() || c.id == name) && c.type.toLowerCase() == type.toLowerCase());
         if (channel) {
             return channel;
@@ -130,10 +130,10 @@ module.exports = {
      * @returns {Discord.Role}
      */
     findRole: (name, guild, notify = true) => {
-        if (!name)
-            return module.exports.logError(`[Utils] [findRole] Invalid input for role name.`);
-        if (!guild)
-            return module.exports.logError(`[Utils] [findRole] Invalid input for guild.`);
+        if (!name) return module.exports.logError(`[Utils] [findRole] Invalid input for role name.`);
+        if (!guild) return module.exports.logError(`[Utils] [findRole] Invalid input for guild.`);
+        if (typeof name == "bigint" || typeof name == "number") name = name.toString();
+
         let role = guild.roles.cache.find(
             (r) => r.name.toLowerCase() == name.toLowerCase() || r.id == name
         );
@@ -154,10 +154,10 @@ module.exports = {
      * @returns {Boolean}
      */
     hasRole: (member, name, notify = true) => {
-        if (!member)
-            return module.exports.logError(`[Utils] [hasRole] Invalid input for ${chalk.bold("member")}.`);
-        if (!name)
-            return module.exports.logError(`[Utils] [hasRole] Invalid input for role ${chalk.bold("name")}.`);
+        if (!member) return module.exports.logError(`[Utils] [hasRole] Invalid input for ${chalk.bold("member")}.`);
+        if (!name) return module.exports.logError(`[Utils] [hasRole] Invalid input for role ${chalk.bold("name")}.`);
+        if (typeof name == "bigint" || typeof name == "number") name = name.toString();
+
         let permissions = [];
         if (Array.isArray(name) && name[0]) {
             for (let index = 0; index < name.length; index++) {
@@ -201,10 +201,9 @@ module.exports = {
      * @returns {Discord.GuildMember}
      */
     parseUser: (argument, guild) => {
-        if (!argument)
-            return module.exports.logError(`[Utils] [parseUser] Invalid input ${chalk.bold("argument")}.`);
-        if (!guild)
-            return module.exports.logError(`[Utils] [parseUser] Invalid input for ${chalk.bold("guild")}.`);
+        if (!argument) return module.exports.logError(`[Utils] [parseUser] Invalid input ${chalk.bold("argument")}.`);
+        if (!guild) return module.exports.logError(`[Utils] [parseUser] Invalid input for ${chalk.bold("guild")}.`);
+        if (typeof argument == "bigint" || typeof argument == "number") argument = argument.toString();
 
         if (argument && guild) {
             argument = argument.replace(/([<@!]|[>])/g, "");
@@ -231,10 +230,9 @@ module.exports = {
      * @returns {Discord.GuildMember}
      */
     parseUserFromMessage: (message, argument, messageMember = true) => {
-        if (!message)
-            return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("message")}.`);
-        if (!argument)
-            return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("argument")}.`);
+        if (!message) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("message")}.`);
+        if (!argument) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("argument")}.`);
+        if (typeof argument == "bigint" || typeof argument == "number") argument = argument.toString();
 
         if (messageMember) {
             return (message.mentions.members.first() || module.exports.parseUser(argument, message.guild) || message.member);

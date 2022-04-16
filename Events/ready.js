@@ -37,41 +37,44 @@ module.exports = async (bot) => {
     }).then(async registredCommands => {
         let fullPermissions = [];
         for (let index = 0; index < registredCommands.length; index++) {
-            let element = registredCommands[index],
-                commandYMLData = SlashCmds.find(x => x.name.toLowerCase() == element.name.toLowerCase()),
-                cmdPerms = [];
-            if (!commandYMLData.commandData.Permission.includes("@everyone")) {
-                if (typeof commandYMLData.commandData.Permission == "string") {
-                    commandYMLData.commandData.Permission = [commandYMLData.commandData.Permission]
+            let element = registredCommands[index], cmdPerms = [];
+            try {
+                let commandYMLData = SlashCmds.find(x => {
+                    let commandName = x.commandData.SlashCommand.Data.Name || x.commandData.Name || x.name;
+                    return commandName.toLowerCase() == element.name.toLowerCase();
+                });
+                if (!commandYMLData) {
+                    Utils.logWarning(`Command ${chalk.bold(element.name)} is not found in commands, please check your command configuration.`);
+                    continue;
                 }
-                for (let i = 0; i < commandYMLData.commandData.Permission.length; i++) {
-                    const perm = commandYMLData.commandData.Permission[i]
-                    const prole = !!Utils.findRole(perm, guild, false),
-                        puser = !!Utils.parseUser(perm, guild, false);
-                    if (!prole && !puser) return Utils.logError(`${chalk.bold(perm)} role nor user was not found in ${chalk.bold(guild.name)} guild`);
-                    if (prole) {
-                        const role = await Utils.findRole(perm, guild, true)
-                        cmdPerms.push({
-                            id: role.id,
-                            type: "ROLE",
-                            permission: true
-                        })
+                if (!commandYMLData?.commandData?.Permission?.includes("@everyone")) {
+                    if (typeof commandYMLData.commandData.Permission == "string")
+                        commandYMLData.commandData.Permission = [commandYMLData.commandData.Permission]
+
+                    for (let i = 0; i < commandYMLData.commandData.Permission.length; i++) {
+                        const permission = commandYMLData.commandData.Permission[i]
+
+                        const permissionRole = Utils.findRole(permission, guild, false),
+                            permissionUser = Utils.parseUser(permission, guild, false);
+
+                        if (permissionRole) {
+                            cmdPerms.push({
+                                id: permissionRole.id,
+                                type: "ROLE",
+                                permission: true
+                            })
+                        } else if (permissionUser) {
+                            cmdPerms.push({
+                                id: permissionUser.id,
+                                type: "USER",
+                                permission: true
+                            })
+                        } else {
+                            Utils.logWarning(`Command ${chalk.bold(element.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
+                        }
                     }
-                    if (puser) {
-                        const user = Utils.parseUser(perm, guild, true)
-                        cmdPerms.push({
-                            id: user.id,
-                            type: "USER",
-                            permission: true
-                        })
-                    }
-                }
-                fullPermissions.push({
-                    id: element.id,
-                    permissions: cmdPerms
-                })
-            } else {
-                fullPermissions.push({
+                    fullPermissions.push({ id: element.id, permissions: cmdPerms })
+                } else fullPermissions.push({
                     id: element.id,
                     permissions: [{
                         id: guild.id,
@@ -79,6 +82,8 @@ module.exports = async (bot) => {
                         permission: true
                     }]
                 })
+            } catch (e) {
+                Utils.logError("Error while registering commands: " + element.name + "\n\t" + e.stack)
             }
         }
         await guild.commands.permissions.set({ fullPermissions })
@@ -88,7 +93,7 @@ module.exports = async (bot) => {
             Utils.logWarning(`[SlashCommands] \"${chalk.bold(`application.commands`)}\" scope wasn't selected while inviting the bot. Please use the below link to re-invite your bot.`)
             Utils.logWarning(`[SlashCommands] ${chalk.blue(chalk.underline(chalk.bold(`https://discord.com/api/oauth2/authorize?client_id=${bot.user.id}&permissions=8&scope=bot%20applications.commands`)))}`)
         } else {
-            Utils.logError(e);
+            Utils.logError(e.stack);
         }
     })
 
