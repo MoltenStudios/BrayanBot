@@ -3,25 +3,50 @@
 	"version": "1.2.0",
 	"description": "An Advanced Discord Bot Node.js Discord.js-v13",
 	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
+	},
+	"bugs": {
+		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
+	},
+	"author": "@Zorino#1110",
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme",
+	"maintainers": [
+		"@Zorino#1110",
+		"raf#0002",
+		"XCraftMan52#0661"
+	],
+	"keywords": [
+		"discord",
+		"discord.js",
+		"node.js",
+		"discordbot",
+		"discord-bot"
+	],
+	"engines": {
+		"node": ">=16.13.1"
+	},
 	"dependencies": {
 		"@discordjs/rest": "^0.3.0",
 		"axios": "^0.26.1",
 		"better-sqlite3": "^7.5.1",
-		"chalk": "^4.1.2",
+		"chalk": "<=4.1.2",
 		"console-stamp": "^3.0.4",
 		"date-differ": "^1.0.1",
-		"discord-api-types": "^0.31.0",
+		"discord-api-types": "^0.31.1",
 		"discord.js": "^13.6.0",
 		"moment": "^2.29.2",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
-		"yaml": "^2.0.0"
+		"yaml": "^2.0.1"
 	},
 	"optionalDependencies": {
 		"@discordjs/opus": "^0.7.0",
-		"@twurple/api": "^5.0.18",
-		"@twurple/auth": "^5.0.18",
+		"@twurple/api": "^5.0.19",
+		"@twurple/auth": "^5.0.19",
 		"@tycrek/log": "^0.5.9",
 		"body-parser": "^1.20.0",
 		"canvas": "^2.9.1",
@@ -35,8 +60,8 @@
 		"express": "^4.17.3",
 		"express-rate-limit": "^6.3.0",
 		"fs-extra": "^10.0.1",
-		"mongoose": "^6.2.10",
-		"prompt": "^1.2.2",
+		"mongoose": "^6.3.0",
+		"prompt": "^1.3.0",
 		"radio-browser": "^2.1.10",
 		"request": "^2.88.2",
 		"request-promise": "^4.2.6",
@@ -58,27 +83,5 @@
 		"start": "node index.js",
 		"install:start": "npm i && node index.js --no-install",
 		"install:dev": "npm i && nodemon index.js --show-errors --no-install -e js"
-	},
-	"author": "@Zorino#1110",
-	"maintainers": [
-		"@Zorino#1110",
-		"raf#0002",
-		"XCraftMan52#0661"
-	],
-	"license": "Apache-2.0",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
-	},
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
-	"bugs": {
-		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
-	},
-	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme"
+	}
 }
