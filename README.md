@@ -58,7 +58,7 @@ And if you have a question, please ask it in the Discord server instead of openi
 
 #### Discussion & Suggestions
 
-We believe there is no such thing as a stupid idea! Which means, you may feel **absolutely free** to request any features over [Issues](https://github.com/BrayanBotDev/BrayanBot/issues) or our [Discord Server](https://brayanbot.dev/discord). While new commands most likely to make it to the bot, suggest them anyway! There is a high chance that they can become implemented as [Addons]((#addons)) 
+We believe there is no such thing as a stupid idea! Which means, you may feel **absolutely free** to request any features over [Issues](https://github.com/BrayanBotDev/BrayanBot/issues) or our [Discord Server](https://brayanbot.dev/discord). While new commands most likely to make it to the bot, suggest them anyway! There is a high chance that they can become implemented as [Addons](https://brayanbot.dev/docs/Developers/Addons/first-party) 
 
 #### Code Contibutions
 
