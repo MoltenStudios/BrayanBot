@@ -5,15 +5,23 @@ name: Node.js CI
 
 on:
     push:
-        branches: [main]
         paths-ignore:
             - 'README.md'
-            - '.github/*'
+            - '.github/**'
             - '.dockerignore'
-            - '*/docker-compose.yml'
-            - '*/Dockerfile'
+            - 'docker-compose.yml'
+            - 'Dockerfile'
+        branches: 
+            - main
     pull_request:
-        branches: [main]
+        paths-ignore:
+            - 'README.md'
+            - '.github/**'
+            - '.dockerignore'
+            - 'docker-compose.yml'
+            - 'Dockerfile'
+        branches: 
+            - main
     schedule:
         - cron: "36 20 * * 6"
 
