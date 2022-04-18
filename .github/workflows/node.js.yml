@@ -6,6 +6,12 @@ name: Node.js CI
 on:
     push:
         branches: [main]
+        paths-ignore:
+            - 'README.md'
+            - '.github/*'
+            - '.dockerignore'
+            - '*/docker-compose.yml'
+            - '*/Dockerfile'
     pull_request:
         branches: [main]
     schedule:
