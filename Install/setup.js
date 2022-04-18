@@ -16,9 +16,6 @@ const config =
 		"Logo": "https://avatars.githubusercontent.com/u/99198112?s=200&v=4",
 		"Link": "https://brayanbot.dev",
 	},
-	"Misc": {
-		"Version": "v1.0.0",
-	},
 }
 
 function getConfirmSchema(description) {
