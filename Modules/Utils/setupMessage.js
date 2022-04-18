@@ -36,6 +36,7 @@ const rowStructure = [
             {
                 Author: String,
                 AuthorIcon: String,
+                AuthorURL: String,
                 URL: String,
                 Title: String,
                 Description: String,
@@ -125,6 +126,7 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
                 Thumbnail = settings.thumbnail || embedSettings.thumbnail || embedSettings.Thumbnail,
                 Author = settings.author || embedSettings.author || embedSettings.Author,
                 AuthorAvatarImage = settings.authoricon || embedSettings.authoricon || embedSettings.AuthorIcon,
+                AuthorURL = settings.authorurl || embedSettings.authorurl || embedSettings.AuthorURL,
                 Color = settings.color || embedSettings.color || embedSettings.Color || config.Embeds.Color || "2f3136",
                 Fields = settings.fields || embedSettings.fields || embedSettings.Fields,
                 Image = settings.image || embedSettings.image || embedSettings.Image,
@@ -134,26 +136,17 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
 
             if (Variables && typeof Variables === "object") {
                 Variables.forEach((variable) => {
-                    if (Content)
-                        Content = Content.replace(variable.searchFor, variable.replaceWith);
-                    if (Title)
-                        Title = Title.replace(variable.searchFor, variable.replaceWith);
-                    if (Description)
-                        Description = Description.replace(variable.searchFor, variable.replaceWith);
-                    if (Footer)
-                        Footer = Footer.replace(variable.searchFor, variable.replaceWith);
-                    if (FooterAvatarImage)
-                        FooterAvatarImage = FooterAvatarImage.replace(variable.searchFor, variable.replaceWith);
-                    if (Thumbnail)
-                        Thumbnail = Thumbnail.replace(variable.searchFor, variable.replaceWith);
-                    if (Author)
-                        Author = Author.replace(variable.searchFor, variable.replaceWith);
-                    if (AuthorAvatarImage)
-                        AuthorAvatarImage = AuthorAvatarImage.replace(variable.searchFor, variable.replaceWith);
-                    if (Image)
-                        Image = Image.replace(variable.searchFor, variable.replaceWith);
-                    if (URL)
-                        URL = URL.replace(variable.searchFor, variable.replaceWith);
+                    if (Content) Content = Content.replace(variable.searchFor, variable.replaceWith);
+                    if (Title) Title = Title.replace(variable.searchFor, variable.replaceWith);
+                    if (Description) Description = Description.replace(variable.searchFor, variable.replaceWith);
+                    if (Footer) Footer = Footer.replace(variable.searchFor, variable.replaceWith);
+                    if (FooterAvatarImage) FooterAvatarImage = FooterAvatarImage.replace(variable.searchFor, variable.replaceWith);
+                    if (Thumbnail) Thumbnail = Thumbnail.replace(variable.searchFor, variable.replaceWith);
+                    if (Author) Author = Author.replace(variable.searchFor, variable.replaceWith);
+                    if (AuthorAvatarImage) AuthorAvatarImage = AuthorAvatarImage.replace(variable.searchFor, variable.replaceWith);
+                    if (AuthorURL) AuthorURL = AuthorURL.replace(variable.searchFor, variable.replaceWith);
+                    if (Image) Image = Image.replace(variable.searchFor, variable.replaceWith);
+                    if (URL) URL = URL.replace(variable.searchFor, variable.replaceWith);
                 });
             }
 
@@ -192,6 +185,8 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
                 Author = Author[Math.floor(Math.random() * Author.length)];
             if (Array.isArray(AuthorAvatarImage))
                 AuthorAvatarImage = AuthorAvatarImage[Math.floor(Math.random() * AuthorAvatarImage.length)];
+            if (Array.isArray(AuthorURL))
+                AuthorURL = AuthorURL[Math.floor(Math.random() * AuthorURL.length)];
             // Randomised Footers
             if (Array.isArray(Footer))
                 Footer = Footer[Math.floor(Math.random() * Footer.length)];
@@ -215,14 +210,23 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
                 if (Title) embed.setTitle(Title);
                 if (Description) embed.setDescription(Description);
                 // Author
-                if (Author && AuthorAvatarImage)
+                if (Author && AuthorAvatarImage && AuthorURL) {
                     embed.setAuthor({
                         name: Author,
-                        iconURL: AuthorAvatarImage
+                        iconURL: AuthorAvatarImage,
+                        url: AuthorURL,
                     });
-                else if (Author) embed.setAuthor({
-                    name: Author
-                });
+                } else if (Author && AuthorAvatarImage) {
+                    embed.setAuthor({
+                        name: Author,
+                        iconURL: AuthorAvatarImage,
+                    });
+                } else if (Author && AuthorURL) {
+                    embed.setAuthor({
+                        name: Author,
+                        url: AuthorURL,
+                    })
+                }
                 // Footers
                 if (Footer && FooterAvatarImage)
                     embed.setFooter({
@@ -394,9 +398,9 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
     }
 
     if (DisableMentions)
-    messageData.allowedMentions = {
-        parse: []
-    }
+        messageData.allowedMentions = {
+            parse: []
+        }
 
     return messageData;
 };
