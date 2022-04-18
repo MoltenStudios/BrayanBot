@@ -3,8 +3,8 @@ name: Public Release CI
 on:
   push:
     tags: [ "v*" ]
-
-
+  workflow_dispatch:
+  
 jobs:
   release-public:
     name: Public Release
@@ -40,7 +40,7 @@ jobs:
           prerelease: false
           title: "BrayanBot v${{ steps.vars.outputs.version }}"
           files: |
-            BrayanBot-${{ steps.vars.outputs.version }}.zip
+            BrayanBot-*.zip
             pterodactyl-egg.json
             Dockerfile
             docker-compose.yml
