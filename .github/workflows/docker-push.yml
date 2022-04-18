@@ -2,12 +2,24 @@
 name: Docker Image CI
 
 on:
-  push:
+ push:
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
+      - '.dockerignore'
+      - 'docker-compose.yml'
+      - 'Dockerfile'
     tags:
     - v*
     branches:
     - main
-  pull_request:
+ pull_request:
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
+      - '.dockerignore'
+      - 'docker-compose.yml'
+      - 'Dockerfile'
     branches:
     - main
 
