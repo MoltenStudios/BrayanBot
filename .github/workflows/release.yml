@@ -23,7 +23,7 @@ jobs:
 
         # Download the pterodactyl egg from craftman's repository
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodactyl-egg.json https://cdn.discordapp.com/attachments/940967061566398515/960130923771351110/egg-brayan-bot-v17.json
+        run: wget -O pterodactyl-egg.json https://cdn.discordapp.com/attachments/940963220485718097/965499029763006474/egg-brayan-bot.json
 
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
