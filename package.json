@@ -78,7 +78,6 @@
 		}
 	},
 	"scripts": {
-		"setup": "node Install/setup.js",
 		"dev": "nodemon index.js --show-errors --no-install -e js",
 		"start": "node index.js",
 		"install:start": "npm i && node index.js --no-install",
