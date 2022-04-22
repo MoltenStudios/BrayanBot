@@ -15,9 +15,9 @@ module.exports = {
 
         if (fs.existsSync("./Addon_Configs") && fs.existsSync(`./Addon_Configs/${name}/`)) {
             let allFiles = fs.readdirSync(`./Addon_Configs/${name}/`)
-            let filtredFiles = allFiles.filter((f) => f.split(".").pop() == extension)
-            if (filtredFiles && filtredFiles[0]) {
-                filtredFiles.forEach(x => {
+            let filteredFiles = allFiles.filter((f) => f.split(".").pop() == extension)
+            if (filteredFiles && filtredFiles[0]) {
+                filteredFiles.forEach(x => {
                     if (fs.readFileSync(`./Addon_Configs/${name}/${x}`, { encoding: "utf-8" }))
                         configs[x.replace(`.${extension}`, "").toLowerCase()] =
                             YAML.parse(fs.readFileSync(`./Addon_Configs/${name}/${x}`, "utf-8"))

@@ -38,7 +38,7 @@ module.exports = {
 
         let showOutput = process.argv.includes("--show-install-output"),
             { spawn } = require("child_process"), modulesToInstall = [],
-            dependenciesInstaled = [];
+            dependenciesInstalled = [];
 
         for (let index = 0; index < dependencies.length; index++) {
             try {
@@ -48,7 +48,7 @@ module.exports = {
                 modulesToInstall.push(dependencies[index]);
             }
         }
-        dependenciesInstaled.forEach(x => dependencies = dependencies.filter(y => y != x));
+        dependenciesInstalled.forEach(x => dependencies = dependencies.filter(y => y != x));
         if (!dependencies[0]) return resolve(true);
 
         if (process.argv.includes("--no-install")) return resolve("no-install but dependencies");

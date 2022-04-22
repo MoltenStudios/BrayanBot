@@ -55,7 +55,7 @@ module.exports = async (bot, message) => {
 
                     if (!hasRole && !userPermission)
                         Utils.logWarning(`Command ${chalk.bold(commands.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
-                    
+
                     if (hasRole) {
                         permissions.push(true)
                     } else if (userPermission && userPermission.id == message.member.id) {

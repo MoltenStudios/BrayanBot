@@ -19,7 +19,7 @@ module.exports = (shortError, fullError = "") => {
     function sendMessage() {
         if (shortError.includes(`config.yml`)) return console.log(log.warn, `Couldn't find config.yml. Please follow our setup guide! https://brayanbot.dev/docs/setup/hosting/windows`)
         if (shortError.includes(`TOKEN_INVALID`)) return console.log(log.warn, `Your bot token is incorrect. Please update in config.yml`)
-        
+
     }
     if (!shortError) return;
     if (typeof shortError !== "string") shortError = shortError.toString();
