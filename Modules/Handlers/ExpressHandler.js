@@ -87,7 +87,7 @@ module.exports = {
                                 if (URL && isValidUrl(URL)) {
                                     app.get(EndPoint, (req, res) => res.redirect(URL))
                                 } else {
-                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("URL")} required. Recieved: ${URL}`)
+                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("URL")} required. Received: ${URL}`)
                                 }
                                 break;
                             }
@@ -98,7 +98,7 @@ module.exports = {
                                 } else if (!fs.existsSync(path.join(__dirname, '../../WebServer', File))) {
                                     Utils.logWarning(`[WS] [EndPoints] ${chalk.bold(File)} not found.`)
                                 } else {
-                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("File")} required. Recieved: ${File}`)
+                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("File")} required. Received: ${File}`)
                                 }
                                 break;
                             }
@@ -109,15 +109,15 @@ module.exports = {
                                 } else if (!fs.existsSync(path.join(__dirname, '../../WebServer', File))) {
                                     Utils.logWarning(`[WS] [EndPoints] ${chalk.bold(File)} not found.`)
                                 } else {
-                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("File")} required. Recieved: ${File}`)
+                                    Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("File")} required. Received: ${File}`)
                                 }
                                 break;
                             }
                         }
                     } else if (!Type) {
-                        Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("Type")} required. Recieved: ${Type}`)
+                        Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("Type")} required. Received: ${Type}`)
                     } else if (!EndPoint) {
-                        Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("EndPoint")} required. Recieved: ${EndPoint}`)
+                        Utils.logWarning(`[WS] [EndPoints] Valid ${chalk.bold("EndPoint")} required. Received: ${EndPoint}`)
                     }
                 }
             }

@@ -66,7 +66,7 @@ module.exports = {
             searchFor: new RegExp(`{${prefix || "user"}-pfp}`, "g"),
             replaceWith: user.user.displayAvatarURL({ dynamic: true }),
         }, {
-            searchFor: new RegExp(`{${prefix || "user"}-createdat}`, "g"),
+            searchFor: new RegExp(`{${prefix || "user"}-createdate}`, "g"),
             replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a"),
         }];
     },

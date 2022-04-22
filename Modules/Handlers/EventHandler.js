@@ -2,7 +2,7 @@ const { client, config, lang, commands } = require("../../index"),
     fs = require("fs"), path = require('path'), Discord = require("discord.js");
 
 module.exports = {
-    EventListner: class EventListner {
+    EventListener: class EventListener {
 
         /**
          * @callback executeFunction
@@ -33,14 +33,14 @@ module.exports = {
             if (name && params.length > 0) client.emit(name, ...params);
         }
     },
-    set: (name, parameter) => new module.exports.EventListner(name, parameter),
+    set: (name, parameter) => new module.exports.EventListener(name, parameter),
     init: () => {
         const eventFiles = fs.readdirSync(path.join(__dirname, "../../Events"))
             .filter((file) => file.endsWith(".js"));
 
         for (let i = 0; i < eventFiles.length; i++) {
             const file = require(`../../Events/${eventFiles[i]}`);
-            if (file) new module.exports.EventListner(eventFiles[i].replace(".js", ""), typeof file == "function" ? file
+            if (file) new module.exports.EventListener(eventFiles[i].replace(".js", ""), typeof file == "function" ? file
                 : typeof file.run == "function" ? file.run : () => { });
         }
     }

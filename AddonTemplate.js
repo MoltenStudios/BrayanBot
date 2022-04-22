@@ -1,6 +1,6 @@
 const Utils = require("../Modules/Utils");
 const { Command } = require("../Modules/Handlers/CommandHandler");
-const { EventListner, EventEmitter } = require("../Modules/Handlers/EventHandler");
+const { EventListener, EventEmitter } = require("../Modules/Handlers/EventHandler");
 
 module.exports = {
     dependencies: [],

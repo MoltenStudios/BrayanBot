@@ -34,7 +34,7 @@ module.exports = async (bot) => {
 
     await rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
-    }).then(async registredCommands => {
+    }).then(async registeredCommands => {
         let fullPermissions = [];
         for (let index = 0; index < registredCommands.length; index++) {
             let element = registredCommands[index], cmdPerms = [];
@@ -141,7 +141,7 @@ module.exports = async (bot) => {
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
     await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
     bot.guilds.cache.size > 1
-        ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`Brayan Bot is not made for multiple servers.`)}`)
+        ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`BrayanBot is not made for multiple servers.`)}`)
         : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server.`);
     await Utils.logInfo(`Bot Ready!`);
 };
