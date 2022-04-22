@@ -83,7 +83,7 @@ function doSetup() {
 				// pattern: ^.*\.(db)$,
 				require: false,
 			},
-			brandname: {
+			brandName: {
 				description: `Your brand/server name used by {brand-name} variable(in embeds). (Example: ${config.Branding.Name})`,
 				type: 'string',
 				default: config.Branding.Name,
