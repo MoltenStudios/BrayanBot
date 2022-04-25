@@ -36,8 +36,8 @@ module.exports = async (bot) => {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
     }).then(async registeredCommands => {
         let fullPermissions = [];
-        for (let index = 0; index < registredCommands.length; index++) {
-            let element = registredCommands[index], cmdPerms = [];
+        for (let index = 0; index < registeredCommands.length; index++) {
+            let element = registeredCommands[index], cmdPerms = [];
             try {
                 let commandYMLData = SlashCmds.find(x => {
                     let commandName = x.commandData.SlashCommand.Data.Name || x.commandData.Name || x.name;
