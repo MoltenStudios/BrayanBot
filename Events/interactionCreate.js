@@ -1,6 +1,11 @@
 const Discord = require("discord.js"),
-    Utils = require("../Modules/Utils");
+    Utils = require("../Modules/Utils"),
+    chalk = require("chalk");
 
+/**
+ * @param {Discord.Client} bot 
+ * @param {Discord.Interaction} interaction 
+ */
 module.exports = async (bot, interaction) => {
     const { config, lang, SlashCmds } = bot;
     // Slash Command Executing
@@ -29,9 +34,61 @@ module.exports = async (bot, interaction) => {
                     }, true))
                 }
             }
-            let options = interaction.options && interaction.options._hoistedOptions ? Utils.parseSlashArgs(interaction.options._hoistedOptions) : {};
-            let commandUsed = interaction.commandName, commandData = command;
-            await command.runSlash(bot, interaction, options, { commandUsed, commandData });
+
+            let permissions = [];
+            if (command.commandData.Permission) {
+                if (typeof command.commandData.Permission == "string")
+                    command.commandData.Permission = [command.commandData.Permission];
+                else if (!command.commandData.Permission[0]) command.commandData.Permission = ["@everyone"];
+
+                if (command.commandData.Permission.includes("@everyone") || command.commandData.Permission.includes("everyone"))
+                    permissions.push(true);
+                else command.commandData.Permission.forEach(permission => {
+                    const roleExists = Utils.findRole(permission, interaction.guild, false);
+                    const userExists = Utils.parseUser(permission, interaction.guild);
+
+                    if (!roleExists && !userExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role/user')} permission in command ${chalk.bold(command.name)}`)
+                    else if (!roleExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role')} permission in command ${chalk.bold(command.name)}`)
+                    else if (!userExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('user')} permission in command ${chalk.bold(command.name)}`)
+
+                    if (userExists && roleExists) {
+                        const hasRole = Utils.hasRole(interaction.member, permission, false);
+                        const userPermission = Utils.parseUser(permission, interaction.guild);
+
+                        if (hasRole) permissions.push(true);
+                        else if (userPermission && userPermission.id == interaction.member.id) permissions.push(true);
+                    }
+                })
+            }
+
+            if (permissions.includes(true)) {
+                let options = interaction.options && interaction.options._hoistedOptions ? Utils.parseSlashArgs(interaction.options._hoistedOptions) : {};
+                let commandUsed = interaction.commandName, commandData = command;
+                await command.runSlash(bot, interaction, options, { commandUsed, commandData });
+            } else {
+                interaction.reply(Utils.setupMessage({
+                    configPath: lang.Presets.NoPermission,
+                    variables: [
+                        ...Utils.userVariables(interaction.member),
+                        {
+                            searchFor: /{perms}/g, replaceWith: permissions[0] ? command.commandData.Permission.map((x) => {
+                                if (!!Utils.findRole(x, interaction.guild, false)) {
+                                    let role = Utils.findRole(x, interaction.guild, true);
+                                    if (role) return Utils.builder.roleMention(role.id);
+                                }
+                                if (!!Utils.parseUser(x, interaction.guild)) {
+                                    let user = Utils.parseUser(x, interaction.guild, true);
+                                    if (user) return Utils.builder.userMention(user.id);
+                                }
+                            }).join(", ") : "Invalid Permissions configured.",
+                        },
+                    ],
+                }));
+            }
+
         } else {
             let cmd = interaction.guild.commands.cache.find((x) =>
                 x.name.toLowerCase() == interaction.commandName.toLowerCase());

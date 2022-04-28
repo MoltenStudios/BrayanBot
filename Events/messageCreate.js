@@ -50,16 +50,22 @@ module.exports = async (bot, message) => {
                 if (commands.commandData.Permission.includes("@everyone") || commands.commandData.Permission.includes("everyone"))
                     permissions.push(true);
                 else commands.commandData.Permission.forEach(permission => {
-                    const hasRole = Utils.hasRole(message.member, permission, false);
-                    const userPermission = Utils.parseUser(permission, message.guild);
+                    const roleExists = Utils.findRole(permission, message.guild, false);
+                    const userExists = Utils.parseUser(permission, message.guild);
 
-                    if (!hasRole && !userPermission)
-                        Utils.logWarning(`Command ${chalk.bold(commands.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
+                    if (!roleExists && !userExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role/user')} permission in command ${chalk.bold(command.name)}`)
+                    else if (!roleExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role')} permission in command ${chalk.bold(command.name)}`)
+                    else if (!userExists)
+                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('user')} permission in command ${chalk.bold(command.name)}`)
 
-                    if (hasRole) {
-                        permissions.push(true)
-                    } else if (userPermission && userPermission.id == message.member.id) {
-                        permissions.push(true)
+                    if (userExists && roleExists) {
+                        const hasRole = Utils.hasRole(message.member, permission, false);
+                        const userPermission = Utils.parseUser(permission, message.guild);
+
+                        if (hasRole) permissions.push(true);
+                        else if (userPermission && userPermission.id == message.author.id) permissions.push(true);
                     }
                 })
             }
@@ -71,7 +77,7 @@ module.exports = async (bot, message) => {
                 variables: [
                     ...Utils.userVariables(message.member),
                     {
-                        searchFor: /{perms}/g, replaceWith: commands.commandData.Permission.map((x) => {
+                        searchFor: /{perms}/g, replaceWith: permissions[0] ? commands.commandData.Permission.map((x) => {
                             if (!!Utils.findRole(x, message.guild, false)) {
                                 let role = Utils.findRole(x, message.guild, true);
                                 if (role) return roleMention(role.id);
@@ -80,7 +86,7 @@ module.exports = async (bot, message) => {
                                 let user = Utils.parseUser(x, message.guild, true);
                                 if (user) return userMention(user.id);
                             }
-                        }).join(", "),
+                        }).join(", ") : "Invalid Permissions configured.",
                     },
                 ],
             }));
