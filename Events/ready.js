@@ -34,60 +34,6 @@ module.exports = async (bot) => {
 
     await rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
-    }).then(async registeredCommands => {
-        let fullPermissions = [];
-        for (let index = 0; index < registeredCommands.length; index++) {
-            let element = registeredCommands[index], cmdPerms = [];
-            try {
-                let commandYMLData = SlashCmds.find(x => {
-                    let commandName = x.commandData.SlashCommand.Data.Name || x.commandData.Name || x.name;
-                    return commandName.toLowerCase() == element.name.toLowerCase();
-                });
-                if (!commandYMLData) {
-                    Utils.logWarning(`Command ${chalk.bold(element.name)} is not found in commands, please check your command configuration.`);
-                    continue;
-                }
-                if (!commandYMLData?.commandData?.Permission?.includes("@everyone")) {
-                    if (typeof commandYMLData.commandData.Permission == "string")
-                        commandYMLData.commandData.Permission = [commandYMLData.commandData.Permission]
-
-                    for (let i = 0; i < commandYMLData.commandData.Permission.length; i++) {
-                        const permission = commandYMLData.commandData.Permission[i]
-
-                        const permissionRole = Utils.findRole(permission, guild, false),
-                            permissionUser = Utils.parseUser(permission, guild, false);
-
-                        if (permissionRole) {
-                            cmdPerms.push({
-                                id: permissionRole.id,
-                                type: "ROLE",
-                                permission: true
-                            })
-                        } else if (permissionUser) {
-                            cmdPerms.push({
-                                id: permissionUser.id,
-                                type: "USER",
-                                permission: true
-                            })
-                        } else {
-                            Utils.logWarning(`Command ${chalk.bold(element.name)} - ${chalk.bold(permission)} is not a valid User/Role.`)
-                        }
-                    }
-                    fullPermissions.push({ id: element.id, permissions: cmdPerms })
-                } else fullPermissions.push({
-                    id: element.id,
-                    permissions: [{
-                        id: guild.id,
-                        type: "ROLE",
-                        permission: true
-                    }]
-                })
-            } catch (e) {
-                Utils.logError("Error while registering commands: " + element.name + "\n\t" + e.stack)
-            }
-        }
-        await guild.commands.permissions.set({ fullPermissions })
-        await Utils.logInfo(`${chalk.bold(SlashCmdsData.length)} Slash Command${SlashCmdsData.length == 1 ? "" : "s"} Loaded.`);
     }).catch(e => {
         if (e.code == 50001) {
             Utils.logWarning(`[SlashCommands] \"${chalk.bold(`application.commands`)}\" scope wasn't selected while inviting the bot. Please use the below link to re-invite your bot.`)
