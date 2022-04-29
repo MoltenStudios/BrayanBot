@@ -28,7 +28,6 @@ jobs:
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
         run: |
-          FILELIST=
           md5sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > md5-checksums.txt
           sha256sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha256-checksums.txt
           sha512sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha512-checksums.txt
