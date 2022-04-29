@@ -6,6 +6,7 @@ yarn.lock
 ## Github ##
 */.github/
 */workflows/
+.gitignore
 
 ## Config ##
 config.yml
