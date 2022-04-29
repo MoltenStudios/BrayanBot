@@ -7,7 +7,7 @@ services:
     tty: true
     working_dir: /opt/brayanbot
     build: .
-    # image: brayanbot/brayanbot
+    # image: brayanbot/brayanbot # comment build: . and uncomment this line to use a public image
     command: npm start
     container_name: brayanbot
     restart: unless-stopped
@@ -16,7 +16,6 @@ services:
       - ./Events:/opt/brayanbot/Events
       - ./Commands:/opt/brayanbot/Commands
       - ./node_modules:/opt/brayanbot/node_modules
-
       - type: bind
         source: ./config.yml
         target: /opt/brayanbot/config.yml
