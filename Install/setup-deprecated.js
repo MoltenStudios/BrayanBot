@@ -17,6 +17,7 @@ const config =
 	}
   }
 
+
 function getConfirmSchema(description) {
 	return {
 		properties: {
