@@ -34,7 +34,11 @@ module.exports = async (bot) => {
 
     rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 17ec97a (Update ready.js)
     }).catch(e => {
         if (e.code == 50001) {
             Utils.logWarning(`[SlashCommands] \"${chalk.bold(`application.commands`)}\" scope wasn't selected while inviting the bot. Please use the below link to re-invite your bot.`)
