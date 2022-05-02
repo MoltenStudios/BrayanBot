@@ -11,7 +11,7 @@ on:
             - '.dockerignore'
             - 'docker-compose.yml'
             - 'Dockerfile'
-        branches: 
+        branches:
             - main
     pull_request:
         paths-ignore:
@@ -20,7 +20,7 @@ on:
             - '.dockerignore'
             - 'docker-compose.yml'
             - 'Dockerfile'
-        branches: 
+        branches:
             - main
     schedule:
         - cron: "36 20 * * 6"
