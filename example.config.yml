@@ -2,7 +2,7 @@ Settings:
   Token: "BOT-TOKEN"
   Prefix: "-"
   Storage: "database.db"
-  DevMode: false # This option will reset every addon configs.
+  DevMode: false # This option will reset all addon configs.
 
 Embeds:
   Color: "2f3136"
