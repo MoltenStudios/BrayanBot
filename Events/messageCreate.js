@@ -55,18 +55,9 @@ module.exports = async (bot, message) => {
 
                     if (!roleExists && !userExists)
                         Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role/user')} permission in command ${chalk.bold(command.name)}`)
-                    else if (!roleExists)
-                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role')} permission in command ${chalk.bold(command.name)}`)
-                    else if (!userExists)
-                        Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('user')} permission in command ${chalk.bold(command.name)}`)
 
-                    if (userExists && roleExists) {
-                        const hasRole = Utils.hasRole(message.member, permission, false);
-                        const userPermission = Utils.parseUser(permission, message.guild);
-
-                        if (hasRole) permissions.push(true);
-                        else if (userPermission && userPermission.id == message.author.id) permissions.push(true);
-                    }
+                    if (userExists && userExists.id === message.author.id) permissions.push(true);
+                    else if(Utils.hasRole(message.member, permission, false)) permissions.push(true);
                 })
             }
             if (permissions.includes(true)) {
