@@ -3,55 +3,31 @@ const Discord = require("discord.js"), chalk = require("chalk"),
     { client } = require("../index");
 
 module.exports = {
-    builder: require("@discordjs/builders"),
-    wait: require("util").promisify(setTimeout),
-    database: require("./Database"),
     parseSlashCommands: require("./Utils/parseSlashCommand"),
     setupMessage: require("./Utils/setupMessage"),
-    logInfo: (text) => {
-        console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text);
-    },
-    logWarning: (text) => {
-        console.log(chalk.hex("#edd100").bold("[WARN] ") + text);
-    },
-    logError: (text) => {
-        console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text);
-    },
+    wait: require("util").promisify(setTimeout),
+    database: require("./Handlers/Database"),
+    builder: require("@discordjs/builders"),
+    logWarning: (...text) => console.log(chalk.hex("#edd100").bold("[WARN] ") + text),
+    logError: (...text) => console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text),
+    logInfo: (...text) => console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text),
+    /** @param {Array} array */
+    getRandom: (array) => array[Math.floor(Math.random() * array.length)],
+    /** @param {String} text */
+    formatFirstLetter: (text) => text.charAt(0).toUpperCase() + text.slice(1),
     /**
-     *
-     * @param {Array} array
-     * @returns
-     */
-    getRandom: (array) => {
-        let random = Math.floor(Math.random() * array.length);
-        return array[random];
-    },
-    /**
-     *
-     * @param {String} text
-     * @returns
-     */
-    formatFirstLetter: (text) => {
-        return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
-    },
-    /**
-     *
      * @param {Discord.GuildMember} user
      * @param {String} prefix
-     * @returns {Array}
+     * @returns {String[]}
      */
     userVariables: (user, prefix) => {
-        if (!user) {
-            module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
-            return [];
-        } else return [{
+        let returnObject = [];
+
+        if(user) returnObject = [{
             searchFor: new RegExp(`{${prefix || "user"}-id}`, "g"),
             replaceWith: user.id,
         }, {
-            searchFor: new RegExp(
-                `{${prefix || "user"}-displayname}`,
-                "g"
-            ),
+            searchFor: new RegExp(`{${prefix || "user"}-displayname}`, "g"),
             replaceWith: user.displayName,
         }, {
             searchFor: new RegExp(`{${prefix || "user"}-username}`, "g"),
@@ -69,18 +45,20 @@ module.exports = {
             searchFor: new RegExp(`{${prefix || "user"}-createdate}`, "g"),
             replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a"),
         }];
+
+        if(!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
+
+        return returnObject;
     },
     /**
-     *
      * @param {Discord.Client} bot
      * @param {String} prefix
-     * @returns {Array}
+     * @returns {Object[]}
      */
     botVariables: (bot, prefix) => {
-        if (!bot) {
-            module.exports.logError(`[Utils] [botVariables] Invalid input for ${chalk.bold("bot")}.`);
-            return [];
-        } else return [{
+        let returnObject = [];
+
+        if(bot) returnObject = [{
             searchFor: new RegExp(`{${prefix || "bot"}-id}`, "g"),
             replaceWith: bot.id,
         }, {
@@ -98,60 +76,60 @@ module.exports = {
         }, {
             searchFor: new RegExp(`{${prefix || "bot"}-pfp}`, "g"),
             replaceWith: bot.user.displayAvatarURL({ dynamic: true }),
-        }];
+        }]
+
+        if (!bot) module.exports.logError(`[Utils] [botVariables] Invalid input for ${chalk.bold("bot")}.`);
+
+        return returnObject;
     },
     /**
-     *
      * @param {String} name
      * @param {Discord.Guild} guild
      * @param {String} type
      * @param {Boolean} notify
-     * @returns {Discord.Channel}
+     * @returns {Discord.Channel | void}
      */
     findChannel: (name, guild, type = "GUILD_TEXT", notify = true) => {
         if (!name) return module.exports.logError(`[Utils] [findChannel] Invalid input for channel ${chalk.bold(name)}.`);
         if (!guild) return module.exports.logError(`[Utils] [findChannel] Invalid input for ${chalk.bold("guild")}.`);
         if (typeof name == "bigint" || typeof name == "number") name = name.toString();
 
-        let channel = guild.channels.cache.find((c) => (c.name.toLowerCase() == name.toLowerCase() || c.id == name) && c.type.toLowerCase() == type.toLowerCase());
-        if (channel) {
-            return channel;
-        } else {
-            if (notify) {
-                module.exports.logError(`[Utils] [findChannel] ${chalk.bold(name)} was not found in the ${chalk.bold(guild.name)} guild`);
-            }
-            return false;
-        }
+        let returnObject = false;
+        const channel = guild.channels.cache.find((c) =>
+            (c.name.toLowerCase() === name.toLowerCase() || c.id === name)
+            && c.type.toLowerCase() === type.toLowerCase());
+
+        if (channel) returnObject =  channel;
+        else if (notify && !channel) module.exports.logError(`[Utils] [findChannel] ${chalk.bold(name)} was not found in the ${chalk.bold(guild.name)} guild`);
+
+        return returnObject;
     },
     /**
      * @param {String} name
      * @param {Discord.TextChannel} guild
      * @param {Boolean} notify
-     * @returns {Discord.Role}
+     * @returns {Discord.Role | void}
      */
     findRole: (name, guild, notify = true) => {
         if (!name) return module.exports.logError(`[Utils] [findRole] Invalid input for role name.`);
         if (!guild) return module.exports.logError(`[Utils] [findRole] Invalid input for guild.`);
         if (typeof name == "bigint" || typeof name == "number") name = name.toString();
 
-        let role = guild.roles.cache.find(
-            (r) => r.name.toLowerCase() == name.toLowerCase() || r.id == name
-        );
-        if (role) {
-            return role;
-        } else {
-            if (notify) {
-                module.exports.logError(`[Utils] [findRole] ${chalk.bold(name)} role was not found in ${chalk.bold(guild.name)} guild`);
-            }
-            return false;
-        }
+        let returnObject = false;
+        const role = guild.roles.cache.find((r) =>
+            r.name.toLowerCase() === name.toLowerCase()
+            || r.id === name);
+
+        if (role) returnObject = role;
+        else if (notify) module.exports.logError(`[Utils] [findRole] ${chalk.bold(name)} role was not found in ${chalk.bold(guild.name)} guild`);
+
+        return returnObject;
     },
     /**
-     *
      * @param {Discord.GuildMember} member
      * @param {String | Array} name
      * @param {Boolean} notify
-     * @returns {Boolean}
+     * @returns {Boolean | void}
      */
     hasRole: (member, name, notify = true) => {
         if (!member) return module.exports.logError(`[Utils] [hasRole] Invalid input for ${chalk.bold("member")}.`);
@@ -161,44 +139,26 @@ module.exports = {
         let permissions = [];
         if (Array.isArray(name) && name[0]) {
             for (let index = 0; index < name.length; index++) {
-                const roleName = name[index];
-                let role = module.exports.findRole(roleName, member.guild, notify);
+                const role = module.exports.findRole(name[index], member.guild, notify)
                 if (role) {
-                    if (member.roles.cache.has(role.id)) {
-                        permissions.push(true);
-                    } else {
-                        permissions.push(false);
-                    }
-                } else {
-                    permissions.push(false);
-                }
+                    if (member.roles.cache.has(role.id)) permissions.push(true);
+                    else permissions.push(false);
+                } else permissions.push(false);
             }
         } else if (typeof name == "string") {
             let role = module.exports.findRole(name, member.guild, notify);
             if (role) {
-                if (member.roles.cache.has(role.id)) {
-                    permissions.push(true);
-                } else {
-                    permissions.push(false);
-                }
-            } else {
-                permissions.push(false);
-            }
-        } else {
-            module.exports.logError(`[Utils] [hasRole] Invalid type of ${chalk.bold("name")} property.`);
-        }
+                if (member.roles.cache.has(role.id)) permissions.push(true);
+                else permissions.push(false);
+            } else permissions.push(false);
+        } else module.exports.logError(`[Utils] [hasRole] Invalid type of ${chalk.bold("name")} property.`);
 
-        if (permissions.includes(true)) {
-            return true;
-        } else {
-            return false;
-        }
+        return permissions.includes(true);
     },
     /**
-     *
      * @param {String} argument
      * @param {Discord.Guild} guild
-     * @returns {Discord.GuildMember}
+     * @returns {Discord.GuildMember | void}
      */
     parseUser: (argument, guild) => {
         if (!argument) return module.exports.logError(`[Utils] [parseUser] Invalid input ${chalk.bold("argument")}.`);
@@ -208,15 +168,10 @@ module.exports = {
         if (argument && guild) {
             argument = argument.replace(/([<@!]|[>])/g, "");
             const user = guild.members.cache.find((user) => {
-                if (user.user.id.toLowerCase() == argument.toLowerCase()) {
-                    return true;
-                } else if (user.user.username.toLowerCase() == argument.toLowerCase()) {
-                    return true;
-                } else if (user.user.tag.toLowerCase() == argument.toLowerCase()) {
-                    return true;
-                } else if (user.displayName && user.displayName.toLowerCase() == argument.toLowerCase()) {
-                    return true;
-                }
+                if (user.user.id.toLowerCase() === argument.toLowerCase()) return true;
+                else if (user.user.username.toLowerCase() === argument.toLowerCase()) return true;
+                else if (user.user.tag.toLowerCase() === argument.toLowerCase()) return true;
+                else if (user.displayName && user.displayName.toLowerCase() === argument.toLowerCase()) return true;
             });
 
             if (user) return user;
@@ -224,31 +179,27 @@ module.exports = {
         } else return false;
     },
     /**
-     *
      * @param {Discord.Message} message
      * @param {String} argument
-     * @returns {Discord.GuildMember}
+     * @returns {Discord.GuildMember | void}
      */
     parseUserFromMessage: (message, argument, messageMember = true) => {
         if (!message) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("message")}.`);
         if (!argument) return module.exports.logError(`[Utils] [parseUserFromMessage] Invalid input ${chalk.bold("argument")}.`);
         if (typeof argument == "bigint" || typeof argument == "number") argument = argument.toString();
 
-        if (messageMember) {
-            return (message.mentions.members.first() || module.exports.parseUser(argument, message.guild) || message.member);
-        } else {
-            return (message.mentions.members.first() || module.exports.parseUser(argument, message.guild));
-        }
+        if (messageMember) return (message.mentions.members.first() || module.exports.parseUser(argument, message.guild) || message.member);
+        else return (message.mentions.members.first() || module.exports.parseUser(argument, message.guild));
     },
     /**
-     *
      * @param {Discord.GuildMember} member
-     * @returns {Array}
+     * @returns {Array | void}
      */
     getUserBadges: (member) => {
         if (!member)
             return module.exports.logError(`[Utils] [getUserBadges] Invalid input ${chalk.bold("member")}.`);
-        let badges = {
+
+        const badges = {
             BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
             BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
             DISCORD_EMPLOYEE: "Discord Staff",
@@ -263,81 +214,62 @@ module.exports = {
             DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
             VERIFIED_BOT: "Verified Bot",
             TEAM_USER: "Team User",
-        }, data = [], flags = member.user.flags.toArray();
-        flags.forEach((flag, i) => {
-            if (badges[flag]) data.push(badges[flag]);
-        });
+        }, data = [];
+
+        member.user.flags.toArray().forEach((flag, i) =>
+            badges[flag] ? data.push(badges[flag]) : false);
+
         return data;
     },
-    getChannel: (channel = null, guild) => {
-        if (typeof channel === "string") {
-            const ch = guild.channels.cache.find((rl) => [rl.name.toLowerCase(), rl.id].includes(channel.toLowerCase()));
-            if (ch) return ch;
-            else return undefined;
-        } else {
-            return undefined;
-        }
-    },
     /**
-     *
      * @param {Array} choices
-     * @returns {Object}
+     * @returns {Object | void}
      */
     parseSlashArgs: function (options) {
-        if (typeof options !== "object" && options.length <= 0) {
-            return module.exports.logError("[Utils] [parseSlashArgs] Invalid Options were provided.");
-        }
-
         let args = {};
-        options.forEach((c) => {
-            let { type, value, name } = c;
+        if (typeof options !== "object" && options.length <= 0)
+            return module.exports.logError("[Utils] [parseSlashArgs] Invalid Options were provided.");
+
+        options.forEach((opt) => {
+            let { type, value, name } = opt;
+
             args[name] = { type };
             if (["STRING", "NUMBER", "INTEGER", "BOOLEAN"].includes(type)) {
                 if (value) args[name].content = value;
             } else if (["CHANNEL"].includes(type)) {
-                if (c.channel) args[name].channel = c.channel;
+                if (opt.channel) args[name].channel = opt.channel;
             } else if (["ROLE"].includes(type)) {
-                if (c.role) args[name].role;
+                if (opt.role) args[name].role;
             } else if (["USER"].includes(type)) {
-                if (c.user) args[name].user = c.user;
-                if (c.member) args[name].member = c.member;
+                if (opt.user) args[name].user = opt.user;
+                if (opt.member) args[name].member = opt.member;
             } else if (["MENTIONABLE".includes(type)]) {
-                if (c.user) args[name].user = c.user;
-                if (c.member) args[name].member = c.member;
-                if (c.role) args[name].role;
-            } else {
-                return module.exports.logWarning("[Utils] [parseSlashArgs] Invalid Choice Type. Type: " + type);
-            }
+                if (opt.user) args[name].user = opt.user;
+                if (opt.member) args[name].member = opt.member;
+                if (opt.role) args[name].role;
+            } else return module.exports.logWarning("[Utils] [parseSlashArgs] Invalid Choice Type. Type: " + type);
+
         });
         return args;
     },
-    paste: (data, url = "https://paste.zorino.in", extension, raw) => {
-        return new Promise(async (resolve, reject) => {
-            axios.post(`${url}/documents`, data).then(({ data }) => {
-                if (raw) url += "/raw";
-                if (extension) data.key += `.${extension}`;
-                resolve(`${url}/${data.key}`);
-            }).catch((error) => {
-                reject(error);
-            });
+    paste: (data, url = "https://paste.zorino.in", extension, raw) => new Promise(async (resolve, reject) => {
+        axios.post(`${url}/documents`, data).then(({ data }) => {
+            if (raw) url += "/raw";
+            if (extension) data.key += `.${extension}`;
+
+            resolve(`${url}/${data.key}`);
+        }).catch(reject)
+    }),
+    /** @param {Discord.Interaction} interaction */
+    sendPing: async (interaction) => new Promise(async (resolve, reject) => {
+        await interaction.client.api.interactions(interaction.id, interaction.token).callback.post({
+            data: { type: 6 },
+        }).then((res) => resolve(res)).catch((err) => {
+            if (err.message === "Unknown interaction")
+                resolve(undefined);
+            else reject(err);
         });
-    },
-    /**
-     *
-     * @param {Discord.Interaction} interaction
-     * @returns
-     */
-    sendPing: async (interaction) => {
-        return new Promise(async (resolve, reject) => {
-            await interaction.client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: { type: 6 },
-            }).then((res) => resolve(res)).catch((err) => {
-                if (err.message === "Unknown interaction")
-                    resolve(undefined);
-                else reject(err);
-            });
-        });
-    },
+    }),
     createMultipleConfigs: async (configs, addonName) => new Promise(async (resolve, reject) => {
         if (typeof configs !== "object" && Object.keys(configs).length <= 0) {
             module.exports.logError("[Utils] [createMultipleConfigs] Invalid Configs were provided.");
@@ -355,7 +287,6 @@ module.exports = {
         resolve(addonConfigs);
     }),
     /**
-     * 
      * @param {Array} array 
      * @param {Function} callback 
      */
@@ -364,19 +295,19 @@ module.exports = {
             await callback(array[index], index, array);
     },
     /**
-     * 
      * @param {Number} bytes 
      * @param {String} seperator 
-     * @returns {Number}
+     * @returns {String}
      */
     bytesToSize: (bytes, seperator = " ") => {
-        // This code is not written by any collobrators from BrayanBot
+        // This code is not written by any collaborators from BrayanBot
         // This code was taken from github gist
         // -> https://gist.github.com/lanqy/5193417?permalink_comment_id=2793883#gistcomment-2793883
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
-        if (bytes == 0) return 'n/a'
-        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10)
-        if (i === 0) return `${bytes}${seperator}${sizes[i]}`
-        return `${(bytes / (1024 ** i)).toFixed(1)}${seperator}${sizes[i]}`
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+        if (bytes === 0) return 'N/A';
+        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+        if (i === 0) return `${bytes}${seperator}${sizes[i]}`;
+        return `${(bytes / (1024 ** i)).toFixed(1)}${seperator}${sizes[i]}`;
     }
 };
