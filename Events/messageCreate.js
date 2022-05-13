@@ -1,6 +1,10 @@
-const Discord = require("discord.js"),
-    Utils = require("../Modules/Utils"), chalk = require("chalk"),
-    { roleMention, userMention } = require("@discordjs/builders");
+const Discord = require("discord.js");
+const moment = require("moment");
+const ms = require("ms");
+const Utils = require("../Modules/Utils"), chalk = require("chalk");
+const { roleMention, userMention } = require("@discordjs/builders");
+
+let db;
 
 /**
  * @param {Discord.Client} bot 
@@ -9,14 +13,53 @@ const Discord = require("discord.js"),
 module.exports = async (bot, message) => {
     const { config, Commands, lang, Aliases } = bot;
 
+    if(!db) db = await Utils.database.getDatabase();
+
     if (message.content.startsWith(config.Settings.Prefix)) {
         let msgArray = message.content.split(" "), command = msgArray[0].toLowerCase(),
-            args = msgArray.slice(1), permissions = [];
+            args = msgArray.slice(1), permissions = [], ignoreCooldown = false;
 
         let commands = Commands.get(command.slice(config.Settings.Prefix.length))
             || Commands.get(Aliases.get(command.slice(config.Settings.Prefix.length)));
 
         if (commands && typeof commands.run == "function") {
+            // Command Cooldown Check
+            if (commands.commandData.Cooldown && !message.author.bot) {
+                const ignoreUserCheck = bot.commands.IgnoredCooldown.Users ? bot.commands.IgnoredCooldown.Users.includes(x =>
+                    x.id == message.author.id
+                    || x.tag.toLowerCase() == message.author.tag.toLowerCase()
+                    || x.username.toLowerCase() == message.author.username.toLowerCase()) : false;
+
+                const ignoreRoleCheck = bot.commands.IgnoredCooldown.Roles ? bot.commands.IgnoredCooldown.Roles.includes(x => message.member.roles.cache.some(y =>
+                    y.id == x
+                    || y.name.toLowerCase() == x.toLowerCase())) : false;
+
+                if(ignoreUserCheck || ignoreRoleCheck) ignoreCooldown = true;
+
+                const cooldown = ms(commands.commandData.Cooldown);
+                const isOnCooldown = db.prepare(`SELECT * FROM cooldowns WHERE user=? AND command=?`).get(message.author.id, commands.name);
+
+
+                if (ignoreCooldown == false) {
+                    if(isOnCooldown && isOnCooldown.time - Date.now() < 0) {
+                        Utils.database.cooldowns.reset(commands.name, message.author.id, cooldown)
+                    } else if(isOnCooldown) {
+                        return message.reply(Utils.setupMessage({
+                            configPath: lang.Presets.OnCooldown,
+                            variables: [
+                                ...Utils.userVariables(message.member, 'user'),
+                                { searchFor: /{cooldown}/g, replaceWith: ms(isOnCooldown.time - Date.now(), { long: true }) },
+                                { searchFor: /{command}/g, replaceWith: command.slice(config.Settings.Prefix.length) }
+                            ]
+                        }))
+                    } else if(!isOnCooldown) {
+                        Utils.database.cooldowns.set(commands.name, message.author.id, cooldown)
+                        db.prepare(`INSERT INTO cooldowns (user, command, time)VALUES(?,?,?)`).run(message.author.id, commands.name, (Date.now() + cooldown));
+                    }
+                }
+            }
+
+            // Command Channel Check
             if (commands.commandData.AllowedChannels) {
                 if (typeof commands.commandData.AllowedChannels == "string")
                     commands.commandData.AllowedChannels = [commands.commandData.AllowedChannels];
@@ -42,6 +85,8 @@ module.exports = async (bot, message) => {
                     msg.delete().catch(e => { })
                 }, 5000))
             }
+
+            // Command Permission Check
             if (commands.commandData.Permission) {
                 if (typeof commands.commandData.Permission == "string")
                     commands.commandData.Permission = [commands.commandData.Permission];
@@ -60,6 +105,7 @@ module.exports = async (bot, message) => {
                     else if(Utils.hasRole(message.member, permission, false)) permissions.push(true);
                 })
             }
+
             if (permissions.includes(true)) {
                 await commands.run(bot, message, args, config);
                 if (commands.commandData.DeleteCommand) message.delete().catch(e => { })

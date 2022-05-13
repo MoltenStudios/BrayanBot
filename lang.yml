@@ -106,7 +106,7 @@ Admin:
 Presets:
   NoPermission:
     Embeds:
-      - Title: Unable to run command
+      - Title: Unable to execute command
         Description: |-
           You do not have enough permissions to run this command
 
@@ -128,6 +128,14 @@ Presets:
         Fields:
           - Name: Allowed Channels
             Value: '> {channels}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
+        Color: '#ff0800'
+  OnCooldown:
+    Embeds:
+      - Title: Unable to execute command
+        Description: "> You are currently on cooldown for this command. You can use this command again in **{cooldown}**."
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true

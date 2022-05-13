@@ -9,24 +9,24 @@ let slashCommandOptionsStructure = [
         Name: String,
         Description: String,
         Required: Boolean,
-        ChannelTypes: Array,
-        DeleteCommand: true,
-        Choices: [
-            {
-                Name: String,
-                Value: String | Number | Int8Array | Int16Array | Int32Array,
-            },
-        ],
+        Choices: [{
+            Name: String,
+            Value: String | Number | Int8Array | Int16Array | Int32Array,
+        }],
     },
 ], slashCommandDataStructure = {
     Name: String,
     Description: String,
     Options: slashCommandOptionsStructure,
 }, commandDataStructure = {
+    Name: String,
     Description: String,
     Usage: String,
     Aliases: Array,
     Permission: Array,
+    ChannelTypes: Array,
+    DeleteCommand: true,
+    Cooldown: 0,
     SlashCommand: {
         Enabled: Boolean,
         Data: slashCommandDataStructure,

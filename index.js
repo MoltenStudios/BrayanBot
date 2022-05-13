@@ -54,7 +54,7 @@ installNodeModules().then(async () => {
     ["Events", "SlashCmds", "SlashCmdsData"].forEach((x) => (client[x] = []));
     ["Commands", "Aliases", "Routes"].forEach((x) => (client[x] = new Discord.Collection()));
 
-    let handlers = ["ErrorHandler.js", "EventHandler.js", "CommandHandler.js", "AddonHandler.js", "ExpressHandler.js"];
+    let handlers = ["ErrorHandler.js", "EventHandler.js", "Database.js" ,"CommandHandler.js", "AddonHandler.js", "ExpressHandler.js"];
     for (let index = 0; index < handlers.length; index++)
         await require(`./Modules/Handlers/${handlers[index]}`).init()
 
