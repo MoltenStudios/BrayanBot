@@ -37,13 +37,13 @@ General:
         Description: |-
           • **Name**: {guild-name}
           • **Guild ID**: {guild-id}
-          • **Created-At**: {guild-createdat}
+          • **Created-At**: {guild-createdate}
         Fields:
           - Name: "\U0001F451 Server Owner"
             Value: |-
               • **Account**: {guild-owner-mention} | {guild-owner-tag}
               • **ID**: {guild-owner-id}
-              • **Created At**: {guild-owner-createdat}
+              • **Created At**: {guild-owner-createdate}
           - Name: ⬆️ Server Boost status
             Value: |-
               • **Boosts**: {guild-boosts} Boosts
