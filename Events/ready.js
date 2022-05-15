@@ -2,6 +2,7 @@ const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-t
     { app } = require('../Modules/Handlers/ExpressHandler'),
     Discord = require("discord.js"), Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
+    Status = require("../Modules/Handlers/StatusHandler"),
     chalk = require("chalk"), axios = require('axios').default;
 /**
  *
@@ -84,6 +85,17 @@ module.exports = async (bot) => {
             Utils.logError(`[Update-Checker] ${e}`)
         }
     })
+
+    await Status.addVariables("Core", [
+        { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
+        { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
+        { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
+        ...Utils.botVariables(bot),
+        ...Utils.guildVariables(bot.guilds.cache.first()),
+        ...Utils.userVariables(Utils.parseUser(bot.guilds.cache.first().ownerId, bot.guilds.cache.first()), "guild-owner"),
+    ])
+
+    if (config.Status) Status.set(config.Status);
 
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
     await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
