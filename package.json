@@ -13,36 +13,26 @@
 	"author": "@Zorino#1110",
 	"license": "Apache-2.0",
 	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme",
-	"maintainers": [
-		"@Zorino#1110",
-		"raf#0002",
-		"XCraftMan52#0661"
-	],
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"maintainers": [ "@Zorino#1110", "raf#0002", "XCraftMan52#0661" ],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"engines": {
 		"node": ">=16.13.1"
 	},
 	"dependencies": {
 		"@discordjs/rest": "^0.3.0",
 		"axios": "^0.26.1",
-		"better-sqlite3": "^7.5.1",
+		"better-sqlite3": "^7.5.3",
 		"chalk": "<=4.1.2",
-		"console-stamp": "^3.0.5",
+		"console-stamp": "^3.0.6",
 		"date-differ": "^1.0.1",
 		"discord-api-types": "^0.31.2",
 		"discord-content": "^1.0.0",
-		"discord.js": "^13.6.0",
+		"discord.js": "^13.7.0",
 		"moment": "^2.29.3",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
-		"yaml": "^2.0.1"
+		"yaml": "^2.1.0"
 	},
 	"optionalDependencies": {
 		"@discordjs/opus": "^0.7.0",
@@ -52,7 +42,6 @@
 		"body-parser": "^1.20.0",
 		"canvas": "^2.9.1",
 		"cors": "^2.8.5",
-		"enmap": "^5.9.0",
 		"erela.js": "^2.3.3",
 		"erela.js-apple": "^1.2.6",
 		"erela.js-deezer": "^1.0.7",
@@ -61,7 +50,7 @@
 		"express": "^4.18.1",
 		"express-rate-limit": "^6.4.0",
 		"fs-extra": "^10.1.0",
-		"mongoose": "^6.3.2",
+		"mongoose": "^6.3.3",
 		"prompt": "^1.3.0",
 		"radio-browser": "^2.1.10",
 		"request": "^2.88.2",
@@ -70,7 +59,7 @@
 		"serve-favicon": "^2.5.0"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.15"
+		"nodemon": "^2.0.16"
 	},
 	"overrides": {
 		"request": {
