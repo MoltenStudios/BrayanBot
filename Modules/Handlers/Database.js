@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 module.exports = {
-    /** @type {sqlite.prototype} */ db,
+    /** @type {sqlite.prototype} */ db: {},
     init: () => new Promise(async (resolve) => {
         module.exports.db = await module.exports.getDatabase();
         const tables = [{
