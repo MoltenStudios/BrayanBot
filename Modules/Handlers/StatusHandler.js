@@ -98,7 +98,7 @@ module.exports = {
      * @param {String} category 
      * @param {VariableStructure} variables 
      */
-    addVariables: async (category, variables) => {
+    addVariables: (category, variables) => {
         let Variables = client.StatusVariables.get(category) || [];
         Variables = Variables.concat(variables);
         client.StatusVariables.set(category, Variables);
