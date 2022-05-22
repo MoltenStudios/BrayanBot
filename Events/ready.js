@@ -2,6 +2,7 @@ const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-t
     { app } = require('../Modules/Handlers/ExpressHandler'),
     Discord = require("discord.js"), Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
+    Status = require("../Modules/Handlers/StatusHandler"),
     chalk = require("chalk"), axios = require('axios').default;
 /**
  *
@@ -9,32 +10,31 @@ const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-t
  * @param {Discord.Interaction} interaction
  */
 module.exports = async (bot) => {
-    let { SlashCmds, SlashCmdsData, config } = bot,
-        rest = new REST({ version: "9" }).setToken(config.Settings.Token),
-        fSize = fsUtils.fsizeSync('./', {
-            skipErrors: true,
-            countFolders: true
-        }), guild = bot.guilds.cache.first();
+    const { SlashCmdsData, config } = bot;
+    const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
+    const fSize = fsUtils.fsizeSync('./', { skipErrors: true, countFolders: true });
+
+    const guild = bot.guilds.cache.first();
 
     if (!guild) {
         Utils.logError(`Currently in ${chalk.bold(0)} servers. | Bot is required to be in atleast ${chalk.bold(1)} server. Use the link below to invite the bot into your server.`)
         Utils.logError(chalk.blue(`https://discord.com/api/oauth2/authorize?client_id=${bot.user.id}&permissions=8&scope=bot%20applications.commands`))
         process.exit(0)
     }
-    await Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
-    await Utils.logInfo("                                                                          ");
-    await Utils.logInfo(`                    • ${chalk.bold(`Brayan Bot v${packageJSON.version}`)} is now Online! •       `);
-    await Utils.logInfo("                                                                          ");
-    await Utils.logInfo("          • Join our Discord Server for any Issues/Custom Bots •          ");
-    await Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://brayanbot.dev/discord`))}                        `);
-    await Utils.logInfo("                                                                          ");
-    await Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
-    await Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s"} Loaded.`);
-    await Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
+    Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
+    Utils.logInfo("                                                                          ");
+    Utils.logInfo(`                    • ${chalk.bold(`Brayan Bot v${packageJSON.version}`)} is now Online! •       `);
+    Utils.logInfo("                                                                          ");
+    Utils.logInfo("          • Join our Discord Server for any Issues/Custom Bots •          ");
+    Utils.logInfo(`                     ${chalk.blue(chalk.underline(`https://brayanbot.dev/discord`))}                        `);
+    Utils.logInfo("                                                                          ");
+    Utils.logInfo("#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#");
+    Utils.logInfo(`${chalk.bold(bot.Events.length)} Event${bot.Events.length == 1 ? "" : "s"} Loaded.`);
+    Utils.logInfo(`${chalk.bold(bot.Commands.size)} Command${bot.Commands.size == 1 ? "" : "s"} Loaded.`);
 
-    await rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
+    rest.put(Routes.applicationGuildCommands(bot.user.id, guild.id), {
         body: SlashCmdsData.filter((x) => typeof x == "object"),
-      
+
     }).catch(e => {
         if (e.code == 50001) {
             Utils.logWarning(`[SlashCommands] \"${chalk.bold(`application.commands`)}\" scope wasn't selected while inviting the bot. Please use the below link to re-invite your bot.`)
@@ -85,11 +85,22 @@ module.exports = async (bot) => {
         }
     })
 
-    await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
-    await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
+    Status.addVariables("Core", [
+        { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
+        { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
+        { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
+        ...Utils.botVariables(bot),
+        ...Utils.guildVariables(bot.guilds.cache.first()),
+        ...Utils.userVariables(Utils.parseUser(bot.guilds.cache.first().ownerId, bot.guilds.cache.first()), "guild-owner"),
+    ])
+
+    if (config.Status) Status.set(config.Status);
+
+    Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
+    Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
     bot.guilds.cache.size > 1
         ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`BrayanBot is not made for multiple servers.`)}`)
         : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server.`);
-    await Utils.logInfo(`Bot Ready!`);
+    Utils.logInfo(`Bot Ready!`);
 };
 module.exports.once = true;
