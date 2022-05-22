@@ -3,6 +3,10 @@ Settings:
   Prefix: "-"
   Storage: "database.db"
   DevMode: false # This option will reset all addon configs.
+<<<<<<< HEAD
+=======
+  Verbose: true # Enable additional messages for easier debugging
+>>>>>>> 25703f3 (add Verbose mode (default true))
 
 Embeds:
   Color: "2f3136"
