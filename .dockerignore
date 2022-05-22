@@ -19,6 +19,7 @@ config.json
 Addons/
 Addon_Configs/
 EvoTickets
+Install/ # not supported in the Docker image
 
 ## Logs ##
 errors.txt
