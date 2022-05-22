@@ -45,7 +45,7 @@ module.exports = {
         for (let index = 0; index < dependencies.length; index++) {
             try {
                 require.resolve(dependencies[index])
-                dependenciesInstaled.push(dependencies[index]);
+                dependenciesInstalled.push(dependencies[index]);
             } catch (e) {
                 modulesToInstall.push(dependencies[index]);
             }
