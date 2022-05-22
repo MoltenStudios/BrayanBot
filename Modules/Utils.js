@@ -5,6 +5,7 @@ const Discord = require("discord.js"), chalk = require("chalk"),
 module.exports = {
     parseSlashCommands: require("./Utils/parseSlashCommand"),
     setupMessage: require("./Utils/setupMessage"),
+<<<<<<< HEAD
     wait: require("util").promisify(setTimeout),
     database: require("./Handlers/Database"),
     builder: require("@discordjs/builders"),
@@ -16,6 +17,41 @@ module.exports = {
     /** @param {String} text */
     formatFirstLetter: (text) => text.charAt(0).toUpperCase() + text.slice(1),
     /**
+=======
+    logInfo: (text) => {
+        console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text);
+    },
+    logWarning: (text) => {
+        console.log(chalk.hex("#edd100").bold("[WARN] ") + text);
+    },
+    logError: (text) => {
+        console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text);
+    },
+    logDebug: (text) => {
+        console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text);
+    },
+ 
+    /**
+     *
+     * @param {Array} array
+     * @returns
+     */
+    
+    getRandom: (array) => {
+        let random = Math.floor(Math.random() * array.length);
+        return array[random];
+    },
+    /**
+     *
+     * @param {String} text
+     * @returns
+     */
+    formatFirstLetter: (text) => {
+        return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+    },
+    /**
+     *
+>>>>>>> f11abfa (verbose mode & refactor)
      * @param {Discord.GuildMember} user
      * @param {String} prefix
      * @returns {String[]}

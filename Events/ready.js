@@ -1,20 +1,43 @@
-const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
+const 
+    { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
     { app } = require('../Modules/Handlers/ExpressHandler'),
+<<<<<<< HEAD
     Discord = require("discord.js"), Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
     Status = require("../Modules/Handlers/StatusHandler"),
     chalk = require("chalk"), axios = require('axios').default;
+=======
+    Discord = require("discord.js"), 
+    Utils = require("../Modules/Utils"),
+    packageJSON = require("../package.json"), 
+    fsUtils = require("nodejs-fs-utils"),
+    chalk = require("chalk"), 
+    axios = require('axios').default,
+    fse = require ("fs-extra");
+
+>>>>>>> f11abfa (verbose mode & refactor)
 /**
  *
  * @param {Discord.Client} bot
  * @param {Discord.Interaction} interaction
  */
+<<<<<<< HEAD
 module.exports = async (bot) => {
     const { SlashCmdsData, config } = bot;
     const rest = new REST({ version: "9" }).setToken(config.Settings.Token);
     const fSize = fsUtils.fsizeSync('./', { skipErrors: true, countFolders: true });
 
     const guild = bot.guilds.cache.first();
+=======
+
+    module.exports = async (bot) => {
+    let { SlashCmds, SlashCmdsData, config } = bot,
+        rest = new REST({ version: "9" }).setToken(config.Settings.Token),
+        fSize = fsUtils.fsizeSync('./', {
+            skipErrors: true,
+            countFolders: true
+        }), guild = bot.guilds.cache.first();
+>>>>>>> f11abfa (verbose mode & refactor)
 
     if (!guild) {
         Utils.logError(`Currently in ${chalk.bold(0)} servers. | Bot is required to be in atleast ${chalk.bold(1)} server. Use the link below to invite the bot into your server.`)
@@ -89,6 +112,7 @@ module.exports = async (bot) => {
         }
     })
 
+<<<<<<< HEAD
     Status.addVariables("Core", [
         { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
         { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
@@ -102,9 +126,23 @@ module.exports = async (bot) => {
 
     Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
     Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
+=======
+    await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
+        if (config.Settings.Verbose == true) {
+            await Utils.logDebug(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
+            if (fse.existsSync("./Addons")) {
+                let files = fse.readdirSync("./Addons");
+                Utils.logDebug(`${files.length} addons found.`);
+            }
+            else { // TODO: make this warning error specific
+                Utils.logWarning(`Addon directory was not found. Make sure the bot can create directories or access the Addons directory.`); 
+            }
+        }
+>>>>>>> f11abfa (verbose mode & refactor)
     bot.guilds.cache.size > 1
         ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`BrayanBot is not made for multiple servers.`)}`)
         : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server.`);
     Utils.logInfo(`Bot Ready!`);
 };
+
 module.exports.once = true;
