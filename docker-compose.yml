@@ -1,14 +1,19 @@
-# BrayanBot docker-compose.yaml v0.1.3
+# BrayanBot docker-compose.yaml v0.1.4
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
 
 services:
   brayanbot:
+    user: 1000:1000 # run as non-root user
     tty: true
     working_dir: /opt/brayanbot
     build: .
+<<<<<<< HEAD
     # image: brayanbot/brayanbot # comment build: . and uncomment this line to use a public image
     command: npm start
+=======
+    command: yarn start
+>>>>>>> 452e3a5 (run rootless & bind errors.txt to host)
     container_name: brayanbot
     restart: unless-stopped
     volumes:
@@ -16,6 +21,11 @@ services:
       - ./Events:/opt/brayanbot/Events
       - ./Commands:/opt/brayanbot/Commands
       - ./node_modules:/opt/brayanbot/node_modules
+<<<<<<< HEAD
+=======
+      - ./errors.txt:/opt/brayanbot/errors.txt
+
+>>>>>>> 452e3a5 (run rootless & bind errors.txt to host)
       - type: bind
         source: ./config.yml
         target: /opt/brayanbot/config.yml
@@ -25,9 +35,6 @@ services:
       - type: bind
         source: ./commands.yml
         target: /opt/brayanbot/commands.yml
-      - type: bind
-        source: ./errors.txt
-        target: /opt/brayanbot/errors.txt
       - type: bind
         source: ./Addon_Configs
         target: /opt/brayanbot/Addon_Configs
