@@ -19,7 +19,7 @@
 	"bugs": {
 		"url": "https://brayanbot.dev/issues"
 	},
-	"author": "@Zorino#1110",
+	"author": "@DakshNamdev",
 	"license": "Apache-2.0",
 <<<<<<< HEAD
 	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme",
@@ -28,9 +28,9 @@
 =======
 	"homepage": "https://brayanbot.dev",
 	"maintainers": [
-		"@Zorino#1110",
-		"raf#0002",
-		"XCraftMan52#0661"
+		"@DakshNamdev",
+		"@NotAShelf",
+		"@XCraftMan52"
 	],
 	"keywords": [
 		"discord",
