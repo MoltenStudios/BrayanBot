@@ -5,39 +5,23 @@ const Discord = require("discord.js"), chalk = require("chalk"),
 module.exports = {
     parseSlashCommands: require("./Utils/parseSlashCommand"),
     setupMessage: require("./Utils/setupMessage"),
-    logInfo: (text) => {
-        console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text);
-    },
-    logWarning: (text) => {
-        console.log(chalk.hex("#edd100").bold("[WARN] ") + text);
-    },
-    logError: (text) => {
-        console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text);
-    },
-    logDebug: (text) => {
-        console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text);
-    },
- 
-    /**
-     *
-     * @param {Array} array
-     * @returns
-     */
-    
+    wait: require("util").promisify(setTimeout),
+    database: require("./Handlers/Database"),
+    builder: require("@discordjs/builders"),
+    logWarning: (...text) => console.log(chalk.hex("#edd100").bold("[WARN] ") + text),
+    logError: (...text) => console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text),
+    logInfo: (...text) => console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text),
+    logDebug: (...text) => console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text),
+    /** @param {Array} array*/
     getRandom: (array) => {
         let random = Math.floor(Math.random() * array.length);
         return array[random];
     },
-    /**
-     *
-     * @param {String} text
-     * @returns
-     */
+    /** @param {String} text @returns {String}*/
     formatFirstLetter: (text) => {
         return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
     },
     /**
-     *
      * @param {Discord.GuildMember} user
      * @param {String} prefix
      * @returns {String[]}
@@ -45,7 +29,7 @@ module.exports = {
     userVariables: (user, prefix) => {
         let returnObject = [];
 
-        if(user) returnObject = [{
+        if (user) returnObject = [{
             searchFor: new RegExp(`{${prefix || "user"}-id}`, "g"),
             replaceWith: user.id,
         }, {
@@ -68,7 +52,7 @@ module.exports = {
             replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a"),
         }];
 
-        if(!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
+        if (!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
 
         return returnObject;
     },
@@ -80,7 +64,7 @@ module.exports = {
     botVariables: (bot, prefix) => {
         let returnObject = [];
 
-        if(bot) returnObject = [{
+        if (bot) returnObject = [{
             searchFor: new RegExp(`{${prefix || "bot"}-id}`, "g"),
             replaceWith: bot.id,
         }, {
@@ -105,7 +89,6 @@ module.exports = {
         return returnObject;
     },
     /**
-     * 
      * @param {Discord.Guild} guild 
      * @param {String} prefix 
      * @returns {Array}
@@ -115,63 +98,63 @@ module.exports = {
             module.exports.logError(`[Utils] [guildVariables] Invalid input for ${chalk.bold("guild")}.`);
             return [];
         } else return [{
-                searchFor: new RegExp(`{${prefix || "guild"}-id}`, "g"),
-                replaceWith: guild.id
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-name}`, "g"),
-                replaceWith: guild.name,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-icon}`, "g"),
-                replaceWith: guild.iconURL({ dynamic: true }),
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-boosts}`),
-                replaceWith: guild.premiumSubscriptionCount == "NONE" ? 0 : guild.premiumSubscriptionCount,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-level}`),
-                replaceWith: guild.premiumTier,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-max-members}`),
-                replaceWith: guild.maximumMembers,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-createdate}`),
-                replaceWith: moment(guild.createdAt).format("MMMM Do YYYY, h:mm a"),
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-online-members}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && (member.presence.status !== "offline").size),
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-online-bots}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status !== "offline" && member.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-members}`),
-                replaceWith: guild.members.cache.filter((m) => !m.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-bots}`),
-                replaceWith: guild.members.cache.filter((m) => m.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-total-members}`),
-                replaceWith: guild.memberCount,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-total-roles}`),
-                replaceWith: guild.roles.cache.size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-total-channels}`),
-                replaceWith: guild.channels.cache.size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-total-emojis}`),
-                replaceWith: guild.emojis.cache.size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-online-humans}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "online" && !member.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-idle-humans}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "idle" && !member.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-dnd-humans}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "dnd" && !member.user.bot).size,
-            }, {
-                searchFor: new RegExp(`{${prefix || "guild"}-offline-humans}`),
-                replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "offline" && !member.user.bot).size,
-            },
+            searchFor: new RegExp(`{${prefix || "guild"}-id}`, "g"),
+            replaceWith: guild.id
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-name}`, "g"),
+            replaceWith: guild.name,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-icon}`, "g"),
+            replaceWith: guild.iconURL({ dynamic: true }),
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-boosts}`),
+            replaceWith: guild.premiumSubscriptionCount == "NONE" ? 0 : guild.premiumSubscriptionCount,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-level}`),
+            replaceWith: guild.premiumTier,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-max-members}`),
+            replaceWith: guild.maximumMembers,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-createdate}`),
+            replaceWith: moment(guild.createdAt).format("MMMM Do YYYY, h:mm a"),
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-online-members}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && (member.presence.status !== "offline").size),
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-online-bots}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status !== "offline" && member.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-members}`),
+            replaceWith: guild.members.cache.filter((m) => !m.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-bots}`),
+            replaceWith: guild.members.cache.filter((m) => m.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-total-members}`),
+            replaceWith: guild.memberCount,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-total-roles}`),
+            replaceWith: guild.roles.cache.size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-total-channels}`),
+            replaceWith: guild.channels.cache.size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-total-emojis}`),
+            replaceWith: guild.emojis.cache.size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-online-humans}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "online" && !member.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-idle-humans}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "idle" && !member.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-dnd-humans}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "dnd" && !member.user.bot).size,
+        }, {
+            searchFor: new RegExp(`{${prefix || "guild"}-offline-humans}`),
+            replaceWith: guild.members.cache.filter((member) => member.presence && member.presence.status == "offline" && !member.user.bot).size,
+        },
         ]
     },
     /**
@@ -191,7 +174,7 @@ module.exports = {
             (c.name.toLowerCase() === name.toLowerCase() || c.id === name)
             && c.type.toLowerCase() === type.toLowerCase());
 
-        if (channel) returnObject =  channel;
+        if (channel) returnObject = channel;
         else if (notify && !channel) module.exports.logError(`[Utils] [findChannel] ${chalk.bold(name)} was not found in the ${chalk.bold(guild.name)} guild`);
 
         return returnObject;
