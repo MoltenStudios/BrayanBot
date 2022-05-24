@@ -2,11 +2,10 @@ Settings:
   Token: "BOT-TOKEN"
   Prefix: "-"
   Storage: "database.db"
-  DevMode: false # This option will reset all addon configs.
-<<<<<<< HEAD
-=======
-  Verbose: true # Enable additional messages for easier debugging
->>>>>>> 25703f3 (add Verbose mode (default true))
+  # Enabling DevMode will reset all addon configurations.
+  DevMode: false 
+  # Verbose mode enables additional debug messages to be shown on the startup log.
+  Verbose: true 
 
 Embeds:
   Color: "2f3136"
@@ -32,32 +31,3 @@ Status:
   ActivitiesSettings:
     Order: "normal"
     Interval: 3
-
-WebServer: 
-  Enabled: true
-  Port: 80
-  Favicon: "favicon.ico"
-  EndPoints:
-    - Type: "URL"
-      EndPoint: "/"
-      URL: "https://brayanbot.dev/"
-
-    - Type: "URL"
-      EndPoint: "/discord"
-      URL: "https://brayanbot.dev/discord"
-
-    - Type: "Page"
-      EndPoint: "/view/page"
-      File: "assets/viewThisPage.html"
-      
-    - Type: "File"
-      EndPoint: "/download"
-      File: "assets/download.txt"
-  Ratelimit: 
-    # It's recommended to keep this enabled.
-    Enabled: true
-    # Max Requests can be made per 1 minute
-    MaxRequests: 1
-    # IPs included will bypass Rate Limiting
-    BypassIPs:
-      - "127.0.0.1" # http://localhost/ | http://127.0.0.1/
