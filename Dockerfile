@@ -4,7 +4,7 @@
 # Node 18.2.0
 # TODO: Switch to pnpm inside Docker
 
-# From Node 19 Alpine image
+# From Node 18 Alpine image
 FROM node:18-alpine
 LABEL MAINTAINER="NotAShelf <raf@brayanbot.dev>"
 
