@@ -50,9 +50,59 @@ module.exports = {
         }, {
             searchFor: new RegExp(`{${prefix || "user"}-createdate}`, "g"),
             replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:D>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "user"}-for}`, "g"),
+            replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:R>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "user"}-badges}`, "g"),
+            replaceWith: module.exports.getUserBadges(user).join(", "),
         }];
 
         if (!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
+
+        return returnObject;
+    },
+    /**
+     * @param {Discord.GuildMember} member
+     * @param {String} prefix
+     * @returns {String[]}
+     */
+    memberVariables: (member, prefix) => {
+        let returnObject = [];
+
+        if (member) returnObject = [{
+            searchFor: new RegExp(`{${prefix || "member"}-id}`, "g"),
+            replaceWith: member.id,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-displayname}`, "g"),
+            replaceWith: member.displayName,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-username}`, "g"),
+            replaceWith: member.user.username,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-tag}`, "g"),
+            replaceWith: member.user.tag,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-mention}`, "g"),
+            replaceWith: "<@" + member.id + ">",
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-pfp}`, "g"),
+            replaceWith: member.displayAvatarURL({ dynamic: true }),
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-createdate}`, "g"),
+            replaceWith: `<t:${Math.floor(member.createdTimestamp / 1000)}:D>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-joindate}`, "g"),
+            replaceWith: `<t:${Math.floor(member.joinedTimestamp / 1000)}:D>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-for}`, "g"),
+            replaceWith: `<t:${Math.floor(member.joinedTimestamp / 1000)}:R>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "member"}-roles}`, "g"),
+            replaceWith: member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map((r) => `<@&${r.id}>`).join(", "),
+        }];
+
+        if (!member) module.exports.logError(`[Utils] [memberVariables] Invalid input for ${chalk.bold("member")}.`);
 
         return returnObject;
     },
