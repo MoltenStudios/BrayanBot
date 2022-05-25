@@ -49,7 +49,7 @@ module.exports = {
             replaceWith: user.user.displayAvatarURL({ dynamic: true }),
         }, {
             searchFor: new RegExp(`{${prefix || "user"}-createdate}`, "g"),
-            replaceWith: moment(user.user.createdAt).format("MMMM Do YYYY, h:mm a"),
+            replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:D>`,
         }];
 
         if (!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
@@ -117,7 +117,7 @@ module.exports = {
             replaceWith: guild.maximumMembers,
         }, {
             searchFor: new RegExp(`{${prefix || "guild"}-createdate}`),
-            replaceWith: moment(guild.createdAt).format("MMMM Do YYYY, h:mm a"),
+            replaceWith: `<t:${Math.floor(guild.createdTimestamp / 1000)}:D>`,
         }, {
             searchFor: new RegExp(`{${prefix || "guild"}-online-members}`),
             replaceWith: guild.members.cache.filter((member) => member.presence && (member.presence.status !== "offline").size),
