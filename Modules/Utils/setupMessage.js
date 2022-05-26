@@ -154,7 +154,7 @@ module.exports = (settings, ephemeral = false, tts = false, disableMentions = fa
                     if (Author) Author = Author.replace(variable.searchFor, variable.replaceWith);
                     if (AuthorAvatarImage) AuthorAvatarImage = AuthorAvatarImage.replace(variable.searchFor, variable.replaceWith);
                     if (AuthorURL) AuthorURL = AuthorURL.replace(variable.searchFor, variable.replaceWith);
-                    if (Color) Color = Color.replace(variable.searchFor, variable.replaceWith);
+                    if (Color && typeof Color == "string") Color = Color.replace(variable.searchFor, variable.replaceWith);
                     if (Image) Image = Image.replace(variable.searchFor, variable.replaceWith);
                     if (URL) URL = URL.replace(variable.searchFor, variable.replaceWith);
                 });
