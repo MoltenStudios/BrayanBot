@@ -5,7 +5,8 @@ const
     Utils = require("../Modules/Utils"),
     packageJSON = require("../package.json"), 
     fsUtils = require("nodejs-fs-utils"),
-    chalk = require("chalk"), 
+    chalk = require("chalk"),
+    Status = require("../Modules/Handlers/StatusHandler"),
     axios = require('axios').default,
     fse = require ("fs-extra");
 
@@ -91,6 +92,17 @@ const
             Utils.logError(`[Update-Checker] ${e}`)
         }
     })
+
+    Status.addVariables("Core", [
+        { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
+        { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
+        { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
+        ...Utils.botVariables(bot),
+        ...Utils.guildVariables(bot.guilds.cache.first()),
+        ...Utils.userVariables(Utils.parseUser(bot.guilds.cache.first().ownerId, bot.guilds.cache.first()), "guild-owner"),
+    ])
+
+    if (config.Status) Status.set(config.Status);
 
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
         if (config.Settings.Verbose == true) {
