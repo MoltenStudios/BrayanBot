@@ -67,6 +67,25 @@ General:
       Data:
         Name: serverinfo
         Description: "View Server's Information"
+  UserInfo:
+    Description: "View User's Information"
+    Usage: "userinfo"
+    Aliases:
+      - "memberinfo"
+    Permission:
+      - "@everyone"
+    AllowedChannels: false
+    DeleteCommand: false
+    Cooldown: false
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: userinfo
+        Description: "View User's Information"
+        Options:
+          - Type: "User"
+            Name: "target"
+            Description: "User Mention"
   Avatar:
     Description: "Displays user's avatar"
     Usage: "avatar <user>"
