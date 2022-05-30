@@ -53,14 +53,14 @@ const
     })
 
     if (webserver && webserver.Enabled) {
-        app.listen(webserver.Port || 80, () => {
+        app.listen(webserver.Port || 8080, () => {
             Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(webserver.Port || 80)}`)
         })
     }
 
     await axios({
         baseURL: "https://api.github.com",
-        url: "repos/BrayanbotDev/BrayanBot/releases/latest",
+        url: "repos/BrayanBot/BrayanBot/releases/latest",
         method: "GET"
     }).then(async ({ data }) => {
         if (data) {
