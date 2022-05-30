@@ -5,14 +5,14 @@
 	"main": "index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
+		"url": "git+https://github.com/BrayanBot/BrayanBot.git"
 	},
 	"bugs": {
-		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
+		"url": "https://github.com/BraayanBot/BrayanBot/issues"
 	},
-	"author": "@BrayanbotDev",
+	"author": "@BraayanBot",
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme",
+	"homepage": "https://github.com/BraayanBot/BrayanBot#readme",
 	"maintainers": [
 		"@DakshNamdev (Zorino) <zorino@brayanbot.dev> ",
 		"@NotAShelf (raf) <raf@brayanbot.dev> ",
