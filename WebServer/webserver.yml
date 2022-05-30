@@ -1,5 +1,5 @@
 Enabled: true
-Port: 80
+Port: 8080
 Favicon: "favicon.ico"
 EndPoints:
   - Type: "URL"
