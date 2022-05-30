@@ -19,9 +19,9 @@ module.exports = {
         return ip
     },
     init: async () => {
-        const { client, config, webserver } = require("../../index");
+        const { client, config } = require("../../index");
 
-        if (webserver && webserver.Enabled) {
+        if (config.WebServer && config.WebServer.Enabled) {
             const { app, getIP } = module.exports;
             const isValidUrl = (url) => {
                 let check = url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
@@ -30,8 +30,8 @@ module.exports = {
             if (!fs.existsSync('WebServer/'))
                 fs.mkdirSync('WebServer/');
 
-            if (!fs.existsSync('WebServer/WebServerLog.txt'))
-                fs.writeFileSync('WebServer/WebServerLog.txt', "", { encoding: "utf-8" });
+            if (!fs.existsSync('WebServerLog.txt'))
+                fs.writeFileSync('WebServerLog.txt', "", { encoding: "utf-8" });
 
             app.use(cors())
             app.use(bodyParser.json())
@@ -42,18 +42,18 @@ module.exports = {
                 if (config.Settings.DevMode)
                     console.log(chalk.hex("#03c6fc").bold("[WebS] ") + `${getIP(req)} » ${req.method} ${chalk.bold(req.url)}`)
 
-                fs.appendFileSync("WebServer/WebServerLog.txt", `${moment().format('MMMM Do YYYY, h:mm:ss a')} | ${getIP(req)} » ${req.method} ${req.url}\n`)
+                fs.appendFileSync("WebServerLog.txt", `${moment().format('MMMM Do YYYY, h:mm:ss a')} | ${getIP(req)} » ${req.method} ${req.url}\n`)
                 next()
             })
 
-            webserver.Ratelimit ? webserver.Ratelimit.Enabled ? app.use(rateLimit({
+            config.WebServer.Ratelimit ? config.WebServer.Ratelimit.Enabled ? app.use(rateLimit({
                 windowMs: 1 * 60 * 1000,
-                max: webserver.Ratelimit ? webserver.Ratelimit.MaxRequests : 60,
+                max: config.WebServer.Ratelimit ? config.WebServer.Ratelimit.MaxRequests : 60,
                 keyGenerator: (req, res) => getIP(req),
                 skip: (req, res) => {
-                    let allowedIPs = webserver.Ratelimit.BypassIPs
-                        ? Array.isArray(webserver.Ratelimit.BypassIPs)
-                            ? webserver.Ratelimit.BypassIPs : [] : [];
+                    let allowedIPs = config.WebServer.Ratelimit.BypassIPs
+                        ? Array.isArray(config.WebServer.Ratelimit.BypassIPs)
+                            ? config.WebServer.Ratelimit.BypassIPs : [] : [];
 
                     return allowedIPs.includes(getIP(req))
                 },
@@ -74,13 +74,13 @@ module.exports = {
                 }
             })) : "" : "";
 
-            if (webserver.Favicon && typeof webserver.Favicon == "string")
-                if (fs.existsSync(path.join(__dirname, '../../WebServer', webserver.Favicon)))
-                    app.use(favicon(path.join(__dirname, '../../WebServer', webserver.Favicon)));
+            if (config.WebServer.Favicon && typeof config.WebServer.Favicon == "string")
+                if (fs.existsSync(path.join(__dirname, '../../WebServer', config.WebServer.Favicon)))
+                    app.use(favicon(path.join(__dirname, '../../WebServer', config.WebServer.Favicon)));
 
-            if (webserver.EndPoints && Array.isArray(webserver.EndPoints) && webserver.EndPoints[0]) {
-                for (let index = 0; index < webserver.EndPoints.length; index++) {
-                    const { Type, EndPoint, URL, File } = webserver.EndPoints[index];
+            if (config.WebServer.EndPoints && Array.isArray(config.WebServer.EndPoints) && config.WebServer.EndPoints[0]) {
+                for (let index = 0; index < config.WebServer.EndPoints.length; index++) {
+                    const { Type, EndPoint, URL, File } = config.WebServer.EndPoints[index];
                     if (Type && EndPoint) {
                         switch (Type.toLowerCase()) {
                             case 'url': {

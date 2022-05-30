@@ -17,7 +17,7 @@ const
  */
 
     module.exports = async (bot) => {
-    let { SlashCmds, SlashCmdsData, config, webserver } = bot,
+    let { SlashCmds, SlashCmdsData, config } = bot,
         rest = new REST({ version: "9" }).setToken(config.Settings.Token),
         fSize = fsUtils.fsizeSync('./', {
             skipErrors: true,
@@ -52,9 +52,9 @@ const
         }
     })
 
-    if (webserver && webserver.Enabled) {
-        app.listen(webserver.Port || 80, () => {
-            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(webserver.Port || 80)}`)
+    if (config.WebServer && config.WebServer.Enabled) {
+        app.listen(config.WebServer.Port || 80, () => {
+            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
         })
     }
 
