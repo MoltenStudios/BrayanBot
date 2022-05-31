@@ -8,11 +8,11 @@
 		"url": "git+https://github.com/BrayanBot/BrayanBot.git"
 	},
 	"bugs": {
-		"url": "https://github.com/BraayanBot/BrayanBot/issues"
+		"url": "https://github.com/BrayanBot/BrayanBot/issues"
 	},
-	"author": "@BraayanBot",
+	"author": "@BrayanBot",
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/BraayanBot/BrayanBot#readme",
+	"homepage": "https://github.com/BrayanBot/BrayanBot#readme",
 	"maintainers": [
 		"@DakshNamdev (Zorino) <zorino@brayanbot.dev> ",
 		"@NotAShelf (raf) <raf@brayanbot.dev> ",
