@@ -107,6 +107,75 @@ module.exports = {
         return returnObject;
     },
     /**
+     * 
+     * @param {Discord.Channel} channel 
+     * @param {String} prefix 
+     * @returns {Array<Object>}
+    */
+    channelVariables: (channel, prefix) => {
+        let returnObject = [];
+
+        if (channel) returnObject = [{
+            searchFor: new RegExp(`{${prefix || "channel"}-id}`, "g"),
+            replaceWith: channel.id,
+        }, {
+            searchFor: new RegExp(`{${prefix || "channel"}-name}`, "g"),
+            replaceWith: channel.name,
+        }, {
+            searchFor: new RegExp(`{${prefix || "channel"}-mention}`, "g"),
+            replaceWith: channel.toString(),
+        }, {
+            searchFor: new RegExp(`{${prefix || "channel"}-type}`, "g"),
+            replaceWith: channel.type,
+        }, {
+            searchFor: new RegExp(`{${prefix || "channel"}-createdate}`, "g"),
+            replaceWith: `<t:${Math.floor(channel.createdTimestamp / 1000)}:D>`,
+        }]
+
+        if (!channel) module.exports.logError(`[Utils] [channelVariables] Invalid input for ${chalk.bold("channel")}.`);
+
+        return returnObject;
+    },
+    /**
+     * 
+     * @param {Discord.Role} role 
+     * @param {String} prefix 
+     * @returns 
+     */
+    roleVariables: (role, prefix) => {
+        let returnObject = [];
+
+        if (role) returnObject = [{
+            searchFor: new RegExp(`{${prefix || "role"}-id}`, "g"),
+            replaceWith: role.id,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-name}`, "g"),
+            replaceWith: role.name,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-mention}`, "g"),
+            replaceWith: role.toString(),
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-createdate}`, "g"),
+            replaceWith: `<t:${Math.floor(role.createdTimestamp / 1000)}:D>`,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-color}`, "g"),
+            replaceWith: role.color,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-hexColor}`, "g"),
+            replaceWith: role.hexColor,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-position}`, "g"),
+            replaceWith: role.rawPosition,
+        }, {
+            searchFor: new RegExp(`{${prefix || "role"}-icon}`, "g"),
+            replaceWith: role.iconURL() || "https://cdn-icons-png.flaticon.com/512/2522/2522053.png",
+        }]
+
+        if (!role) module.exports.logError(`[Utils] [roleVariables] Invalid input for ${chalk.bold("role")}.`);
+
+        return returnObject;
+    },
+    /**
      * @param {Discord.Client} bot
      * @param {String} prefix
      * @returns {Object[]}
