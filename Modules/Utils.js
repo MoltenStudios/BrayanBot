@@ -251,6 +251,25 @@ module.exports = {
         return returnObject;
     },
     /**
+     * @param {String} name 
+     * @param {Discord.Client} client 
+     * @param {Boolean} notify
+     * @returns {Discord.Guild | void}
+     */
+     findGuild: (name, client, notify = true) => {
+        if (!name) return module.exports.logError(`[Utils] [findGuild] Invalid input for guild name.`);
+        if (!client) return module.exports.logError(`[Utils] [findGuild] Invalid input for client.`);
+        if (typeof name == "bigint" || typeof name == "number") name = name.toString();
+
+        let returnObject = false;
+        const guild = client.guilds.cache.find((g) => g.name.toLowerCase() === name.toLowerCase() || g.id === name);
+
+        if (guild) returnObject = guild;
+        else if (notify) module.exports.logError(`[Utils] [findGuild] ${chalk.bold(name)} guild was not found.`);
+
+        return returnObject;
+    },
+    /**
      * @param {Discord.GuildMember} member
      * @param {String | Array} name
      * @param {Boolean} notify
