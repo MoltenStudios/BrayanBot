@@ -1,75 +1,68 @@
 {
 	"name": "brayan-bot",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "An Advanced Discord Bot Node.js Discord.js-v13",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/BrayanbotDev/BrayanBot.git"
+		"url": "git+https://github.com/BrayanBot/BrayanBot.git"
 	},
 	"bugs": {
-		"url": "https://github.com/BrayanbotDev/BrayanBot/issues"
+		"url": "https://github.com/BrayanBot/BrayanBot/issues"
 	},
-	"author": "@Zorino#1110",
+	"author": "@BrayanBot",
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/BrayanbotDev/BrayanBot#readme",
+	"homepage": "https://github.com/BrayanBot/BrayanBot#readme",
 	"maintainers": [
-		"@Zorino#1110",
-		"raf#0002",
-		"XCraftMan52#0661"
+		"@DakshNamdev (Zorino) <zorino@brayanbot.dev> ",
+		"@NotAShelf (raf) <raf@brayanbot.dev> ",
+		"@XCraftMan52#0661 (XCraftMan)"
 	],
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"engines": {
-		"node": ">=16.13.1"
+		"node": ">=16.15.0"
 	},
 	"dependencies": {
 		"@discordjs/rest": "^0.3.0",
 		"axios": "^0.26.1",
-		"better-sqlite3": "^7.5.1",
+		"better-erela.js-apple": "^1.0.2",
+		"better-sqlite3": "^7.5.3",
 		"chalk": "<=4.1.2",
-		"console-stamp": "^3.0.4",
+		"console-stamp": "^3.0.6",
 		"date-differ": "^1.0.1",
-		"discord-api-types": "^0.31.1",
-		"discord.js": "^13.6.0",
-		"moment": "^2.29.2",
+		"discord-api-types": "^0.31.2",
+		"discord-content": "^1.0.0",
+		"discord.js": "^13.7.0",
+		"lavasfy": "^2.3.0",
+		"moment": "^2.29.3",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
-		"yaml": "^2.0.1"
+		"yaml": "^2.1.0"
 	},
 	"optionalDependencies": {
 		"@discordjs/opus": "^0.7.0",
-		"@twurple/api": "^5.0.19",
-		"@twurple/auth": "^5.0.19",
+		"@twurple/api": "^5.1.6",
+		"@twurple/auth": "^5.1.6",
 		"@tycrek/log": "^0.5.9",
 		"body-parser": "^1.20.0",
 		"canvas": "^2.9.1",
 		"cors": "^2.8.5",
-		"enmap": "^5.9.0",
 		"erela.js": "^2.3.3",
 		"erela.js-apple": "^1.2.6",
 		"erela.js-deezer": "^1.0.7",
 		"erela.js-facebook": "^1.0.4",
-		"erela.js-spotify": "^1.2.0",
-		"express": "^4.17.3",
-		"express-rate-limit": "^6.3.0",
-		"fs-extra": "^10.0.1",
-		"mongoose": "^6.3.0",
+		"express": "^4.18.1",
+		"express-rate-limit": "^6.4.0",
+		"fs-extra": "^10.1.0",
+		"mongoose": "^6.3.3",
 		"prompt": "^1.3.0",
 		"radio-browser": "^2.1.10",
-		"request": "^2.88.2",
-		"request-promise": "^4.2.6",
 		"rss-parser": "^3.12.0",
 		"serve-favicon": "^2.5.0"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.15"
+		"nodemon": "^2.0.16"
 	},
 	"overrides": {
 		"request": {
@@ -78,7 +71,7 @@
 		}
 	},
 	"scripts": {
-		"dev": "nodemon index.js --show-errors --no-install -e js",
+		"dev": "nodemon index.js --show-errors --no-install --skip-dependencies -e js",
 		"start": "node index.js",
 		"install:start": "npm i && node index.js --no-install",
 		"install:dev": "npm i && nodemon index.js --show-errors --no-install -e js"

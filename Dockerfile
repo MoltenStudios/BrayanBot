@@ -1,24 +1,34 @@
-# BrayanBot Dockerfile v0.1.2
+# BrayanBot Dockerfile v0.1.3
 # authors:
 #  - NotAShelf <me@notashelf.dev>
-# Node 17
+# Node 18.2.0
+# TODO: Switch to pnpm inside Docker
 
-FROM node:17.4.0
+# From Node 18 Alpine image
+FROM node:18-alpine
+LABEL MAINTAINER="NotAShelf <raf@brayanbot.dev>"
+
+# update packages
+RUN apk update && apk add --no-cache git ca-certificates make gcc g++ bash
 
 # Set working directory
 WORKDIR /opt/brayanbot
-# and copy files into that directory (config.yml, modules etc.)
+
+# And copy files into that directory (config.yml, modules etc.)
 COPY . ./
 
-RUN npm install -g npm@8 && npm install --save-dev
+# Install dependencies
+RUN yarn
 
 # Ensure these directories & files exist for compose volumes
-RUN touch /opt/brayanbot/config.yml && \
-    touch /opt/brayanbot/lang.yml && \
-    touch /opt/brayanbot/commands.yml
+RUN touch /opt/brayanbot/lang.yml && \
+    touch /opt/brayanbot/commands.yml && \
+    cp /opt/brayanbot/example.config.yml /opt/brayanbot/config.yml
 
-# Create a config.yml based on example config
-# and then start BrayanBot
 
-CMD npm start
+# Clean Yarn cache
+RUN yarn cache clean
+
+# Start the bot
+CMD [ "yarn", "start" ]
 

@@ -2,21 +2,21 @@
 const config =
 {
 	"Settings": {
-		"Token": "BOT-TOKEN",
-		"Prefix": "-",
-		"ServerID": "YOUR-SERVER-ID",
-		"Storage": "database.db",
-		"DevMode": false
+	  "Token": "BOT-TOKEN",
+	  "Prefix": "-",
+	  "Storage": "database.db",
+	  "DevMode": false
 	},
 	"Embeds": {
-		"Color": "2f3136"
+	  "Color": "2f3136"
 	},
 	"Branding": {
-		"Name": "BrayanBot",
-		"Logo": "https://avatars.githubusercontent.com/u/99198112?s=200&v=4",
-		"Link": "https://brayanbot.dev",
-	},
-}
+	  "Name": "BrayanBot",
+	  "Logo": "https://avatars.githubusercontent.com/u/99198112?s=200&v=4",
+	  "Link": "https://brayanbot.dev"
+	}
+  }
+
 
 function getConfirmSchema(description) {
 	return {

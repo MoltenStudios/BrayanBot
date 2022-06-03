@@ -37,13 +37,13 @@ General:
         Description: |-
           • **Name**: {guild-name}
           • **Guild ID**: {guild-id}
-          • **Created-At**: {guild-createdat}
+          • **Created-At**: {guild-createdate}
         Fields:
           - Name: "\U0001F451 Server Owner"
             Value: |-
               • **Account**: {guild-owner-mention} | {guild-owner-tag}
               • **ID**: {guild-owner-id}
-              • **Created At**: {guild-owner-createdat}
+              • **Created At**: {guild-owner-createdate}
           - Name: ⬆️ Server Boost status
             Value: |-
               • **Boosts**: {guild-boosts} Boosts
@@ -70,6 +70,30 @@ General:
               • **Idle Humans**: {guild-idle-humans}
               • **DND Humans**: {guild-dnd-humans}
               • **Offline Humans**: {guild-offline-humans}
+        Timestamp: true
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+  UserInfo:
+    Embeds:
+      - Title: "\U0001f464 User Info - {user-tag}"
+        Description: |-
+          • **Account**: {user-mention} | {user-tag}
+          • **ID**: {user-id}
+          • **Created at**: {user-createdate} | {user-for}
+          • **Avatar**: [Link]({user-pfp})
+        Fields:
+          - Name: "\U0001F6E1 User Badges"
+            Value: |-
+              • **Badges**: {user-badges}
+          - Name: "\U0001F4AD Member Info"
+            Value: |-
+              • **Joined at**: {member-joindate} | {member-for}
+              • **Displayname**: {member-displayname}
+              • **Server avatar**: [Link]({member-pfp})
+          - Name: "\U0001F6A9 Member Roles"
+            Value: |-
+              • **Roles**: {member-roles}
+        Thumbnail: '{user-pfp}'
         Timestamp: true
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
@@ -106,7 +130,7 @@ Admin:
 Presets:
   NoPermission:
     Embeds:
-      - Title: Unable to run command
+      - Title: Unable to execute command
         Description: |-
           You do not have enough permissions to run this command
 
@@ -128,6 +152,14 @@ Presets:
         Fields:
           - Name: Allowed Channels
             Value: '> {channels}'
+        Footer: '{user-tag}'
+        FooterIcon: '{user-pfp}'
+        Timestamp: true
+        Color: '#ff0800'
+  OnCooldown:
+    Embeds:
+      - Title: Unable to execute command
+        Description: "> You are currently on cooldown for this command. You can use this command again in **{cooldown}**."
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true

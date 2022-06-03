@@ -1,4 +1,10 @@
 DisabledCommands: []
+
+IgnoredCooldown:
+  Users:
+    - "Zorino#1110"
+  Roles:
+    - "Special"
 General:
   Help:
     Description: "Displays all Bot Commands"
@@ -8,6 +14,7 @@ General:
       - "@everyone"
     AllowedChannels: false
     DeleteCommand: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:
@@ -25,6 +32,7 @@ General:
       - "@everyone"
     AllowedChannels: false
     DeleteCommand: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:
@@ -38,6 +46,7 @@ General:
       - "@everyone"
     AllowedChannels: false
     DeleteCommand: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:
@@ -52,11 +61,31 @@ General:
       - "@everyone"
     AllowedChannels: false
     DeleteCommand: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:
         Name: serverinfo
         Description: "View Server's Information"
+  UserInfo:
+    Description: "View User's Information"
+    Usage: "userinfo"
+    Aliases:
+      - "memberinfo"
+    Permission:
+      - "@everyone"
+    AllowedChannels: false
+    DeleteCommand: false
+    Cooldown: false
+    SlashCommand:
+      Enabled: true
+      Data:
+        Name: userinfo
+        Description: "View User's Information"
+        Options:
+          - Type: "User"
+            Name: "target"
+            Description: "User Mention"
   Avatar:
     Description: "Displays user's avatar"
     Usage: "avatar <user>"
@@ -66,6 +95,7 @@ General:
       - "@everyone"
     AllowedChannels: false
     DeleteCommand: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:
@@ -83,6 +113,7 @@ Admin:
     Permission:
       - "Zorino#1110"
     AllowedChannels: false
+    Cooldown: false
     SlashCommand:
       Enabled: true
       Data:

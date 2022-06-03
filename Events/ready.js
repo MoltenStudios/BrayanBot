@@ -1,15 +1,23 @@
-const { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
+const 
+    { REST } = require("@discordjs/rest"), { Routes } = require("discord-api-types/v9"),
     { app } = require('../Modules/Handlers/ExpressHandler'),
-    Discord = require("discord.js"), Utils = require("../Modules/Utils"),
-    packageJSON = require("../package.json"), fsUtils = require("nodejs-fs-utils"),
-    chalk = require("chalk"), axios = require('axios').default;
+    Discord = require("discord.js"), 
+    Utils = require("../Modules/Utils"),
+    packageJSON = require("../package.json"), 
+    fsUtils = require("nodejs-fs-utils"),
+    chalk = require("chalk"),
+    Status = require("../Modules/Handlers/StatusHandler"),
+    axios = require('axios').default,
+    fse = require ("fs-extra");
+
 /**
  *
  * @param {Discord.Client} bot
  * @param {Discord.Interaction} interaction
  */
-module.exports = async (bot) => {
-    let { SlashCmds, SlashCmdsData, config } = bot,
+
+    module.exports = async (bot) => {
+    let { SlashCmds, SlashCmdsData, config, webserver } = bot,
         rest = new REST({ version: "9" }).setToken(config.Settings.Token),
         fSize = fsUtils.fsizeSync('./', {
             skipErrors: true,
@@ -44,15 +52,15 @@ module.exports = async (bot) => {
         }
     })
 
-    if (config.WebServer && config.WebServer.Enabled) {
-        app.listen(config.WebServer.Port || 80, () => {
-            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(config.WebServer.Port || 80)}`)
+    if (webserver && webserver.Enabled) {
+        app.listen(webserver.Port || 8080, () => {
+            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(webserver.Port || 80)}`)
         })
     }
 
     await axios({
         baseURL: "https://api.github.com",
-        url: "repos/BrayanbotDev/BrayanBot/releases/latest",
+        url: "repos/BrayanBot/BrayanBot/releases/latest",
         method: "GET"
     }).then(async ({ data }) => {
         if (data) {
@@ -85,11 +93,32 @@ module.exports = async (bot) => {
         }
     })
 
+    Status.addVariables("Core", [
+        { searchFor: /{brand-name}/g, replaceWith: config.Branding.Name },
+        { searchFor: /{brand-logo}/g, replaceWith: config.Branding.Logo },
+        { searchFor: /{brand-link}/g, replaceWith: config.Branding.Link },
+        ...Utils.botVariables(bot),
+        ...Utils.guildVariables(bot.guilds.cache.first()),
+        ...Utils.userVariables(Utils.parseUser(bot.guilds.cache.first().ownerId, bot.guilds.cache.first()), "guild-owner"),
+    ])
+
+    if (config.Status) Status.set(config.Status);
+
     await Utils.logInfo(`Logged in as: ${chalk.bold(bot.user.tag)}`);
-    await Utils.logInfo(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
+        if (config.Settings.Verbose == true) {
+            await Utils.logDebug(`Currently using ${chalk.bold(Utils.bytesToSize(fSize))} of storage`);
+            if (fse.existsSync("./Addons")) {
+                let files = fse.readdirSync("./Addons");
+                Utils.logDebug(`${files.length} addons found.`);
+            }
+            else { // TODO: make this warning error specific
+                Utils.logWarning(`Addon directory was not found. Make sure the bot can create directories or access the Addons directory.`); 
+            }
+        }
     bot.guilds.cache.size > 1
         ? Utils.logWarning(`Currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.hex("##ff596d")(`BrayanBot is not made for multiple servers.`)}`)
         : Utils.logInfo(`Currently in ${chalk.bold(bot.guilds.cache.size)} server.`);
     await Utils.logInfo(`Bot Ready!`);
 };
+
 module.exports.once = true;

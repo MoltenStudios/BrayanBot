@@ -36,6 +36,8 @@ module.exports = {
     installModules: async (addonName, dependencies) => new Promise(async (resolve, reject) => {
         if (!dependencies || !Array.isArray(dependencies) || !dependencies[0]) return resolve(true);
 
+        if(process.argv.includes("--skip-dependencies")) return resolve(true);
+
         let showOutput = process.argv.includes("--show-install-output"),
             { spawn } = require("child_process"), modulesToInstall = [],
             dependenciesInstalled = [];
@@ -43,7 +45,7 @@ module.exports = {
         for (let index = 0; index < dependencies.length; index++) {
             try {
                 require.resolve(dependencies[index])
-                dependenciesInstaled.push(dependencies[index]);
+                dependenciesInstalled.push(dependencies[index]);
             } catch (e) {
                 modulesToInstall.push(dependencies[index]);
             }

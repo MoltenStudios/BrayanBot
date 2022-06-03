@@ -1,14 +1,14 @@
-# BrayanBot docker-compose.yaml v0.1.3
+# BrayanBot docker-compose.yaml v0.1.4
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
 
 services:
   brayanbot:
+    user: 1000:1000 # run as non-root user
     tty: true
     working_dir: /opt/brayanbot
     build: .
-    # image: brayanbot/brayanbot
-    command: npm start
+    command: yarn start
     container_name: brayanbot
     restart: unless-stopped
     volumes:
@@ -16,6 +16,7 @@ services:
       - ./Events:/opt/brayanbot/Events
       - ./Commands:/opt/brayanbot/Commands
       - ./node_modules:/opt/brayanbot/node_modules
+      - ./errors.txt:/opt/brayanbot/errors.txt
 
       - type: bind
         source: ./config.yml
@@ -26,9 +27,6 @@ services:
       - type: bind
         source: ./commands.yml
         target: /opt/brayanbot/commands.yml
-      - type: bind
-        source: ./errors.txt
-        target: /opt/brayanbot/errors.txt
       - type: bind
         source: ./Addon_Configs
         target: /opt/brayanbot/Addon_Configs

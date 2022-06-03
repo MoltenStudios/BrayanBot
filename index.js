@@ -49,12 +49,12 @@ installNodeModules().then(async () => {
         });
 
     module.exports["client"] = client;
-    ["config.yml", "commands.yml", "lang.yml"].forEach((x) => module.exports[x.replace(".yml", "")] = YAML.parse(fs.readFileSync(x, "utf-8"), { prettyErrors: true }));
-    ["config", "lang", "commands"].forEach((x) => (client[x] = module.exports[x]));
+    ["config.yml", "commands.yml", "lang.yml", "WebServer/webserver.yml"].forEach((x) => module.exports[x.replace(".yml", "").replace("WebServer/", "")] = YAML.parse(fs.readFileSync(x, "utf-8"), { prettyErrors: true }));
+    ["config", "lang", "commands", "webserver"].forEach((x) => (client[x] = module.exports[x]));
     ["Events", "SlashCmds", "SlashCmdsData"].forEach((x) => (client[x] = []));
-    ["Commands", "Aliases", "Routes"].forEach((x) => (client[x] = new Discord.Collection()));
+    ["Commands", "Aliases", "Routes", "StatusVariables"].forEach((x) => (client[x] = new Discord.Collection()));
 
-    let handlers = ["ErrorHandler.js", "EventHandler.js", "CommandHandler.js", "AddonHandler.js", "ExpressHandler.js"];
+    let handlers = ["ErrorHandler.js", "EventHandler.js", "Database.js" ,"CommandHandler.js", "AddonHandler.js", "ExpressHandler.js"];
     for (let index = 0; index < handlers.length; index++)
         await require(`./Modules/Handlers/${handlers[index]}`).init()
 

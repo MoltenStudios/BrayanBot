@@ -2,7 +2,10 @@ Settings:
   Token: "BOT-TOKEN"
   Prefix: "-"
   Storage: "database.db"
-  DevMode: false # This option will reset every addon configs.
+  # Enabling DevMode will reset all addon configurations.
+  DevMode: false 
+  # Verbose mode enables additional debug messages to be shown on the startup log.
+  Verbose: true 
 
 Embeds:
   Color: "2f3136"
@@ -12,31 +15,19 @@ Branding:
   Logo: "https://avatars.githubusercontent.com/u/99198112?s=200&v=4"
   Link: "https://brayanbot.dev"
 
-WebServer: 
-  Enabled: true
-  Port: 80
-  Favicon: "favicon.ico"
-  EndPoints:
-    - Type: "URL"
-      EndPoint: "/"
-      URL: "https://brayanbot.dev/"
-
-    - Type: "URL"
-      EndPoint: "/discord"
-      URL: "https://brayanbot.dev/discord"
-
-    - Type: "Page"
-      EndPoint: "/view/page"
-      File: "assets/viewThisPage.html"
-      
-    - Type: "File"
-      EndPoint: "/download"
-      File: "assets/download.txt"
-  Ratelimit: 
-    # It's recommended to keep this enabled.
-    Enabled: true
-    # Max Requests can be made per 1 minute
-    MaxRequests: 1
-    # IPs included will bypass Rate Limiting
-    BypassIPs:
-      - "127.0.0.1" # http://localhost/ | http://127.0.0.1/
+Status:
+  Status: "online"
+  Afk: false
+  Activities:
+    - Text: "discord.js"
+      Type: "PLAYING"
+    - Text: "BrayanBot.dev"
+      Type: "STREAMING"
+      URL: "https://brayanbot.dev"
+    - Text: "for help"
+      Type: "LISTENING"
+    - Text: "{guild-members} members"
+      Type: "WATCHING"
+  ActivitiesSettings:
+    Order: "normal"
+    Interval: 3
