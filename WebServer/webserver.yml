@@ -1,4 +1,4 @@
-Enabled: true
+Enabled: false
 Port: 8080
 Favicon: "favicon.ico"
 EndPoints:
