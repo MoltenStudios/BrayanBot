@@ -113,19 +113,19 @@ General:
 Admin:
   Eval:
     Embeds:
-      - Title: '{bot-username} Eval'
-        Fields:
-          - Name: ⬇️ | Input
+      
+      - Fields:
+          - Name: Input
             Value: |-
               ```js
               {input}```
-          - Name: ⬆️ | Output
+          - Name: Output
             Value: |-
-              ```js
-              {output}```
+             {output}
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true
+        Color: '{color}'
 
 Presets:
   NoPermission:
