@@ -1,6 +1,5 @@
 const Utils = require("../../Modules/Utils"),
   { lang, config, commands } = require("../../index"),
-  { post } = require("node-superfetch");
 moment = require("moment");
 
 module.exports = {
@@ -50,11 +49,15 @@ module.exports.run = async (bot, message, args) => {
     );
   // Try to execute code
   let clr;
+  let rawOutput;
   try {
-    var output = `\`\`\`js\n${await eval(input)}\n\`\`\``;
+    rawOutput = await eval(input);
+    var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
     clr = "#3c70dc";
   } catch (e) {
-    var output = `\`\`\`js\n${e}\n\`\`\``;
+    rawOutput = e;
+    var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
+    
     clr = "RED";
   }
   // Send error message if output includes token
@@ -73,8 +76,7 @@ module.exports.run = async (bot, message, args) => {
       })
     );
   if (output.length > 1024) {
-    const { body } = await post("https://hastebin.com/documents").send(output);
-    let output_link = `https://hastebin.com/${body.key}.js`;
+    const output_link = await Utils.paste(rawOutput, "https://paste.zorino.in")
     message.reply(
       Utils.setupMessage({
         configPath: lang.Admin.Eval,
@@ -144,11 +146,15 @@ module.exports.runSlash = async (bot, interaction) => {
     );
   // Try to execute code
   let clr;
+  let rawOutput;
   try {
-    var output = `\`\`\`js\n${await eval(input)}\n\`\`\``;
+    rawOutput = await eval(input);
+    var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
     clr = "#3c70dc";
   } catch (e) {
-    var output = `\`\`\`js\n${e}\n\`\`\``;
+    rawOutput = e;
+    var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
+    
     clr = "RED";
   }
   // Send error message if output includes token
@@ -167,8 +173,7 @@ module.exports.runSlash = async (bot, interaction) => {
       })
     );
   if (output.length > 1024) {
-    const { body } = await post("https://hastebin.com/documents").send(output);
-    let output_link = `https://hastebin.com/${body.key}.js`;
+    const output_link = await Utils.paste(rawOutput, "https://paste.zorino.in")
     interaction.reply(
       Utils.setupMessage({
         configPath: lang.Admin.Eval,
@@ -197,4 +202,3 @@ module.exports.runSlash = async (bot, interaction) => {
     })
   );
 };
-
