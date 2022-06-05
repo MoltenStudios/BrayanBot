@@ -23,7 +23,7 @@ jobs:
 
         # Download the pterodactyl egg from Zorino's Discord link.
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodactyl-egg.json https://cdn.discordapp.com/attachments/940963220485718097/965499029763006474/egg-brayan-bot.json
+        run: wget -O pterodactyl-egg.json https://cdn.zorino.in/egg-brayan-bot.json
 
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
