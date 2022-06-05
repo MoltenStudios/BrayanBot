@@ -325,7 +325,7 @@ module.exports = {
      * @param {Boolean} notify
      * @returns {Discord.Guild | void}
      */
-     findGuild: (name, client, notify = true) => {
+    findGuild: (name, client, notify = true) => {
         if (!name) return module.exports.logError(`[Utils] [findGuild] Invalid input for guild name.`);
         if (!client) return module.exports.logError(`[Utils] [findGuild] Invalid input for client.`);
         if (typeof name == "bigint" || typeof name == "number") name = name.toString();
@@ -429,7 +429,7 @@ module.exports = {
             TEAM_USER: "Team User",
         }, data = [];
 
-        member.user.flags.toArray().forEach((flag, i) =>
+        if (member.user.flags) member.user.flags.toArray().forEach((flag, i) =>
             badges[flag] ? data.push(badges[flag]) : false);
 
         return data;
