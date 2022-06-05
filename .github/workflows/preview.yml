@@ -23,7 +23,7 @@ jobs:
 
       # Download pterodactyl egg from xcraftman's repository
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodacytl-egg.json https://raw.githubusercontent.com/xcraftman52/Pterodactyl-eggs/master/bots/BrayanBot/egg-brayan-bot.json
+        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-brayan-bot.json
 
       # Create a prerelease
       - uses: "marvinpinto/action-automatic-releases@latest"
