@@ -6,6 +6,8 @@ Settings:
   DevMode: false 
   # Verbose mode enables additional debug messages to be shown on the startup log.
   Verbose: true 
+  # PasteURl is the URL or Bin Service that is used to post the paste of "Evaluated Output".
+  PasteURl: "https://paste.brayanbot.dev" # Don't Change this if you
 
 Embeds:
   Color: "2f3136"
