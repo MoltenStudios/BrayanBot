@@ -1,6 +1,6 @@
 const Utils = require("../../Modules/Utils"),
   { lang, config, commands } = require("../../index"),
-moment = require("moment");
+  moment = require("moment");
 
 module.exports = {
   name: "eval",
@@ -47,9 +47,10 @@ module.exports.run = async (bot, message, args) => {
         ],
       })
     );
+  // URl to paste output if > 1024 Chars
+  const pasteURl = bot.config.Settings.PasteURl;
   // Try to execute code
-  let clr;
-  let rawOutput;
+  let clr, rawOutput;
   try {
     rawOutput = await eval(input);
     var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
@@ -57,7 +58,7 @@ module.exports.run = async (bot, message, args) => {
   } catch (e) {
     rawOutput = e;
     var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
-    
+
     clr = "RED";
   }
   // Send error message if output includes token
@@ -76,7 +77,28 @@ module.exports.run = async (bot, message, args) => {
       })
     );
   if (output.length > 1024) {
-    const output_link = await Utils.paste(rawOutput, "https://paste.zorino.in")
+    try {
+      output_link = await Utils.paste(rawOutput, pasteURl);
+    } catch (e) {
+      interaction.reply(
+        Utils.setupMessage({
+          configPath: lang.Presets.Error,
+          variables: [
+            {
+              searchFor: /{error}/g,
+              replaceWith:
+                "Failed to upload output,\nCheck console for more info!",
+            },
+            ...Utils.userVariables(interaction.member),
+            ...Utils.botVariables(bot),
+          ],
+        })
+      );
+      console.log(
+        "\n-----------------------------------------------------------\nInvalidConfig: Paste URl provided is not supported!\n-----------------------------------------------------------"
+      );
+      return;
+    }
     message.reply(
       Utils.setupMessage({
         configPath: lang.Admin.Eval,
@@ -144,9 +166,10 @@ module.exports.runSlash = async (bot, interaction) => {
         ],
       })
     );
+  // URl to paste output if > 1024 Chars
+  const pasteURl = bot.config.Settings.PasteURl;
   // Try to execute code
-  let clr;
-  let rawOutput;
+  let clr, rawOutput, output_link;
   try {
     rawOutput = await eval(input);
     var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
@@ -154,7 +177,7 @@ module.exports.runSlash = async (bot, interaction) => {
   } catch (e) {
     rawOutput = e;
     var output = `\`\`\`js\n${rawOutput}\n\`\`\``;
-    
+
     clr = "RED";
   }
   // Send error message if output includes token
@@ -173,7 +196,28 @@ module.exports.runSlash = async (bot, interaction) => {
       })
     );
   if (output.length > 1024) {
-    const output_link = await Utils.paste(rawOutput, "https://paste.zorino.in")
+    try {
+      output_link = await Utils.paste(rawOutput, pasteURl);
+    } catch (e) {
+      interaction.reply(
+        Utils.setupMessage({
+          configPath: lang.Presets.Error,
+          variables: [
+            {
+              searchFor: /{error}/g,
+              replaceWith:
+                "Failed to upload output,\nCheck console for more info!",
+            },
+            ...Utils.userVariables(interaction.member),
+            ...Utils.botVariables(bot),
+          ],
+        })
+      );
+      console.log(
+        "\n-----------------------------------------------------------\nInvalidConfig: Paste URl provided is not supported!\n-----------------------------------------------------------"
+      );
+      return;
+    }
     interaction.reply(
       Utils.setupMessage({
         configPath: lang.Admin.Eval,
@@ -202,3 +246,4 @@ module.exports.runSlash = async (bot, interaction) => {
     })
   );
 };
+
