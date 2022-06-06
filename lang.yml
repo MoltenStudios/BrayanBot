@@ -167,7 +167,7 @@ Presets:
   Error:
     Embeds:
       - Title: Unable to perform action
-        Description: '> {error}'
+        Description: '>>> {error}'
         Footer: '{user-tag}'
         FooterIcon: '{user-pfp}'
         Timestamp: true
