@@ -54,7 +54,7 @@ const
 
     if (webserver && webserver.Enabled) {
         app.listen(webserver.Port || 8080, () => {
-            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(webserver.Port || 80)}`)
+            Utils.logInfo(`WebServer is now Online & Listening on port ${chalk.bold(webserver.Port || 8080)}`)
         })
     }
 
