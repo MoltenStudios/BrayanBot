@@ -1,6 +1,6 @@
 {
 	"name": "brayan-bot",
-	"version": "2.0.1",
+	"version": "1.4.0",
 	"description": "An Advanced Discord Bot Node.js Discord.js-v13",
 	"main": "index.js",
 	"repository": {
