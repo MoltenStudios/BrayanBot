@@ -43,7 +43,7 @@ module.exports.run = async (bot, message, args, config) => {
                     {
                         Title: "💁‍♂️ Help Menu",
                         Description:
-                            "> User `-help <command>` to view more information about command",
+                            "> Use `{prefix}help <command>` to view more information about command",
                         Fields: fields,
                         Footer: "{user-tag}",
                         FooterTag: "{user-tag}",
@@ -55,6 +55,7 @@ module.exports.run = async (bot, message, args, config) => {
             variables: [
                 ...Utils.userVariables(message.member),
                 ...Utils.botVariables(bot),
+                { searchFor: {prefix}/g, replaceWith: config.Settings.Prefix, },
             ],
         }, true));
     } else {
@@ -126,7 +127,7 @@ module.exports.runSlash = async (bot, interaction) => {
                     {
                         Title: "💁‍♂️ Help Menu",
                         Description:
-                            "> User `-help <command>` to view more information about command",
+                            "> Use `/help <command>` to view more information about command",
                         Fields: fields,
                         Footer: "{user-tag}",
                         FooterTag: "{user-tag}",
