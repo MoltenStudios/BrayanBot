@@ -43,7 +43,9 @@ BrayanBot is fully modular, it allows you to install verified Third-Party Addons
 
 <li align="center">Zorino#1110</li>
 <li align="center">SimonB50#1234</li>
-
+<li align="center">KevinSidd#0115</li>
+<li align="center">ElkinSantiana#0115</li>
+<li align="center">XCraftMan52#0661</li>
 
 <h2 align="center">✨ Contributing</h2>
 
