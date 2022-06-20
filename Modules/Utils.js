@@ -3,6 +3,7 @@ const Discord = require("discord.js"), chalk = require("chalk"),
     { client } = require("../index");
 
 module.exports = {
+    ...require("./Variables"),
     parseSlashCommands: require("./Utils/parseSlashCommand"),
     setupMessage: require("./Utils/setupMessage"),
     wait: require("util").promisify(setTimeout),
@@ -14,198 +15,55 @@ module.exports = {
     logDebug: (...text) => console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text),
     /** @param {Array} array*/
     getRandom: (array) => {
-        let random = Math.floor(Math.random() * array.length);
-        return array[random];
+        array[Math.floor(Math.random() * array.length)]
     },
     /** @param {String} text @returns {String}*/
-    formatFirstLetter: (text) => {
-        return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+    formatFirstLetter: (text) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`,
+    /** @param {Array} array */
+    getRandom: (array) => {
+        return array[Math.floor(Math.random() * array.length)]
     },
     /**
-     * @param {Discord.GuildMember} user
-     * @param {String} prefix
-     * @returns {String[]}
+     * Apply variables to a string.
+     * @param string String to replace the variables in
+     * @param variables Array of variables to search and replace
      */
-    userVariables: (user, prefix) => {
-        let returnObject = [];
+    applyVariables: (string, variables) => {
+        for (let i = 0; i < variables.length; i++)
+            string = string.replace(variables[i].searchFor, variables[i].replaceWith);
 
-        if (user) returnObject = [{
-            searchFor: new RegExp(`{${prefix || "user"}-id}`, "g"),
-            replaceWith: user.id,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-displayname}`, "g"),
-            replaceWith: user.displayName,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-username}`, "g"),
-            replaceWith: user.user.username,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-tag}`, "g"),
-            replaceWith: user.user.tag,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-mention}`, "g"),
-            replaceWith: "<@" + user.id + ">",
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-pfp}`, "g"),
-            replaceWith: user.user.displayAvatarURL({ dynamic: true }),
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:D>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-for}`, "g"),
-            replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:R>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "user"}-badges}`, "g"),
-            replaceWith: module.exports.getUserBadges(user).join(", "),
-        }];
-
-        if (!user) module.exports.logError(`[Utils] [userVariables] Invalid input for ${chalk.bold("user")}.`);
-
-        return returnObject;
+        return string;
     },
     /**
-     * @param {Discord.GuildMember} member
-     * @param {String} prefix
-     * @returns {String[]}
+     * Paginate array
+     * @param array Array of all elements to paginate
+     * @param itemsperpage Amount of items per page
+     * @param page Page Number to Get
      */
-    memberVariables: (member, prefix) => {
-        let returnObject = [];
-
-        if (member) returnObject = [{
-            searchFor: new RegExp(`{${prefix || "member"}-id}`, "g"),
-            replaceWith: member.id,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-displayname}`, "g"),
-            replaceWith: member.displayName,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-username}`, "g"),
-            replaceWith: member.user.username,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-tag}`, "g"),
-            replaceWith: member.user.tag,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-mention}`, "g"),
-            replaceWith: "<@" + member.id + ">",
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-pfp}`, "g"),
-            replaceWith: member.displayAvatarURL({ dynamic: true }),
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(member.createdTimestamp / 1000)}:D>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-joindate}`, "g"),
-            replaceWith: `<t:${Math.floor(member.joinedTimestamp / 1000)}:D>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-for}`, "g"),
-            replaceWith: `<t:${Math.floor(member.joinedTimestamp / 1000)}:R>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "member"}-roles}`, "g"),
-            replaceWith: member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map((r) => `<@&${r.id}>`).join(", "),
-        }];
-
-        if (!member) module.exports.logError(`[Utils] [memberVariables] Invalid input for ${chalk.bold("member")}.`);
-
-        return returnObject;
+    paginateArray: (array, itemsperpage, page = 1) => {
+        const maxPages = Math.ceil(array.length / itemsperpage);
+        if (page < 1 || page > maxPages) return null;
+        return array.slice((page - 1) * itemsperpage, page * itemsperpage)
     },
     /**
-     * 
-     * @param {Discord.Channel} channel 
-     * @param {String} prefix 
-     * @returns {Array<Object>}
-    */
-    channelVariables: (channel, prefix) => {
-        let returnObject = [];
-
-        if (channel) returnObject = [{
-            searchFor: new RegExp(`{${prefix || "channel"}-id}`, "g"),
-            replaceWith: channel.id,
-        }, {
-            searchFor: new RegExp(`{${prefix || "channel"}-name}`, "g"),
-            replaceWith: channel.name,
-        }, {
-            searchFor: new RegExp(`{${prefix || "channel"}-mention}`, "g"),
-            replaceWith: channel.toString(),
-        }, {
-            searchFor: new RegExp(`{${prefix || "channel"}-type}`, "g"),
-            replaceWith: channel.type,
-        }, {
-            searchFor: new RegExp(`{${prefix || "channel"}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(channel.createdTimestamp / 1000)}:D>`,
-        }]
-
-        if (!channel) module.exports.logError(`[Utils] [channelVariables] Invalid input for ${chalk.bold("channel")}.`);
-
-        return returnObject;
-    },
-    /**
-     * 
-     * @param {Discord.Role} role 
-     * @param {String} prefix 
-     * @returns 
+     * Get info about a valid discord invite
+     * @param inviteCode Invite Code to check
      */
-    roleVariables: (role, prefix) => {
-        let returnObject = [];
+    inviteInfo: async (inviteCode) => {
+        return new Promise(async (resolve, reject) => {
+            axios.get(`https://discord.com/api/v8/invites/${inviteCode}?with_counts=true`).catch(reject).then(data => data?.data).then(data => {
+                data.url = data.code ? `https://discord.com/${data.code}` : null;
+                data.guild.iconURL = data.guild.icon ? `https://cdn.discordapp.com/icons/${data.guild.id}/${data.guild.icon}?size=64` : null;
+                data.guild.splashURL = data.guild.splash ? `https://cdn.discordapp.com/splashes/${data.guild.id}/${data.guild.splash}?size=64` : null;
+                data.guild.bannerURL = data.guild.banner ? `https://cdn.discordapp.com/banners/${data.guild.id}/${data.guild.banner}?size=64` : null;
+                if (data.inviter) {
+                    data.inviter.tag = `${data.inviter.username}#${data.inviter.discriminator}`;
+                    data.inviter.avatarURL = data.inviter.avatar ? `https://cdn.discordapp.com/avatars/${data.inviter.id}/${data.inviter.avatar}?size=64` : null;
+                }
 
-        if (role) returnObject = [{
-            searchFor: new RegExp(`{${prefix || "role"}-id}`, "g"),
-            replaceWith: role.id,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-name}`, "g"),
-            replaceWith: role.name,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-mention}`, "g"),
-            replaceWith: role.toString(),
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(role.createdTimestamp / 1000)}:D>`,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-color}`, "g"),
-            replaceWith: role.color,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-hexColor}`, "g"),
-            replaceWith: role.hexColor,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-position}`, "g"),
-            replaceWith: role.rawPosition,
-        }, {
-            searchFor: new RegExp(`{${prefix || "role"}-icon}`, "g"),
-            replaceWith: role.iconURL() || "https://cdn-icons-png.flaticon.com/512/2522/2522053.png",
-        }]
-
-        if (!role) module.exports.logError(`[Utils] [roleVariables] Invalid input for ${chalk.bold("role")}.`);
-
-        return returnObject;
-    },
-    /**
-     * @param {Discord.Client} bot
-     * @param {String} prefix
-     * @returns {Object[]}
-     */
-    botVariables: (bot, prefix) => {
-        let returnObject = [];
-
-        if (bot) returnObject = [{
-            searchFor: new RegExp(`{${prefix || "bot"}-id}`, "g"),
-            replaceWith: bot.id,
-        }, {
-            searchFor: new RegExp(`{${prefix || "bot"}-displayname}`, "g"),
-            replaceWith: bot.displayName,
-        }, {
-            searchFor: new RegExp(`{${prefix || "bot"}-username}`, "g"),
-            replaceWith: bot.user.username,
-        }, {
-            searchFor: new RegExp(`{${prefix || "bot"}-tag}`, "g"),
-            replaceWith: bot.user.tag,
-        }, {
-            searchFor: new RegExp(`{${prefix || "bot"}-mention}`, "g"),
-            replaceWith: "<@" + bot.id + ">",
-        }, {
-            searchFor: new RegExp(`{${prefix || "bot"}-pfp}`, "g"),
-            replaceWith: bot.user.displayAvatarURL({ dynamic: true }),
-        }]
-
-        if (!bot) module.exports.logError(`[Utils] [botVariables] Invalid input for ${chalk.bold("bot")}.`);
-
-        return returnObject;
+                return resolve(data);
+            })
+        })
     },
     /**
      * @param {Discord.Guild} guild 
