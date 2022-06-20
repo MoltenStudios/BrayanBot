@@ -20,7 +20,7 @@
 	],
 	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"engines": {
-		"node": ">=16.15.0"
+		"node": ">=16.16.0"
 	},
 	"dependencies": {
 		"@brayanbot/discord-utils": "^1.1.0",
