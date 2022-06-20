@@ -12,19 +12,13 @@
 	},
 	"author": "@BrayanBot",
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/BrayanBot/BrayanBot#readme",
+	"homepage": "https://brayanbot.dev/",
 	"maintainers": [
 		"@DakshNamdev (Zorino) <zorino@brayanbot.dev> ",
 		"@NotAShelf (raf) <raf@brayanbot.dev> ",
 		"@XCraftMan52#0661 (XCraftMan)"
 	],
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"engines": {
 		"node": ">=16.15.0"
 	},
