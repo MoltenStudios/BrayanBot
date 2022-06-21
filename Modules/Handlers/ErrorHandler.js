@@ -1,7 +1,6 @@
-const { client, config, lang, commands } = require("../../index"),
-    Utils = require("../Utils"), { inspect } = require("util"),
-    fs = require("fs"), chalk = require("chalk"),
-    path = require("path"), moment = require('moment');
+const { HTTPError } = require("discord.js");
+const Utils = require("../Utils"), { inspect } = require("util"),
+    fs = require("fs"), chalk = require("chalk"), moment = require('moment');
 module.exports = {
     init: () => {
         process.on('uncaughtException', module.exports.uncaughtException);
@@ -28,10 +27,15 @@ module.exports = {
             "DiscordAPIError: Unknown Message",
             "DiscordAPIError: Unknown Channel"
         ];
-        if (!consoleIgnore.includes(reason.toString())) {
-            let lines;
+        if (reason instanceof HTTPError) {
+            if (reason.code == 500) {
+                Utils.logError(`Internal Server Error occured while contacting Discord's API. View Discord Status at ${chalk.blue(chalk.underline(`https://discordstatus.com/`))}`)
+                Utils.logInfo("Stopping bot..");
+                process.exit(0)
+            }
+        } else if (!consoleIgnore.includes(reason.toString())) {
+            let lines = "-".repeat(reason.toString().length)
             if (process.argv.includes("--show-errors")) {
-                lines = lines = "-".repeat(reason.toString().length)
                 Utils.logError(`${chalk.red(`[[ Occured at: ${moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')} ]]`)}\n${lines}\n${reason.toString()}\n${lines}`)
             } else {
                 Utils.logError(`An unexpected error occured, please contact BrayanBot Support team at ${chalk.blue(chalk.underline(`https://discord.gg/G4AV33KeqF`))}`)
