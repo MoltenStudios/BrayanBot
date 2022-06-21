@@ -13,10 +13,6 @@ module.exports = {
     logError: (...text) => console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text),
     logInfo: (...text) => console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text),
     logDebug: (...text) => console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text),
-    /** @param {Array} array*/
-    getRandom: (array) => {
-        array[Math.floor(Math.random() * array.length)]
-    },
     /** @param {String} text @returns {String}*/
     formatFirstLetter: (text) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`,
     /** @param {Array} array */
