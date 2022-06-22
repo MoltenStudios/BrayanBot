@@ -1,0 +1,33 @@
+{
+	"name": "brayanbot",
+	"version": "2.0.0",
+	"description": "A modular Discord bot for your server management needs.",
+	"homepage": "https://github.com/BrayanBot/BrayanBot#readme",
+	"author": "https://github.com/BrayanBot",
+	"license": "Apache-2.0",
+	"main": "src/index.js",
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
+	"maintainers": [
+		"@DakshNamdev (Zorino) <@Zorino#1110> ",
+		"@NotAShelf (raf) <raf@brayanbot.dev> ",
+		"@XCraftMan52#0661 (XCraftMan)"
+	],
+	"scripts": {
+		"build": "tsc --build --verbose",
+		"dev": "nodemon --exec \"npm run start\" -e ts",
+		"start": "tsc && node build/index"
+	},
+	"bugs": {
+		"url": "https://github.com/BrayanBot/BrayanBot/issues"
+	},
+	"engines": {
+		"node": ">=16.15.0"
+	},
+	"dependencies": {
+		"discord.js": "^13.8.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.16",
+		"typescript": "^4.7.4"
+	}
+}
