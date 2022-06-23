@@ -6,7 +6,13 @@
 	"author": "https://github.com/BrayanBot",
 	"license": "Apache-2.0",
 	"main": "src/index.js",
-	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
+	"keywords": [
+		"discord",
+		"discord.js",
+		"node.js",
+		"discordbot",
+		"discord-bot"
+	],
 	"maintainers": [
 		"@DakshNamdev (Zorino) <@Zorino#1110> ",
 		"@NotAShelf (raf) <raf@brayanbot.dev> ",
@@ -24,7 +30,8 @@
 		"node": ">=16.15.0"
 	},
 	"dependencies": {
-		"discord.js": "^13.8.0"
+		"discord.js": "^13.8.0",
+		"yaml": "^2.1.1"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.16",
