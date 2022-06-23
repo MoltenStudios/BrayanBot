@@ -15,7 +15,9 @@ const manager: BrayanBot = new BrayanBot({
 (async () => {
     await manager.initializeHandlers();
 })().then(() => {
-    manager.login("ODg2OTcyMzYzNTU0NTUzOTM3.YT9XYg.WlQA4mkSQcUQCiHD9A4NioDDdhQ");
+    if(manager.configs.config?.Settings) {
+        manager.login(manager.configs.config?.Settings.Token);
+    }
 })
 
 export { manager };

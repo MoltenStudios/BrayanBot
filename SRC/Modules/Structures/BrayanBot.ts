@@ -1,14 +1,14 @@
 import { Collection, Client, ClientOptions } from "discord.js";
 import { CommandHandler } from "./Handlers/Commands";
 import { ConfigHandler } from "./Handlers/Config";
+import { ConfigType } from "../../Configs/config";
 import { EventHandler } from "./Handlers/Events";
 import fs from "fs";
-import { ConfigType } from "../../Configs/config";
  
 type ManagerOptions = {
-    commandDir: string
-    configDir: string
-    eventDir: string
+    commandDir: string;
+    configDir: string;
+    eventDir: string;
 }
 
 type Handlers = {
