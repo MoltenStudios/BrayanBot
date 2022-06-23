@@ -8,13 +8,14 @@ const manager: BrayanBot = new BrayanBot({
     retryLimit: 5,
 }, {
     commandDir: path.join(__dirname, "Commands"),
+    configDir: path.join(__dirname, "Configs"),
     eventDir: path.join(__dirname, "Events"),
 });
 
 (async () => {
     await manager.initializeHandlers();
 })().then(() => {
-    manager.login("my-bot-token-that-u-won't-have");
+    manager.login("ODg2OTcyMzYzNTU0NTUzOTM3.YT9XYg.WlQA4mkSQcUQCiHD9A4NioDDdhQ");
 })
 
 export { manager };
