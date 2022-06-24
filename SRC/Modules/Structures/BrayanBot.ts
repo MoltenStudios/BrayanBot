@@ -1,5 +1,5 @@
 import { Collection, Client, ClientOptions } from "discord.js";
-import { CommandHandler } from "./Handlers/Commands";
+import { Command, CommandHandler } from "./Handlers/Commands";
 import { ConfigHandler } from "./Handlers/Config";
 import { ConfigType } from "../../Configs/config";
 import { EventHandler } from "./Handlers/Events";
@@ -32,7 +32,7 @@ type Configs = {
 }
 
 export class BrayanBot extends Client {
-    public commands: Collection<string, Object> = new Collection();
+    public commands: Collection<string, Command> = new Collection();
     public events: { name: string, handler: Function }[] = [];
     public managerOptions: ManagerOptions;
     public handlers: Handlers = {};
