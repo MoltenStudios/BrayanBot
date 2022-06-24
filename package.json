@@ -6,22 +6,16 @@
 	"author": "https://github.com/BrayanBot",
 	"license": "Apache-2.0",
 	"main": "src/index.js",
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
+	"keywords": [ "discord", "discord.js", "node.js", "discordbot", "discord-bot" ],
 	"maintainers": [
 		"@DakshNamdev (Zorino) <@Zorino#1110> ",
 		"@NotAShelf (raf) <raf@brayanbot.dev> ",
 		"@XCraftMan52#0661 (XCraftMan)"
 	],
 	"scripts": {
-		"build": "tsc --build --verbose",
 		"dev": "nodemon --exec \"npm run start\" -e ts",
-		"start": "tsc && node build/index"
+		"start": "tsc && node build/index.js",
+		"build": "tsc --build --verbose"
 	},
 	"bugs": {
 		"url": "https://github.com/BrayanBot/BrayanBot/issues"
@@ -30,6 +24,8 @@
 		"node": ">=16.15.0"
 	},
 	"dependencies": {
+		"chalk": "^4.1.2",
+		"console-stamp": "^3.0.6",
 		"discord.js": "^13.8.1",
 		"yaml": "^2.1.1"
 	},

@@ -1,6 +1,5 @@
 import { BrayanBot } from "../BrayanBot";
 import { manager } from "../../../index";
-import { Client } from "discord.js";
 import { readdirSync } from "fs";
 import path from "path";
 
@@ -31,9 +30,9 @@ export class EventHandler {
 
 export class EventListener {
     public name: string;
-    public handler: (client: Client) => any;
+    public handler: (client: BrayanBot) => any;
     
-    constructor(name: string, handler = (client: Client) => {}) {
+    constructor(name: string, handler = (client: BrayanBot) => {}) {
         this.name = name;
         this.handler = handler;
         manager.events.push({ name, handler });

@@ -66,6 +66,6 @@ const defaultConfig = {
     }
 }
 
-export default new Config(path.join(__dirname, "../../Data/config.yml"), defaultConfig)
+export default new Config(path.join(__dirname, "../../data/config.yml"), defaultConfig)
 
 export { ConfigType }

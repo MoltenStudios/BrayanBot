@@ -1,7 +1,5 @@
 import { BrayanBot } from "../BrayanBot";
-import { manager } from "../../../index";
 import { readdirSync } from "fs";
-import path from "path";
 
 export class CommandHandler {
     public manager: BrayanBot;

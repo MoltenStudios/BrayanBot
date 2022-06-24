@@ -1,5 +1,5 @@
-import { Message, CommandInteraction } from "discord.js"
-import { BrayanBot } from "../BrayanBot"
+import { Message, CommandInteraction } from "discord.js";
+import { BrayanBot } from "../BrayanBot";
 
 export interface Command {
     commandData: {
