@@ -20,6 +20,7 @@ export class ConfigHandler {
     }
 
     async initialize() {
+        if(!fs.existsSync("data/")) fs.mkdirSync("data/")
         for (let i = 0; i < this.configFiles.length; i++) {
             const configFile = require(path.join(this.configDir, this.configFiles[i]));
             const config: Config = configFile.default;
