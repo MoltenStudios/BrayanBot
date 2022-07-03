@@ -31,6 +31,7 @@ type Configs = {
     lang?: {};
 }
 
+
 export class BrayanBot extends Client {
     public commands: Collection<string, Command> = new Collection();
     public events: { name: string, handler: Function }[] = [];
