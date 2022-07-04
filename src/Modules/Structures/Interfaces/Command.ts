@@ -4,7 +4,6 @@ import { BrayanBot } from "../BrayanBot";
 type CommandData = {
     Name: string
     Usage?: string
-    Array?: string
     Cooldown?: number
     Permission?: string[]
     Description?: string
@@ -19,7 +18,6 @@ interface CommandInterface {
     commandData: {
         Name: string
         Usage?: string
-        Array?: string
         Cooldown?: number
         Permission?: string[]
         Description?: string
