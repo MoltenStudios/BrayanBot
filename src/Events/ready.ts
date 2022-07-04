@@ -23,11 +23,11 @@ export default new EventListener("ready", (bot: BrayanBot) => {
         chalk.whiteBright(`•«                                                          »•`),
     ].forEach((line) => info(line))
     
-    if(!process.argv.includes("--debug")) {
+    if(process.argv.includes("--debug")) {
         debug(`Currently using ${chalk.bold(`${((fastFolderSize(".") || 0) / 1024 / 1024).toFixed(2)} MB`)} Storage.`);
-        debug(`Loaded ${bot.commands.size} commands.`);
-        debug(`Loaded ${bot.events.length} events.`);
+        debug(`Loaded ${chalk.bold(bot.commands.size)} commands.`);
+        debug(`Loaded ${chalk.bold(bot.events.length)} events.`);
     }
 
-    info("Everything has been loaded & BrayanBot is ready to use!");
+    info(`Everything has been loaded & ${chalk.bold(`BrayanBot`)} is ready to use!`);
 });
