@@ -21,7 +21,7 @@ export class EventHandler {
 
     async initialize() {
         for (let i = 0; i < this.eventFiles.length; i++) {
-            const event = require(path.join(this.eventDir, this.eventFiles[i]));
+            require(path.join(this.eventDir, this.eventFiles[i]));
         }
 
         return this;
@@ -32,12 +32,13 @@ export class EventListener {
     public name: string;
     public handler: (client: BrayanBot) => any;
     
-    constructor(name: string, handler = (client: BrayanBot) => {}) {
+    constructor(name: string, handler = (client: BrayanBot, ...params: any) => {}) {
         this.name = name;
         this.handler = handler;
+        
         manager.events.push({ name, handler });
-        manager.on(name, async (...params) => {
-            handler(manager, ...(params as []));
+        manager.on(name, async (...params: any) => {
+            await handler(manager, ...params);
         });
     }
 }
