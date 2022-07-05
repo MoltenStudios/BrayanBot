@@ -8,6 +8,11 @@ export default new EventListener("ready", (bot: BrayanBot) => {
     const { debug, info, warn, error } = bot.logger;
     const guild = bot.guilds.cache.first();
 
+    if(bot.configs.config?.Settings.UseMentionPrefix) 
+        if(Array.isArray(bot.configs.config?.Settings.Prefix)
+            && !bot.configs.config?.Settings.Prefix.includes(`<@${bot.user?.id}>`)
+        ) bot.configs.config?.Settings.Prefix.push(`<@${bot.user?.id}>`);
+
     if(!guild) {
         info(chalk.blue(`https://discord.com/api/oauth2/authorize?client_id=${bot.user?.id}&permissions=8&scope=bot%20applications.commands`))
         return error(`${chalk.bold("BrayanBot")} is in currently in ${chalk.bold(bot.guilds.cache.size)} servers. | ${chalk.bold("BrayanBot")} requires atlest ${chalk.bold(1)} server.`, 
