@@ -4,7 +4,9 @@ import path from "path";
 type ConfigType = {
     Settings: {
         Token: string;
+        UseMentionPrefix: boolean;
         Prefix: string[] | string;
+        IgnoreBots: boolean;
         DevMode: boolean;
         Verbose: boolean;
     },
@@ -29,7 +31,10 @@ type ConfigType = {
 const defaultConfig = {
     Settings: {
         Token: "Your-Bot-Token",
+        UseMentionPrefix: true,
         Prefix: ["-"],
+        "~0": "Weather bots can use commands or not.",
+        IgnoreBots: false,
         DevMode: false,
         Verbose: false
     },
