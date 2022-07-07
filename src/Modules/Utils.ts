@@ -1,5 +1,5 @@
 import { Guild, GuildMember, Role } from "discord.js";
-import { manager } from "../index";
+import { setupMessage } from "./Utils/setupMessage";
 import chalk from "chalk";
 
 export default class Utils {
@@ -8,6 +8,28 @@ export default class Utils {
         info: (...text: any[]) =>  console.log(chalk.greenBright.bold("[INFO]"), ...text),
         warn: (...text: any[]) =>  console.log(chalk.yellowBright.bold("[WARN]"), ...text),
         error: (...text: any[]) => console.log(chalk.redBright.bold("[ERROR]"), ...text),
+    }
+
+    static setupMessage = setupMessage;
+
+    static getRandom(array: any[]) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    static applyVariables(string: string, variables: { 
+        searchFor: RegExp,
+        replaceWith: any
+    }[]) {
+        for(let i = 0; i < variables.length; i++) 
+            string = string.replace(variables[i].searchFor, variables[i].replaceWith);
+    
+        return string;
+    }
+
+    static paginateArray (array: Array<any>, itemsperpage: number, page = 1): Array<any> | null {
+        const maxPages = Math.ceil(array.length / itemsperpage);
+        if (page < 1 || page > maxPages) return null;
+        return array.slice((page - 1) * itemsperpage, page * itemsperpage)
     }
 
     static findRole(guild: Guild, name: string | number, notify = true): Role | undefined | void {
