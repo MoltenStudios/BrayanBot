@@ -34,5 +34,6 @@ export default new EventListener("ready", (bot: BrayanBot) => {
         debug(`Loaded ${chalk.bold(bot.events.length)} events.`);
     }
 
+    info(`Logged in as ${chalk.bold(bot.user?.tag || "Unknown")}`);
     info(`Everything has been loaded & ${chalk.bold(`BrayanBot`)} is ready to use!`);
 });
