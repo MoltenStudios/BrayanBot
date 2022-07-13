@@ -36,7 +36,7 @@ const defaultConfig = {
         "~0": "Weather bots can use commands or not.",
         IgnoreBots: false,
         DevMode: false,
-        Verbose: false
+        Verbose: false,
     },
     "~l0": "Empty Line",
     Branding: {

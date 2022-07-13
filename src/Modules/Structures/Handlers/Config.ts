@@ -1,3 +1,4 @@
+import { ConfigType } from "../../../Configs/config";
 import { BrayanBot, Configs } from "../BrayanBot";
 import path from "path";
 import yaml from "yaml";
@@ -26,9 +27,15 @@ export class ConfigHandler {
             const config: Config = configFile.default;
             config.configName = this.configFiles[i].replace(".js", "")
 
-            if(process.argv.includes("--reset-configs"))
+            if(process.argv.includes("--reset-configs")) {
+                if(config.configName == "config") 
+                    config.configData.Settings = {
+                        ...config.configData.Settings, // To get settings not in config already
+                        ...config.getFile().Settings // To overwrite settings from old config
+                        // This system doesn't remove anything from config.Settings part.
+                    }
                 this.manager.configs[config.configName as keyof Configs] = config.createFile().getFile();
-            else this.manager.configs[config.configName as keyof Configs] = config.getFile();
+            } else this.manager.configs[config.configName as keyof Configs] = config.getFile();
         }
 
         return this;
@@ -37,7 +44,7 @@ export class ConfigHandler {
 
 export class Config {
     private storagePath: string;
-    private configData: any;
+    public configData: any;
     public configName: string | undefined;
 
     constructor(storagePath: string, configData: any) {
