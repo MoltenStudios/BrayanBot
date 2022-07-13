@@ -32,7 +32,6 @@ export class CommandHandler {
             }
         }
 
-
         return this;
     }
 }

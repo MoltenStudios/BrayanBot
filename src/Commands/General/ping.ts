@@ -1,46 +1,25 @@
+import { manager } from "../..";
 import { Command } from "../../Modules/Structures/Handlers/Commands";
 import Utils from "../../Modules/Utils";
+import ms from "ms";
 
 export default new Command({
-    commandData: {
-        Name: "ping",
-        Usage: 'ping',
-        Cooldown: 0,
-        Permission: ["Zorino#1110"],
-        Description: "KOOL",
-        DeleteCommand: false,
-        SlashCommand: {
-            Enabled: false,
-            Data: {}
-        }
-    },
-    runLegacy(manager, message, args, prefixUsed, commandData) {
+    commandData: manager.configs.commands?.General.Ping!,
+    runLegacy: async (manager, message, args, prefixUsed, commandData) => {
+        const ping = Math.round((Date.now() - message.createdTimestamp) / 1000);
+        const apiPing = Math.round(manager.ws.ping);
+
         message.reply(Utils.setupMessage({
-            configPath: {
-                Content: "Test from setupMessage",
-                Embeds: [{
-                    Title: "title test",
-                    Description: "description test",
-                    Footer: "footer tst",
-                    Author: "author test",
-                    Timestamp: true
-                }],
-                Components: {
-                    "1": [
-                        {
-                            Type: "Button",
-                            Style: "Link",
-                            Link: "https://zorino.in/",
-                            Label: "link",
-                            CustomID: "link lol",
-                            Emoji: "👀"
-                        }
-                    ]
-                }
-            }
-        }))
+            configPath: manager.configs.lang?.General.Ping!,
+            variables: [
+                { searchFor: /{ping}/g, replaceWith: ms(ping, { long: true }) },
+                { searchFor: /{apiPing}/g, replaceWith: ms(apiPing, { long: true }) },
+            ]
+        }));
     },
-    runSlash(manager, interaction, options, commandData) {
-        interaction.reply("hii :wave:")
+    runSlash: async (manager, interaction, options, commandData) => {
+        const ping = Date.now() - interaction.createdTimestamp;
+        const apiPing = Math.round(interaction.client.ws.ping);
+        interaction.reply(`Pong! - Bot Latency: ${ping}ms - API Latency: ${apiPing}ms - Round Trip: ${ping + apiPing}ms`);
     },
 });
