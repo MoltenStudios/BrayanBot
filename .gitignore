@@ -1,4 +1,7 @@
 build/
 node_modules/
 src/disposal/
+
 data/config.yml
+data/lang.yml
+data/commands.yml
