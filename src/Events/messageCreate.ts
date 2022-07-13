@@ -24,7 +24,9 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
         if(!cmd) return;
 
         if(cmd.commandData.Permission && !Utils.hasPermission(cmd.commandData.Permission, message.member!)) {
-            return message.reply(`You don't have permission to run this command.`)
+            return message.reply(Utils.setupMessage({
+                configPath: bot.configs.lang?.Miscellaneous.InvalidPermissions!
+            }))
         }
 
         await cmd.runLegacy?.call(this, bot, message, args, prefixUsed, cmd)
