@@ -1,8 +1,10 @@
 import { Collection, Client, ClientOptions } from "discord.js";
 import { Command, CommandHandler } from "./Handlers/Commands";
+import { CommandsType } from "../../Configs/commands";
 import { ConfigHandler } from "./Handlers/Config";
 import { ConfigType } from "../../Configs/config";
 import { EventHandler } from "./Handlers/Events";
+import { LangType } from "../../Configs/lang";
 import Utils from "../Utils";
 import fs from "fs";
 
@@ -26,9 +28,9 @@ type Handlers = {
 }
 
 type Configs = {
-    commands?: {};
+    commands?: CommandsType;
     config?: ConfigType;
-    lang?: {};
+    lang?: LangType;
 }
 
 
@@ -61,9 +63,9 @@ export class BrayanBot extends Client {
     }
 
     async initializeHandlers() {
-        this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
         this.handlers.ConfigHandler = await new ConfigHandler(this, this.managerOptions.configDir).initialize();
         this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
+        this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
 
         return this;
     }
