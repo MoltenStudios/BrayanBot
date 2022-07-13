@@ -2,6 +2,7 @@ import Utils from '../Utils';
 import { SetupEmbed, setupEmbed } from './setupEmbed';
 import { SetupComponents, setupComponents } from './setupComponents';
 import { MessageActionRow, MessageAttachment, MessageEmbed } from 'discord.js';
+import { manager } from '../..';
 
 type SetupMessage = {
     Embeds?: SetupEmbed[],
@@ -39,7 +40,14 @@ type Message = {
  */
 const setupMessage = (settings: Settings): Message => {
     const configPath = settings.configPath;
-    const variables = settings.variables;
+    const variables = settings.variables ?? [];
+
+    variables.push(...[
+        { searchFor: /{brand-color}/g, replaceWith: manager.configs.config?.Branding.Color || "#2f3136" },
+        { searchFor: /{brand-name}/g, replaceWith: manager.configs.config?.Branding.Name || "BrayanBot" },
+        { searchFor: /{brand-link}/g, replaceWith: manager.configs.config?.Branding.Link || "https://brayanbot.dev" },
+        { searchFor: /{brand-logo}/g, replaceWith: manager.configs.config?.Branding.Logo || "https://avatars.githubusercontent.com/u/99198112" },
+    ])
 
     const message: Message = {
         files: [], embeds: [],
