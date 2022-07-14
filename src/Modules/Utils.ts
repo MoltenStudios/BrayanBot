@@ -1,4 +1,4 @@
-import { Guild, GuildMember, Role } from "discord.js";
+import { Guild, GuildMember, Role, UserFlags, UserFlagsString } from "discord.js";
 import { setupMessage } from "./Utils/setupMessage";
 import chalk from "chalk";
 
@@ -70,5 +70,30 @@ export default class Utils {
             const isMemberPermission = this.findMember(member.guild, perm, false);
             if(isMemberPermission && member.id == isMemberPermission.id) return true;
         })
+    }
+
+    static getUserBadges (member: GuildMember) {
+        const badges = {
+            BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
+            BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
+            DISCORD_EMPLOYEE: "Discord Staff",
+            DISCORD_NITRO: "Discord Nitro",
+            EARLY_SUPPORTER: "Early Supporter",
+            HOUSE_BALANCE: "HypeSquad Balance",
+            HOUSE_BRAVERY: "HypeSquad Bravery",
+            HOUSE_BRILLIANCE: "HypeSquad Brilliance",
+            HYPESQUAD_EVENTS: "HypeSquad Events",
+            EARLY_VERIFIED_BOT_DEVELOPER: "Early Verified Bot Developer",
+            PARTNERED_SERVER_OWNER: "Partnered Server Owner",
+            DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
+            VERIFIED_BOT: "Verified Bot",
+            TEAM_USER: "Team User",
+        }
+        const data: string[] = []
+
+        Object.entries(badges).forEach(([badge, value]) => 
+            UserFlags.FLAGS[badge as UserFlagsString] ? data.push(value) : false)
+
+        return data;
     }
 }
