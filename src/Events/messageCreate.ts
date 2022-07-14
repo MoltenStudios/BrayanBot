@@ -25,7 +25,8 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
 
         if(cmd.commandData.Permission && !Utils.hasPermission(cmd.commandData.Permission, message.member!)) {
             return message.reply(Utils.setupMessage({
-                configPath: bot.configs.lang?.Miscellaneous.InvalidPermissions!
+                configPath: bot.configs.lang?.Miscellaneous.InvalidPermissions!,
+                variables: Utils.userVariables(message.member!)
             }))
         }
 

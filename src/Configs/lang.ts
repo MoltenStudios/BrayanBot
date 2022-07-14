@@ -36,6 +36,8 @@ const defaultConfig: LangType = {
                 Author: "{brand-name} • Invalid Permissions",
                 Description: "> You don't have enough permission to execute this function.",
                 AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
                 Timestamp: true
             }]
         }

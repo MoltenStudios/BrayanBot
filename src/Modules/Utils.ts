@@ -1,4 +1,5 @@
 import { Guild, GuildMember, Role, UserFlags, UserFlagsString } from "discord.js";
+import Variables from "./Variables"
 import { setupMessage } from "./Utils/setupMessage";
 import chalk from "chalk";
 
@@ -11,6 +12,11 @@ export default class Utils {
     }
 
     static setupMessage = setupMessage;
+    static userVariables = Variables.userVariables;
+    static roleVariables = Variables.roleVariables;
+    static guildVariables = Variables.guildVariables;
+    static memberVariables = Variables.memberVariables;
+    static channelVariables = Variables.channelVariables;
 
     static getRandom(array: any[]) {
         return array[Math.floor(Math.random() * array.length)];
