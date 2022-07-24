@@ -49,7 +49,6 @@ module.exports = (settings) => {
         Embeds = Utils.paginateArray(Embeds, 10, 1);
     }
 
-    if (Components && typeof Components == "object" && !Array.isArray(Components)) Components = [Components];
     if (Embeds && typeof Embeds == "object" && !Array.isArray(Embeds)) Embeds = [Embeds];
     if (Files && typeof Files == "object" && !Array.isArray(Files)) Files = [Files];
 
