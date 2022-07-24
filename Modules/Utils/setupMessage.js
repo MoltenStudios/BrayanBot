@@ -38,7 +38,7 @@ module.exports = (settings) => {
         tts: !!configPath.TTS
     };
 
-    const Content = configPath.Content || undefined;
+    let Content = configPath.Content || undefined;
     let Components = configPath.Components || {};
     let Embeds = configPath.Embeds || [];
     let Files = configPath.Files || [];
