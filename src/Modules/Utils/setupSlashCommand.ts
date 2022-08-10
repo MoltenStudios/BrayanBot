@@ -1,3 +1,5 @@
+import { ApplicationCommandOptionType } from "discord.js"
+
 type SlashCommandOption = {
     Type?: string,
     Name?: string,
@@ -74,15 +76,15 @@ const setupSlashCommand = (settings: SetupSlashCommand) => {
                 required: !!option.Required
             }
 
-            if (["sub command", 1].includes(option.Type.toLowerCase())) parsedOption.type = 1
-            else if (["sub command group", 2].includes(option.Type.toLowerCase())) parsedOption.type = 2
-            else if (["string", 3].includes(option.Type.toLowerCase())) parsedOption.type = 3
-            else if (["integer", 4].includes(option.Type.toLowerCase())) parsedOption.type = 4
-            else if (["boolean", 5].includes(option.Type.toLowerCase())) parsedOption.type = 5
-            else if (["user", 6].includes(option.Type.toLowerCase())) parsedOption.type = 6
-            else if (["channel", 7].includes(option.Type.toLowerCase())) parsedOption.type = 7
-            else if (["role", 8].includes(option.Type.toLowerCase())) parsedOption.type = 8
-            else if (["mentionable", 9].includes(option.Type.toLowerCase())) parsedOption.type = 9
+            if (["sub command", 1].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Subcommand
+            else if (["sub command group", 2].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.SubcommandGroup
+            else if (["string", 3].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.String
+            else if (["integer", 4].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Integer
+            else if (["boolean", 5].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Boolean
+            else if (["user", 6].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.User
+            else if (["channel", 7].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Channel
+            else if (["role", 8].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Role
+            else if (["mentionable", 9].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Mentionable
             else throw new Error(`Option Type ${option.Type} is not a valid option type`);
 
             if([1, 2].includes(parsedOption.type)) {

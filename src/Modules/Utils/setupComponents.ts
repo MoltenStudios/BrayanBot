@@ -1,5 +1,5 @@
 import Utils from '../Utils';
-import { MessageActionRow, MessageActionRowComponentResolvable, MessageButton, MessageButtonStyleResolvable, MessageSelectMenu } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
 
 type Component = {
     Type: string,
@@ -7,7 +7,7 @@ type Component = {
     Disabled?: boolean,
 
     // Button
-    Style?: string,
+    Style?: string | ButtonStyle,
     Label?: string,
     Emoji?: string,
     Link?: string,
@@ -44,16 +44,16 @@ type Settings = {
 /**
  * Create message components from given settings.
  * @param settings Settings with configPath and variables to create message components
- * @returns {MessageActionRow[]}
+ * @returns {ActionRowBuilder[]}
  */
-const setupComponents = (settings: Settings): MessageActionRow[] => {
+const setupComponents = (settings: Settings): ActionRowBuilder[] => {
     const configPath = settings.configPath;
     const variables = settings.variables;
-    const components: MessageActionRow[] = [];
+    const components: ActionRowBuilder[] = [];
 
-    const rows: MessageActionRow[] = [ 
-        new MessageActionRow(), new MessageActionRow(), 
-        new MessageActionRow(), new MessageActionRow(), new MessageActionRow() 
+    const rows: ActionRowBuilder[] = [ 
+        new ActionRowBuilder(), new ActionRowBuilder(), 
+        new ActionRowBuilder(), new ActionRowBuilder(), new ActionRowBuilder() 
     ];
     
     for (let [i, value] of Object.entries(configPath)) {
@@ -77,20 +77,20 @@ const setupComponents = (settings: Settings): MessageActionRow[] => {
                         if(Link && typeof Link === "string") Link = Utils.applyVariables(Link, variables);
                     }
 
-                    if(Style && ["blurple", "green", "red", "grey", "url", "link"].includes(Style.toLowerCase())) {
+                    if(Style && typeof Style == "string" && ["blurple", "green", "red", "grey", "url", "link"].includes(Style.toLowerCase())) {
                         switch(Style.toLowerCase()) {
-                            case "url":     case "link":        Style = "LINK"; break;
-                            case "red":     case "danger":      Style = "DANGER"; break;
-                            case "green":   case "success":     Style = "SUCCESS"; break;
-                            case "grey":    case "secondary":   Style = "SECONDARY"; break;
-                            case "blurple": case "primary":     Style = "PRIMARY"; break;
-                            default: Link ? Style = "Link" : Style = "PRIMARY"; break;
+                            case "url":     case "link":        Style = ButtonStyle.Link; break;
+                            case "red":     case "danger":      Style = ButtonStyle.Danger; break;
+                            case "green":   case "success":     Style = ButtonStyle.Success; break;
+                            case "grey":    case "secondary":   Style = ButtonStyle.Secondary; break;
+                            case "blurple": case "primary":     Style = ButtonStyle.Primary; break;
+                            default: Link ? Style = ButtonStyle.Link : Style = ButtonStyle.Primary; break;
                         }
                     }
 
-                    const Button = new MessageButton()
+                    const Button = new ButtonBuilder()
                     if(Link) {
-                        Button.setURL(Link).setStyle("LINK")
+                        Button.setURL(Link).setStyle(ButtonStyle.Link)
                         if(Label) Button.setLabel(Label);
                         if(Emoji) Button.setEmoji(Emoji);
                         if(Disabled) Button.setDisabled(Disabled);
@@ -99,10 +99,10 @@ const setupComponents = (settings: Settings): MessageActionRow[] => {
                         if(Label) Button.setLabel(Label);
                         if(Emoji) Button.setEmoji(Emoji);
                         if(Disabled) Button.setDisabled(Disabled);
-                        if(Style) Button.setStyle(Style as MessageButtonStyleResolvable);
+                        if(Style) Button.setStyle(Style as ButtonStyle);
                     }
 
-                    row.addComponents(Button as MessageActionRowComponentResolvable)
+                    row.addComponents(Button as ButtonBuilder);
                     break;
                 }
                 case "SelectMenu".toLowerCase(): {
@@ -116,7 +116,7 @@ const setupComponents = (settings: Settings): MessageActionRow[] => {
                             if(Placeholder && typeof Placeholder === "string") Placeholder = Utils.applyVariables(Placeholder, variables);
                         }
 
-                        const SelectMenu = new MessageSelectMenu()
+                        const SelectMenu = new SelectMenuBuilder()
                             .setCustomId(CustomID).setDisabled(Disabled)
                             .setMaxValues(MaxSelect).setMinValues(MinSelect)
 
@@ -152,7 +152,7 @@ const setupComponents = (settings: Settings): MessageActionRow[] => {
                             return data;
                         }))
 
-                        row.addComponents(SelectMenu as MessageActionRowComponentResolvable)
+                        row.addComponents(SelectMenu as SelectMenuBuilder)
                     }
 
                     break;

@@ -1,7 +1,7 @@
 import Utils from '../Utils';
 import { SetupEmbed, setupEmbed } from './setupEmbed';
 import { SetupComponents, setupComponents } from './setupComponents';
-import { MessageActionRow, MessageAttachment, MessageEmbed } from 'discord.js';
+import { ActionRowBuilder, APIActionRowComponent, APIMessageActionRowComponent, AttachmentBuilder, EmbedBuilder, ReplyMessageOptions } from "discord.js";
 import { manager } from '../..';
 
 type SetupMessage = {
@@ -28,9 +28,9 @@ type Settings = {
 type Message = {
     tts?: boolean,
     content?: string,
-    embeds: MessageEmbed[],
-    files?: MessageAttachment[],
-    components?: MessageActionRow[]
+    embeds: EmbedBuilder[],
+    files?: AttachmentBuilder[],
+    components?: ActionRowBuilder[]
 }
 
 /**
@@ -38,10 +38,10 @@ type Message = {
  * @param settings Settings with configPath and variables to create embed
  * @returns {Message}
  */
-const setupMessage = (settings: Settings): Message => {
+const setupMessage = (settings: Settings): ReplyMessageOptions => {
     const configPath = settings.configPath;
     const variables = settings.variables ?? [];
-
+    
     variables.push(...[
         { searchFor: /{brand-color}/g, replaceWith: manager.configs.config?.Branding.Color || "#2f3136" },
         { searchFor: /{brand-name}/g, replaceWith: manager.configs.config?.Branding.Name || "BrayanBot" },
@@ -49,7 +49,7 @@ const setupMessage = (settings: Settings): Message => {
         { searchFor: /{brand-logo}/g, replaceWith: manager.configs.config?.Branding.Logo || "https://avatars.githubusercontent.com/u/99198112" },
     ])
 
-    const message: Message = {
+    const message: ReplyMessageOptions = {
         files: [], embeds: [],
         components: [],
         content: undefined,
@@ -85,11 +85,10 @@ const setupMessage = (settings: Settings): Message => {
     }
 
     if(Embeds && Array.isArray(Embeds)) {
-        Embeds.forEach(configPath => message.embeds.push(setupEmbed({ configPath, variables })))
+        Embeds.forEach(configPath => message.embeds?.push(setupEmbed({ configPath, variables })))
     }
 
     if(Components && Object.keys(Components)[0]) {
-        console.log(setupComponents({ configPath: Components, variables }));
         message.components = setupComponents({ configPath: Components, variables });
     }
 
@@ -109,7 +108,7 @@ const setupMessage = (settings: Settings): Message => {
             }
             
             if(FilePath) {
-                const attachment = new MessageAttachment(FilePath);
+                const attachment = new AttachmentBuilder(FilePath);
                 if(FileName) attachment.setName(FileName);
                 if(FileSpoiler) attachment.setSpoiler(true);
                 if(FileDescription) attachment.setDescription(FileDescription);

@@ -1,5 +1,5 @@
 import Utils from '../Utils';
-import Discord, { ColorResolvable, MessageEmbed } from 'discord.js';
+import { ColorResolvable, EmbedBuilder } from 'discord.js';
 import { manager } from '../..';
 
 type SetupEmbed = {
@@ -34,9 +34,9 @@ type Settings = {
 /**
  * Create an Embed from given settings.
  * @param settings Settings with configPath and variables to create embed
- * @returns {MessageEmbed}
+ * @returns {EmbedBuilder}
  */
-const setupEmbed = (settings: Settings): MessageEmbed => {
+const setupEmbed = (settings: Settings): EmbedBuilder => {
     const configPath = settings.configPath;
     const variables = settings.variables;
 
@@ -95,7 +95,7 @@ const setupEmbed = (settings: Settings): MessageEmbed => {
     if (!Author && !AuthorIcon && !AuthorURL && !URL && !Title && !Description && !Footer && !FooterIcon &&
         !Thumbnail && !Image && !Color && !Timestamp && !Fields) throw new Error("No Embed Properties were found.")
 
-    const Embed = new MessageEmbed();
+    const Embed = new EmbedBuilder();
 
     if (Title) Embed.setTitle(Title as string);
     if (Description) Embed.setDescription(Description as string);
@@ -123,11 +123,12 @@ const setupEmbed = (settings: Settings): MessageEmbed => {
 
     if (Array.isArray(Fields) && Fields.length > 0) {
         for (let y = 0; y < Fields.length; y++) {
-            Embed.addField(
-                Fields[y].Name as string,
-                Fields[y].Value as string,
-                !!Fields[y].Inline
-            );
+            if(Fields[y].Name && Fields[y].Value) 
+                Embed.addFields({
+                    name: Fields[y].Name as string,
+                    value: Fields[y].Value as string,
+                    inline: !!Fields[y].Inline
+                });
         }
     }
 
