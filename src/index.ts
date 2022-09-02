@@ -1,13 +1,23 @@
 import { BrayanBot } from "./Modules/Structures/BrayanBot";
 import consoleStamp from "console-stamp";
-import { IntentsBitField } from "discord.js";
+import { GatewayIntentBits } from "discord.js";
 import chalk from "chalk";
 import path from "path";
 
 consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
 const manager: BrayanBot = new BrayanBot({
-    intents: new IntentsBitField(32767),
+    intents: [
+        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers,
+        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks,
+        GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping,
+        GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildScheduledEvents
+    ],
     failIfNotExists: false,
 }, {
     commandDir: path.join(__dirname, "Commands"),
