@@ -61,16 +61,6 @@ const setupMessage = (settings: Settings): ReplyMessageOptions => {
     let Components = configPath.Components || {};
     let Content = configPath.Content || undefined;
 
-    if(Embeds.length > 10) {
-        Embeds = Utils.paginateArray(Embeds, 10, 1)!;   
-    }
-
-    if(Object.keys(Components).length) {
-        if(!Content || !Embeds) {
-            return Utils.logger.error("Content or Embeds are required to use Components in message.")!;
-        }
-    }
-
     if(Content) {
         if(Array.isArray(Content)) Content = Utils.getRandom(Content);
 
@@ -89,8 +79,8 @@ const setupMessage = (settings: Settings): ReplyMessageOptions => {
     }
 
     if(Components && Object.keys(Components)[0]) {
-        console.log(setupComponents({ configPath: Components, variables }));
-        // message.components = 
+        // @ts-ignore: Wierd Discord.js code that doesn't allow me to use the correct type
+        message.components = setupComponents({ configPath: Components, variables })
     }
 
     if(Files) {

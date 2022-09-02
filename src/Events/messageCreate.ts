@@ -8,7 +8,9 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
 
     let prefixUsed: string | undefined;
     if(message.content && Array.isArray(config?.Settings.Prefix)) {
-        prefixUsed = config?.Settings.Prefix.find(prefix => message.content.toLowerCase().startsWith(prefix.toLowerCase())) as string;
+        prefixUsed = config?.Settings.Prefix.find(prefix => {
+            return message.content.toLowerCase().startsWith(prefix.toLowerCase())
+        }) as string;
     } else if(message.content && typeof config?.Settings.Prefix == "string") {
         prefixUsed = config?.Settings.Prefix;
     }
