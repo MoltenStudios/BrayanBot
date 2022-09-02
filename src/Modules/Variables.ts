@@ -21,7 +21,7 @@ export default class Variables {
             replaceWith: "<@" + user.id + ">",
         }, {
             searchFor: new RegExp(`{${prefix}-pfp}`, "g"),
-            replaceWith: user.user.displayAvatarURL({ dynamic: true }),
+            replaceWith: user.user.displayAvatarURL({ forceStatic: false }),
         }, {
             searchFor: new RegExp(`{${prefix}-createdate}`, "g"),
             replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:D>`,
@@ -52,7 +52,7 @@ export default class Variables {
             replaceWith: "<@" + member.id + ">",
         }, {
             searchFor: new RegExp(`{${prefix}-pfp}`, "g"),
-            replaceWith: member.displayAvatarURL({ dynamic: true }),
+            replaceWith: member.displayAvatarURL({ forceStatic: false }),
         }, {
             searchFor: new RegExp(`{${prefix}-createdate}`, "g"),
             replaceWith: `<t:${Math.floor(member.user.createdTimestamp / 1000)}:D>`,
@@ -128,7 +128,7 @@ export default class Variables {
             replaceWith: "<@" + bot.user?.id + ">",
         }, {
             searchFor: new RegExp(`{${prefix}-pfp}`, "g"),
-            replaceWith: bot.user?.displayAvatarURL({ dynamic: true }) ?? "https://avatars.githubusercontent.com/u/99198112",
+            replaceWith: bot.user?.displayAvatarURL({ forceStatic: false }) ?? "https://avatars.githubusercontent.com/u/99198112",
         }]
     }
 
@@ -141,7 +141,7 @@ export default class Variables {
             replaceWith: guild.name,
         }, {
             searchFor: new RegExp(`{${prefix}-icon}`, "g"),
-            replaceWith: guild.iconURL({ dynamic: true }),
+            replaceWith: guild.iconURL({ forceStatic: false }),
         }, {
             searchFor: new RegExp(`{${prefix}-boosts}`),
             replaceWith: guild.premiumSubscriptionCount,

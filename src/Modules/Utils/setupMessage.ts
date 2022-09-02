@@ -89,7 +89,8 @@ const setupMessage = (settings: Settings): ReplyMessageOptions => {
     }
 
     if(Components && Object.keys(Components)[0]) {
-        message.components = setupComponents({ configPath: Components, variables });
+        console.log(setupComponents({ configPath: Components, variables }));
+        // message.components = 
     }
 
     if(Files) {

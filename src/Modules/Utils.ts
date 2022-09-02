@@ -98,7 +98,7 @@ export default class Utils {
         const data: string[] = []
 
         Object.entries(badges).forEach(([badge, value]) => 
-            UserFlags.FLAGS[badge as UserFlagsString] ? data.push(value) : false)
+            UserFlags[badge as UserFlagsString] ? data.push(value) : false)
 
         return data;
     }
