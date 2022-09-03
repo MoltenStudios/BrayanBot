@@ -27,33 +27,7 @@ const defaultConfig: LangType = {
                 }],
                 AuthorIcon: "{brand-logo}",
                 Timestamp: true
-            }],
-            Components: {
-                "1": [{
-                    Type: "Button",
-                    CustomID: "lol",
-                    Emoji: "🤖",
-                    Label: "lol",
-                    Style: "red"
-                }, {
-                    Type: "Button",
-                    Style: "Link",
-                    Link: "https://discord.js.org",
-                    Label: "discord.js",
-                    Emoji: "🔗"
-                }],
-                "2": [{
-                    Type: "Select Menu",
-                    Placeholder: "Select a server",
-                    Options: [{
-                        Value: "1",
-                        Label: "1",
-                        Default: true,
-                        Description: "lololol",
-                        Emoji: "🤖"
-                    }]
-                }]
-            }
+            }]
         }
     },
     Miscellaneous: {

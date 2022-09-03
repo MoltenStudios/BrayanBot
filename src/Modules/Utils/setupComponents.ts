@@ -63,7 +63,7 @@ const setupComponents = (settings: Settings): ActionRowBuilder[] => {
             const CustomID = component.CustomID || null;
             const Disabled = component.Disabled || false;
 
-            if(CustomID) switch (Type?.toLowerCase()) {
+            switch (Type?.toLowerCase()) {
                 case "Button".toLowerCase(): {
                     let Style = component.Style || null;
                     let Label = component.Label || null;
@@ -105,13 +105,14 @@ const setupComponents = (settings: Settings): ActionRowBuilder[] => {
                     row.addComponents(Button as ButtonBuilder);
                     break;
                 }
+                case "Select Menu".toLowerCase():
                 case "SelectMenu".toLowerCase(): {
                     let Placeholder = component.Placeholder || null;
                     let MinSelect = component.MinSelect || 0;
-                    let MaxSelect = component.MaxSelect || 0;
+                    let MaxSelect = component.MaxSelect || 1;
                     let Options = component.Options || [];
 
-                    if(Options[0]) {
+                    if(Options[0] && CustomID) {
                         if(variables && variables[0]) {
                             if(Placeholder && typeof Placeholder === "string") Placeholder = Utils.applyVariables(Placeholder, variables);
                         }
