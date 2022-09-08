@@ -27,14 +27,14 @@ interface CommandInterface {
             Data: Object
         }
     };
-    runLegacy?: (
+    LegacyRun?: (
         manager: BrayanBot, 
         message: Message, 
         args: string[], 
         prefixUsed: string, 
         commandData: Object
     ) => any;
-    runSlash?: (
+    InteractionRun?: (
         manager: BrayanBot, 
         interaction: CommandInteraction, 
         options: Object[], 

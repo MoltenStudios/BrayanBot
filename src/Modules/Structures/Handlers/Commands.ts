@@ -38,14 +38,14 @@ export class CommandHandler {
 
 export class Command {
     commandData: CommandData;
-    runLegacy: ((
+    LegacyRun: ((
         manager: BrayanBot, 
         message: Message, 
         args: string[], 
         prefixUsed: string, 
         commandData: Object
     ) => any) | undefined;
-    runSlash: ((
+    InteractionRun: ((
         manager: BrayanBot, 
         interaction: CommandInteraction, 
         options: Object[], 
@@ -55,9 +55,9 @@ export class Command {
     constructor(command: CommandInterface) {
         this.commandData = command.commandData;
 
-        if(command.runLegacy && typeof command.runLegacy == "function") 
-            this.runLegacy = command.runLegacy;
-        if(command.runSlash && typeof command.runSlash == "function") 
-            this.runSlash = command.runSlash;
+        if(command.LegacyRun && typeof command.LegacyRun == "function") 
+            this.LegacyRun = command.LegacyRun;
+        if(command.InteractionRun && typeof command.InteractionRun == "function") 
+            this.InteractionRun = command.InteractionRun;
     }
 }
