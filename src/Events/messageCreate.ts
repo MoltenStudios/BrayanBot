@@ -23,7 +23,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
         const args = msg.slice(1);
 
         const cmd = bot.commands.get(command);
-        if(cmd) {
+        if(cmd && cmd.commandData.Enabled == true) {
             if(cmd.commandData.Permission && !Utils.hasPermission(cmd.commandData.Permission, message.member!)) {
                 return message.reply(Utils.setupMessage({
                     configPath: lang?.Miscellaneous.InvalidPermissions!,
