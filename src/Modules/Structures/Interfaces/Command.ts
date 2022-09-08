@@ -2,6 +2,7 @@ import { Message, CommandInteraction } from "discord.js";
 import { BrayanBot } from "../BrayanBot";
 
 type CommandData = {
+    Enabled?: boolean
     Name: string
     Usage?: string
     Cooldown?: number
@@ -15,18 +16,7 @@ type CommandData = {
 }
 
 interface CommandInterface {
-    commandData: {
-        Name: string
-        Usage?: string
-        Cooldown?: number
-        Permission?: string[]
-        Description?: string
-        DeleteCommand?: boolean
-        SlashCommand: {
-            Enabled: boolean,
-            Data: Object
-        }
-    };
+    commandData: CommandData;
     LegacyRun?: (
         manager: BrayanBot, 
         message: Message, 

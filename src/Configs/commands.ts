@@ -11,6 +11,7 @@ type CommandsType = {
 const defaultConfig: CommandsType = {
     General: {
         Ping: {
+            Enabled: true,
             Name: "ping",
             Usage: 'ping',
             Cooldown: 0,
