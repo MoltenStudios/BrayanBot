@@ -3,6 +3,7 @@ import { SetupMessage } from "../Modules/Utils/setupMessage";
 import path from "path";
 
 type LangType = {
+    TagEmbed: SetupMessage,
     General: {
         Ping: SetupMessage
     },
@@ -12,6 +13,28 @@ type LangType = {
 }
 
 const defaultConfig: LangType = {
+    TagEmbed: {
+        Embeds: [{
+            Author: "{brand-name}",
+            AuthorIcon: "{brand-logo}",
+            Description: "> [**BrayanBot's Website**]({brand-link})",
+            Fields: [{
+                Name: "📖 Open Source",
+                Value: "> This bot's base is open source, you can find the source code [here](https://github.com/brayanbot/brayanbot)."
+            }, {
+                Name: "⚡ Blazing fast!",
+                Value: "> No unnecessary packages or dependencies! Doesn't get any more lightweight."
+            }, {
+                Name: "⚙ Easy to Customize",
+                Value: "> Every message is customizable. Change them all you want!"
+            }, {
+                Name: "💻 Cross-Platform",
+                Value: "> ARM, Linux, MacOS, Windows... Inside Docker or on Pterodactyl. We support all of them!"
+            }],
+            Footer: "{user-tag}",
+            Timestamp: true
+        }]
+    },
     General: {
         Ping: {
             Embeds: [{

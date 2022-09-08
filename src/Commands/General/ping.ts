@@ -5,7 +5,7 @@ import ms from "ms";
 
 export default new Command({
     commandData: manager.configs.commands?.General.Ping!,
-    runLegacy: async (manager, message, args, prefixUsed, commandData) => {
+    LegacyRun: async (manager, message, args, prefixUsed, commandData) => {
         const ping = Math.round((Date.now() - message.createdTimestamp) / 1000);
         const apiPing = Math.round(manager.ws.ping);
 
@@ -17,7 +17,7 @@ export default new Command({
             ]
         }));
     },
-    runSlash: async (manager, interaction, options, commandData) => {
+    InteractionRun: async (manager, interaction, options, commandData) => {
         const ping = Date.now() - interaction.createdTimestamp;
         const apiPing = Math.round(interaction.client.ws.ping);
         interaction.reply(`Pong! - Bot Latency: ${ping}ms - API Latency: ${apiPing}ms - Round Trip: ${ping + apiPing}ms`);

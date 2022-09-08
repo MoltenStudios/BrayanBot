@@ -9,6 +9,7 @@ type ConfigType = {
         IgnoreBots: boolean;
         DevMode: boolean;
         Verbose: boolean;
+        TagForInfo: boolean;
     },
     Branding: {
         Name: string;
@@ -35,6 +36,8 @@ const defaultConfig = {
         Prefix: ["-"],
         "~0": "Weather bots can use commands or not.",
         IgnoreBots: false,
+        TagForInfo: true,
+        "~1": "Development options",
         DevMode: false,
         Verbose: false,
     },
