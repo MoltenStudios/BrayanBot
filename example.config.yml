@@ -4,7 +4,7 @@ Settings:
   Storage: "database.db"
   # Enabling DevMode will reset all addon configurations.
   DevMode: true 
-  # Enabling DbReady will show tabel ready messages on startup.
+  # Enabling DbReady will show table ready messages on startup.
   DbReady: true
   # Enabling DelError will delete errors.txt on startup.
   DelError: true
