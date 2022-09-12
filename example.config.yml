@@ -1,5 +1,5 @@
 Settings:
-  Token: "!"
+  Token: "BOT-TOKEN"
   Prefix: "-"
   Storage: "database.db"
   # Enabling DevMode will reset all addon configurations.
@@ -7,7 +7,7 @@ Settings:
   # Enabling DbReady will show table ready messages on startup.
   DbReady: true
   # Enabling DelError will delete errors.txt on startup.
-  DelError: true
+  DelError: false
   # Verbose mode enables additional debug messages to be shown on the startup log.
   Verbose: false
 
