@@ -58,6 +58,10 @@ installNodeModules().then(async () => {
     for (let index = 0; index < handlers.length; index++)
         await require(`./Modules/Handlers/${handlers[index]}`).init()
 
+    if (client.config.Settings.DelError) {
+        if (fs.existsSync("errors.txt")) fs.unlinkSync("errors.txt");
+    }
+
     if (client.config.Settings.Token)
         client.login(client.config.Settings.Token);
     else return Utils.logError("An invalid token was provided.");

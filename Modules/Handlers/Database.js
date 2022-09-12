@@ -43,8 +43,8 @@ module.exports = {
         } else if (db && tableName && values) {
             try {
                 db.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${values})`).run();
-                if (config.Settings.DevMode)
-                    Utils.logInfo(`${chalk.bold(tableName)} Table Ready. (${chalk.bold(db.name.replace("Database/", ""))})`);
+                if (config.Settings.DbReady)
+                    Utils.logTable(`${chalk.bold(tableName)} Table Ready. (${chalk.bold(db.name.replace("Database/", ""))})`);
             } catch (err) {
                 Utils.logWarning(`An error occured while setting up database. (${tableName})`);
                 reject(err);
