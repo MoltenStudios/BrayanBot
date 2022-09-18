@@ -3,9 +3,13 @@ Settings:
   Prefix: "-"
   Storage: "database.db"
   # Enabling DevMode will reset all addon configurations.
-  DevMode: false 
+  DevMode: false
+  # Enabling DbReady will show table ready messages on startup.
+  DbReady: true
+  # Enabling DelError will delete errors.txt on startup.
+  DelError: false
   # Verbose mode enables additional debug messages to be shown on the startup log.
-  Verbose: true 
+  Verbose: true
 
 Branding:
   Color: "#2f3136"

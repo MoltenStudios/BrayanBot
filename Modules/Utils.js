@@ -12,6 +12,7 @@ module.exports = {
     logWarning: (...text) => console.log(chalk.hex("#edd100").bold("[WARN] ") + text),
     logError: (...text) => console.log(chalk.hex("#ff0800").bold("[ERROR] ") + text),
     logInfo: (...text) => console.log(chalk.hex("#57ff6b").bold("[INFO] ") + text),
+    logTable: (...text) => console.log(chalk.hex("#57ff6b").bold("[TABLE] ") + text),
     logDebug: (...text) => console.log(chalk.hex("#ffff00").bold("[DEBUG] ") + text),
     /** @param {String} text @returns {String}*/
     formatFirstLetter: (text) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`,
