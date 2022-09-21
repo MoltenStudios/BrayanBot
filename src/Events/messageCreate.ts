@@ -16,7 +16,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
     }
     
     if(prefixUsed) {
-        if(!config?.Settings.IgnoreBots && !message.author.bot) return;
+        if(!config?.Settings.IgnoreBots && message.author.bot) return;
         
         const msg = message.content.split(" ");
         const command = msg[0].toLowerCase().replace(prefixUsed, "");
