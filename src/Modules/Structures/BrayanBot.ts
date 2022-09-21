@@ -1,5 +1,6 @@
-import { Collection, Client, ClientOptions } from "discord.js";
+import { Collection, Client, ClientOptions, REST } from "discord.js";
 import { Command, CommandHandler } from "./Handlers/Commands";
+import { RawSlashCommand } from "../Utils/setupSlashCommand";
 import { CommandsType } from "../../Configs/commands";
 import { ConfigHandler } from "./Handlers/Config";
 import { ConfigType } from "../../Configs/config";
@@ -36,6 +37,7 @@ type Configs = {
 
 export class BrayanBot extends Client {
     public commands: Collection<string, Command> = new Collection();
+    public slashCommands: Collection<string, RawSlashCommand> = new Collection();
     public events: { name: string, handler: Function }[] = [];
     public managerOptions: ManagerOptions;
     public handlers: Handlers = {};
@@ -66,6 +68,9 @@ export class BrayanBot extends Client {
         this.handlers.ConfigHandler = await new ConfigHandler(this, this.managerOptions.configDir).initialize();
         this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
         this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
+
+        if(this.configs.config?.Settings.Token)
+            this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
 
         return this;
     }

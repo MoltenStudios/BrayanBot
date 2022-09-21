@@ -3,6 +3,8 @@ import { CommandInteraction, Message } from "discord.js";
 import { readdirSync, lstatSync } from "fs";
 import { BrayanBot } from "../BrayanBot";
 import path from "path";
+import { manager } from "../../..";
+import Utils from "../../Utils";
 
 export class CommandHandler {
     public manager: BrayanBot;
@@ -59,5 +61,10 @@ export class Command {
             this.LegacyRun = command.LegacyRun;
         if(command.InteractionRun && typeof command.InteractionRun == "function") 
             this.InteractionRun = command.InteractionRun;
+
+        if(this.commandData.SlashCommand?.Enabled && this.commandData.SlashCommand.Data.Name) {
+            const parsedSlashCommand = Utils.setupSlashCommand(this.commandData.SlashCommand.Data);
+            manager.slashCommands.set(this.commandData.SlashCommand.Data.Name, parsedSlashCommand);
+        }
     }
 }

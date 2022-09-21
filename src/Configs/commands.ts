@@ -19,8 +19,11 @@ const defaultConfig: CommandsType = {
             Description: "KOOL",
             DeleteCommand: false,
             SlashCommand: {
-                Enabled: false,
-                Data: {}
+                Enabled: true,
+                Data: {
+                    Name: "ping",
+                    Description: "KOOL",
+                }
             }
         }
     }

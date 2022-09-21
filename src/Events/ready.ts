@@ -2,8 +2,9 @@ import { EventListener } from "../Modules/Structures/Handlers/Events";
 import { BrayanBot } from "../Modules/Structures/BrayanBot";
 import fastFolderSize from "fast-folder-size/sync";
 import chalk from "chalk";
+import Utils from "../Modules/Utils";
 
-export default new EventListener("ready", (bot: BrayanBot) => {
+export default new EventListener("ready", async (bot: BrayanBot) => {
     const { version } = require("../../package.json");
     const { debug, info, warn, error } = bot.logger;
     const guild = bot.guilds.cache.first();
@@ -27,6 +28,8 @@ export default new EventListener("ready", (bot: BrayanBot) => {
         chalk.whiteBright(`               ${chalk.blueBright.underline(`https://brayanbot.dev/discord`)}  `),
         chalk.whiteBright(`•«                                                          »•`),
     ].forEach((line) => info(line))
+    
+    await Utils.loadCommands(bot);
     
     if(process.argv.includes("--debug")) {
         debug(`Currently using ${chalk.bold(`${((fastFolderSize(".") || 0) / 1024 / 1024).toFixed(2)} MB`)} Storage.`);

@@ -1,6 +1,7 @@
-import { manager } from "../..";
 import { Command } from "../../Modules/Structures/Handlers/Commands";
+import { InteractionReplyOptions } from "discord.js";
 import Utils from "../../Modules/Utils";
+import { manager } from "../..";
 import ms from "ms";
 
 export default new Command({
@@ -20,6 +21,13 @@ export default new Command({
     InteractionRun: async (manager, interaction, options, commandData) => {
         const ping = Date.now() - interaction.createdTimestamp;
         const apiPing = Math.round(interaction.client.ws.ping);
-        interaction.reply(`Pong! - Bot Latency: ${ping}ms - API Latency: ${apiPing}ms - Round Trip: ${ping + apiPing}ms`);
+        
+        interaction.reply(Utils.setupMessage({
+            configPath: manager.configs.lang?.General.Ping!,
+            variables: [
+                { searchFor: /{ping}/g, replaceWith: ms(ping, { long: true }) },
+                { searchFor: /{apiPing}/g, replaceWith: ms(apiPing, { long: true }) },
+            ]
+        }) as InteractionReplyOptions);
     },
 });

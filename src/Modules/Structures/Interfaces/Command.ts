@@ -1,5 +1,11 @@
+import { SetupSlashCommand } from "../../Utils/setupSlashCommand";
 import { Message, CommandInteraction } from "discord.js";
 import { BrayanBot } from "../BrayanBot";
+
+type SlashCommandData = {
+    Name: string,
+    Description: string,
+}
 
 type CommandData = {
     Enabled?: boolean
@@ -11,7 +17,7 @@ type CommandData = {
     DeleteCommand?: boolean
     SlashCommand: {
         Enabled: boolean,
-        Data: Object
+        Data: SetupSlashCommand
     }
 }
 
@@ -32,4 +38,4 @@ interface CommandInterface {
     ) => any;
 }
 
-export { CommandData, CommandInterface }
+export { CommandData, CommandInterface, SlashCommandData }

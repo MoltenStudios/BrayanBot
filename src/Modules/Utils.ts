@@ -1,7 +1,9 @@
-import { Guild, GuildMember, Role, UserFlags, UserFlagsString } from "discord.js";
+import chalk from "chalk";
 import Variables from "./Variables"
 import { setupMessage } from "./Utils/setupMessage";
-import chalk from "chalk";
+import { loadCommands } from "./Utils/loadCommands";
+import { setupSlashCommand } from "./Utils/setupSlashCommand";
+import { Guild, GuildMember, Role, UserFlags, UserFlagsString } from "discord.js";
 
 export default class Utils {
     static logger = {
@@ -11,7 +13,9 @@ export default class Utils {
         error: (...text: any[]) => console.log(chalk.redBright.bold("[ERROR]"), ...text),
     }
 
+    static loadCommands = loadCommands;
     static setupMessage = setupMessage;
+    static setupSlashCommand = setupSlashCommand;
     static userVariables = Variables.userVariables;
     static roleVariables = Variables.roleVariables;
     static guildVariables = Variables.guildVariables;
