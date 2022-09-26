@@ -1,4 +1,4 @@
-import { Message, CommandInteraction, PermissionResolvable } from "discord.js";
+import { Message, ChatInputCommandInteraction, PermissionResolvable } from "discord.js";
 import { SetupSlashCommand } from "../../Utils/setupSlashCommand";
 import { BrayanBot } from "../BrayanBot";
 
@@ -42,7 +42,7 @@ interface CommandInterface {
     ) => any;
     InteractionRun?: (
         manager: BrayanBot, 
-        interaction: CommandInteraction, 
+        interaction: ChatInputCommandInteraction, 
         commandData: Object
     ) => any;
 }

@@ -1,10 +1,10 @@
 import { CommandData, CommandInterface, CommandConfig } from "../Interfaces/Command";
-import { CommandInteraction, Message } from "discord.js";
+import { ChatInputCommandInteraction, Message } from "discord.js";
 import { readdirSync, lstatSync } from "fs";
 import { BrayanBot } from "../BrayanBot";
-import path from "path";
 import { manager } from "../../..";
 import Utils from "../../Utils";
+import path from "path";
 
 export class CommandHandler {
     public manager: BrayanBot;
@@ -50,7 +50,7 @@ export class Command {
     ) => any) | undefined;
     InteractionRun: ((
         manager: BrayanBot, 
-        interaction: CommandInteraction, 
+        interaction: ChatInputCommandInteraction, 
         commandData: Object
     ) => any) | undefined;
 
