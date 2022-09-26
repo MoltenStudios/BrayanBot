@@ -1,11 +1,19 @@
 import { Command } from "../../Modules/Structures/Handlers/Commands";
 import { InteractionReplyOptions } from "discord.js";
 import Utils from "../../Modules/Utils";
-import { manager } from "../..";
+import { manager } from "../../index";
 import ms from "ms";
 
 export default new Command({
     commandData: manager.configs.commands?.General.Ping!,
+    commandConfig: {
+        dmOnly: true,
+        guildOnly: false,
+        requiredPermissions: {
+            user: [],
+            bot: []
+        }
+    },
     LegacyRun: async (manager, message, args, prefixUsed, commandData) => {
         const ping = Math.round((Date.now() - message.createdTimestamp) / 1000);
         const apiPing = Math.round(manager.ws.ping);

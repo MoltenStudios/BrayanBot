@@ -8,7 +8,11 @@ type LangType = {
         Ping: SetupMessage
     },
     Miscellaneous: {
-        InvalidPermissions: SetupMessage
+        InvalidRolePermissions: SetupMessage,
+        InvalidBotPermissions: SetupMessage,
+        InvalidUserPermissions: SetupMessage,
+        DMOnly: SetupMessage,
+        GuildOnly: SetupMessage,
     }
 }
 
@@ -54,10 +58,55 @@ const defaultConfig: LangType = {
         }
     },
     Miscellaneous: {
-        InvalidPermissions: {
+        InvalidRolePermissions: {
+            Private: true,
             Embeds: [{
                 Author: "{brand-name} • Invalid Permissions",
-                Description: "> You don't have enough permission to execute this function.",
+                Description: "> You don't have enough role permission to execute this function.",
+                AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
+                Timestamp: true
+            }]
+        },
+        InvalidBotPermissions: {
+            Private: true,
+            Embeds: [{
+                Author: "{brand-name} • Invalid Bot Permissions",
+                Description: "> Bot does't have enough base permission to execute this function.",
+                AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
+                Timestamp: true
+            }]
+        },
+        InvalidUserPermissions: {
+            Private: true,
+            Embeds: [{
+                Author: "{brand-name} • Invalid Bot Permissions",
+                Description: "> You don't have enough base permission to execute this function.",
+                AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
+                Timestamp: true
+            }]
+        },
+        DMOnly: {
+            Private: true,
+            Embeds: [{
+                Author: "{brand-name} • Invalid Channel Type",
+                Description: "> This command can only be executed in Direct Messages.",
+                AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
+                Timestamp: true
+            }]
+        },
+        GuildOnly: {
+            Private: true,
+            Embeds: [{
+                Author: "{brand-name} • Invalid Channel Type",
+                Description: "> This command can only be executed a Guild.",
                 AuthorIcon: "{brand-logo}",
                 FooterIcon: "{user-pfp}",
                 Footer: "{user-tag}",

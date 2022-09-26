@@ -1,4 +1,4 @@
-import { CommandData, CommandInterface } from "../Interfaces/Command";
+import { CommandData, CommandInterface, CommandConfig } from "../Interfaces/Command";
 import { CommandInteraction, Message } from "discord.js";
 import { readdirSync, lstatSync } from "fs";
 import { BrayanBot } from "../BrayanBot";
@@ -40,6 +40,7 @@ export class CommandHandler {
 
 export class Command {
     commandData: CommandData;
+    commandConfig: CommandConfig;
     LegacyRun: ((
         manager: BrayanBot, 
         message: Message, 
@@ -56,7 +57,7 @@ export class Command {
 
     constructor(command: CommandInterface) {
         this.commandData = command.commandData;
-
+        this.commandConfig = command.commandConfig
         if(command.LegacyRun && typeof command.LegacyRun == "function") 
             this.LegacyRun = command.LegacyRun;
         if(command.InteractionRun && typeof command.InteractionRun == "function") 

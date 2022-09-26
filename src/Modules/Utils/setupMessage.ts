@@ -1,10 +1,11 @@
 import Utils from '../Utils';
 import { SetupEmbed, setupEmbed } from './setupEmbed';
 import { SetupComponents, setupComponents } from './setupComponents';
-import { ActionRowBuilder, APIActionRowComponent, APIMessageActionRowComponent, AttachmentBuilder, EmbedBuilder, ReplyMessageOptions } from "discord.js";
+import { ActionRowBuilder, AttachmentBuilder, EmbedBuilder, MessageReplyOptions } from "discord.js";
 import { manager } from '../..';
 
 type SetupMessage = {
+    Private?: boolean;
     Embeds?: SetupEmbed[],
     Content?: string | string[],
     Components?: SetupComponents,
@@ -38,7 +39,9 @@ type Message = {
  * @param settings Settings with configPath and variables to create embed
  * @returns {Message}
  */
-const setupMessage = (settings: Settings): ReplyMessageOptions => {
+const setupMessage = (settings: Settings): MessageReplyOptions & {
+    ephemeral?: boolean
+} => {
     const configPath = settings.configPath;
     const variables = settings.variables ?? [];
     
@@ -49,17 +52,21 @@ const setupMessage = (settings: Settings): ReplyMessageOptions => {
         { searchFor: /{brand-logo}/g, replaceWith: manager.configs.config?.Branding.Logo || "https://avatars.githubusercontent.com/u/99198112" },
     ])
 
-    const message: ReplyMessageOptions = {
+    const message: MessageReplyOptions & {
+        ephemeral?: boolean
+    } = {
         files: [], embeds: [],
         components: [],
         content: undefined,
-        tts: !!configPath.TTS
+        tts: !!configPath.TTS,
     };
 
     const Files = configPath.Files || [];
     let Embeds = configPath.Embeds || [];
     let Components = configPath.Components || {};
     let Content = configPath.Content || undefined;
+
+    if(configPath.Private) message.ephemeral = true;
 
     if(Content) {
         if(Array.isArray(Content)) Content = Utils.getRandom(Content);

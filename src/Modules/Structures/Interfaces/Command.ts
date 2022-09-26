@@ -1,10 +1,19 @@
+import { Message, CommandInteraction, PermissionResolvable } from "discord.js";
 import { SetupSlashCommand } from "../../Utils/setupSlashCommand";
-import { Message, CommandInteraction } from "discord.js";
 import { BrayanBot } from "../BrayanBot";
 
 type SlashCommandData = {
     Name: string,
     Description: string,
+}
+
+type CommandConfig = {
+    guildOnly: boolean;
+    dmOnly: boolean;
+    requiredPermissions: {
+        user: PermissionResolvable[],
+        bot: PermissionResolvable[]
+    }
 }
 
 type CommandData = {
@@ -23,6 +32,7 @@ type CommandData = {
 
 interface CommandInterface {
     commandData: CommandData;
+    commandConfig: CommandConfig;
     LegacyRun?: (
         manager: BrayanBot, 
         message: Message, 
@@ -38,4 +48,4 @@ interface CommandInterface {
     ) => any;
 }
 
-export { CommandData, CommandInterface, SlashCommandData }
+export { CommandData, CommandInterface, SlashCommandData, CommandConfig }
