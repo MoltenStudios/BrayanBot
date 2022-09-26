@@ -43,7 +43,6 @@ interface CommandInterface {
     InteractionRun?: (
         manager: BrayanBot, 
         interaction: CommandInteraction, 
-        options: Object[], 
         commandData: Object
     ) => any;
 }

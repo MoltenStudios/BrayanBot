@@ -55,7 +55,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
                 }) as InteractionReplyOptions)
             }
     
-            await cmd.InteractionRun?.call(this, bot, interaction, [{}], cmd);
+            await cmd.InteractionRun?.call(this, bot, interaction, cmd);
         }
     }
 })

@@ -1,9 +1,10 @@
 import Utils from '../Utils';
 import { BrayanBot } from '../Structures/BrayanBot';
-import { Routes } from 'discord.js';
+import { Collection, Routes } from 'discord.js';
 import chalk from 'chalk';
+import { RawSlashCommand } from './setupSlashCommand';
 
-const loadCommands = async (manager: BrayanBot, force = false) => {
+const loadCommands = async (manager: BrayanBot, force = false): Promise<Collection<string, RawSlashCommand>> => {
     const enabledCMDS = manager.commands.filter(cmd => cmd.commandData.SlashCommand.Enabled);
 
     const cmdsToRegister = force || process.argv.includes("--reset-slashCommands") 
@@ -23,6 +24,8 @@ const loadCommands = async (manager: BrayanBot, force = false) => {
             Utils.logger.info(`${chalk.bold(cmdsToRegister.size)} Slash Commands for guild ${chalk.bold(guild.name)} have been registered!`)
         }))
     }
+
+    return cmdsToRegister;
 }
 
 export { loadCommands }

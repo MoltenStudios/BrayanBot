@@ -26,7 +26,7 @@ export default new Command({
             ]
         }));
     },
-    InteractionRun: async (manager, interaction, options, commandData) => {
+    InteractionRun: async (manager, interaction, commandData) => {
         const ping = Date.now() - interaction.createdTimestamp;
         const apiPing = Math.round(interaction.client.ws.ping);
         

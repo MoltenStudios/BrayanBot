@@ -51,7 +51,6 @@ export class Command {
     InteractionRun: ((
         manager: BrayanBot, 
         interaction: CommandInteraction, 
-        options: Object[], 
         commandData: Object
     ) => any) | undefined;
 
