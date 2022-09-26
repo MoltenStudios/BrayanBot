@@ -13,7 +13,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
         if(cmd && cmd.commandData.Enabled == true) {
             if(cmd.commandConfig.dmOnly && interaction.channel?.type !== ChannelType.DM) {
                 return interaction.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.DMOnly!,
+                    configPath: lang.Miscellaneous.DMOnly,
                     variables: Utils.userVariables(interaction.member as GuildMember)
                 }) as InteractionReplyOptions)
             }
@@ -25,7 +25,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
                 ChannelType.AnnouncementThread
             ].includes(interaction.channel.type)) {
                 return interaction.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.GuildOnly!,
+                    configPath: lang.Miscellaneous.GuildOnly,
                     variables: Utils.userVariables(interaction.member as GuildMember)
                 }) as InteractionReplyOptions)
             }
@@ -33,7 +33,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
             if(cmd.commandConfig.requiredPermissions.user) {
                 if(!interaction.guild?.members.cache.get(interaction.user.id)?.permissions.has(cmd.commandConfig.requiredPermissions.user)) {
                     return interaction.reply(Utils.setupMessage({
-                        configPath: lang?.Miscellaneous.InvalidUserPermissions!,
+                        configPath: lang.Miscellaneous.InvalidUserPermissions,
                         variables: Utils.userVariables(interaction.member as GuildMember)
                     }) as InteractionReplyOptions)
                 }
@@ -42,7 +42,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
             if(cmd.commandConfig.requiredPermissions.bot) {
                 if(!interaction.guild?.members.me?.permissions.has(cmd.commandConfig.requiredPermissions.bot)) {
                     return interaction.reply(Utils.setupMessage({
-                        configPath: lang?.Miscellaneous.InvalidBotPermissions!,
+                        configPath: lang.Miscellaneous.InvalidBotPermissions,
                         variables: Utils.userVariables(interaction.member as GuildMember)
                     }) as InteractionReplyOptions)
                 }
@@ -50,7 +50,7 @@ export default new EventListener("interactionCreate", async (bot: BrayanBot, int
             
             if(cmd.commandData.Permission && !Utils.hasPermission(cmd.commandData.Permission, interaction.member as GuildMember)) {
                 return interaction.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.InvalidRolePermissions!,
+                    configPath: lang.Miscellaneous.InvalidRolePermissions,
                     variables: Utils.userVariables(interaction.member as GuildMember)
                 }) as InteractionReplyOptions)
             }

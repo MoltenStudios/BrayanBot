@@ -29,9 +29,9 @@ type Handlers = {
 }
 
 type Configs = {
-    commands?: CommandsType;
-    config?: ConfigType;
-    lang?: LangType;
+    commands: CommandsType;
+    config: ConfigType;
+    lang: LangType;
 }
 
 
@@ -41,7 +41,8 @@ export class BrayanBot extends Client {
     public events: { name: string, handler: Function }[] = [];
     public managerOptions: ManagerOptions;
     public handlers: Handlers = {};
-    public configs: Configs = {}
+    // @ts-ignore
+    public configs: Configs = {};
     public logger: Logger
 
     constructor(clientOptions: ClientOptions, managerOptions: ManagerOptions) {

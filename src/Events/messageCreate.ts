@@ -26,7 +26,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
         if(cmd && cmd.commandData.Enabled == true && cmd.LegacyRun) {
             if(cmd.commandConfig.dmOnly && message.channel.type !== ChannelType.DM) {
                 return message.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.DMOnly!,
+                    configPath: lang.Miscellaneous.DMOnly,
                     variables: Utils.userVariables(message.member!)
                 }))
             }
@@ -38,7 +38,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
                 ChannelType.AnnouncementThread
             ].includes(message.channel.type)) {
                 return message.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.GuildOnly!,
+                    configPath: lang.Miscellaneous.GuildOnly,
                     variables: Utils.userVariables(message.member!)
                 }))
             }
@@ -46,7 +46,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
             if(cmd.commandConfig.requiredPermissions.user) {
                 if(!message.member?.permissions.has(cmd.commandConfig.requiredPermissions.user)) {
                     return message.reply(Utils.setupMessage({
-                        configPath: lang?.Miscellaneous.InvalidUserPermissions!,
+                        configPath: lang.Miscellaneous.InvalidUserPermissions,
                         variables: Utils.userVariables(message.member!)
                     }))
                 }
@@ -55,7 +55,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
             if(cmd.commandConfig.requiredPermissions.bot) {
                 if(!message.guild?.members.me?.permissions.has(cmd.commandConfig.requiredPermissions.bot)) {
                     return message.reply(Utils.setupMessage({
-                        configPath: lang?.Miscellaneous.InvalidBotPermissions!,
+                        configPath: lang.Miscellaneous.InvalidBotPermissions,
                         variables: Utils.userVariables(message.member!)
                     }))
                 }
@@ -63,7 +63,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
             
             if(cmd.commandData.Permission && !Utils.hasPermission(cmd.commandData.Permission, message.member!)) {
                 return message.reply(Utils.setupMessage({
-                    configPath: lang?.Miscellaneous.InvalidRolePermissions!,
+                    configPath: lang.Miscellaneous.InvalidRolePermissions,
                     variables: Utils.userVariables(message.member!)
                 }))
             }
@@ -76,7 +76,7 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
         && !message.content.replace(`<@${bot.user.id}>`, "")) {
         const ctn = message.content.replace(`<@${bot.user.id}>`, "");
         if(ctn == "") message.reply(Utils.setupMessage({
-            configPath: lang?.TagEmbed!,
+            configPath: lang.TagEmbed,
             variables: Utils.userVariables(message.member!)
         }))
     }

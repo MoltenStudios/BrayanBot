@@ -5,7 +5,7 @@ import { manager } from "../../index";
 import ms from "ms";
 
 export default new Command({
-    commandData: manager.configs.commands?.General.Ping!,
+    commandData: manager.configs.commands.General.Ping,
     commandConfig: {
         dmOnly: true,
         guildOnly: false,
@@ -19,7 +19,7 @@ export default new Command({
         const apiPing = Math.round(manager.ws.ping);
 
         message.reply(Utils.setupMessage({
-            configPath: manager.configs.lang?.General.Ping!,
+            configPath: manager.configs.lang.General.Ping,
             variables: [
                 { searchFor: /{ping}/g, replaceWith: ms(ping, { long: true }) },
                 { searchFor: /{apiPing}/g, replaceWith: ms(apiPing, { long: true }) },
@@ -31,7 +31,7 @@ export default new Command({
         const apiPing = Math.round(interaction.client.ws.ping);
         
         interaction.reply(Utils.setupMessage({
-            configPath: manager.configs.lang?.General.Ping!,
+            configPath: manager.configs.lang.General.Ping,
             variables: [
                 { searchFor: /{ping}/g, replaceWith: ms(ping, { long: true }) },
                 { searchFor: /{apiPing}/g, replaceWith: ms(apiPing, { long: true }) },
