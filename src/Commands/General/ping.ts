@@ -7,7 +7,7 @@ import ms from "ms";
 export default new Command({
     commandData: manager.configs.commands.General.Ping,
     commandConfig: {
-        dmOnly: true,
+        dmOnly: false,
         guildOnly: false,
         requiredPermissions: {
             user: [],

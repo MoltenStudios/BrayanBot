@@ -16,13 +16,13 @@ const defaultConfig: CommandsType = {
             Usage: 'ping',
             Cooldown: 0,
             Permission: ["@everyone"],
-            Description: "KOOL",
+            Description: "Displays Bot's Latency",
             DeleteCommand: false,
             SlashCommand: {
                 Enabled: true,
                 Data: {
                     Name: "ping",
-                    Description: "KOOL",
+                    Description: "Displays Bot's Latency",
                 }
             }
         }
