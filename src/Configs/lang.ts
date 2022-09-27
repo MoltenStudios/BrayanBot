@@ -5,7 +5,10 @@ import path from "path";
 type LangType = {
     TagEmbed: SetupMessage,
     General: {
-        Ping: SetupMessage
+        Ping: SetupMessage,
+        Info: {
+            BotInfo: SetupMessage,
+        }
     },
     Miscellaneous: {
         InvalidRolePermissions: SetupMessage,
@@ -55,6 +58,35 @@ const defaultConfig: LangType = {
                 AuthorIcon: "{brand-logo}",
                 Timestamp: true
             }]
+        },
+        Info: {
+            BotInfo: {
+                Embeds: [{
+                    Author: "{brand-name}",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "> BrayanBot is a modern Discord bot written with latest DiscordJS features in mind that provide an easy-to-use ecosystem for developers and a robust bot base for Server Owners.",
+                    Fields: [{
+                        Name: "• Information",
+                        Value: [
+                            "> [**BrayanBot's Website**]({brand-link})",
+                            "> [**BrayanBot's GitHub**](https://github.com/brayanbot/brayanbot)",
+                            "> [**BrayanBot's Discord**](https://discord.gg/G4AV33KeqF)",
+                        ].join("\n")
+                    }, {
+                        Name: "• Statistics",
+                        Value: [
+                            "```yml",
+                            "• Bot Ram Usage: {botRamUsage}/{botMaxRam} MB",
+                            "• Bot Uptime: {botUptime}",
+                            "• System Uptime: {uptime}",
+                            "```"
+                        ].join("\n"),
+                    }],
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }]
+            },
         }
     },
     Miscellaneous: {
