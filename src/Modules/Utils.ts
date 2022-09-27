@@ -16,6 +16,7 @@ export default class Utils {
     static loadCommands = loadCommands;
     static setupMessage = setupMessage;
     static setupSlashCommand = setupSlashCommand;
+    static botVariables = Variables.botVariables;
     static userVariables = Variables.userVariables;
     static roleVariables = Variables.roleVariables;
     static guildVariables = Variables.guildVariables;
