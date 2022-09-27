@@ -23,6 +23,9 @@ export default new Command({
         
         switch(subCommand) {
             case "bot": {
+                const ping = Date.now() - interaction.createdTimestamp;
+                const apiPing = Math.round(interaction.client.ws.ping);
+
                 interaction.reply(Utils.setupMessage({
                     configPath: lang.General.Info.BotInfo,
                     variables: [
@@ -30,12 +33,15 @@ export default new Command({
                         ...Utils.guildVariables(interaction.guild as Guild),
                         ...Utils.userVariables(interaction.member as GuildMember),
                         ...Utils.channelVariables(interaction.channel as GuildChannel),
+                        { searchFor: /{botPing}/g, replaceWith: ms(ping, { long: true }) },
+                        { searchFor: /{botApiPing}/g, replaceWith: ms(apiPing, { long: true }) },
                         { searchFor: /{uptime}/g, replaceWith: ms(os.uptime() * 1000, { long: true }) },
                         { searchFor: /{botRamUsage}/g, replaceWith: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(0) },
                         { searchFor: /{botMaxRam}/g, replaceWith: (process.memoryUsage().heapTotal / 1024 / 1024).toFixed(0) },
                         { searchFor: /{botUptime}/g, replaceWith: ms(manager.uptime!, { long: true }) },
                     ],
                 }) as InteractionReplyOptions)
+                
                 break;
             }
 
