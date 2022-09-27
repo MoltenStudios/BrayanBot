@@ -11,22 +11,6 @@ type CommandsType = {
 
 const defaultConfig: CommandsType = {
     General: {
-        Ping: {
-            Enabled: true,
-            Name: "ping",
-            Usage: 'ping',
-            Cooldown: 0,
-            Permission: ["@everyone"],
-            Description: "Displays Bot's Latency",
-            DeleteCommand: false,
-            SlashCommand: {
-                Enabled: true,
-                Data: {
-                    Name: "ping",
-                    Description: "Displays Bot's Latency",
-                }
-            }
-        },
         Info: {
             Enabled: true,
             Name: "info",

@@ -5,7 +5,6 @@ import path from "path";
 type LangType = {
     TagEmbed: SetupMessage,
     General: {
-        Ping: SetupMessage,
         Info: {
             BotInfo: SetupMessage,
         }
@@ -43,22 +42,6 @@ const defaultConfig: LangType = {
         }]
     },
     General: {
-        Ping: {
-            Embeds: [{
-                Author: "{brand-name}'s Ping",
-                Fields: [{
-                    Name: "🤖 Bot Latency",
-                    Value: "> {ping}",
-                    Inline: true
-                }, {
-                    Name: "🔗 API Latency",
-                    Value: "> {apiPing}",
-                    Inline: true
-                }],
-                AuthorIcon: "{brand-logo}",
-                Timestamp: true
-            }]
-        },
         Info: {
             BotInfo: {
                 Embeds: [{
@@ -76,9 +59,11 @@ const defaultConfig: LangType = {
                         Name: "• Statistics",
                         Value: [
                             "```yml",
-                            "• Bot Ram Usage: {botRamUsage}/{botMaxRam} MB",
-                            "• Bot Uptime: {botUptime}",
                             "• System Uptime: {uptime}",
+                            "• Bot Uptime: {botUptime}",
+                            "• Bot API Ping: {botApiPing}",
+                            "• Bot Ping: {botPing}",
+                            "• Bot Ram Usage: {botRamUsage}/{botMaxRam} MB",
                             "```"
                         ].join("\n"),
                     }],
