@@ -4,7 +4,6 @@ import { CommandData } from "../Modules/Structures/Interfaces/Command";
 
 type CommandsType = {
     General: {
-        Ping: CommandData,
         Info: CommandData
     }
 }
