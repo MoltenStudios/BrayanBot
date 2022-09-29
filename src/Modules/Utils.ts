@@ -20,7 +20,6 @@ export default class Utils {
     static userVariables = Variables.userVariables;
     static roleVariables = Variables.roleVariables;
     static guildVariables = Variables.guildVariables;
-    static memberVariables = Variables.memberVariables;
     static channelVariables = Variables.channelVariables;
 
     static getRandom(array: any[]) {
@@ -85,25 +84,27 @@ export default class Utils {
 
     static getUserBadges (member: GuildMember) {
         const badges = {
-            BUGHUNTER_LEVEL_1: "Discord Bug Hunter Level 1",
-            BUGHUNTER_LEVEL_2: "Discord Bug Hunter Level 2",
-            DISCORD_EMPLOYEE: "Discord Staff",
-            DISCORD_NITRO: "Discord Nitro",
-            EARLY_SUPPORTER: "Early Supporter",
-            HOUSE_BALANCE: "HypeSquad Balance",
-            HOUSE_BRAVERY: "HypeSquad Bravery",
-            HOUSE_BRILLIANCE: "HypeSquad Brilliance",
-            HYPESQUAD_EVENTS: "HypeSquad Events",
-            EARLY_VERIFIED_BOT_DEVELOPER: "Early Verified Bot Developer",
-            PARTNERED_SERVER_OWNER: "Partnered Server Owner",
-            DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
-            VERIFIED_BOT: "Verified Bot",
-            TEAM_USER: "Team User",
+            BugHunterLevel1: "Discord Bug Hunter Level 1",
+            BugHunterLevel2: "Discord Bug Hunter Level 2",
+            Staff: "Discord Staff",
+            PremiumEarlySupporter: "Early Supporter",
+            HypeSquadOnlineHouse3: "HypeSquad Balance",
+            HypeSquadOnlineHouse1: "HypeSquad Bravery",
+            HypeSquadOnlineHouse2: "HypeSquad Brilliance",
+            Hypesquad: "HypeSquad Events",
+            VerifiedDeveloper: "Early Verified Bot Developer",
+            Partner: "Partnered Server Owner",
+            CertifiedModerator: "Discord Certified Moderator",
+            VerifiedBot: "Verified Bot",
+            TeamPseudoUser: "Team User",
+            Spammer: "Spammer",
+            Quarantined: "Quarantined"
         }
         const data: string[] = []
 
-        Object.entries(badges).forEach(([badge, value]) => 
-            UserFlags[badge as UserFlagsString] ? data.push(value) : false)
+        Object.entries(badges).forEach(([badge, value]) => {
+            if(member.user.flags?.has(badge as UserFlagsString)) data.push(value)
+        })
 
         return data;
     }

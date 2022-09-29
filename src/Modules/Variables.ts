@@ -26,43 +26,21 @@ export default class Variables {
             searchFor: new RegExp(`{${prefix}-createdate}`, "g"),
             replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:D>`,
         }, {
-            searchFor: new RegExp(`{${prefix}-for}`, "g"),
-            replaceWith: `<t:${Math.floor(user.user.createdTimestamp / 1000)}:R>`,
+            searchFor: new RegExp(`{${prefix}-joindate}`, "g"),
+            replaceWith: `<t:${Math.floor((user.joinedTimestamp ?? 0) / 1000)}:D>`,
         }, {
             searchFor: new RegExp(`{${prefix}-badges}`, "g"),
-            replaceWith: Utils.getUserBadges(user).join(", "),
-        }]
-    }
-
-    static memberVariables(member: GuildMember, prefix = "member") {
-        return [{
-            searchFor: new RegExp(`{${prefix}-id}`, "g"),
-            replaceWith: member.id,
-        }, {
-            searchFor: new RegExp(`{${prefix}-displayname}`, "g"),
-            replaceWith: member.displayName,
-        }, {
-            searchFor: new RegExp(`{${prefix}-username}`, "g"),
-            replaceWith: member.user.username,
-        }, {
-            searchFor: new RegExp(`{${prefix}-tag}`, "g"),
-            replaceWith: member.user.tag,
-        }, {
-            searchFor: new RegExp(`{${prefix}-mention}`, "g"),
-            replaceWith: "<@" + member.id + ">",
-        }, {
-            searchFor: new RegExp(`{${prefix}-pfp}`, "g"),
-            replaceWith: member.displayAvatarURL({ forceStatic: false }),
-        }, {
-            searchFor: new RegExp(`{${prefix}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(member.user.createdTimestamp / 1000)}:D>`,
-        }, {
-            searchFor: new RegExp(`{${prefix}-joindate}`, "g"),
-            replaceWith: `<t:${Math.floor((member.joinedTimestamp ?? 0) / 1000)}:D>`,
+            replaceWith: Utils.getUserBadges(user).join(", ") || "None",
         }, {
             searchFor: new RegExp(`{${prefix}-roles}`, "g"),
-            replaceWith: member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id)
+            replaceWith: user.roles.cache.filter(x => x.id != user.guild.roles.everyone.id)
                 .map((r) => `<@&${r.id}>`).join(", "),
+        }, {
+            searchFor: new RegExp(`{${prefix}-isBoosting}`, "g"),
+            replaceWith: user.premiumSince ? "Yes" : "No",
+        }, {
+            searchFor: new RegExp(`{${prefix}-banner}`, "g"),
+            replaceWith: user.user.bannerURL({ forceStatic: false }) || "https://i.zorino.in/KYVDiscord_zZVBeqlAEv.png",
         }]
     }
 
@@ -141,7 +119,10 @@ export default class Variables {
             replaceWith: guild.name,
         }, {
             searchFor: new RegExp(`{${prefix}-icon}`, "g"),
-            replaceWith: guild.iconURL({ forceStatic: false }),
+            replaceWith: guild.iconURL({ forceStatic: false }) || "https://cdn.discordapp.com/embed/avatars/0.png",
+        }, {
+            searchFor: new RegExp(`{${prefix}-banner}`, "g"),
+            replaceWith: guild.bannerURL() || "https://i.zorino.in/KYVDiscord_zZVBeqlAEv.png",
         }, {
             searchFor: new RegExp(`{${prefix}-boosts}`),
             replaceWith: guild.premiumSubscriptionCount,
@@ -172,6 +153,9 @@ export default class Variables {
         }, {
             searchFor: new RegExp(`{${prefix}-total-emojis}`),
             replaceWith: guild.emojis.cache.size,
+        }, {
+            searchFor: new RegExp(`{${prefix}-total-stickers}`),
+            replaceWith: guild.stickers.cache.size,
         }, {
             searchFor: new RegExp(`{${prefix}-online-members}`),
             replaceWith: guild.members.cache.filter((member) => member.presence?.status !== "offline").size,
