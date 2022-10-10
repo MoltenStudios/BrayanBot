@@ -79,7 +79,6 @@ export default new Command({
 
             case "user": {
                 const user = Utils.getUserFromMessage(message, 1, false) || message.member as GuildMember;
-                console.log(Utils.getUserFromMessage(message, 1, false)?.user.tag)
                 message.reply(Utils.setupMessage({
                     configPath: lang.General.Info.UserInfo,
                     variables: [
