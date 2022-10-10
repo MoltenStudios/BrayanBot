@@ -59,7 +59,7 @@ export default class Variables {
             replaceWith: channel.type,
         }, {
             searchFor: new RegExp(`{${prefix}-createdate}`, "g"),
-            replaceWith: `<t:${Math.floor(channel.createdTimestamp / 1000)}:D>`,
+            replaceWith: `<t:${Math.floor((channel.createdTimestamp ?? 0) / 1000)}:D>`,
         }]
     }
 

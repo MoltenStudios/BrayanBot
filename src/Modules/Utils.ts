@@ -3,7 +3,7 @@ import Variables from "./Variables"
 import { setupMessage } from "./Utils/setupMessage";
 import { loadCommands } from "./Utils/loadCommands";
 import { setupSlashCommand } from "./Utils/setupSlashCommand";
-import { Guild, GuildMember, Role, UserFlags, UserFlagsString } from "discord.js";
+import { Guild, GuildMember, Role, Message, UserFlagsString } from "discord.js";
 
 export default class Utils {
     static logger = {
@@ -107,5 +107,18 @@ export default class Utils {
         })
 
         return data;
+    }
+
+    static getUserFromMessage(message: Message, arg = 0, checkFull = false) {
+        const args = message.content.split(" "); args.shift();
+        const toFind = checkFull ? args.join(" ") : (args[arg] || '');
+        
+        return message.mentions.members?.first() 
+            ||  message.guild!.members.cache.find(member => 
+                    member.user.tag.toLowerCase() == toFind.toLowerCase() 
+                    || member.displayName.toLowerCase() == toFind.toLowerCase() 
+                    || member.user.username.toLowerCase() == toFind.toLowerCase() 
+                    || member.id == toFind.replace(/([<@!]|[>])/g, "")
+                );
     }
 }

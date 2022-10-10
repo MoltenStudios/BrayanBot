@@ -41,16 +41,6 @@ const defaultConfig: CommandsType = {
                             Description: "The User to show Information about",
                             Required: false
                         }]
-                    }, {
-                        Type: "Sub Command",
-                        Name: "channel",
-                        Description: "Show's Information about a Channel",
-                        Options: [{
-                            Type: "Channel",
-                            Name: "channel",
-                            Description: "The Channel to show Information about",
-                            Required: false
-                        }]
                     }],
                 }
             }

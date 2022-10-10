@@ -7,6 +7,9 @@ type LangType = {
     General: {
         Info: {
             BotInfo: SetupMessage,
+            UserInfo: SetupMessage,
+            GuildInfo: SetupMessage,
+            InvalidUsage: SetupMessage,
         }
     },
     Miscellaneous: {
@@ -43,6 +46,20 @@ const defaultConfig: LangType = {
     },
     General: {
         Info: {
+            InvalidUsage: {
+                Embeds: [{
+                    Author: "{brand-name} | Invalid Usage",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "> {user-mention}, you have to specify a valid type of information to show. Valid types are: `bot`, `user`, `channel` and `guild`.",
+                    Fields: [{
+                        Name: "• Usage",
+                        Value: "> `{prefixUsed}info <bot/user/guild> [parameter]`"
+                    }],
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }]
+            },
             BotInfo: {
                 Embeds: [{
                     Author: "{brand-name}",
@@ -71,6 +88,85 @@ const defaultConfig: LangType = {
                     Footer: "{user-tag}",
                     Timestamp: true
                 }]
+            }, 
+            GuildInfo: {
+                Embeds: [{
+                    Author: "{guild-name}",
+                    AuthorIcon: "{guild-icon}",
+                    Fields: [{
+                        Name: "👑 Owner",
+                        Value: "> {owner-mention} ({owner-tag})"
+                    }, {
+                        Name: "🗓️Created",
+                        Value: "> {guild-createdate}"
+                    }, {
+                        Name: "⚡ Boosts",
+                        Value: "> {guild-boosts} Boosts (Level {guild-level})"
+                    }, {
+                        Name: "💠 Members",
+                        Value: [
+                            "> Humans - **{guild-members}**",
+                            "> Bots - **{guild-bots}**",
+                            "> Online - **{guild-online-members}**",
+                        ].join("\n")
+                    }, {
+                        Name: "📊 Counters",
+                        Value: [
+                            "> Roles - **{guild-total-roles}**",
+                            "> Members - **{guild-total-members}**",
+                            "> Channels - **{guild-total-channels}**",
+                            "> Stickers - **{guild-total-stickers}**",
+                            "> Emojis - **{guild-total-emojis}**",
+                        ].join("\n")
+                    }],
+                    Thumbnail: "{guild-icon}",
+                    Image: "{guild-banner}",
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }],
+                Components: {
+                    1: [{
+                        Type: "Button",
+                        Style: "LINK",
+                        Link: "{invite}",
+                        Label: "Server Invite",
+                    }]
+                }
+            }, 
+            UserInfo: {
+                Embeds: [{
+                    Author: "{target-tag}'s Info",
+                    AuthorIcon: "{target-pfp}",
+                    Fields: [{
+                        Name: "🗓️ Created",
+                        Value: "> {target-createdate} | {createdSince}",
+                        Inline: true
+                    }, {
+                        Name: "🔺 Joined",
+                        Value: "> {target-joindate} | {joinSince}",
+                    }, {
+                        Name: "⚡ Boosting",
+                        Value: "> {target-isBoosting} | {boostingSince}",
+                    }, {
+                        Name: "🎖 Badges",
+                        Value: "> {target-badges}"
+                    }],
+                    FooterIcon: "{user-pfp}",
+                    Thumbnail: "{target-pfp}",
+                    Image: "{target-banner}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }],
+                Components: {
+                    1: [{
+                        Type: "Button",
+                        Style: "LINK",
+                        Link: "{target-pfp}",
+                        Label: "Profile Picture",
+                        Emoji: "👤"
+                    }]
+                }
             },
         }
     },
