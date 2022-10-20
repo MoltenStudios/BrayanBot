@@ -10,10 +10,7 @@ export default new Command({
     commandConfig: {
         dmOnly: false,
         guildOnly: true,
-        requiredPermissions: {
-            user: [],
-            bot: []
-        }
+        requiredPermissions: { user: [], bot: [] }
     },
     LegacyRun: async (manager, message, args, prefixUsed, commandData) => {
         const lang = manager.configs.lang;
