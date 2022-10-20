@@ -50,7 +50,7 @@ const defaultConfig: LangType = {
                 Embeds: [{
                     Author: "{brand-name} | Invalid Usage",
                     AuthorIcon: "{brand-logo}",
-                    Description: "> {user-mention}, you have to specify a valid type of information to show. Valid types are: `bot`, `user`, `channel` and `guild`.",
+                    Description: "> {user-mention}, you have to specify a valid type of information to show. Valid types are: `bot`, `user` and `guild`.",
                     Fields: [{
                         Name: "• Usage",
                         Value: "> `{prefixUsed}info <bot/user/guild> [parameter]`"

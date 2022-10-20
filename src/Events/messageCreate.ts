@@ -19,8 +19,8 @@ export default new EventListener("messageCreate", async (bot: BrayanBot, message
         if(!config?.Settings.IgnoreBots && message.author.bot) return;
         
         const msg = message.content.split(" ");
-        const command = msg[0].toLowerCase().replace(prefixUsed, "");
-        const args = msg.slice(1);
+        const command = msg[prefixUsed.includes(" ") ? 1 : 0].toLowerCase().replace(prefixUsed, "");
+        const args = msg.slice(prefixUsed.includes(" ") ? 2 : 1);
 
         const cmd = bot.commands.get(command);
         if(cmd && cmd.commandData.Enabled == true && cmd.LegacyRun) {
