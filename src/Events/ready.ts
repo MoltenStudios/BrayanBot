@@ -11,8 +11,8 @@ export default new EventListener("ready", async (bot: BrayanBot) => {
 
     if(bot.configs.config?.Settings.UseMentionPrefix) 
         if(Array.isArray(bot.configs.config?.Settings.Prefix)
-            && !bot.configs.config?.Settings.Prefix.includes(`<@${bot.user?.id}>`)
-        ) bot.configs.config?.Settings.Prefix.push(`<@${bot.user?.id}>`);
+            && !bot.configs.config?.Settings.Prefix.includes(`<@${bot.user?.id}> `)
+        ) bot.configs.config?.Settings.Prefix.push(`<@${bot.user?.id}> `);
 
     if(!guild) {
         info(chalk.blue(`https://discord.com/api/oauth2/authorize?client_id=${bot.user?.id}&permissions=8&scope=bot%20applications.commands`))
