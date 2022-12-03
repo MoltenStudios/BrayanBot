@@ -23,6 +23,7 @@ const manager: BrayanBot = new BrayanBot({
     commandDir: path.join(__dirname, "Commands"),
     configDir: path.join(__dirname, "Configs"),
     eventDir: path.join(__dirname, "Events"),
+    addonDir: path.join(__dirname, "Addons")
 });
 
 manager.initializeHandlers().then((manager) => {

@@ -1,6 +1,7 @@
 import { Collection, Client, ClientOptions, REST } from "discord.js";
 import { Command, CommandHandler } from "./Handlers/Commands";
 import { RawSlashCommand } from "../Utils/setupSlashCommand";
+import { Addon, AddonHandler } from "./Handlers/Addons";
 import { CommandsType } from "../../Configs/commands";
 import { ConfigHandler } from "./Handlers/Config";
 import { ConfigType } from "../../Configs/config";
@@ -20,12 +21,14 @@ type ManagerOptions = {
     commandDir: string;
     configDir: string;
     eventDir: string;
+    addonDir: string;
 }
 
 type Handlers = {
     EventHandler?: EventHandler
     CommandHandler?: CommandHandler
     ConfigHandler?: ConfigHandler
+    AddonHandler?: AddonHandler
 }
 
 type Configs = {
@@ -37,6 +40,7 @@ type Configs = {
 
 export class BrayanBot extends Client {
     public commands: Collection<string, Command> = new Collection();
+    public addons: Collection<string, Addon> = new Collection();
     public slashCommands: Collection<string, RawSlashCommand> = new Collection();
     public events: { name: string, handler: Function }[] = [];
     public managerOptions: ManagerOptions;
@@ -59,6 +63,9 @@ export class BrayanBot extends Client {
         if (!managerOptions.eventDir) throw new Error("[BrayanBot] No event directory was provided.");
         if (!fs.existsSync(managerOptions.eventDir)) fs.mkdirSync(managerOptions.eventDir);
 
+        if (!managerOptions.addonDir) throw new Error("[BrayanBot] No addon directory was provided.");
+        if (!fs.existsSync(managerOptions.addonDir)) fs.mkdirSync(managerOptions.addonDir);
+
         this.managerOptions = managerOptions;
         this.logger = Utils.logger;
 
@@ -69,6 +76,7 @@ export class BrayanBot extends Client {
         this.handlers.ConfigHandler = await new ConfigHandler(this, this.managerOptions.configDir).initialize();
         this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
         this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
+        this.handlers.AddonHandler = await new AddonHandler(this, this.managerOptions.addonDir).initialize();
 
         if(this.configs.config?.Settings.Token)
             this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);

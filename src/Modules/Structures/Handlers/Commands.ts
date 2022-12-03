@@ -66,5 +66,7 @@ export class Command {
             const parsedSlashCommand = Utils.setupSlashCommand(this.commandData.SlashCommand.Data);
             manager.slashCommands.set(this.commandData.SlashCommand.Data.Name, parsedSlashCommand);
         }
+        manager.commands.set(command.commandData.Name, this);
+        return this;
     }
 }
