@@ -1,0 +1,11 @@
+## Dependencies ##
+node_modules
+
+## Github ##
+*/.github/
+*/workflows/
+.gitignore
+
+## Databases ##
+*.db
+*.sqlite
