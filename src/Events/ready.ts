@@ -25,7 +25,7 @@ export default new EventListener("ready", async (bot: BrayanBot) => {
         chalk.whiteBright(`               Thanks for using BrayanBot!                                     `),
         chalk.whiteBright(`                                                                               `),
         chalk.whiteBright(`       Join our Discord Server if you face any issues.                         `),
-        chalk.whiteBright(`               ${chalk.blueBright.underline(`https://brayanbot.dev/discord`)}  `),
+        chalk.whiteBright(`               ${chalk.blueBright.underline(`https://discord.neushore.dev/`)}  `),
         chalk.whiteBright(`•«                                                          »•`),
     ].forEach((line) => info(line))
     

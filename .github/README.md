@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://avatars.githubusercontent.com/u/99198112?s=200&v=4" alt="Logo"  width="200">
   <h1>BrayanBot</h1>
-  <a href="https://brayanbot.dev/discord">
+  <a href="https://discord.neushore.dev/">
     <img border="0" alt="Discord" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
   </a>
   <a href="https://www.javascript.com/">
@@ -28,14 +28,14 @@ It holds the intention of being as fast as lightweight as possible out of the bo
 entirely to their own liking. With so little hard-coded commands, BrayanBot is _the_ Discord bot of your dreams.
 
 This repository is for the TypeScript rewrite and is actively looking for new features and ideas. If you have any ideas for BrayanBot V2,
-please feel free to join our [Discord Server](https://brayanbot.dev/discord) and let us know. If you are interested in contributing those ideas instead,
+please feel free to join our [Discord Server](https://discord.neushore.dev/) and let us know. If you are interested in contributing those ideas instead,
 feel absolutely free to do so. We always appreciate any and all contributions.
 
 <h2 align="center">✨ Contributing</h2>
 
 ---
 
-**We think everyone should be able to contribute to BrayanBot**, so we have listed below the list of ways in which you can contribute to BrayanBot. For any questions, don't hesitate to ask them in our [Support Server](https://brayanbot.dev/discord).
+**We think everyone should be able to contribute to BrayanBot**, so we have listed below the list of ways in which you can contribute to BrayanBot. For any questions, don't hesitate to ask them in our [Support Server](https://discord.neushore.dev/).
 
 We welcome all kinds of contributions. Feel free to open a pull request for any code contributions, or an issue for feature requests and support.
 
@@ -44,13 +44,13 @@ We welcome all kinds of contributions. Feel free to open a pull request for any 
 
 #### Discussion & Suggestions
 
-We believe there is no such thing as a stupid idea! Which means, you may feel **absolutely free** to request any features over [Issues](https://github.com/BrayanBotDev/BrayanBot/issues) or our [Discord Server](https://brayanbot.dev/discord). While new commands most likely to make it to the bot, suggest them anyway! There is a high chance that they can become implemented as [Addons](https://brayanbot.dev/docs/Developers/Addons/first-party)
+We believe there is no such thing as a stupid idea! Which means, you may feel **absolutely free** to request any features over [Issues](https://github.com/BrayanBot/BrayanBot/issues) or our [Discord Server](https://discord.neushore.dev/). While new commands most likely to make it to the bot, suggest them anyway! There is a high chance that they can become implemented as [Addons](https://brayanbot.dev/docs/Developers/Addons/first-party)
 
 #### Code Contibutions
 
-If you consider yourself proficient in JavaScript, then feel free to contribute new features by [Forking this repository](https://github.com/BrayanBotDev/BrayanBot/fork). Or if you are interested in creating your own [Addons](https://brayanbot.dev/Developers/Addons/creating-addons), make sure you have read the necessary development. Feel free to hop in our Discord Server for development support.
+If you consider yourself proficient in JavaScript, then feel free to contribute new features by [Forking this repository](https://github.com/BrayanBot/BrayanBot/fork). Or if you are interested in creating your own [Addons](https://brayanbot.dev/Developers/Addons/creating-addons), make sure you have read the necessary development. Feel free to hop in our Discord Server for development support.
 
-> If you would like to make a contribution, we kindly ask that you respect our [Contribution Guidelines](https://github.com/BrayanBotDev/BrayanBot/blob/dev/.github/CONTRUBUTING.md) while doing so.
+> If you would like to make a contribution, we kindly ask that you respect our [Contribution Guidelines](https://github.com/BrayanBot/BrayanBot/blob/main/.github/CONTRUBUTING.md) while doing so.
 
 #### Translations
 
@@ -58,7 +58,7 @@ We do not yet have a streamlined system for Translations, however, if you have t
 
 #### Bug Reports
 
-There's a fly in your room? Found a command that nukes your entire operating system when ran? Then you should _definitely_ consider opening a [Bug Report](https://github.com/BrayanBotDev/BrayanBot/issues) or reporting said bug over [Discord](https://brayanbot.dev/discord). We make sure everything is fixed as soon as possible and no bugs ever get to you. You report em', we squash em'
+There's a fly in your room? Found a command that nukes your entire operating system when ran? Then you should _definitely_ consider opening a [Bug Report](https://github.com/BrayanBot/BrayanBot/issues) or reporting said bug over [Discord](https://discord.neushore.dev/). We make sure everything is fixed as soon as possible and no bugs ever get to you. You report em', we squash em'
 
 ####
 
