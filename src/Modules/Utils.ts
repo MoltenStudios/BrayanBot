@@ -9,8 +9,12 @@ import {
     Role,
     Message,
     UserFlagsString,
+    ChannelType,
     TextChannel,
-  } from "discord.js";
+    VoiceChannel,
+    CategoryChannel,
+    DMChannel
+} from "discord.js";
 
 export default class Utils {
     static logger = {
@@ -20,13 +24,9 @@ export default class Utils {
         error: (...text: any[]) => console.log(chalk.redBright.bold("[ERROR]"), ...text),
     }
 
-    static loadCommands = loadCommands;
-    static setupMessage = setupMessage;
-    static setupSlashCommand = setupSlashCommand;
-    static botVariables = Variables.botVariables;
-    static userVariables = Variables.userVariables;
-    static roleVariables = Variables.roleVariables;
-    static guildVariables = Variables.guildVariables;
+    static loadCommands = loadCommands; static setupMessage = setupMessage; static setupSlashCommand = setupSlashCommand;
+    static botVariables = Variables.botVariables; static userVariables = Variables.userVariables;
+    static roleVariables = Variables.roleVariables; static guildVariables = Variables.guildVariables;
     static channelVariables = Variables.channelVariables;
 
     static getRandom(array: any[]) {
@@ -37,10 +37,7 @@ export default class Utils {
         searchFor: RegExp,
         replaceWith: any
     }[]) {
-        for(let i = 0; i < variables.length; i++) 
-            string = string.replace(variables[i].searchFor, variables[i].replaceWith);
-    
-        return string;
+        return variables.reduce((output, variable) => output.replace(variable.searchFor, variable.replaceWith), string);
     }
 
     static paginateArray (array: Array<any>, itemsperpage: number, page = 1): Array<any> | null {
@@ -50,52 +47,52 @@ export default class Utils {
     }
 
     static findRole(guild: Guild, name: string | number, notify = true): Role | undefined | void {
+        const roleName = typeof name === "number" ? name.toString() : name;
         const role = guild.roles.cache.find((r) => {
-            if(typeof name == "string") {
-                return r.name.toLowerCase() == name.toLowerCase()
-                    || r.id == name;
-            } else if(typeof name == "number") {
-                return r.name.toLowerCase() == name.toString().toLowerCase()
-                    || r.id == name.toString().toLowerCase();
-            } else return false;
+            return r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName.toLowerCase();
         });
 
-        if(!role && notify) return this.logger.error(`Role "${chalk.bold(name)}" was not found in "${chalk.bold(guild.name)}" server.`);
-        else return role;
+        if (!role && notify) {
+            this.logger.error(`The role with the name or ID "${chalk.bold(name)}" was not found in the "${chalk.bold(guild.name)}" server.`);
+        }
+        
+        return role;
     }
 
     static findMember(guild: Guild, name: string | number, notify = false): GuildMember | undefined | void {
+        const memberName = typeof name === "number" ? name.toString() : name;
         const member = guild.members.cache.find((m) => {
-            if(typeof name == "string") {
-                return m.user.tag.toLowerCase() == name.toLowerCase() 
-                    || m.id == name.toLowerCase();
-            } else if(typeof name == "number") {
-                return m.user.tag.toLowerCase() == name.toString().toLowerCase()
-                    || m.id == name.toString().toLowerCase();
-            } else return false;
-        }) 
+            return m.user.tag.toLowerCase() === memberName.toLowerCase() || m.id.toLowerCase() === memberName.toLowerCase() || m.user.username.toLowerCase() === memberName.toLowerCase();
+        });
 
-        if(!member && notify) return this.logger.error(`GuildMember "${chalk.bold(name)}" was not found in "${chalk.bold(guild.name)}" server.`);
-        else return member;
+        if (!member && notify) {
+            this.logger.error(`The member with the username or ID "${chalk.bold(name)}" was not found in the "${chalk.bold(guild.name)}" server.`);
+        }
+
+        return member;
     }
     
-    static findChannel(guild: Guild, name: string | number, notify = false): TextChannel | undefined | void {
-        const channel = guild.channels.cache.find((c) => {
-            if(typeof name == "string") {
-                return c.name.toLowerCase() == name.toLowerCase()
-                    || c.id == name;
-            } else if(typeof name == "number") {
-                return c.name.toLowerCase() == name.toString().toLowerCase()
-                    || c.id == name.toString().toLowerCase();
-            } else return false;
-        })
-        if (channel instanceof TextChannel) {
-            return channel;
-        } else {
-            if(!channel && notify) return this.logger.error(`Channel "${chalk.bold(name)}" was not found in "${chalk.bold(guild.name)}" server.`);
-            return;
-        }        
+    static findChannel(type: ChannelType, guild: Guild, name: string | number, notify = false): TextChannel | VoiceChannel | DMChannel | CategoryChannel | undefined {
+        if (typeof name === "number") name = name.toString();
+        const channels = guild.channels.cache.filter(channel => channel.type === type);
+        const channel = channels.find(ch => ch.name === name || ch.id === name);
+
+        switch (type) {
+            case ChannelType.GuildText:
+                return channel instanceof TextChannel ? channel : undefined;
+            case ChannelType.GuildVoice:
+                return channel instanceof VoiceChannel ? channel : undefined;
+            case ChannelType.DM:
+                return channel instanceof DMChannel ? channel : undefined;
+            case ChannelType.GuildCategory:
+                return channel instanceof CategoryChannel ? channel : undefined;
+            case ChannelType.PrivateThread:
+                return channel instanceof TextChannel ? channel : undefined;
+            default:
+                if (notify) this.logger.error(`The ${chalk.bold(ChannelType[type].toString())} channel named "${chalk.bold(name)}" could not be found in the "${chalk.bold( guild.name )}" server. Please check the channel name and its type and try again.`);
+        }
     }
+
     
     static hasPermission (permissions: string[], member: GuildMember): Boolean {
         return permissions.some((perm: any) => {
@@ -125,13 +122,10 @@ export default class Utils {
             Spammer: "Spammer",
             Quarantined: "Quarantined"
         }
-        const data: string[] = []
 
-        Object.entries(badges).forEach(([badge, value]) => {
-            if(member.user.flags?.has(badge as UserFlagsString)) data.push(value)
-        })
-
-        return data;
+        return Object.entries(badges)
+            .filter(([badge, _]) => member.user.flags?.has(badge as UserFlagsString))
+            .map(([_, value]) => value);
     }
 
     static getUserFromMessage(message: Message, arg = 0, checkFull = false) {
