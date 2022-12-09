@@ -3,7 +3,14 @@ import Variables from "./Variables"
 import { setupMessage } from "./Utils/setupMessage";
 import { loadCommands } from "./Utils/loadCommands";
 import { setupSlashCommand } from "./Utils/setupSlashCommand";
-import { Guild, GuildMember, Role, Message, UserFlagsString } from "discord.js";
+import {
+    Guild,
+    GuildMember,
+    Role,
+    Message,
+    UserFlagsString,
+    TextChannel,
+  } from "discord.js";
 
 export default class Utils {
     static logger = {
@@ -66,10 +73,28 @@ export default class Utils {
                 return m.user.tag.toLowerCase() == name.toString().toLowerCase()
                     || m.id == name.toString().toLowerCase();
             } else return false;
-        })
+        }) 
 
         if(!member && notify) return this.logger.error(`GuildMember "${chalk.bold(name)}" was not found in "${chalk.bold(guild.name)}" server.`);
         else return member;
+    }
+    
+    static findChannel(guild: Guild, name: string | number, notify = false): TextChannel | undefined | void {
+        const channel = guild.channels.cache.find((c) => {
+            if(typeof name == "string") {
+                return c.name.toLowerCase() == name.toLowerCase()
+                    || c.id == name;
+            } else if(typeof name == "number") {
+                return c.name.toLowerCase() == name.toString().toLowerCase()
+                    || c.id == name.toString().toLowerCase();
+            } else return false;
+        })
+        if (channel instanceof TextChannel) {
+            return channel;
+        } else {
+            if(!channel && notify) return this.logger.error(`Channel "${chalk.bold(name)}" was not found in "${chalk.bold(guild.name)}" server.`);
+            return;
+        }        
     }
     
     static hasPermission (permissions: string[], member: GuildMember): Boolean {
