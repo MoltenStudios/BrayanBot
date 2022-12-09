@@ -11,6 +11,7 @@ const commandStructure = {
             Name: String,
             Description: String,
             Required: Boolean,
+            AutoComplete: Boolean,
             ChannelTypes: Array,
             Choices: [
                 {
@@ -87,10 +88,12 @@ module.exports = (data) => {
                                 description: option.Description,
                                 required: option.Required ? true : false,
                                 channel_types: option.ChannelTypes && Array.isArray(option.ChannelTypes) ? [] : null,
+                                autocomplete: false,
                                 options: [],
                                 choices: [],
                             };
 
+                            if (option.AutoComplete) optionData.autocomplete = true
                             if (option.Type && optionTypes.includes(option.Type.toLowerCase())) {
                                 if (["sub command", 1].includes(option.Type.toLowerCase())) {
                                     optionData.type = 1;

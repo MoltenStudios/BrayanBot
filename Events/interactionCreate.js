@@ -9,7 +9,7 @@ let db;
  * @param {Discord.Interaction} interaction 
  */
 module.exports = async (bot, interaction) => {
-    if(!db) db = await Utils.database.getDatabase();
+    if (!db) db = await Utils.database.getDatabase();
     const { config, lang, SlashCmds } = bot;
     // Slash Command Executing
     if (interaction.isCommand()) {
@@ -25,18 +25,18 @@ module.exports = async (bot, interaction) => {
 
                 const ignoreRoleCheck = bot.commands.IgnoredCooldown.Roles ? bot.commands.IgnoredCooldown.Roles.includes(x =>
                     interaction.member.roles.cache.some(y => y.id == x
-                    || y.name.toLowerCase() == x.toLowerCase())) : false;
+                        || y.name.toLowerCase() == x.toLowerCase())) : false;
 
-                if(ignoreUserCheck || ignoreRoleCheck) ignoreCooldown = true;
+                if (ignoreUserCheck || ignoreRoleCheck) ignoreCooldown = true;
 
                 const cooldown = ms(command.commandData.Cooldown);
                 const isOnCooldown = db.prepare(`SELECT * FROM cooldowns WHERE user=? AND command=?`).get(interaction.user.id, command.name);
 
 
                 if (ignoreCooldown == false) {
-                    if(isOnCooldown && isOnCooldown.time - Date.now() < 0) {
+                    if (isOnCooldown && isOnCooldown.time - Date.now() < 0) {
                         Utils.database.cooldowns.reset(command.name, interaction.user.id, cooldown)
-                    } else if(isOnCooldown) {
+                    } else if (isOnCooldown) {
                         return interaction.reply(Utils.setupMessage({
                             configPath: lang.Presets.OnCooldown,
                             variables: [
@@ -45,7 +45,7 @@ module.exports = async (bot, interaction) => {
                                 { searchFor: /{command}/g, replaceWith: command.name }
                             ]
                         }))
-                    } else if(!isOnCooldown) {
+                    } else if (!isOnCooldown) {
                         Utils.database.cooldowns.set(command.name, interaction.user.id, cooldown)
                         db.prepare(`INSERT INTO cooldowns (user, command, time)VALUES(?,?,?)`).run(interaction.user.id, command.name, (Date.now() + cooldown));
                     }
@@ -92,7 +92,7 @@ module.exports = async (bot, interaction) => {
                         Utils.logWarning(`${chalk.bold(permission)} is not a valid ${chalk.bold('role/user')} permission in command ${chalk.bold(command.name)}`)
 
                     if (userExists && userExists.id === interaction.user.id) permissions.push(true);
-                    else if(Utils.hasRole(interaction.member, permission, false)) permissions.push(true);
+                    else if (Utils.hasRole(interaction.member, permission, false)) permissions.push(true);
                 })
             };
 
@@ -133,6 +133,8 @@ module.exports = async (bot, interaction) => {
         bot.emit("interactionCreate-Button", interaction);
     } else if (interaction.isSelectMenu()) {
         bot.emit("interactionCreate-SelectMenu", interaction);
+    } else if (interaction.isAutocomplete()) {
+        bot.emit("interactionCreate-AutoComplete", interaction);
     }
 };
 module.exports.once = false;
