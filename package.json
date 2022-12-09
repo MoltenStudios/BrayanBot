@@ -35,7 +35,7 @@
 		"discord-content": "^1.0.0",
 		"discord.js": "^13.8.0",
 		"lavasfy": "^2.3.0",
-		"moment": "^2.29.3",
+		"moment": "^2.29.4",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
 		"nodejs-fs-utils": "^1.2.6",
