@@ -42,7 +42,7 @@
 		"yaml": "^2.1.1"
 	},
 	"optionalDependencies": {
-		"@discordjs/opus": "^0.7.0",
+		"@discordjs/opus": "^0.8.0",
 		"@twurple/api": "^5.1.6",
 		"@twurple/auth": "^5.1.6",
 		"@tycrek/log": "^0.5.9",
