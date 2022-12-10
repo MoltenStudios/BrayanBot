@@ -23,20 +23,19 @@ const manager: BrayanBot = new BrayanBot({
     commandDir: path.join(__dirname, "Commands"),
     configDir: path.join(__dirname, "Configs"),
     eventDir: path.join(__dirname, "Events"),
-    addonDir: path.join(__dirname, "Addons")
+    addonDir: path.join(__dirname, "Addons"),
+    databaseDir: path.join(__dirname, "Database")
 });
 
 manager.initializeHandlers().then((manager) => {
-    const { config, lang, commands } = manager.configs;
-    if(config?.Settings) {
-        if(config.Settings.Token == "Your-Bot-Token") {
-            return manager.logger.info(`Generated config.yml at ${chalk.bold("data/config.yml")} please configure this file and start bot again.`), process.exit(1);
-        } else manager.login(config.Settings.Token).catch((e: Error) => {
-            if(e.name.includes("TOKEN_INVALID")) {
-                return manager.logger.error(`Your current bot token is incorrect please reset your token and replace it in config.`), process.exit(1);
-            } else return manager.logger.error(e), process.exit(1);
-        });
-    }
+    const { config } = manager.configs;
+    if (config.Settings.Token == "Your-Bot-Token") {
+        manager.logger.info(`Generated config.yml at ${chalk.bold("data/config.yml")} please configure this file and start bot again.`), process.exit(1);
+    } else manager.login(config.Settings.Token).catch((e: Error) => {
+        if (e.name.includes("TOKEN_INVALID")) {
+            manager.logger.error(`Your current bot token is incorrect please reset your token and replace it in config.`), process.exit(1);
+        } else manager.logger.error(e), process.exit(1);
+    });
 })
 
 export { manager };

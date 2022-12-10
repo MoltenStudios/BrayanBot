@@ -9,6 +9,7 @@ import { EventHandler } from "./Handlers/Events";
 import { LangType } from "../../Configs/lang";
 import Utils from "../Utils";
 import fs from "fs";
+import { DatabaseHandler } from "./Handlers/Database";
 
 type Logger = {
     info: (...text: any[]) => void;
@@ -22,6 +23,7 @@ type ManagerOptions = {
     configDir: string;
     eventDir: string;
     addonDir: string;
+    databaseDir: string;
 }
 
 type Handlers = {
@@ -29,6 +31,7 @@ type Handlers = {
     CommandHandler?: CommandHandler
     ConfigHandler?: ConfigHandler
     AddonHandler?: AddonHandler
+    DatabaseHandler?: DatabaseHandler
 }
 
 type Configs = {
@@ -39,6 +42,9 @@ type Configs = {
 
 
 export class BrayanBot extends Client {
+    databaseDir(databaseDir: any, arg1: string): string | Buffer {
+        throw new Error("Method not implemented.");
+    }
     public commands: Collection<string, Command> = new Collection();
     public addons: Collection<string, Addon> = new Collection();
     public slashCommands: Collection<string, RawSlashCommand> = new Collection();
@@ -66,6 +72,9 @@ export class BrayanBot extends Client {
         if (!managerOptions.addonDir) throw new Error("[BrayanBot] No addon directory was provided.");
         if (!fs.existsSync(managerOptions.addonDir)) fs.mkdirSync(managerOptions.addonDir);
 
+        if (!managerOptions.databaseDir) throw new Error("[BrayanBot] No database directory was provided.");
+        if (!fs.existsSync(managerOptions.databaseDir)) fs.mkdirSync(managerOptions.databaseDir);
+
         this.managerOptions = managerOptions;
         this.logger = Utils.logger;
 
@@ -77,9 +86,9 @@ export class BrayanBot extends Client {
         this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
         this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
         this.handlers.AddonHandler = await new AddonHandler(this, this.managerOptions.addonDir).initialize();
+        this.handlers.DatabaseHandler = await new DatabaseHandler(this, this.managerOptions.databaseDir).initialize();
 
-        if(this.configs.config?.Settings.Token)
-            this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
+        this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
 
         return this;
     }
