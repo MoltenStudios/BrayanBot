@@ -46,7 +46,7 @@ We welcome all kinds of contributions. Feel free to open a pull request for any 
 
 We believe there is no such thing as a stupid idea! Which means, you may feel **absolutely free** to request any features over [Issues](https://github.com/BrayanBot/BrayanBot/issues) or our [Discord Server](https://discord.neushore.dev/). While new commands most likely to make it to the bot, suggest them anyway! There is a high chance that they can become implemented as [Addons](https://brayanbot.dev/docs/Developers/Addons/first-party)
 
-#### Code Contibutions
+#### Code Contributions
 
 If you consider yourself proficient in JavaScript, then feel free to contribute new features by [Forking this repository](https://github.com/BrayanBot/BrayanBot/fork). Or if you are interested in creating your own [Addons](https://brayanbot.dev/Developers/Addons/creating-addons), make sure you have read the necessary development. Feel free to hop in our Discord Server for development support.
 
