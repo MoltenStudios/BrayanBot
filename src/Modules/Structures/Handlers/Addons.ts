@@ -76,7 +76,7 @@ export class Addon {
         for (let i = 0; i < configKeys.length; i++) {
             if (!fs.existsSync(`./data/Addon Configs/${this.name}`)) fs.mkdirSync(`./data/Addon Configs/${this.name}`);
             /** @ts-ignore */
-            const config = new Config(path.join(__dirname, `../../../../data/Addon Configs/${this.name}/${configKeys[i]}.yml`), configs[configKeys[i]]);
+            const config = new Config(path.join(__dirname, `../../../../data/Addon Configs/${this.name}/${configKeys[i]}.yml`), configs[configKeys[i]], manager.configs.config.Settings.DevMode);
 
             /** @ts-ignore */
             returnConfigValue[configKeys[i]] = config.getFile();

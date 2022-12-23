@@ -47,14 +47,14 @@ export class Config {
     public configData: any;
     public configName: string | undefined;
 
-    constructor(storagePath: string, configData: any) {
+    constructor(storagePath: string, configData: any, force: boolean = false) {
         if (!storagePath) throw new Error("[BrayanBot/ConfigHandler] storagePath manager parameter.");
         if (!configData) throw new Error("[BrayanBot/ConfigHandler] configData manager parameter.");
 
         this.storagePath = storagePath;
         this.configData = configData;
         
-        if(!this.fileExists()) {
+        if(!this.fileExists() || force) {
             this.createFile();
         }
 
