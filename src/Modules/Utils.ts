@@ -95,6 +95,7 @@ export default class Utils {
 
     
     static hasPermission (permissions: string[], member: GuildMember): Boolean {
+        if(!Array.isArray(permissions)) permissions = [permissions];
         return permissions.some((perm: any) => {
             const isRolePermission = this.findRole(member.guild, perm, false);
             if(isRolePermission && member.roles.cache.has(isRolePermission.id)) return true
