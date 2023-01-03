@@ -22,11 +22,11 @@ const execute = async (bot) => {
     }
     [
         chalk.whiteBright(`•«                                                          »•`),
-        chalk.whiteBright(`             BrayanBot ${`v${version}`} is now online!             `),
-        chalk.whiteBright(`               Thanks for using BrayanBot!                                     `),
-        chalk.whiteBright(`                                                                               `),
-        chalk.whiteBright(`       Join our Discord Server if you face any issues.                         `),
-        chalk.whiteBright(`               ${chalk.blueBright.underline(`https://discord.neushore.dev/`)}  `),
+        chalk.whiteBright(`             BrayanBot ${`v${version}`} is now online!`),
+        chalk.whiteBright(`               Thanks for using BrayanBot!`),
+        chalk.whiteBright(``),
+        chalk.whiteBright(`       Join our Discord Server if you face any issues.`),
+        chalk.whiteBright(`               ${chalk.blueBright.underline(`https://discord.neushore.dev/`)}`),
         chalk.whiteBright(`•«                                                          »•`),
     ].forEach((line) => info(line))
 
