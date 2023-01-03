@@ -1,52 +1,38 @@
+import { ChannelType, TextChannel, VoiceChannel, CategoryChannel, DMChannel } from "discord.js";
+import { setupSlashCommand } from "./Utils/setupSlashCommand.js";
+import { setupMessage } from "./Utils/setupMessage.js";
+import { loadCommands } from "./Utils/loadCommands.js";
+import { botVariables, channelVariables, guildVariables, roleVariables, userVariables } from "./Variables.js"
 import chalk from "chalk";
-import Variables from "./Variables"
-import { setupMessage } from "./Utils/setupMessage";
-import { loadCommands } from "./Utils/loadCommands";
-import { setupSlashCommand } from "./Utils/setupSlashCommand";
-import {
-    Guild,
-    GuildMember,
-    Role,
-    Message,
-    UserFlagsString,
-    ChannelType,
-    TextChannel,
-    VoiceChannel,
-    CategoryChannel,
-    DMChannel
-} from "discord.js";
 
 export default class Utils {
     static logger = {
-        debug: (...text: any[]) => console.log(chalk.magentaBright.bold("[DEBUG]"), ...text),
-        info: (...text: any[]) =>  console.log(chalk.greenBright.bold("[INFO]"), ...text),
-        warn: (...text: any[]) =>  console.log(chalk.yellowBright.bold("[WARN]"), ...text),
-        error: (...text: any[]) => console.log(chalk.redBright.bold("[ERROR]"), ...text),
+        debug: (...text) => console.log(chalk.magentaBright.bold("[DEBUG]"), ...text),
+        info: (...text) => console.log(chalk.greenBright.bold("[INFO]"), ...text),
+        warn: (...text) => console.log(chalk.yellowBright.bold("[WARN]"), ...text),
+        error: (...text) => console.log(chalk.redBright.bold("[ERROR]"), ...text),
     }
 
     static loadCommands = loadCommands; static setupMessage = setupMessage; static setupSlashCommand = setupSlashCommand;
-    static botVariables = Variables.botVariables; static userVariables = Variables.userVariables;
-    static roleVariables = Variables.roleVariables; static guildVariables = Variables.guildVariables;
-    static channelVariables = Variables.channelVariables;
+    static botVariables = botVariables; static userVariables = userVariables;
+    static roleVariables = roleVariables; static guildVariables = guildVariables;
+    static channelVariables = channelVariables;
 
-    static getRandom(array: any[]) {
+    static getRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
     }
 
-    static applyVariables(string: string, variables: { 
-        searchFor: RegExp,
-        replaceWith: any
-    }[]) {
+    static applyVariables(string, variables) {
         return variables.reduce((output, variable) => output.replace(variable.searchFor, variable.replaceWith), string);
     }
 
-    static paginateArray (array: Array<any>, itemsperpage: number, page = 1): Array<any> | null {
+    static paginateArray(array, itemsperpage, page = 1) {
         const maxPages = Math.ceil(array.length / itemsperpage);
         if (page < 1 || page > maxPages) return null;
         return array.slice((page - 1) * itemsperpage, page * itemsperpage)
     }
 
-    static findRole(guild: Guild, name: string | number, notify = true): Role | undefined | void {
+    static findRole(guild, name, notify = true) {
         const roleName = typeof name === "number" ? name.toString() : name;
         const role = guild.roles.cache.find((r) => {
             return r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName.toLowerCase();
@@ -55,11 +41,11 @@ export default class Utils {
         if (!role && notify) {
             this.logger.error(`The role with the name or ID "${chalk.bold(name)}" was not found in the "${chalk.bold(guild.name)}" server.`);
         }
-        
+
         return role;
     }
 
-    static findMember(guild: Guild, name: string | number, notify = false): GuildMember | undefined | void {
+    static findMember(guild, name, notify = false) {
         const memberName = typeof name === "number" ? name.toString() : name;
         const member = guild.members.cache.find((m) => {
             return m.user.tag.toLowerCase() === memberName.toLowerCase() || m.id.toLowerCase() === memberName.toLowerCase() || m.user.username.toLowerCase() === memberName.toLowerCase();
@@ -71,8 +57,8 @@ export default class Utils {
 
         return member;
     }
-    
-    static findChannel(type: ChannelType, guild: Guild, name: string | number, notify = false): TextChannel | VoiceChannel | DMChannel | CategoryChannel | undefined {
+
+    static findChannel(type, guild, name, notify = false) {
         if (typeof name === "number") name = name.toString();
         const channels = guild.channels.cache.filter(channel => channel.type === type);
         const channel = channels.find(ch => ch.name === name || ch.id === name);
@@ -89,23 +75,23 @@ export default class Utils {
             case ChannelType.PrivateThread:
                 return channel instanceof TextChannel ? channel : undefined;
             default:
-                if (notify) this.logger.error(`The ${chalk.bold(ChannelType[type].toString())} channel named "${chalk.bold(name)}" could not be found in the "${chalk.bold( guild.name )}" server. Please check the channel name and its type and try again.`);
+                if (notify) this.logger.error(`The ${chalk.bold(ChannelType[type].toString())} channel named "${chalk.bold(name)}" could not be found in the "${chalk.bold(guild.name)}" server. Please check the channel name and its type and try again.`);
         }
     }
 
-    
-    static hasPermission (permissions: string[], member: GuildMember): Boolean {
-        if(!Array.isArray(permissions)) permissions = [permissions];
-        return permissions.some((perm: any) => {
+
+    static hasPermission(permissions, member) {
+        if (!Array.isArray(permissions)) permissions = [permissions];
+        return permissions.some((perm) => {
             const isRolePermission = this.findRole(member.guild, perm, false);
-            if(isRolePermission && member.roles.cache.has(isRolePermission.id)) return true
+            if (isRolePermission && member.roles.cache.has(isRolePermission.id)) return true
 
             const isMemberPermission = this.findMember(member.guild, perm, false);
-            if(isMemberPermission && member.id == isMemberPermission.id) return true;
+            if (isMemberPermission && member.id == isMemberPermission.id) return true;
         })
     }
 
-    static getUserBadges (member: GuildMember) {
+    static getUserBadges(member) {
         const badges = {
             BugHunterLevel1: "Discord Bug Hunter Level 1",
             BugHunterLevel2: "Discord Bug Hunter Level 2",
@@ -125,20 +111,20 @@ export default class Utils {
         }
 
         return Object.entries(badges)
-            .filter(([badge, _]) => member.user.flags?.has(badge as UserFlagsString))
+            .filter(([badge, _]) => member.user.flags?.has(badge))
             .map(([_, value]) => value);
     }
 
-    static getUserFromMessage(message: Message, arg = 0, checkFull = false) {
+    static getUserFromMessage(message, arg = 0, checkFull = false) {
         const args = message.content.split(" "); args.shift();
         const toFind = checkFull ? args.join(" ") : (args[arg] || '');
-        
-        return message.mentions.members?.first() 
-            ||  message.guild!.members.cache.find(member => 
-                    member.user.tag.toLowerCase() == toFind.toLowerCase() 
-                    || member.displayName.toLowerCase() == toFind.toLowerCase() 
-                    || member.user.username.toLowerCase() == toFind.toLowerCase() 
-                    || member.id == toFind.replace(/([<@!]|[>])/g, "")
-                );
+
+        return message.mentions.members?.first()
+            || message.guild.members.cache.find(member =>
+                member.user.tag.toLowerCase() == toFind.toLowerCase()
+                || member.displayName.toLowerCase() == toFind.toLowerCase()
+                || member.user.username.toLowerCase() == toFind.toLowerCase()
+                || member.id == toFind.replace(/([<@!]|[>])/g, "")
+            );
     }
 }

@@ -1,61 +1,60 @@
-import { Collection, Client, ClientOptions, REST } from "discord.js";
-import { Command, CommandHandler } from "./Handlers/Commands";
-import { RawSlashCommand } from "../Utils/setupSlashCommand";
-import { Addon, AddonHandler } from "./Handlers/Addons";
-import { CommandsType } from "../../Configs/commands";
-import { ConfigHandler } from "./Handlers/Config";
-import { ConfigType } from "../../Configs/config";
-import { EventHandler } from "./Handlers/Events";
-import { LangType } from "../../Configs/lang";
-import Utils from "../Utils";
+import Discord from "discord.js";
+const { Collection, Client, ClientOptions, REST } = Discord;
+import { Command, CommandHandler } from "./Handlers/Commands.js";
+import { Addon, AddonHandler } from "./Handlers/Addons.js";
+import { CommandsType } from "../../Configs/commands.js";
+import { DatabaseHandler } from "./Handlers/Database.js";
+import { ConfigHandler } from "./Handlers/Config.js";
+import { ConfigType } from "../../Configs/config.js";
+import { EventHandler } from "./Handlers/Events.js";
+import { LangType } from "../../Configs/lang.js";
+import Utils from "../Utils.js";
 import fs from "fs";
-import { DatabaseHandler } from "./Handlers/Database";
 
-type Logger = {
-    info: (...text: any[]) => void;
-    debug: (...text: any[]) => void;
-    warn: (...text: any[]) => void;
-    error: (...text: any[]) => void;
+const Logger = {
+    info: (...text) => { },
+    debug: (...text) => { },
+    warn: (...text) => { },
+    error: (...text) => { },
 }
 
-type ManagerOptions = {
-    commandDir: string;
-    configDir: string;
-    eventDir: string;
-    addonDir: string;
-    databaseDir: string;
+const ManagerOptions = {
+    commandDir: String,
+    configDir: String,
+    eventDir: String,
+    addonDir: String,
+    databaseDir: String,
 }
 
-type Handlers = {
-    EventHandler?: EventHandler
-    CommandHandler?: CommandHandler
-    ConfigHandler?: ConfigHandler
-    AddonHandler?: AddonHandler
-    DatabaseHandler?: DatabaseHandler
+const Handlers = {
+    EventHandler: EventHandler,
+    CommandHandler: CommandHandler,
+    ConfigHandler: ConfigHandler,
+    AddonHandler: AddonHandler,
+    DatabaseHandler: DatabaseHandler,
 }
 
-type Configs = {
-    commands: CommandsType;
-    config: ConfigType;
-    lang: LangType;
+const Configs = {
+    commands: CommandsType,
+    config: ConfigType,
+    lang: LangType,
 }
 
 
 export class BrayanBot extends Client {
-    databaseDir(databaseDir: any, arg1: string): string | Buffer {
-        throw new Error("Method not implemented.");
-    }
-    public commands: Collection<string, Command> = new Collection();
-    public addons: Collection<string, Addon> = new Collection();
-    public slashCommands: Collection<string, RawSlashCommand> = new Collection();
-    public events: { name: string, handler: Function }[] = [];
-    public managerOptions: ManagerOptions;
-    public handlers: Handlers = {};
-    // @ts-ignore
-    public configs: Configs = {};
-    public logger: Logger
+    /** @type {Collection<string, Command>} */ commands = new Collection();
+    /** @type {Collection<string, Addon>} */ addons = new Collection();
+    /** @type {Collection<string, RawSlashCommand>} */ slashCommands = new Collection();
+    /** @type {{ name: string, handler: Function }[]} */ events = [];
+    /** @type {ManagerOptions} */ managerOptions;
+    /** @type {Handlers} */ handlers = {};
+    /** @type {Configs} */ configs = {};
+    /** @type {Logger} */ logger
 
-    constructor(clientOptions: ClientOptions, managerOptions: ManagerOptions) {
+    /**
+     * @param {ClientOptions} clientOptions @param {ManagerOptions} managerOptions 
+     */
+    constructor(clientOptions, managerOptions) {
         super(clientOptions);
 
         if (!managerOptions) throw new Error("[BrayanBot] No options was provided.");

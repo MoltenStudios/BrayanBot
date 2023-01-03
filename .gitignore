@@ -2,7 +2,4 @@ build/
 node_modules/
 src/disposal/
 
-data/Addon Configs/
-data/config.yml
-data/lang.yml
-data/commands.yml
+data/

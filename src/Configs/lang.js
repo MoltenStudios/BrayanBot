@@ -1,8 +1,10 @@
-import { Config } from "../Modules/Structures/Handlers/Config";
-import { SetupMessage } from "../Modules/Utils/setupMessage";
+import { Config } from "../Modules/Structures/Handlers/Config.js";
+import { SetupMessage } from "../Modules/Utils/setupMessage.js";
 import path from "path";
 
-type LangType = {
+const __dirname = path.resolve();
+
+const LangType = {
     TagEmbed: SetupMessage,
     General: {
         Info: {
@@ -21,7 +23,8 @@ type LangType = {
     }
 }
 
-const defaultConfig: LangType = {
+/** @type {LangType} */
+const defaultConfig = {
     TagEmbed: {
         Embeds: [{
             Author: "{brand-name}",
@@ -88,7 +91,7 @@ const defaultConfig: LangType = {
                     Footer: "{user-tag}",
                     Timestamp: true
                 }]
-            }, 
+            },
             GuildInfo: {
                 Embeds: [{
                     Author: "{guild-name}",
@@ -133,7 +136,7 @@ const defaultConfig: LangType = {
                         Label: "Server Invite",
                     }]
                 }
-            }, 
+            },
             UserInfo: {
                 Embeds: [{
                     Author: "{target-tag}'s Info",
@@ -229,6 +232,6 @@ const defaultConfig: LangType = {
     }
 }
 
-export default new Config(path.join(__dirname, "../../data/lang.yml"), defaultConfig)
+export default new Config(path.join(__dirname, "./data/lang.yml"), defaultConfig)
 
 export { LangType }

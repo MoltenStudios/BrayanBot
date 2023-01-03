@@ -1,16 +1,16 @@
-import { BrayanBot } from "../BrayanBot";
-import BetterSql3, { Database as BtrDatabase } from "better-sqlite3"
-import Discord from "discord.js";
-import Utils from "../../Utils";
+import BetterSql3 from "better-sqlite3"
+const { Database: BtrDatabase } = BetterSql3;
+import { BrayanBot } from "../BrayanBot.js";
+import { manager } from "../../../index.js";
 import path from "path";
-import { manager } from "../../..";
 
 export class DatabaseHandler {
-    public manager: BrayanBot;
-    public databaseDir: string;
-    public defaultDatabase: BtrDatabase;
+    /** @type {BrayanBot} */ manager;
+    /** @type {string} */ databaseDir;
+    /** @type {BtrDatabase} */ defaultDatabase;
 
-    constructor(manager: BrayanBot, databaseDir: string) {
+    /** @param {BrayanBot} manager @param {string} databaseDir */
+    constructor(manager, databaseDir) {
         if (!manager) throw new Error("[BrayanBot/DatabaseHandler] Missing manager parameter.");
         if (!databaseDir) throw new Error("[BrayanBot/DatabaseHandler] Missing databaseDir parameter.");
 
@@ -33,25 +33,28 @@ export class DatabaseHandler {
 }
 
 export class Database {
-    private name: string;
-    fileName: string;
-    private database: BtrDatabase;
+    /** @type {string} */ name;
+    /** @type {string} */ fileName;
+    /** @type {BtrDatabase} */ database;
 
-    constructor(name: string) {
+    /** @param {string} databaseDir */
+    constructor(name) {
         if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
 
         this.name = name;
         this.fileName = this.name.includes(".db") || this.name.includes(".sqlite") ? this.name : `${this.name}.db`;
-        this.database = new BetterSql3(path.join(manager.handlers.DatabaseHandler?.databaseDir!, this.fileName));
+        this.database = new BetterSql3(path.join(manager.handlers.DatabaseHandler?.databaseDir, this.fileName));
 
         return this;
     }
 
-    static createTableQuery = (name: string, values: string) => `CREATE TABLE IF NOT EXISTS ${name} (${values})`;
+    /** @param {string} name @param {string} values */
+    static createTableQuery = (name, values) => `CREATE TABLE IF NOT EXISTS ${name} (${values})`;
 
-    getDatabase(): BtrDatabase { return this.database; }
+    getDatabase() { return this.database; }
 
-    createTable(name: string, values: string): Database {
+    /** @param {string} name @param {string} values */
+    createTable(name, values) {
         if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
         if (!values) throw new Error("[BrayanBot/Database] Missing values parameter.");
 
@@ -60,7 +63,8 @@ export class Database {
         return this;
     }
 
-    createTables(tables: { name: string, values: string }[]): Database {
+    /** @param {{ name: string, values: string }[]} tables */
+    createTables(tables) {
         if (!tables) throw new Error("[BrayanBot/Database] Missing tables parameter.");
 
         for (const table of tables) this.createTable(table.name, table.values);
@@ -68,7 +72,8 @@ export class Database {
         return this;
     }
 
-    deleteTable(name: string): Database {
+    /** @param {string} name */
+    deleteTable(name) {
         if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
 
         this.database.prepare(`DROP TABLE IF EXISTS ${name}`).run();
@@ -76,7 +81,8 @@ export class Database {
         return this;
     }
 
-    deleteTables(names: string[]): Database {
+    /** @param {string[]} */
+    deleteTables(names) {
         if (!names) throw new Error("[BrayanBot/Database] Missing names parameter.");
 
         for (const name of names) this.deleteTable(name);
@@ -84,7 +90,7 @@ export class Database {
         return this;
     }
 
-    deleteAllTables(): Database {
+    deleteAllTables() {
         const tableNames = this.database.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(table => table.name);
 
         for (const name of tableNames) this.deleteTable(name);

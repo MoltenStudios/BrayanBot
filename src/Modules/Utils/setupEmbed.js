@@ -1,42 +1,42 @@
-import Utils from '../Utils';
-import { ColorResolvable, EmbedBuilder } from 'discord.js';
-import { manager } from '../..';
+import { EmbedBuilder } from 'discord.js';
+import { manager } from '../../index.js';
+import Utils from '../Utils.js';
 
-type SetupEmbed = {
-    Type?: "rich" | "image" | "video" | "gifv" | "article" | "link",
-    Author?: string | string[],
-    AuthorIcon?: string | string[],
-    AuthorURL?: string | string[],
-    URL?: string | string[],
-    Title?: string | string[],
-    Description?: string | string[],
-    Fields?: string | {
-        Name: string,
-        Value: string,
-        Inline?: Boolean,
-    }[],
-    Footer?: string | string[],
-    FooterIcon?: string | string[],
-    Thumbnail?: string | string[],
-    Image?: string | string[],
-    Color?: string | string[],
-    Timestamp?: number | string | Boolean,
+const SetupEmbed = {
+    Type: "rich" | "image" | "video" | "gifv" | "article" | "link",
+    Author: String || [String],
+    AuthorIcon: String || [String],
+    AuthorURL: String || [String],
+    URL: String || [String],
+    Title: String || [String],
+    Description: String || [String],
+    Fields: String || [{
+        Name: String,
+        Value: String,
+        Inline: Boolean,
+    }],
+    Footer: String || [String],
+    FooterIcon: String || [String],
+    Thumbnail: String || [String],
+    Image: String || [String],
+    Color: String || [String],
+    Timestamp: Number || String || Boolean,
 }
 
-type Settings = {
+const Settings = {
     configPath: SetupEmbed,
-    variables?: {
+    variables: [{
         searchFor: RegExp,
-        replaceWith: any
-    }[]
+        replaceWith: String || Number || Boolean
+    }]
 }
 
 /**
  * Create an Embed from given settings.
- * @param settings Settings with configPath and variables to create embed
+ * @param {Settings} settings Settings Settings with configPath and variables to create embed
  * @returns {EmbedBuilder}
  */
-const setupEmbed = (settings: Settings): EmbedBuilder => {
+const setupEmbed = (settings) => {
     const configPath = settings.configPath;
     const variables = settings.variables;
 
@@ -97,38 +97,37 @@ const setupEmbed = (settings: Settings): EmbedBuilder => {
 
     const Embed = new EmbedBuilder();
 
-    if (Title) Embed.setTitle(Title as string);
-    if (Description) Embed.setDescription(Description as string);
-    if (URL) Embed.setURL(URL as string);
-    if (Thumbnail) Embed.setThumbnail(Thumbnail as string);
-    if (Image) Embed.setImage(Image as string);
-    if (Color) Embed.setColor(Color as ColorResolvable);
+    if (Title) Embed.setTitle(Title);
+    if (Description) Embed.setDescription(Description);
+    if (URL) Embed.setURL(URL);
+    if (Thumbnail) Embed.setThumbnail(Thumbnail);
+    if (Image) Embed.setImage(Image);
+    if (Color) Embed.setColor(Color);
     if (Timestamp) Embed.setTimestamp(Date.now());
 
-    if(Author && AuthorIcon && AuthorURL) {
-        Embed.setAuthor({name: Author as string, iconURL: AuthorIcon as string, url: AuthorURL as string });
-    } else if(Author && AuthorIcon) {
-        Embed.setAuthor({ name: Author as string, iconURL: AuthorIcon as string });
-    } else if(Author && AuthorURL) {
-        Embed.setAuthor({ name: Author as string, url: AuthorURL as string });
-    } else if(Author) {
-        Embed.setAuthor({ name: Author as string });
+    if (Author && AuthorIcon && AuthorURL) {
+        Embed.setAuthor({ name: Author, iconURL: AuthorIcon, url: AuthorURL });
+    } else if (Author && AuthorIcon) {
+        Embed.setAuthor({ name: Author, iconURL: AuthorIcon });
+    } else if (Author && AuthorURL) {
+        Embed.setAuthor({ name: Author, url: AuthorURL });
+    } else if (Author) {
+        Embed.setAuthor({ name: Author });
     }
 
-    if(Footer && FooterIcon) {
-        Embed.setFooter({ text: Footer as string, iconURL: FooterIcon as string })
-    } else if(Footer) {
-        Embed.setFooter({ text: Footer as string });
+    if (Footer && FooterIcon) {
+        Embed.setFooter({ text: Footer, iconURL: FooterIcon })
+    } else if (Footer) {
+        Embed.setFooter({ text: Footer });
     }
 
     if (Array.isArray(Fields) && Fields.length > 0) {
         for (let y = 0; y < Fields.length; y++) {
-            if(Fields[y].Name && Fields[y].Value) 
-                Embed.addFields({
-                    name: Fields[y].Name as string,
-                    value: Fields[y].Value as string,
-                    inline: !!Fields[y].Inline
-                });
+            if (Fields[y].Name && Fields[y].Value) Embed.addFields({
+                name: Fields[y].Name,
+                value: Fields[y].Value,
+                inline: !!Fields[y].Inline
+            });
         }
     }
 

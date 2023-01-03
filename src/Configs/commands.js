@@ -1,14 +1,17 @@
 import path from "path";
-import { Config } from "../Modules/Structures/Handlers/Config";
-import { CommandData } from "../Modules/Structures/Interfaces/Command";
+import { Config } from "../Modules/Structures/Handlers/Config.js";
+import { CommandData } from "../Modules/Structures/Interfaces/Command.js";
 
-type CommandsType = {
+const __dirname = path.resolve();
+
+const CommandsType = {
     General: {
         Info: CommandData
     }
 }
 
-const defaultConfig: CommandsType = {
+/** @type {CommandsType} */
+const defaultConfig = {
     General: {
         Info: {
             Enabled: true,
@@ -48,6 +51,6 @@ const defaultConfig: CommandsType = {
     }
 }
 
-export default new Config(path.join(__dirname, "../../data/commands.yml"), defaultConfig)
+export default new Config(path.join(__dirname, "./data/commands.yml"), defaultConfig)
 
 export { CommandsType }

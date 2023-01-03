@@ -6,6 +6,7 @@
 	"author": "https://github.com/BrayanBot",
 	"license": "Apache-2.0",
 	"main": "src/index.js",
+	"type": "module",
 	"keywords": [
 		"discord",
 		"discord.js",
@@ -19,9 +20,8 @@
 		"@XCraftMan52#0661 (XCraftMan)"
 	],
 	"scripts": {
-		"dev": "nodemon --exec \"tsc && node build/index.js --reset-configs --reset-slashCommands\" -e ts",
-		"start": "tsc && node build/index.js",
-		"build": "tsc --build --verbose"
+		"dev": "nodemon --exec \"node src/index.js --reset-configs --reset-slashCommands\" -e js",
+		"start": "node src/index.js"
 	},
 	"bugs": {
 		"url": "https://github.com/BrayanBot/BrayanBot/issues"
@@ -41,9 +41,6 @@
 		"yaml": "^2.1.1"
 	},
 	"devDependencies": {
-		"@types/better-sqlite3": "^7.6.3",
-		"@types/ms": "^0.7.31",
-		"nodemon": "^2.0.19",
-		"typescript": "^4.8.2"
+		"nodemon": "^2.0.19"
 	}
 }

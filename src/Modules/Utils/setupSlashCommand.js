@@ -1,45 +1,47 @@
 import { ApplicationCommandOptionType } from "discord.js"
 
-type SlashCommandOption = {
-    Type?: string,
-    Name?: string,
-    Description?: string,
-    Required?: Boolean,
-    ChannelTypes?: string[],
-    Options?: SlashCommandOption[],
-    Choices?: {
-        Name?: string,
-        Value?: any,
-    }[]
+const SlashCommandOption = {
+    Type: String,
+    Name: String,
+    Description: String,
+    Required: Boolean,
+    ChannelTypes: [String],
+    Options: [this],
+    Choices: [{
+        Name: String,
+        Value: String || Number || Boolean,
+    }]
 }
 
-type SetupSlashCommand = {
-    Name?: string,
-    Description?: string,
-    Options?: SlashCommandOption[]
+const SetupSlashCommand = {
+    Name: String,
+    Description: String,
+    Options: [SlashCommandOption]
 }
 
-type RawSlashCommand = {
-    type?: number,
-    name?: string,
-    description?: string,
-    options?: RawSlashCommand[],
-    required?: boolean,
-    channel_types?: any[]
-    choices?: {
-        name: string,
-        value: any
-    }[],
+const RawSlashCommand = {
+    type: Number,
+    name: String,
+    description: String,
+    options: [this],
+    required: Boolean,
+    channel_types: [],
+    choices: [{
+        name: String,
+        value: String || Number || Boolean,
+    }],
 }
 
-const setupSlashCommand = (settings: SetupSlashCommand) => {
+/** @param {SetupSlashCommand} settings */
+const setupSlashCommand = (settings) => {
     const { Name, Description, Options } = settings;
 
-    if(!Name || !Description) {
+    if (!Name || !Description) {
         throw new Error('Name and Description are required to build a SlashCommand');
     }
 
-    let slashCMD: RawSlashCommand = {
+    /** @type {RawSlashCommand} */
+    let slashCMD = {
         name: Name.toLowerCase(),
         description: Description,
     }, optionTypes = [
@@ -58,19 +60,20 @@ const setupSlashCommand = (settings: SetupSlashCommand) => {
         "guild_stage_voice", 13, "stage channel", "stage voice", "stage_channel", "stage_voice",
     ]
 
-    if(Array.isArray(Options) && Options.length) {
+    if (Array.isArray(Options) && Options.length) {
         slashCMD.options = Options.map(option => {
-            if(!option.Type) {
+            if (!option.Type) {
                 throw new Error('Option Type is required to build a SlashCommand Option');
-            } else if(!optionTypes.includes(option.Type.toLowerCase())) {
+            } else if (!optionTypes.includes(option.Type.toLowerCase())) {
                 throw new Error(`Option Type ${option.Type} is not a valid option type`);
-            } else if(!option.Name) {
+            } else if (!option.Name) {
                 throw new Error('Option Name is required to build a SlashCommand Option');
-            } else if(!option.Description) {
+            } else if (!option.Description) {
                 throw new Error('Option Description is required to build a SlashCommand Option');
             }
 
-            let parsedOption: RawSlashCommand = {
+            /** @type {RawSlashCommand} */
+            let parsedOption = {
                 name: option.Name.toLowerCase(),
                 description: option.Description,
                 required: !!option.Required
@@ -87,7 +90,7 @@ const setupSlashCommand = (settings: SetupSlashCommand) => {
             else if (["mentionable", 9].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Mentionable
             else throw new Error(`Option Type ${option.Type} is not a valid option type`);
 
-            if([1, 2].includes(parsedOption.type)) {
+            if ([1, 2].includes(parsedOption.type)) {
                 parsedOption = { type: parsedOption.type, ...setupSlashCommand(option) }
             } else {
                 if (option.Choices && Array.isArray(option.Choices) && ["string", 3, "integer", 4, "number", 10].includes(option.Type.toLowerCase())) {
@@ -100,36 +103,36 @@ const setupSlashCommand = (settings: SetupSlashCommand) => {
                             name: choice.Name,
                             value: typeof choice.Value == "string" ? choice.Value.toLowerCase() : parseInt(choice.Value),
                         }
-                    })  
+                    })
                 }
 
                 if (option.ChannelTypes && Array.isArray(option.ChannelTypes) && ["channel", 7].includes(option.Type.toLowerCase())) {
                     parsedOption.channel_types = option.ChannelTypes.map(channelType => {
                         if (channelTypes.includes(channelType.toLowerCase())) {
-                            if (["guild_text", 0, "text"].includes(channelType.toLowerCase())) 
+                            if (["guild_text", 0, "text"].includes(channelType.toLowerCase()))
                                 return 0
-                            else if (["guild_voice", 2, "voice"].includes(channelType.toLowerCase())) 
+                            else if (["guild_voice", 2, "voice"].includes(channelType.toLowerCase()))
                                 return 2
-                            else if (["guild_category", 4, "category"].includes(channelType.toLowerCase())) 
+                            else if (["guild_category", 4, "category"].includes(channelType.toLowerCase()))
                                 return 4
-                            else if (["guild_news", 5, "news"].includes(channelType.toLowerCase())) 
+                            else if (["guild_news", 5, "news"].includes(channelType.toLowerCase()))
                                 return 5
-                            else if (["guild_store", 6, "store", "store_thread"].includes(channelType.toLowerCase())) 
+                            else if (["guild_store", 6, "store", "store_thread"].includes(channelType.toLowerCase()))
                                 return 6
-                            else if (["guild_news_thread", 10, "news thread", "news_thread"].includes(channelType.toLowerCase())) 
+                            else if (["guild_news_thread", 10, "news thread", "news_thread"].includes(channelType.toLowerCase()))
                                 return 10
-                            else if (["guild_public_thread", 11, "public thread", "public_thread"].includes(channelType.toLowerCase())) 
+                            else if (["guild_public_thread", 11, "public thread", "public_thread"].includes(channelType.toLowerCase()))
                                 return 11
-                            else if (["guild_private_thread", 12, "private thread", "private_thread"].includes(channelType.toLowerCase())) 
+                            else if (["guild_private_thread", 12, "private thread", "private_thread"].includes(channelType.toLowerCase()))
                                 return 12
-                            else if (["guild_stage_voice", 13, "stage channel", "stage voice", "stage_channel", "stage_voice"].includes(channelType.toLowerCase())) 
+                            else if (["guild_stage_voice", 13, "stage channel", "stage voice", "stage_channel", "stage_voice"].includes(channelType.toLowerCase()))
                                 return 13
                             else throw new Error(`Channel Type ${channelType} is not a valid channel type`);
                         }
                     })
                 }
             }
-            
+
             return parsedOption;
         })
     } else slashCMD.options = [];
