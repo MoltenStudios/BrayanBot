@@ -1,4 +1,4 @@
-# BrayanBot docker-compose.yaml v2.0.0
+# BrayanBot docker-compose.yaml v2.0.1
 # authors:
 #  - NotAShelf <me@notashelf.dev> 
 #  - XCraftMan52 <lucas@lucaswebber.net>
@@ -14,6 +14,4 @@ services:
     volumes:
       - ./data:/opt/brayanbot/data
       - ./src:/opt/brayanbot/src
-    environment:
-      - LOG_LEVEL=debug # debug, info, warn, error
-      - FORCE_COLOR=3 # force color output
+    environment: []
