@@ -27,7 +27,7 @@ BrayanBot is a free (and open source), addon-oriented, actively maintained base 
 It holds the intention of being as fast as lightweight as possible out of the box, while allowing users to customize the bot (or fork it!)
 entirely to their own liking. With so little hard-coded commands, BrayanBot is _the_ Discord bot of your dreams.
 
-This repository is for the TypeScript rewrite and is actively looking for new features and ideas. If you have any ideas for BrayanBot V2,
+This repository is for the V2 rewrite and is actively looking for new features and ideas. If you have any ideas for BrayanBot V2,
 please feel free to join our [Discord Server](https://discord.neushore.dev/) and let us know. If you are interested in contributing those ideas instead,
 feel absolutely free to do so. We always appreciate any and all contributions.
 
