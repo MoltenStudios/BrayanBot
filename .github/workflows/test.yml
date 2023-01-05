@@ -1,0 +1,16 @@
+name: "Automated Test CI"
+
+on:
+  workflow_dispatch
+
+env:
+  BOT_TOKEN: ${{ secrets.BOT_TEST_TOKEN }}
+
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Take the bot on a test run"
+        run: | 
+          export ENV_TOKEN="$BOT_TOKEN"
+          ../scripts/audit.sh
