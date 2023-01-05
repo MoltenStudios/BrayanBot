@@ -25,7 +25,7 @@ const manager = new BrayanBot({
     configDir: path.join(__dirname, "/src/Configs"),
     eventDir: path.join(__dirname, "/src/Events"),
     addonDir: path.join(__dirname, "/data/addons"),
-    databaseDir: path.join(__dirname, "/src/Database")
+    databaseDir: path.join(__dirname, "/data/database")
 });
 
 manager.initializeHandlers().then((manager) => {
