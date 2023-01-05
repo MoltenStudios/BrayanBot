@@ -30,11 +30,17 @@ const manager = new BrayanBot({
 
 manager.initializeHandlers().then((manager) => {
     const { config } = manager.configs;
-    if (config.Settings.Token == "Your-Bot-Token") {
-        manager.logger.info(`Generated config.yml at ${chalk.bold("data/config.yml")} please configure this file and start bot again.`), process.exit(1);
-    } else manager.login(config.Settings.Token).catch((e) => {
+    // If ENV_TOKEN is set, use it instead of config.yml
+    const { token } = process.env.ENV_TOKEN || config.Settings.Token;
+
+    if (token == "Your-Bot-Token") {
+        manager.logger.info(`Generated config.yml at ${chalk.bold("data/config.yml")}. Please configure this file and start bot again.`), process.exit(1);
+    } else manager.login(token).catch((e) => {
         if (e.name.includes("TOKEN_INVALID")) {
-            manager.logger.error(`Your current bot token is incorrect please reset your token and replace it in config.`), process.exit(1);
+            if (process.env.BOT_PLATFORM == "Docker") {
+                // If this is a Dockerized environment, warn about the token environment variable and not a config.yml file.
+                manager.logger.error(`Your current bot token is incorrect. Please set ENV_TOKEN in your compose file, or the env file.`), process.exit(1);
+            } else manager.logger.error(`Your current bot token is incorrect. Please reset your token and replace it in config.`), process.exit(1);
         } else manager.logger.error(e), process.exit(1);
     });
 })

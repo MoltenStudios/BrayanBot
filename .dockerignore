@@ -1,11 +1,15 @@
 ## Dependencies ##
 node_modules
+shell.nix
 
 ## Github ##
 */.github/
-*/workflows/
+*/.github/workflows/
 .gitignore
 
 ## Databases ##
 *.db
 *.sqlite
+
+## Config Files ##
+data/
