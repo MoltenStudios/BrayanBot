@@ -14,17 +14,18 @@ nocolor="\033[0m"
 
 _install () {
     # Install pnpm dependencies
-    printf "$boldwhite" ; echo -en "\n1. Installing dependencies...\n"
-    pnpm fetch
-    pnpm install -r
-    pnpm i better-sqlite3 # this is a dependency, but sometimes it doesn't install properly
+    printf "$boldwhite" ; echo -en "\n1. Installing dependencies...\n" ; echo -en "$nocolor"
+    pnpm fetch &&
+    pnpm install -r &&
+    # this is a dependency, but sometimes it doesn't install properly
+    pnpm i better-sqlite3 && printf "$green" ; echo -en "Dependencies installed successfully\n" || return 1
 }
 
 _audit () {
     # Audit pnpm dependencies
-    printf "$boldwhite" ; echo -en "\n2. Auditing installed dependencies...\n"
+    printf "$boldwhite" ; echo -en "\n2. Auditing installed dependencies...\n" ; echo -en "$nocolor"
     mkdir -p test
-    pnpm audit --json > test/audit.json
+    pnpm audit --json > ./test/audit.json
 
     # Look for vulnerabilities by grepping "critical", "high", "moderate", "low" that are not equal to 0
     if grep -i "critical" < ./test/audit.json | grep -v "0" > /dev/null; then
@@ -47,11 +48,11 @@ _audit () {
 
 _test () {
     # Run tests
-    printf "$boldwhite" ; echo -en "\n3. Running tests...\n"
-    timeout 3m pnpm run start > errors.log ;
+    printf "$boldwhite" ; echo -en "\n3. Running tests...\n" ; echo -en "$nocolor"
+    timeout 3m pnpm run start > ./test/errors.log ;
     
     # Parse errors.log to check if any errors were thrown
-    mkdir -p test
+    mkdir -vp test
     if grep -i "error" ./test/errors.log > /dev/null; then
         printf "$boldred" ; echo -en "Error(s) found in errors.log:\n"
         # Return lines with error
