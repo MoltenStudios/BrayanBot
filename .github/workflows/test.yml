@@ -7,9 +7,11 @@ env:
   BOT_TOKEN: ${{ secrets.BOT_TEST_TOKEN }}
 
 jobs:
-  greeting_job:
+  test_job:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
+
       - name: "Take the bot on a test run"
         run: | 
           export ENV_TOKEN="$BOT_TOKEN"
