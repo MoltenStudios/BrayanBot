@@ -10,9 +10,10 @@ jobs:
   test_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: "Take the bot on a test run"
         run: | 
           export ENV_TOKEN="$BOT_TOKEN"
-          ../scripts/audit.sh
+          chmod +x ./.github/scripts/audit.sh
+          ./.github/scripts/audit.sh
