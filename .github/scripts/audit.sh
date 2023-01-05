@@ -49,7 +49,7 @@ _audit () {
 _test () {
     # Run tests
     printf "$boldwhite" ; echo -en "\n3. Running tests...\n" ; echo -en "$nocolor"
-    timeout 3m pnpm run start > ./test/errors.log ;
+    timeout 10s pnpm run start > ./test/errors.log ;
     
     # Parse errors.log to check if any errors were thrown
     mkdir -vp test
