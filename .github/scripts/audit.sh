@@ -23,19 +23,20 @@ _install () {
 _audit () {
     # Audit pnpm dependencies
     printf "$boldwhite" ; echo -en "\n2. Auditing installed dependencies...\n"
+    mkdir -p test
     pnpm audit --json > test/audit.json
 
     # Look for vulnerabilities by grepping "critical", "high", "moderate", "low" that are not equal to 0
-    if grep -i "critical" < test/audit.json | grep -v "0" > /dev/null; then
+    if grep -i "critical" < ./test/audit.json | grep -v "0" > /dev/null; then
         printf "$red" ; echo -en "Critical vulnerabilities found in audit.json\n"
         return 1
     elif grep -i "high" < test/audit.json | grep -v "0" > /dev/null; then
         printf "$red" ; echo -en "High vulnerabilities found in audit.json\n"
         return 1
-    elif grep -i "moderate" < test/audit.json| grep -v "0" > /dev/null; then
+    elif grep -i "moderate" < ./test/audit.json| grep -v "0" > /dev/null; then
         printf "$red" ; echo -en "Moderate vulnerabilities found in audit.json\n"
         return 1
-    elif grep -i "low" < test/audit.json | grep -v "0" > /dev/null; then
+    elif grep -i "low" < ./test/audit.json | grep -v "0" > /dev/null; then
         printf "$red" ; echo -en "Low vulnerabilities found in audit.json\n"
         return 1
     else
@@ -50,7 +51,8 @@ _test () {
     timeout 3m pnpm run start > errors.log ;
     
     # Parse errors.log to check if any errors were thrown
-    if grep -i "error" test/errors.log > /dev/null; then
+    mkdir -p test
+    if grep -i "error" ./test/errors.log > /dev/null; then
         printf "$boldred" ; echo -en "Error(s) found in errors.log:\n"
         # Return lines with error
         printf "$red" ; grep -i "error" < errors.log ; echo -en "\n$nocolor"
