@@ -16,7 +16,7 @@
     <img src="https://img.shields.io/badge/discord.js-v14-7354F6?logo=discord&logoColor=white&style=flat-square" />
     <img src="https://img.shields.io/github/stars/brayanbotdev/brayanbot.svg?logo=github&style=flat-square" />
     <img src="https://img.shields.io/github/license/brayanbotdev/brayanbot.svg?logo=github&style=flat-square" />
-    <img src="https://img.shields.io/github/workflow/status/brayanbotdev/brayanbot/CodeQL?label=test&logo=circleci&style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/BrayanBot/BrayanBot/nodejs.yml?branch=v2?label=test&logo=circleci&style=flat-square" />
 </div>
 
 <h2 align="center">📢 About BrayanBot</h2>
