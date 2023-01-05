@@ -56,7 +56,7 @@ _test () {
     if grep -i "error" ./test/errors.log > /dev/null; then
         printf "$boldred" ; echo -en "Error(s) found in errors.log:\n"
         # Return lines with error
-        printf "$red" ; grep -i "error" < errors.log ; echo -en "\n$nocolor"
+        printf "$red" ; grep -i "error" < ./test/errors.log ; echo -en "\n$nocolor"
         return 1
     else
         printf "$green" ; echo "No errors found in errors.log"
