@@ -40,6 +40,6 @@ jobs:
 
       - name: "Take the bot on a test run"
         run: | 
-          export ENV_TOKEN="$BOT_TOKEN"
+          export ENV_TOKEN="${BOT_TOKEN}"
           chmod +x ./.github/scripts/audit.sh
           ./.github/scripts/audit.sh

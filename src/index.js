@@ -31,7 +31,7 @@ const manager = new BrayanBot({
 manager.initializeHandlers().then((manager) => {
     const { config } = manager.configs;
     // If ENV_TOKEN is set, use it instead of config.yml
-    const { token } = process.env.ENV_TOKEN || config.Settings.Token;
+    const token = process.env.ENV_TOKEN || config.Settings.Token;
 
     if (token == "Your-Bot-Token") {
         manager.logger.info(`Generated config.yml at ${chalk.bold("data/config.yml")}. Please configure this file and start bot again.`), process.exit(1);
