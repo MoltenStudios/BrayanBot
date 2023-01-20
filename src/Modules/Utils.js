@@ -27,12 +27,12 @@ export default {
     getRandom: (array) => array[Math.floor(Math.random() * array.length)],
 
     /** @param {string} string @param {[{ searchFor: RegExp, replaceWith: any }]} variables*/
-    applyVariable: (string, variables) => {
+    applyVariables(string, variables) {
         return variables.reduce((output, variable) => output.replace(variable.searchFor, variable.replaceWith), string);
     },
 
     /** @param {Array} array @param {number} itemsperpage @param {number} page */
-    paginateArray: (array, itemsperpage, page = 1) => {
+    paginateArray(array, itemsperpage, page = 1) {
         const maxPages = Math.ceil(array.length / itemsperpage);
         if (page < 1 || page > maxPages) return null;
         return array.slice((page - 1) * itemsperpage, page * itemsperpage)
@@ -43,7 +43,7 @@ export default {
      * @param {Boolean} notify 
      * @returns {Role | undefined}
      */
-    findRole: (guild, name, notify = true) => {
+    findRole(guild, name, notify = true) {
         const roleName = typeof name === "number" ? name.toString() : name;
         const role = guild.roles.cache.find((r) => {
             return r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName.toLowerCase();
@@ -61,7 +61,7 @@ export default {
      * @param {Boolean} notify 
      * @returns {GuildMember | undefined}
      */
-    findMember: (guild, name, notify = false) => {
+    findMember(guild, name, notify = false) {
         const memberName = typeof name === "number" ? name.toString() : name;
         const member = guild.members.cache.find((m) => {
             return m.user.tag.toLowerCase() === memberName.toLowerCase() || m.id.toLowerCase() === memberName.toLowerCase() || m.user.username.toLowerCase() === memberName.toLowerCase();
@@ -81,7 +81,7 @@ export default {
      * @param {Boolean} notify 
      * @returns {TextChannel | VoiceChannel | DMChannel | CategoryChannel | undefined}
      */
-    findChannel: (type, guild, name, notify = false) => {
+    findChannel(type, guild, name, notify = false) {
         if (typeof name === "number") name = name.toString();
         const channels = guild.channels.cache.filter(channel => channel.type === type);
         const channel = channels.find(ch => ch.name === name || ch.id === name);
@@ -106,7 +106,7 @@ export default {
      * @param {GuildMember} member 
      * @returns {Boolean}
      */
-    hasPermission: (permissions, member) => {
+    hasPermission(permissions, member) {
         if (!Array.isArray(permissions)) permissions = [permissions];
         return permissions.some((perm) => {
             const isRolePermission = this.findRole(member.guild, perm, false);
@@ -117,7 +117,7 @@ export default {
         })
     },
     /** @param {GuildMember} member */
-    getUserBadges: (member) => {
+    getUserBadges(member) {
         const badges = {
             BugHunterLevel1: "Discord Bug Hunter Level 1",
             BugHunterLevel2: "Discord Bug Hunter Level 2",
@@ -141,7 +141,7 @@ export default {
             .map(([_, value]) => value);
     },
 
-    getUserFromMessage: (message, arg = 0, checkFull = false) => {
+    getUserFromMessage(message, arg = 0, checkFull = false) {
         const args = message.content.split(" "); args.shift();
         const toFind = checkFull ? args.join(" ") : (args[arg] || '');
 
