@@ -44,8 +44,8 @@ export class CommandHandler {
 export class Command {
     /** @type {CommandData} */ commandData;
     /** @type {CommandConfig} */ commandConfig;
-    /** @type {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: Object) => any) | undefined} */ LegacyRun;
-    /** @type {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: Object) => any) | undefined} */ InteractionRun;
+    /** @type {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: CommandData) => any) | undefined} */ LegacyRun;
+    /** @type {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: CommandData) => any) | undefined} */ InteractionRun;
 
     /** @param {CommandInterface} command */
     constructor(command) {
@@ -66,7 +66,29 @@ export class Command {
             manager.slashCommands.set(this.commandData.Name, parsedSlashCommand);
         }
 
-        manager.commands.set(command.commandData.Name, this);
+        if (this.LegacyRun || this.InteractionRun)
+            manager.commands.set(command.commandData.Name, this);
+
         return this;
+    }
+
+    /** @param {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: Object) => any) | undefined} execute */
+    runLegacyRun(execute) { if (execute && typeof execute == "function") this.LegacyRun = execute; return this; }
+
+    /** @param {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: Object) => any) | undefined} execute */
+    runInteractionRun(execute) { if (execute && typeof execute == "function") this.InteractionRun = execute; return this; }
+
+    registerCommand() {
+        if (Array.isArray(this.commandData.Arguments)) {
+            const parsedSlashCommand = Utils.setupSlashCommand({
+                Name: this.commandData.Name,
+                Description: this.commandData.Description,
+                Options: this.commandData.Arguments
+            });
+
+            manager.slashCommands.set(this.commandData.Name, parsedSlashCommand);
+        }
+
+        manager.commands.set(command.commandData.Name, this);
     }
 }
