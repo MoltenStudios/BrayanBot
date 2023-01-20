@@ -7,6 +7,7 @@ const SlashCommandOption = {
     Required: Boolean,
     ChannelTypes: [String],
     Options: [this],
+    AutoComplete: Boolean,
     Choices: [{
         Name: String,
         Value: String || Number || Boolean,
@@ -26,6 +27,7 @@ const RawSlashCommand = {
     options: [this],
     required: Boolean,
     channel_types: [],
+    autocomplete: Boolean,
     choices: [{
         name: String,
         value: String || Number || Boolean,
@@ -76,7 +78,8 @@ const setupSlashCommand = (settings) => {
             let parsedOption = {
                 name: option.Name.toLowerCase(),
                 description: option.Description,
-                required: !!option.Required
+                required: !!option.Required,
+                autocomplete: !!option.AutoComplete,
             }
 
             if (["sub command", 1].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Subcommand
