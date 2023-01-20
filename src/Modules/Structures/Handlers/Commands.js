@@ -56,10 +56,16 @@ export class Command {
         if (command.InteractionRun && typeof command.InteractionRun == "function")
             this.InteractionRun = command.InteractionRun;
 
-        if (this.commandData.SlashCommand?.Enabled && this.commandData.SlashCommand.Data.Name) {
-            const parsedSlashCommand = Utils.setupSlashCommand(this.commandData.SlashCommand.Data);
-            manager.slashCommands.set(this.commandData.SlashCommand.Data.Name, parsedSlashCommand);
+        if (Array.isArray(this.commandData.Arguments)) {
+            const parsedSlashCommand = Utils.setupSlashCommand({
+                Name: this.commandData.Name,
+                Description: this.commandData.Description,
+                Options: this.commandData.Arguments
+            });
+
+            manager.slashCommands.set(this.commandData.Name, parsedSlashCommand);
         }
+
         manager.commands.set(command.commandData.Name, this);
         return this;
     }

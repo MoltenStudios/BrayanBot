@@ -1,11 +1,6 @@
-import { SetupSlashCommand } from "../../Utils/setupSlashCommand.js";
+import { SlashCommandOption } from "../../Utils/setupSlashCommand.js";
 import { Message, ChatInputCommandInteraction } from "discord.js";
 import { BrayanBot } from "../BrayanBot.js";
-
-const SlashCommandData = {
-    Name: String,
-    Description: String,
-}
 
 const CommandConfig = {
     guildOnly: Boolean,
@@ -24,10 +19,7 @@ const CommandData = {
     Permission: [String],
     Description: String,
     DeleteCommand: Boolean,
-    SlashCommand: {
-        Enabled: Boolean,
-        Data: SetupSlashCommand
-    }
+    Arguments: [SlashCommandOption]
 }
 
 const CommandInterface = {
@@ -45,4 +37,4 @@ const CommandInterface = {
     InteractionRun: (manager, interaction, commandData) => { }
 }
 
-export { CommandData, CommandInterface, SlashCommandData, CommandConfig }
+export { CommandData, CommandInterface, CommandConfig }
