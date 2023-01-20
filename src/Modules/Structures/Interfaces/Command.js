@@ -34,7 +34,12 @@ const CommandInterface = {
     /**
      * @param {BrayanBot} manager @param {ChatInputCommandInteraction} interaction 
      * @param {CommandData} commandData */
-    InteractionRun: (manager, interaction, commandData) => { }
+    InteractionRun: (manager, interaction, commandData) => { },
+    /**
+     * @param {BrayanBot} manager 
+     * @param {AutocompleteInteraction} interaction 
+     */
+    AutoComplete: (manager, interaction) => { }
 }
 
 export { CommandData, CommandInterface, CommandConfig }

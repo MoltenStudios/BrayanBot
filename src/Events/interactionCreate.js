@@ -1,8 +1,8 @@
 import { EventListener } from "../Modules/Structures/Handlers/Events.js";
 import { BrayanBot } from "../Modules/Structures/BrayanBot.js";
-import Discord from "discord.js";
 import Utils from "../Modules/Utils.js";
-const { ChannelType, Interaction } = Discord
+import Discord from "discord.js";
+const { Interaction, ChannelType } = Discord;
 
 /** @param {BrayanBot} bot @param {Interaction} interaction */
 const execute = async (bot, interaction) => {
@@ -58,6 +58,13 @@ const execute = async (bot, interaction) => {
             }
 
             await cmd.InteractionRun?.call(this, bot, interaction, cmd);
+        }
+    } else if (interaction.isAutocomplete()) {
+        const command = interaction.commandName;
+
+        const cmd = bot.commands.get(command);
+        if (cmd && cmd.AutoComplete && typeof cmd.AutoComplete == "function") {
+            await cmd.AutoComplete.call(this, bot, interaction);
         }
     }
 }

@@ -1,5 +1,5 @@
 import { CommandData, CommandInterface, CommandConfig } from "../Interfaces/Command.js";
-import { ChatInputCommandInteraction, Message } from "discord.js";
+import { ChatInputCommandInteraction, AutocompleteInteraction, Message } from "discord.js";
 import { manager } from "../../../index.js";
 import { readdirSync, lstatSync } from "fs";
 import { BrayanBot } from "../BrayanBot.js";
@@ -46,15 +46,19 @@ export class Command {
     /** @type {CommandConfig} */ commandConfig;
     /** @type {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: CommandData) => any) | undefined} */ LegacyRun;
     /** @type {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: CommandData) => any) | undefined} */ InteractionRun;
+    /** @type {((manager: BrayanBot, interaction: AutocompleteInteraction) => any) | undefined} */ AutoComplete;
 
     /** @param {CommandInterface} command */
     constructor(command) {
         this.commandData = command.commandData;
         this.commandConfig = command.commandConfig
+
         if (command.LegacyRun && typeof command.LegacyRun == "function")
             this.LegacyRun = command.LegacyRun;
         if (command.InteractionRun && typeof command.InteractionRun == "function")
             this.InteractionRun = command.InteractionRun;
+        if (command.AutoComplete && typeof command.AutoComplete == "function")
+            this.AutoComplete = command.AutoComplete;
 
         if (Array.isArray(this.commandData.Arguments)) {
             const parsedSlashCommand = Utils.setupSlashCommand({
@@ -77,6 +81,9 @@ export class Command {
 
     /** @param {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: Object) => any) | undefined} execute */
     runInteractionRun(execute) { if (execute && typeof execute == "function") this.InteractionRun = execute; return this; }
+
+    /** @param {((manager: BrayanBot, interaction: AutocompleteInteraction) => any) | undefined} execute */
+    runAutoComplete(execute) { if (execute && typeof execute == "function") this.AutoComplete = execute; return this; }
 
     registerCommand() {
         if (Array.isArray(this.commandData.Arguments)) {
