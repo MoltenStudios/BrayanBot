@@ -46,7 +46,7 @@ const setupEmbed = (settings) => {
     let URL = configPath.URL || null;
     let Title = configPath.Title || null;
     let Description = configPath.Description || null;
-    let Fields = configPath.Fields || null;
+    let Fields = configPath.Fields, fields = [];
     let Footer = configPath.Footer || null;
     let FooterIcon = configPath.FooterIcon || null;
     let Thumbnail = configPath.Thumbnail || null;
@@ -85,8 +85,10 @@ const setupEmbed = (settings) => {
 
         if (Array.isArray(Fields) && Fields.length > 0) {
             for (let i = 0; i < Fields.length; i++) {
-                if (Fields[i].Name && typeof Fields[i].Name == "string") Fields[i].Name = Utils.applyVariables(Fields[i].Name, variables);
-                if (Fields[i].Value && typeof Fields[i].Value == "string") Fields[i].Value = Utils.applyVariables(Fields[i].Value, variables);
+                let newField = { name: null, value: null, inline: !!Fields[i].Inline }
+                if (Fields[i].Name && typeof Fields[i].Name == "string") newField.name = Utils.applyVariables(Fields[i].Name, variables);
+                if (Fields[i].Value && typeof Fields[i].Value == "string") newField.value = Utils.applyVariables(Fields[i].Value, variables);
+                fields.push(newField)
             }
         }
     }
@@ -120,14 +122,15 @@ const setupEmbed = (settings) => {
     } else if (Footer) {
         Embed.setFooter({ text: Footer });
     }
-
-    if (Array.isArray(Fields) && Fields.length > 0) {
-        for (let y = 0; y < Fields.length; y++) {
-            if (Fields[y].Name && Fields[y].Value) Embed.addFields({
-                name: Fields[y].Name,
-                value: Fields[y].Value,
-                inline: !!Fields[y].Inline
-            });
+    if (Array.isArray(fields) && fields.length > 0) {
+        for (let y = 0; y < fields.length; y++) {
+            if (fields[y].name && fields[y].value) {
+                Embed.addFields({
+                    name: fields[y].name,
+                    value: fields[y].value,
+                    inline: !!fields[y].inline
+                });
+            }
         }
     }
 
