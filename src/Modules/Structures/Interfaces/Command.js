@@ -15,6 +15,7 @@ const CommandData = {
     Enabled: Boolean,
     Name: String,
     Usage: String,
+    Type: String,
     Cooldown: Number,
     Permission: [String],
     Description: String,

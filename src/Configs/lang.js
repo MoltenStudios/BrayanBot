@@ -12,6 +12,15 @@ const LangType = {
             UserInfo: SetupMessage,
             GuildInfo: SetupMessage,
             InvalidUsage: SetupMessage,
+        },
+        Help: {
+            AutoCompleteCategory: {
+                [String]: String
+            },
+            CommandNotFound: SetupMessage,
+            NoCommandsInCategory: SetupMessage,
+            CommandInfo: SetupMessage,
+            CommandList: SetupMessage
         }
     },
     Miscellaneous: {
@@ -171,6 +180,68 @@ const defaultConfig = {
                     }]
                 }
             },
+        },
+        Help: {
+            AutoCompleteCategory: {
+                'General': 'General Commands 🌏',
+            },
+            CommandNotFound: {
+                Embeds: [{
+                    Author: "{brand-name} | Command Info",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "> {user-mention}, the command you are looking for does not exist.",
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }]
+            },
+            NoCommandsInCategory: {
+                Embeds: [{
+                    Author: "{brand-name} | List Category",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "> {user-mention}, the category you are looking for does not have any commands.",
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }]
+            },
+            CommandInfo: {
+                Embeds: [{
+                    Author: "{brand-name} | Command Info • {cmd-name}",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "> {cmd-description}",
+                    Fields: [{
+                        Name: "• Usage",
+                        Value: "> `{prefixUsed}{cmd-usage}`"
+                    }, {
+                        Name: "• Type",
+                        Value: "> {cmd-type}",
+                        Inline: true
+                    }, {
+                        Name: "• Cooldown",
+                        Value: "> {cmd-cooldown}",
+                        Inline: true
+                    }, {
+                        Name: "• Permissions",
+                        Value: "> {cmd-permission}",
+                        Inline: true
+                    }, {
+                        Name: "• Slash Command",
+                        Value: "> {cmd-slashMentions}",
+                        Inline: true
+                    }],
+                    FooterIcon: "{user-pfp}",
+                    Footer: "{user-tag}",
+                    Timestamp: true
+                }]
+            },
+            CommandList: {
+                Embeds: [{
+                    Author: "{brand-name} | Commands List • {category} [{current-page}/{max-page}]",
+                    AuthorIcon: "{brand-logo}",
+                    Description: "{data}",
+                }]
+            }
         }
     },
     Miscellaneous: {
