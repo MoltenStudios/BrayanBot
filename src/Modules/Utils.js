@@ -23,6 +23,11 @@ export default {
     guildVariables: guildVariables,
     channelVariables: channelVariables,
 
+    /** @param {String} string */
+    capitalizeFirstLetter: (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
     /** @param {Array} array */
     getRandom: (array) => array[Math.floor(Math.random() * array.length)],
 
