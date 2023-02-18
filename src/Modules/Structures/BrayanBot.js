@@ -80,16 +80,36 @@ export class BrayanBot extends Client {
         return this;
     }
 
-    async initializeHandlers() {
+    // async initializeHandlers() {
+    //     this.handlers.ConfigHandler = await new ConfigHandler(this, this.managerOptions.configDir).initialize();
+    //     this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
+    //     this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
+    //     this.handlers.DatabaseHandler = await new DatabaseHandler(this, this.managerOptions.databaseDir).initialize();
+    //     this.handlers.AddonHandler = await new AddonHandler(this, this.managerOptions.addonDir).initialize();
+
+    //     this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
+
+    //     return this;
+    // }
+
+    /**
+     * 
+     * @param {String} token 
+     * @returns {Promise<string>}
+     */
+
+    async login(token) {
         this.handlers.ConfigHandler = await new ConfigHandler(this, this.managerOptions.configDir).initialize();
         this.handlers.EventHandler = await new EventHandler(this, this.managerOptions.eventDir).initialize();
         this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
         this.handlers.DatabaseHandler = await new DatabaseHandler(this, this.managerOptions.databaseDir).initialize();
         this.handlers.AddonHandler = await new AddonHandler(this, this.managerOptions.addonDir).initialize();
 
-        this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
+        this.rest = new REST({ version: "10" }).setToken(token);
 
-        return this;
+        const promiseString = await super.login(token);
+
+        return promiseString;
     }
 }
 
