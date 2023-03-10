@@ -43,6 +43,7 @@ const Configs = {
 
 export class BrayanBot extends Client {
     /** @type {Collection<string, Command>} */ commands = new Collection();
+    /** @type {Collection<string, Command>} */ aliases = new Collection();
     /** @type {Collection<string, Addon>} */ addons = new Collection();
     /** @type {Collection<string, RawSlashCommand>} */ slashCommands = new Collection();
     /** @type {{ name: string, handler: Function }[]} */ events = [];

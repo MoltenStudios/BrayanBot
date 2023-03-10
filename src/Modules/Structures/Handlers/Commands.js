@@ -33,6 +33,15 @@ export class CommandHandler {
                 import(`file://` + path.join(this.commandDir, this.commandDirFiles[i], dirFiles[y])).then((module) => {
                     const command = module.default;
                     this.manager.commands.set(command.commandData.Name, command);
+                    if (command.commandData.Aliases) {
+                        if (typeof command.commandData.Aliases == "string") {
+                            this.manager.aliases.set(command.commandData.Aliases, command.commandData.Name);
+                        } else if (Array.isArray(command.commandData.Aliases)) {
+                            command.commandData.Aliases.forEach(alias => {
+                                this.manager.aliases.set(alias, command.commandData.Name);
+                            });
+                        }
+                    }
                 });
             }
         }

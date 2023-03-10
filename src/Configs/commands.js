@@ -23,6 +23,7 @@ const defaultConfig = {
             Permission: ["@everyone"],
             Description: "Show's Information about the Bot, User, Channel or Guild",
             DeleteCommand: false,
+            Aliases: ['information'],
             Arguments: [{
                 Type: "Sub Command",
                 Name: "bot",
@@ -52,6 +53,7 @@ const defaultConfig = {
             Permission: ["@everyone"],
             Description: "Helps you with the Bot's Commands",
             DeleteCommand: false,
+            Aliases: [],
             Arguments: [{
                 Type: "Sub Command",
                 Name: "Category",

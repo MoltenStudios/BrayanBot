@@ -17,6 +17,7 @@ const CommandData = {
     Usage: String,
     Type: String,
     Cooldown: Number,
+    Aliases: Array,
     Permission: [String],
     Description: String,
     DeleteCommand: Boolean,

@@ -23,7 +23,7 @@ const execute = async (bot, message) => {
         const command = msg[prefixUsed.includes(" ") ? 1 : 0].toLowerCase().replace(prefixUsed, "");
         const args = msg.slice(prefixUsed.includes(" ") ? 2 : 1);
 
-        const cmd = bot.commands.get(command);
+        const cmd = bot.commands.get(bot.aliases.get(command) || command)
         if (cmd && cmd.commandData.Enabled == true && cmd.LegacyRun) {
             if (cmd.commandConfig.dmOnly && message.channel.type !== ChannelType.DM) {
                 return message.reply(Utils.setupMessage({
