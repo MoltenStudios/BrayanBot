@@ -1,8 +1,12 @@
 import { BrayanBot } from "./Modules/Structures/BrayanBot.js";
 import { GatewayIntentBits } from "discord.js";
 import consoleStamp from "console-stamp";
+import Utils from "./Modules/Utils.js";
+import { inspect } from "util";
+import moment from "moment"
 import chalk from "chalk";
 import path from "path";
+import fs from "fs";
 
 consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
@@ -43,6 +47,16 @@ manager.initializeHandlers().then((manager) => {
             } else manager.logger.error(`Your current bot token is incorrect. Please reset your token and replace it in config.`), process.exit(1);
         } else manager.logger.error(e), process.exit(1);
     });
+
+    if (fs.existsSync("data/errors.log")) fs.unlinkSync("data/errors.log");
 })
+
+process.on("uncaughtException", (error, origin) => {
+    Utils.logger.error(chalk.redBright.bold("[ANTICRASH]"), (error instanceof Error ? error.stack : error) ?? origin);
+});
+
+process.on("unhandledRejection", async (reason, promise) => {
+    Utils.logger.error(chalk.redBright.bold("[ANTICRASH]"), (reason instanceof Error ? reason.stack : reason) ?? promise);
+});
 
 export { manager };
