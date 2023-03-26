@@ -20,7 +20,7 @@
 		"@XCraftMan52#0661 (XCraftMan)"
 	],
 	"scripts": {
-		"dev": "nodemon --exec \"node src/index.js --reset-configs --reset-slashCommands\" -e js",
+		"dev": "nodemon --exec \"node src/index.js --debug --devmode --reset-configs --reset-slashCommands\" -e js",
 		"start": "node src/index.js"
 	},
 	"bugs": {
@@ -30,17 +30,18 @@
 		"node": ">=16.15.0"
 	},
 	"dependencies": {
+		"archiver": "^5.3.1",
 		"axios": "^0.27.2",
-		"better-sqlite3": "^8.0.1",
+		"better-sqlite3": "^8.2.0",
 		"chalk": "^4.1.2",
-		"console-stamp": "^3.0.6",
-		"discord.js": "^14.4.0",
+		"console-stamp": "^3.1.1",
+		"discord.js": "^14.8.0",
 		"fast-folder-size": "^1.7.1",
 		"ms": "^2.1.3",
 		"mysql": "^2.18.1",
-		"yaml": "^2.1.1"
+		"yaml": "^2.2.1"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.19"
+		"nodemon": "^2.0.22"
 	}
 }
