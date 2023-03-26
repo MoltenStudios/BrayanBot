@@ -27,6 +27,7 @@ const LangType = {
         InvalidRolePermissions: SetupMessage,
         InvalidBotPermissions: SetupMessage,
         InvalidUserPermissions: SetupMessage,
+        CommandOnCooldown: SetupMessage,
         DMOnly: SetupMessage,
         GuildOnly: SetupMessage,
     }
@@ -272,6 +273,17 @@ const defaultConfig = {
             Embeds: [{
                 Author: "{brand-name} • Invalid Bot Permissions",
                 Description: "> You don't have enough base permission to execute this function.",
+                AuthorIcon: "{brand-logo}",
+                FooterIcon: "{user-pfp}",
+                Footer: "{user-tag}",
+                Timestamp: true
+            }]
+        },
+        CommandOnCooldown: {
+            Private: true,
+            Embeds: [{
+                Author: "{brand-name} • Command Cooldown",
+                Description: "> You are on cooldown for this command. You'll be able to use this command in <t:{time}:R>.",
                 AuthorIcon: "{brand-logo}",
                 FooterIcon: "{user-pfp}",
                 Footer: "{user-tag}",

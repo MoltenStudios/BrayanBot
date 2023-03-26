@@ -1,13 +1,14 @@
 import { Database } from './Database.js';
-import Discord from 'discord.js';
-import Utils from '../Utils.js';
 
 const cooldownDatabase = new Database("default.db")
-    .createTable("cooldown", "user, command, time");
+    .createTable("cooldowns", "user, command, time");
 const database = cooldownDatabase.getDatabase();
 
 export { cooldownDatabase, database }
 export default class Cooldown {
+    static getCooldown(command, userId) {
+        return database.prepare(`SELECT * FROM cooldowns WHERE user=? AND command=?`).get(userId, command);
+    }
     static createCooldown(command, userId, ms = 0) {
         database.prepare(`INSERT INTO cooldowns (user, command, time)VALUES(?,?,?)`).run(userId, command, (Date.now() + ms));
     }

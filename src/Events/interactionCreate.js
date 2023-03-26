@@ -1,9 +1,11 @@
 import { EventListener } from "../Modules/Structures/Handlers/Events.js";
+import Cooldown from "../Modules/Structures/Handlers/Cooldown.js";
 import { BrayanBot } from "../Modules/Structures/BrayanBot.js";
 import Utils from "../Modules/Utils.js";
 import Discord from "discord.js";
-const { Interaction, ChannelType } = Discord;
+import ms from "ms"
 
+const { Interaction, ChannelType } = Discord;
 /** @param {BrayanBot} bot @param {Interaction} interaction */
 const execute = async (bot, interaction) => {
     const { config, lang } = bot.configs;
@@ -13,6 +15,27 @@ const execute = async (bot, interaction) => {
 
         const cmd = bot.commands.get(command);
         if (cmd && cmd.commandData.Enabled == true) {
+            if (cmd.commandData.Cooldown && !interaction.user.bot) {
+                const cooldown = ms(cmd.commandData.Cooldown);
+                const isOnCooldown = Cooldown.getCooldown(cmd.commandData.Name, interaction.member.id)
+
+                if (isOnCooldown && isOnCooldown.time - Date.now() < 0) {
+                    Cooldown.resetCooldown(cmd.commandData.Name, interaction.member.id, cooldown)
+                } else if (isOnCooldown) {
+                    return interaction.reply(Object.assign(Utils.setupMessage({
+                        configPath: lang.Miscellaneous.CommandOnCooldown,
+                        variables: [
+                            ...Utils.userVariables(interaction.member, 'user'),
+                            { searchFor: /{cooldown}/g, replaceWith: ms(isOnCooldown.time - Date.now(), { long: true }) },
+                            { searchFor: /{time}/g, replaceWith: Math.ceil(isOnCooldown.time / 1000) },
+                            { searchFor: /{command}/g, replaceWith: command.slice(config.Settings.Prefix.length) }
+                        ]
+                    }), { ephemeral: true }))
+                } else if (!isOnCooldown) {
+                    Cooldown.createCooldown(cmd.commandData.Name, interaction.member.id, cooldown)
+                }
+            }
+
             if (cmd.commandConfig.dmOnly && interaction.channel?.type !== ChannelType.DM) {
                 return interaction.reply(Utils.setupMessage({
                     configPath: lang.Miscellaneous.DMOnly,

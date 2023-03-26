@@ -1,7 +1,9 @@
 import { EventListener } from "../Modules/Structures/Handlers/Events.js";
+import Cooldown from "../Modules/Structures/Handlers/Cooldown.js";
 import { BrayanBot } from "../Modules/Structures/BrayanBot.js";
 import { ChannelType, Message } from "discord.js";
 import Utils from "../Modules/Utils.js";
+import ms from "ms"
 
 /** @param {BrayanBot} bot @param {Message} message */
 const execute = async (bot, message) => {
@@ -25,6 +27,27 @@ const execute = async (bot, message) => {
 
         const cmd = bot.commands.get(bot.aliases.get(command) || command)
         if (cmd && cmd.commandData.Enabled == true && cmd.LegacyRun) {
+            if (cmd.commandData.Cooldown && !message.author.bot) {
+                const cooldown = ms(cmd.commandData.Cooldown);
+                const isOnCooldown = Cooldown.getCooldown(cmd.commandData.Name, message.author.id)
+
+                if (isOnCooldown && isOnCooldown.time - Date.now() < 0) {
+                    Cooldown.resetCooldown(cmd.commandData.Name, message.author.id, cooldown)
+                } else if (isOnCooldown) {
+                    return message.reply(Utils.setupMessage({
+                        configPath: lang.Miscellaneous.CommandOnCooldown,
+                        variables: [
+                            ...Utils.userVariables(message.member, 'user'),
+                            { searchFor: /{cooldown}/g, replaceWith: ms(isOnCooldown.time - Date.now(), { long: true }) },
+                            { searchFor: /{time}/g, replaceWith: Math.ceil(isOnCooldown.time / 1000) },
+                            { searchFor: /{command}/g, replaceWith: command.slice(config.Settings.Prefix.length) }
+                        ]
+                    }))
+                } else if (!isOnCooldown) {
+                    Cooldown.createCooldown(cmd.commandData.Name, message.author.id, cooldown)
+                }
+            }
+
             if (cmd.commandConfig.dmOnly && message.channel.type !== ChannelType.DM) {
                 return message.reply(Utils.setupMessage({
                     configPath: lang.Miscellaneous.DMOnly,

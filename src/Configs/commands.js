@@ -19,7 +19,7 @@ const defaultConfig = {
             Name: "info",
             Type: "General",
             Usage: 'info <bot/user/channel/guild> [parameter]',
-            Cooldown: 0,
+            Cooldown: false,
             Permission: ["@everyone"],
             Description: "Show's Information about the Bot, User, Channel or Guild",
             DeleteCommand: false,
