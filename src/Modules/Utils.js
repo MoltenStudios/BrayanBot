@@ -7,7 +7,7 @@ import chalk from "chalk";
 
 export default {
     logger: {
-        debug: (...text) => console.log(chalk.magentaBright.bold("[DEBUG]"), ...text),
+        debug: (...text) => process.argv.includes("--debug") && console.log(chalk.magentaBright.bold("[DEBUG]"), ...text),
         info: (...text) => console.log(chalk.greenBright.bold("[INFO]"), ...text),
         warn: (...text) => console.log(chalk.yellowBright.bold("[WARN]"), ...text),
         error: (...text) => console.log(chalk.redBright.bold("[ERROR]"), ...text),

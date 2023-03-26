@@ -32,11 +32,9 @@ const execute = async (bot) => {
 
     await Utils.loadCommands(bot);
 
-    if (process.argv.includes("--debug")) {
-        debug(`Currently using ${chalk.bold(`${((fastFolderSize(".") || 0) / 1024 / 1024).toFixed(2)} MB`)} Storage.`);
-        debug(`Loaded ${chalk.bold(bot.commands.size)} commands.`);
-        debug(`Loaded ${chalk.bold(bot.events.length)} events.`);
-    }
+    debug(`Currently using ${chalk.bold(`${((fastFolderSize(".") || 0) / 1024 / 1024).toFixed(2)} MB`)} Storage.`);
+    debug(`Loaded ${chalk.bold(bot.commands.size)} commands.`);
+    debug(`Loaded ${chalk.bold(bot.events.length)} events.`);
 
     info(`Logged in as ${chalk.bold(bot.user?.tag || "Unknown")}`);
     info(`Everything has been loaded & ${chalk.bold(`BrayanBot`)} is ready to use!`);
