@@ -1,20 +1,22 @@
-# BrayanBot Dockerfile v2.0.0
+# BrayanBot Dockerfile v2.0.1
 # authors:
 #  - NotAShelf <me@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
 # Node 18.2.0
 
 # From Node 18 Alpine image
-FROM node:18-alpine
+FROM node:18-alpine as base
 
-LABEL MAINTAINER="NotAShelf <raf@brayanbot.dev>"
+# Set maintainer
+LABEL MAINTAINER="NotAShelf <raf@neushore.dev>"
+
+# Install pnpm 
+RUN npm i -g pnpm
+
+FROM base as dependencies
 
 # Set working directory
 WORKDIR /opt/brayanbot
-
-# Download and Install pnpm
-RUN apk add --no-cache curl \
-    && curl -sL https://unpkg.com/@pnpm/self-installer | node
 
 # And copy files into that directory
 COPY . ./
@@ -25,9 +27,13 @@ RUN pnpm fetch
 # Install dependencies
 RUN pnpm install -r 
 
-# Ensure these directories & files exist for compose volumes
-RUN touch /opt/brayanbot/data
+FROM dependencies as deploy
 
-# Start the bot
+# Make sure the data directory exists so that we can mount it
+RUN mkdir -p /opt/brayanbot/data
+
+# Start the bot with the BOT_PLATFORM environment variable set to Docker
+# This allows the bot to decide the correct error message(s)
+RUN export BOT_PLATFORM=Docker
 CMD [ "pnpm", "start" ]
 

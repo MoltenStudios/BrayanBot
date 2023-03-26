@@ -8,6 +8,7 @@ services:
     tty: true
     working_dir: /opt/brayanbot
     build: .
+    #image: brayanbot/brayanbot:latest
     command: pnpm start
     container_name: BrayanBot
     restart: unless-stopped
