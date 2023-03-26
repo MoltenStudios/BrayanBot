@@ -9,9 +9,9 @@ const loadCommands = async (manager, force = false) => {
         ? manager.slashCommands.filter(cmd => !!enabledCMDS.find(c => c.commandData.Name == cmd.name))
         : manager.slashCommands;
 
-    await manager.rest.put(Routes.applicationCommands(manager.user.id), {
-        body: cmdsToRegister.toJSON()
-    })
+    if (cmdsToRegister.toJSON().length > 0) {
+        await manager.rest.put(Routes.applicationCommands(manager.user.id), { body: cmdsToRegister.toJSON() })
+    }
 
     return cmdsToRegister;
 }
