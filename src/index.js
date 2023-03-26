@@ -2,8 +2,6 @@ import { BrayanBot } from "./Modules/Structures/BrayanBot.js";
 import { GatewayIntentBits } from "discord.js";
 import consoleStamp from "console-stamp";
 import Utils from "./Modules/Utils.js";
-import { inspect } from "util";
-import moment from "moment"
 import chalk from "chalk";
 import path from "path";
 import fs from "fs";
@@ -28,8 +26,9 @@ const manager = new BrayanBot({
     commandDir: path.join(__dirname, "/src/Commands"),
     configDir: path.join(__dirname, "/src/Configs"),
     eventDir: path.join(__dirname, "/src/Events"),
+    backupDir: path.join(__dirname, "/backups"),
     addonDir: path.join(__dirname, "/data/addons"),
-    databaseDir: path.join(__dirname, "/data/database")
+    databaseDir: path.join(__dirname, "/data/database"),
 });
 
 manager.initializeHandlers().then((manager) => {

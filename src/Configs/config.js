@@ -12,6 +12,7 @@ const ConfigType = {
         DevMode: Boolean,
         Verbose: Boolean,
         TagForInfo: Boolean,
+        BackupFiles: [String],
     },
     Branding: {
         Name: String,
@@ -42,6 +43,10 @@ const defaultConfig = {
         "~1": "Development options",
         DevMode: false,
         Verbose: false,
+        BackupFiles: [
+            "data/addon_configs/", "data/database/", "data/addons/",
+            "data/commands.yml", "data/config.yml", "data/lang.yml",
+        ]
     },
     "~l0": "Empty Line",
     Branding: {

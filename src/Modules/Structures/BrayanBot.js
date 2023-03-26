@@ -5,6 +5,7 @@ import { Addon, AddonHandler } from "./Handlers/Addons.js";
 import { CommandsType } from "../../Configs/commands.js";
 import { DatabaseHandler } from "./Handlers/Database.js";
 import { ConfigHandler } from "./Handlers/Config.js";
+import { BackupHandler } from "./Handlers/Backup.js";
 import { ConfigType } from "../../Configs/config.js";
 import { EventHandler } from "./Handlers/Events.js";
 import { LangType } from "../../Configs/lang.js";
@@ -24,14 +25,16 @@ const ManagerOptions = {
     eventDir: String,
     addonDir: String,
     databaseDir: String,
+    backupDir: String,
 }
 
 const Handlers = {
-    EventHandler: EventHandler,
+    DatabaseHandler: DatabaseHandler,
     CommandHandler: CommandHandler,
+    BackupHandler: BackupHandler,
     ConfigHandler: ConfigHandler,
     AddonHandler: AddonHandler,
-    DatabaseHandler: DatabaseHandler,
+    EventHandler: EventHandler,
 }
 
 const Configs = {
@@ -75,6 +78,9 @@ export class BrayanBot extends Client {
         if (!managerOptions.databaseDir) throw new Error("[BrayanBot] No database directory was provided.");
         if (!fs.existsSync(managerOptions.databaseDir)) fs.mkdirSync(managerOptions.databaseDir);
 
+        if (!managerOptions.backupDir) throw new Error("[BrayanBot] No backup directory was provided.");
+        if (!fs.existsSync(managerOptions.backupDir)) fs.mkdirSync(managerOptions.backupDir);
+
         this.managerOptions = managerOptions;
         this.logger = Utils.logger;
 
@@ -87,6 +93,7 @@ export class BrayanBot extends Client {
         this.handlers.CommandHandler = await new CommandHandler(this, this.managerOptions.commandDir).initialize();
         this.handlers.DatabaseHandler = await new DatabaseHandler(this, this.managerOptions.databaseDir).initialize();
         this.handlers.AddonHandler = await new AddonHandler(this, this.managerOptions.addonDir).initialize();
+        this.handlers.BackupHandler = await new BackupHandler(this, this.managerOptions.backupDir, this.configs.config.Settings.BackupFiles).initialize();
 
         this.rest = new REST({ version: "10" }).setToken(this.configs.config.Settings.Token);
 
