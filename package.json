@@ -20,7 +20,7 @@
 		"@XCraftMan52#0661 (XCraftMan)"
 	],
 	"scripts": {
-		"dev": "nodemon --exec \"node src/index.js --debug --devmode --reset-configs --reset-slashCommands\" -e js",
+		"dev": "nodemon --exec \"node src/index.js --debug --devmode --show-errors --reset-configs --reset-slashCommands\" -e js",
 		"start": "node src/index.js"
 	},
 	"bugs": {

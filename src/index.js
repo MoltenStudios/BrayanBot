@@ -46,16 +46,37 @@ manager.initializeHandlers().then((manager) => {
             } else manager.logger.error(`Your current bot token is incorrect. Please reset your token and replace it in config.`), process.exit(1);
         } else manager.logger.error(e), process.exit(1);
     });
-
     if (fs.existsSync("data/errors.log")) fs.unlinkSync("data/errors.log");
+
+
 })
 
+const errorLogStream = fs.createWriteStream("data/errors.log", { flags: "a" });
+
 process.on("uncaughtException", (error, origin) => {
-    Utils.logger.error(chalk.redBright.bold("[ANTICRASH]"), (error instanceof Error ? error.stack : error) ?? origin);
+    const errorMessage = `${chalk.whiteBright.bold(error.message)}\n${error.stack.split('\n').slice(1, 5).join('\n')}`;
+    errorLogStream.write(`${formatErrorMessage(error, 'uncaughtException')}\n`);
+
+    if (process.argv.includes("--show-errors")) Utils.logger.error(errorMessage);
 });
 
+
 process.on("unhandledRejection", async (reason, promise) => {
-    Utils.logger.error(chalk.redBright.bold("[ANTICRASH]"), (reason instanceof Error ? reason.stack : reason) ?? promise);
+    const errorMessage = `${chalk.whiteBright.bold(reason.message)}\n${reason.stack.split('\n').slice(1, 5).join('\n')}`;
+    errorLogStream.write(`${formatErrorMessage(reason, 'unhandledRejection')}\n`);
+
+    if (process.argv.includes("--show-errors")) Utils.logger.error(errorMessage);
 });
+
+const formatErrorMessage = (error, origin) => {
+    const date = new Date().toISOString();
+    const originInfo = origin ? `| ${origin}` : "";
+    const errorInfo = error instanceof Error ? error.stack.split('\n').slice(0, 5).join('\n') : error;
+
+    const separatorLength = Math.min(process.stdout.columns || 80, 100);
+    const separator = "=-=".repeat(separatorLength / 3);
+
+    return `${separator}\nOccured At: ${date} ${originInfo}\n${separator}\n${errorInfo}`;
+}
 
 export { manager };
