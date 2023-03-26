@@ -15,7 +15,7 @@ export class AddonHandler {
 
     /** @param {BrayanBot} manager @param {string} addonDir */
     constructor(manager, addonDir) {
-        if (!manager) throw new Error("[BrayanBot/CommandHandler] Missing manager parameter.");
+        if (!manager) throw new Error("[BrayanBot/AddonHandler] Missing manager parameter.");
         if (!addonDir) throw new Error("[BrayanBot/AddonHandler] Missing addonDir parameter.");
 
         this.manager = manager;
