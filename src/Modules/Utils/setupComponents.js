@@ -1,4 +1,8 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
+import {
+    ActionRowBuilder, ButtonBuilder, ButtonStyle,
+    StringSelectMenuBuilder, ChannelSelectMenuBuilder,
+    RoleSelectMenuBuilder, UserSelectMenuBuilder, ChannelType
+} from 'discord.js';
 import Utils from '../Utils.js';
 
 const Component = {
@@ -14,6 +18,8 @@ const Component = {
 
     // Select Menu
     Placeholder: String,
+    MenuType: "channel" || "role" || "user" || "string",
+    ChannelType: ChannelType,
     MinSelect: Number,
     MaxSelect: Number,
     Options: [{
@@ -107,44 +113,50 @@ const setupComponents = (settings) => {
                 }
                 case "Select Menu".toLowerCase():
                 case "SelectMenu".toLowerCase(): {
+                    let MenuType = component.MenuType?.toLowerCase() || "string";
                     let Placeholder = component.Placeholder || null;
                     let MinSelect = component.MinSelect || 0;
                     let MaxSelect = component.MaxSelect || 1;
                     let Options = component.Options || [];
 
-                    if (Options[0] && CustomID) {
+                    if (CustomID && ["channel", "role", "user", "mentionable", "string"].includes(MenuType)) {
                         if (variables && variables[0]) {
                             if (Placeholder && typeof Placeholder === "string") Placeholder = Utils.applyVariables(Placeholder, variables);
                         }
+                        const SelectMenu = new (MenuType == "role" ? RoleSelectMenuBuilder : MenuType == "channel" ? ChannelSelectMenuBuilder
+                            : MenuType == "user" ? UserSelectMenuBuilder : StringSelectMenuBuilder)();
 
-                        const SelectMenu = new SelectMenuBuilder()
-                            .setCustomId(CustomID).setDisabled(Disabled)
+                        SelectMenu.setCustomId(CustomID).setDisabled(Disabled)
                             .setMaxValues(MaxSelect).setMinValues(MinSelect)
+
+                        if (component.ChannelType) SelectMenu.setChannelTypes([component.ChannelType]);
 
                         if (Placeholder) SelectMenu.setPlaceholder(Placeholder);
 
-                        SelectMenu.setOptions(Options.map(option => {
-                            let Label = option.Label;
-                            let Value = option.Value;
-                            let Emoji = option.Emoji || null;
-                            let Default = option.Default || false;
-                            let Description = option.Description || null;
+                        if (Options && Options[0]) {
+                            SelectMenu?.setOptions(Options.map(option => {
+                                let Label = option.Label || null;
+                                let Value = option.Value || null;
+                                let Emoji = option.Emoji || null;
+                                let Default = option.Default || false;
+                                let Description = option.Description || null;
 
-                            let data = { value: Value, label: Label, };
+                                let data = { value: Value, label: Label, };
 
-                            if (Default) data.default = Default;
-                            if (variables && variables[0]) {
-                                if (Label && typeof Label === "string") data.label = Utils.applyVariables(Label, variables);
-                                if (Value && typeof Value === "string") data.value = Utils.applyVariables(Value, variables);
-                                if (Emoji && typeof Emoji === "string") data.emoji = Utils.applyVariables(Emoji, variables);
-                                if (Description && typeof Description === "string") data.description = Utils.applyVariables(Description, variables);
-                            } else {
-                                if (Emoji) data.emoji = Emoji;
-                                if (Description) data.description = Description;
-                            }
+                                if (Default) data.default = Default;
+                                if (variables && variables[0]) {
+                                    if (Label && typeof Label === "string") data.label = Utils.applyVariables(Label, variables);
+                                    if (Value && typeof Value === "string") data.value = Utils.applyVariables(Value, variables);
+                                    if (Emoji && typeof Emoji === "string") data.emoji = Utils.applyVariables(Emoji, variables);
+                                    if (Description && typeof Description === "string") data.description = Utils.applyVariables(Description, variables);
+                                } else {
+                                    if (Emoji) data.emoji = Emoji;
+                                    if (Description) data.description = Description;
+                                }
 
-                            return data;
-                        }))
+                                return data;
+                            }))
+                        }
 
                         row.addComponents(SelectMenu)
                     }
