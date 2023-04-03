@@ -2,9 +2,9 @@ name: Public Release CI
 
 on:
   push:
-    tags: [ "v*" ]
+    tags: ["v*"]
   workflow_dispatch:
-  
+
 jobs:
   release-public:
     name: Public Release
@@ -19,26 +19,26 @@ jobs:
 
         # Zip up necessary files
       - name: Archive Source code
-        run: zip -r BrayanBot-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
+        run: zip -r Proxima-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
 
         # Fetch the pterodactyl egg
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodactyl-egg.json https://cdn.zorino.in/egg-brayan-bot.json
+        run: wget -O pterodactyl-egg.json https://cdn.zorino.in/egg-proxima-bot.json
 
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
         run: |
-          md5sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > md5-checksums.txt
-          sha256sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha256-checksums.txt
-          sha512sum BrayanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha512-checksums.txt
+          md5sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > md5-checksums.txt
+          sha256sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha256-checksums.txt
+          sha512sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha512-checksums.txt
       # Release Public Build
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          title: "BrayanBot v${{ steps.vars.outputs.version }}"
+          title: "Proxima v${{ steps.vars.outputs.version }}"
           files: |
-            BrayanBot-*.zip
+            Proxima-*.zip
             pterodactyl-egg.json
             Dockerfile
             docker-compose.yml

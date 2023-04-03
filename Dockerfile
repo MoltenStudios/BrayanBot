@@ -1,4 +1,4 @@
-# BrayanBot Dockerfile v2.0.1
+# Proxima Dockerfile v2.0.1
 # authors:
 #  - NotAShelf <me@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
@@ -16,7 +16,7 @@ RUN npm i -g pnpm
 FROM base as dependencies
 
 # Set working directory
-WORKDIR /opt/brayanbot
+WORKDIR /opt/proxima
 
 # And copy files into that directory
 COPY . ./
@@ -30,7 +30,7 @@ RUN pnpm install -r
 FROM dependencies as deploy
 
 # Make sure the data directory exists so that we can mount it
-RUN mkdir -p /opt/brayanbot/data
+RUN mkdir -p /opt/proxima/data
 
 # Start the bot with the BOT_PLATFORM environment variable set to Docker
 # This allows the bot to decide the correct error message(s)

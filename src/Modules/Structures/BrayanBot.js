@@ -44,7 +44,7 @@ const Configs = {
 }
 
 
-export class BrayanBot extends Client {
+export class Proxima extends Client {
     /** @type {Collection<string, Command>} */ commands = new Collection();
     /** @type {Collection<string, Command>} */ aliases = new Collection();
     /** @type {Collection<string, Addon>} */ addons = new Collection();
@@ -61,24 +61,24 @@ export class BrayanBot extends Client {
     constructor(clientOptions, managerOptions) {
         super(clientOptions);
 
-        if (!managerOptions) throw new Error("[BrayanBot] No options was provided.");
+        if (!managerOptions) throw new Error("[Proxima] No options was provided.");
 
-        if (!managerOptions.commandDir) throw new Error("[BrayanBot] No command directory was provided.");
+        if (!managerOptions.commandDir) throw new Error("[Proxima] No command directory was provided.");
         if (!fs.existsSync(managerOptions.commandDir)) fs.mkdirSync(managerOptions.commandDir);
 
-        if (!managerOptions.configDir) throw new Error("[BrayanBot] No config directory was provided.");
+        if (!managerOptions.configDir) throw new Error("[Proxima] No config directory was provided.");
         if (!fs.existsSync(managerOptions.configDir)) fs.mkdirSync(managerOptions.configDir);
 
-        if (!managerOptions.eventDir) throw new Error("[BrayanBot] No event directory was provided.");
+        if (!managerOptions.eventDir) throw new Error("[Proxima] No event directory was provided.");
         if (!fs.existsSync(managerOptions.eventDir)) fs.mkdirSync(managerOptions.eventDir);
 
-        if (!managerOptions.addonDir) throw new Error("[BrayanBot] No addon directory was provided.");
+        if (!managerOptions.addonDir) throw new Error("[Proxima] No addon directory was provided.");
         if (!fs.existsSync(managerOptions.addonDir)) fs.mkdirSync(managerOptions.addonDir);
 
-        if (!managerOptions.databaseDir) throw new Error("[BrayanBot] No database directory was provided.");
+        if (!managerOptions.databaseDir) throw new Error("[Proxima] No database directory was provided.");
         if (!fs.existsSync(managerOptions.databaseDir)) fs.mkdirSync(managerOptions.databaseDir);
 
-        if (!managerOptions.backupDir) throw new Error("[BrayanBot] No backup directory was provided.");
+        if (!managerOptions.backupDir) throw new Error("[Proxima] No backup directory was provided.");
         if (!fs.existsSync(managerOptions.backupDir)) fs.mkdirSync(managerOptions.backupDir);
 
         this.managerOptions = managerOptions;

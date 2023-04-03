@@ -1,4 +1,4 @@
-import { BrayanBot } from "./Modules/Structures/BrayanBot.js";
+import { Proxima } from "./Modules/Structures/Proxima.js";
 import { GatewayIntentBits } from "discord.js";
 import consoleStamp from "console-stamp";
 import Utils from "./Modules/Utils.js";
@@ -9,7 +9,7 @@ import fs from "fs";
 consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
 const __dirname = path.resolve();
-const manager = new BrayanBot({
+const manager = new Proxima({
     intents: [
         GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers,

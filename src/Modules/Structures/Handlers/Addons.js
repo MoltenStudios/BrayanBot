@@ -1,5 +1,5 @@
 import { readdirSync, lstatSync } from "fs";
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import { Config } from "./Config.js";
 import Utils from "../../Utils.js";
 import chalk from "chalk";
@@ -9,14 +9,14 @@ import fs from "fs";
 const __dirname = path.resolve();
 
 export class AddonHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ addonDir;
     /** @type {string[]} */ addonDirFiles;
 
-    /** @param {BrayanBot} manager @param {string} addonDir */
+    /** @param {Proxima} manager @param {string} addonDir */
     constructor(manager, addonDir) {
-        if (!manager) throw new Error("[BrayanBot/AddonHandler] Missing manager parameter.");
-        if (!addonDir) throw new Error("[BrayanBot/AddonHandler] Missing addonDir parameter.");
+        if (!manager) throw new Error("[NeuShore/AddonHandler] Missing manager parameter.");
+        if (!addonDir) throw new Error("[NeuShore/AddonHandler] Missing addonDir parameter.");
 
         this.manager = manager;
         this.addonDir = addonDir;
@@ -56,7 +56,7 @@ export class AddonHandler {
 export class Addon {
     /** @type {string} */ name;
     /** @type {string} */ version;
-    /** @type {(manager: BrayanBot) => any} */ execute = () => { };
+    /** @type {(manager: Proxima) => any} */ execute = () => { };
     /** @type {Array<string> | undefined} */ log;
     /** @type {Object | undefined} */ addonConfigs;
 
@@ -67,7 +67,7 @@ export class Addon {
 
         return this;
     }
-    /** @param {(manager: BrayanBot) => any} execute */
+    /** @param {(manager: Proxima) => any} execute */
     setExecute(execute) { this.execute = execute; return this };
     /** @param  {...string} text */
     setLog(...text) { this.log = text; return this };

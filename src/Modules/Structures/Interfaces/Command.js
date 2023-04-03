@@ -1,6 +1,6 @@
 import { SlashCommandOption } from "../../Utils/setupSlashCommand.js";
 import { Message, ChatInputCommandInteraction } from "discord.js";
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 
 const CommandConfig = {
     guildOnly: Boolean,
@@ -30,15 +30,15 @@ const CommandInterface = {
     /** @type {CommandConfig} */
     commandConfig: CommandConfig,
     /** 
-     * @param {BrayanBot} manager @param {Message} message @param {String[]} args 
+     * @param {Proxima} manager @param {Message} message @param {String[]} args 
      * @param {String} prefixUsed @param {String} commandData */
     LegacyRun: (manager, message, args, prefixUsed, commandData) => { },
     /**
-     * @param {BrayanBot} manager @param {ChatInputCommandInteraction} interaction 
+     * @param {Proxima} manager @param {ChatInputCommandInteraction} interaction 
      * @param {CommandData} commandData */
     InteractionRun: (manager, interaction, commandData) => { },
     /**
-     * @param {BrayanBot} manager 
+     * @param {Proxima} manager 
      * @param {AutocompleteInteraction} interaction 
      */
     AutoComplete: (manager, interaction) => { }

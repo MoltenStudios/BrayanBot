@@ -2,8 +2,7 @@ name: Dev Branch CI
 
 on:
   push:
-    branches: [ "dev/*" ]
-
+    branches: ["dev/*"]
 
 jobs:
   release-dev:
@@ -19,11 +18,11 @@ jobs:
 
       # Zip up everything excluding Dockerfile and docker-compose.yml
       - name: Archive Source code
-        run: zip -r BrayanBot-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
+        run: zip -r Proxima-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
 
       # Fetch pterodactyl egg
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-brayan-bot.json
+        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-proxima-bot.json
 
       # Create a prerelease
       - uses: "marvinpinto/action-automatic-releases@latest"
@@ -33,7 +32,7 @@ jobs:
           prerelease: true
           title: "Development Build (${{ steps.vars.outputs.version }})"
           files: |
-            BrayanBot-*.zip
+            Proxima-*.zip
             Dockerfile
             docker-compose.yml
             pterodacytl-egg.json

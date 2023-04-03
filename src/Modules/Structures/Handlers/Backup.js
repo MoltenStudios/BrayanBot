@@ -1,4 +1,4 @@
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import Utils from "../../Utils.js";
 import archiver from "archiver";
 import { lstatSync } from "fs";
@@ -10,14 +10,14 @@ import ms from "ms";
 const prefix = chalk.blueBright.bold("[BackupHandler]");
 
 export class BackupHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ backupDir;
     /** @type {string[]} */ filePathsToBackup;
 
-    /** @param {BrayanBot} manager @param {string} backupDir @param {string[]} filePathsToBackup*/
+    /** @param {Proxima} manager @param {string} backupDir @param {string[]} filePathsToBackup*/
     constructor(manager, backupDir, filePathsToBackup) {
-        if (!manager) throw new Error("[BrayanBot/BackupHandler] Missing manager parameter.");
-        if (!backupDir) throw new Error("[BrayanBot/BackupHandler] Missing backupDir parameter.");
+        if (!manager) throw new Error("[NeuShore/BackupHandler] Missing manager parameter.");
+        if (!backupDir) throw new Error("[NeuShore/BackupHandler] Missing backupDir parameter.");
 
         this.manager = manager;
         this.backupDir = backupDir;

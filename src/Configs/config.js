@@ -50,9 +50,9 @@ const defaultConfig = {
     },
     "~l0": "Empty Line",
     Branding: {
-        Name: "BrayanBot",
+        Name: "Proxima",
         Color: "#2f3136",
-        Link: "https://brayanbot.dev",
+        Link: "https://neushore.dev",
         Logo: "https://avatars.githubusercontent.com/u/99198112",
     },
     "~l1": "Empty Line",
@@ -64,8 +64,8 @@ const defaultConfig = {
             Text: "discord.js",
         }, {
             Type: "STREAMING",
-            Text: "BrayanBot.dev",
-            URL: "https://brayanbot.dev"
+            Text: "neushore.dev",
+            URL: "https://neushore.dev"
         }, {
             Type: "LISTENING",
             Text: "for help"
