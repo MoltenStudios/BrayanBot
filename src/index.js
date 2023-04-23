@@ -10,17 +10,7 @@ consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
 const __dirname = path.resolve();
 const manager = new Proxima({
-    intents: [
-        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping,
-        GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildScheduledEvents
-    ],
+    intents: Object.values(GatewayIntentBits).filter(value => typeof value == "string"),
     failIfNotExists: false,
 }, {
     commandDir: path.join(__dirname, "/src/Commands"),
