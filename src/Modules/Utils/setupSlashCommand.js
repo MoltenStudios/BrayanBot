@@ -52,6 +52,7 @@ const setupSlashCommand = (settings) => {
         "boolean", 5, "user", 6,
         "channel", 7, "role", 8,
         "mentionable", 9,
+        "attachment", 11
     ], channelTypes = [
         "guild_text", 0, "text", "guild_voice", 2, "voice",
         "guild_category", 4, "category", "guild_news", 5, "news",
@@ -91,6 +92,7 @@ const setupSlashCommand = (settings) => {
             else if (["channel", 7].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Channel
             else if (["role", 8].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Role
             else if (["mentionable", 9].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Mentionable
+            else if (["attachment", 11].includes(option.Type.toLowerCase())) parsedOption.type = ApplicationCommandOptionType.Attachment
             else throw new Error(`Option Type ${option.Type} is not a valid option type`);
 
             if ([1, 2].includes(parsedOption.type)) {
