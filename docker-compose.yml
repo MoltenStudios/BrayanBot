@@ -1,14 +1,13 @@
-# BrayanBot docker-compose.yaml v2.0.1
+# Proxima docker-compose.yaml v2.0.2
 # authors:
-#  - NotAShelf <me@notashelf.dev> 
+#  - NotAShelf <raf@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
 
 services:
   brayanbot:
     tty: true
     working_dir: /opt/brayanbot
-    build: .
-    #image: brayanbot/brayanbot:latest
+    image: Neushore/Proxima:latest
     command: pnpm start
     container_name: BrayanBot
     restart: unless-stopped
