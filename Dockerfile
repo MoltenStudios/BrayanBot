@@ -25,7 +25,7 @@ COPY . ./
 RUN pnpm fetch 
 
 # Install dependencies
-RUN pnpm install -r 
+RUN pnpm install -r --no-frozen-lockfile
 
 FROM dependencies as deploy
 
