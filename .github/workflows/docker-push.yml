@@ -44,6 +44,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/Proxima:latest
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/proxima:latest

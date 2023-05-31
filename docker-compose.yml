@@ -6,12 +6,12 @@
 services:
   brayanbot:
     tty: true
-    working_dir: /opt/brayanbot
+    working_dir: /opt/proxima
     image: Neushore/Proxima:latest
     command: pnpm start
-    container_name: BrayanBot
+    container_name: Proxima
     restart: unless-stopped
     volumes:
-      - ./data:/opt/brayanbot/data
-      - ./src:/opt/brayanbot/src
+      - ./data:/opt/proxima/data
+      - ./src:/opt/proxima/src
     environment: []
