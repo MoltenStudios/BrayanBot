@@ -1,7 +1,7 @@
-import { BrayanBot } from '../Structures/BrayanBot.js';
+import { Proxima } from '../Structures/Proxima.js';
 import { Routes } from 'discord.js';
 
-/** @param {BrayanBot} manager */
+/** @param {Proxima} manager */
 const loadCommands = async (manager, force = false) => {
     const enabledCMDS = manager.commands.filter(cmd => Array.isArray(cmd.commandData.Arguments));
 

@@ -1,4 +1,4 @@
-import { BrayanBot } from "./Modules/Structures/BrayanBot.js";
+import { Proxima } from "./Modules/Structures/Proxima.js";
 import { GatewayIntentBits } from "discord.js";
 import consoleStamp from "console-stamp";
 import Utils from "./Modules/Utils.js";
@@ -9,18 +9,8 @@ import fs from "fs";
 consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
 const __dirname = path.resolve();
-const manager = new BrayanBot({
-    intents: [
-        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildBans, GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping,
-        GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildScheduledEvents
-    ],
+const manager = new Proxima({
+    intents: Object.values(GatewayIntentBits).filter(value => typeof value == "string"),
     failIfNotExists: false,
 }, {
     commandDir: path.join(__dirname, "/src/Commands"),

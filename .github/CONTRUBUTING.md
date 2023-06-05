@@ -3,9 +3,9 @@
 By contributing you accept the code of conduct.
 
 ## Contrubuting Guidelines
-### Contributing to BrayanBot
+### Contributing to Proxima
 
-Thanks for taking your time to consider contributing to the project! BrayanBot aims to expand through third party contributions and your decision to chip in is truly appreciated. In this file, you are going to find helpful tips on how to contribute your ideas!
+Thanks for taking your time to consider contributing to the project! Proxima aims to expand through third party contributions and your decision to chip in is truly appreciated. In this file, you are going to find helpful tips on how to contribute your ideas!
 
 We try to make contributing as easy and transparent as possible, whether it's:
 
@@ -16,18 +16,18 @@ We try to make contributing as easy and transparent as possible, whether it's:
 
 #### Testing
 
-We do have an unit test to cover most of BrayanBot's functionality and we always test new, first party contributions before merging. Thus, we also ask that you always test your code beforehand and create tests for your code additions so that we can easily see if your code works as expected and whether it is up to our desired standards.
+We do have an unit test to cover most of Proxima's functionality and we always test new, first party contributions before merging. Thus, we also ask that you always test your code beforehand and create tests for your code additions so that we can easily see if your code works as expected and whether it is up to our desired standards.
 
 #### Submitting changes
 
-* If you're unable to find an open issue, [open a new one](https://github.com/BrayanBotDev/BrayanBot/issues/new). Be sure to include a **title, a clear description of your idea or issue** and give as much relevant information as possible.
-* Open  a new [GitHub Pull Request to BrayanBot](https://github.com/BrayanBotDev/BrayanBot/pulls) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Include the relevant issue number if applicable.
+* If you're unable to find an open issue, [open a new one](https://github.com/NeuShore/Proxima/issues/new). Be sure to include a **title, a clear description of your idea or issue** and give as much relevant information as possible.
+* Open  a new [GitHub Pull Request to Proxima](https://github.com/NeuShore/Proxima/pulls) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Include the relevant issue number if applicable.
 
 **Unsure where to begin contributing? You can start by looking through these issues labels:**
 
-* [Enhancement issues](https://github.com/BrayanBotDev/BrayanBot/labels/enhancement) 
-* [Bug issues](https://github.com/BrayanBotDev/BrayanBot/labels/bug) 
-* [Documentation issues](https://github.com/BrayanBotDev/BrayanBot/labels/documentation)
+* [Enhancement issues](https://github.com/NeuShore/Proxima/labels/enhancement) 
+* [Bug issues](https://github.com/NeuShore/Proxima/labels/bug) 
+* [Documentation issues](https://github.com/NeuShore/Proxima/labels/documentation)
 
 ### Use a Consistent Coding Style
 
@@ -37,9 +37,9 @@ ESLint and Prettier are recommended.
 Thanks!
 ## Code of conduct
 
-This is the code of conduct for the BrayanBot developer community. It is based on Artemis Lena Code of Conduct by FantasyCookie17. As it is licensed CC0, it may also be used in modified or non-modified form by other communities without permission by the author. Its purpose is to ensure a civilized, tolerant, compassionate, helpful, pluralistic and peaceful style of communication.
+This is the code of conduct for the Proxima developer community. It is based on Artemis Lena Code of Conduct by FantasyCookie17. As it is licensed CC0, it may also be used in modified or non-modified form by other communities without permission by the author. Its purpose is to ensure a civilized, tolerant, compassionate, helpful, pluralistic and peaceful style of communication.
 
-BrayanBot developer community includes BrayanBot Github repository and all Third Party Developers as well as their discord guilds.
+Proxima developer community includes Proxima Github repository and all Third Party Developers as well as their discord guilds.
 
 
 
@@ -83,7 +83,7 @@ BrayanBot developer community includes BrayanBot Github repository and all Third
 -   Undesirable behavior will lead to warnings, and later on, if repeated too often, kicks or bans.
 -   Prohibited behavior will, in most cases, directly lead to a kick or ban.
 -   Any kind of violation can lead to removal of the offending content.
--   Kicks and bans apply to all communities administrated by BrayanBot maintainers group.
+-   Kicks and bans apply to all communities administrated by Proxima maintainers group.
 
 If a moderator violates the code of conduct, make sure to point it out to me. This can lead to warnings and demotion of the moderator.
 

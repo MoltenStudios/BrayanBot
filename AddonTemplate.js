@@ -27,7 +27,7 @@ const addon = new Addon("test", "v1.1.1"), addonConfig = {
 /** @type {addonConfig} */
 const { config, lang, commands } = addon.customConfig(addonConfig);
 
-addon.setLog(chalk.hex("#f52486").bold("[") + chalk.hex("#e01e37").bold("BrayanBot") + chalk.hex("#f52486").bold("]"),
+addon.setLog(chalk.hex("#f52486").bold("[") + chalk.hex("#e01e37").bold("Proxima") + chalk.hex("#f52486").bold("]"),
     chalk.bold("TesT"), "has been loaded!", `Version: ${chalk.bold(`v1.1.1`)}`);
 
 addon.setExecute(async (manager) => {

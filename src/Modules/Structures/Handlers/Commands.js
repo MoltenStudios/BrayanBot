@@ -2,19 +2,19 @@ import { CommandData, CommandInterface, CommandConfig } from "../Interfaces/Comm
 import { ChatInputCommandInteraction, AutocompleteInteraction, Message } from "discord.js";
 import { manager } from "../../../index.js";
 import { readdirSync, lstatSync } from "fs";
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import Utils from "../../Utils.js";
 import path from "path";
 
 export class CommandHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ commandDir;
     /** @type {string[]} */ commandDirFiles;
 
-    /** @param {BrayanBot} manager @param {string} commandDir */
+    /** @param {Proxima} manager @param {string} commandDir */
     constructor(manager, commandDir) {
-        if (!manager) throw new Error("[BrayanBot/CommandHandler] Missing manager parameter.");
-        if (!commandDir) throw new Error("[BrayanBot/CommandHandler] Missing commandDir parameter.");
+        if (!manager) throw new Error("[NeuShore/CommandHandler] Missing manager parameter.");
+        if (!commandDir) throw new Error("[NeuShore/CommandHandler] Missing commandDir parameter.");
 
         this.manager = manager;
         this.commandDir = commandDir;
@@ -53,9 +53,9 @@ export class CommandHandler {
 export class Command {
     /** @type {CommandData} */ commandData;
     /** @type {CommandConfig} */ commandConfig;
-    /** @type {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: CommandData) => any) | undefined} */ LegacyRun;
-    /** @type {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: CommandData) => any) | undefined} */ InteractionRun;
-    /** @type {((manager: BrayanBot, interaction: AutocompleteInteraction) => any) | undefined} */ AutoComplete;
+    /** @type {((manager: Proxima, message: Message, args: string[], prefixUsed: string, commandData: CommandData) => any) | undefined} */ LegacyRun;
+    /** @type {((manager: Proxima, interaction: ChatInputCommandInteraction, commandData: CommandData) => any) | undefined} */ InteractionRun;
+    /** @type {((manager: Proxima, interaction: AutocompleteInteraction) => any) | undefined} */ AutoComplete;
 
     /** @param {CommandInterface} command */
     constructor(command) {
@@ -85,13 +85,13 @@ export class Command {
         return this;
     }
 
-    /** @param {((manager: BrayanBot, message: Message, args: string[], prefixUsed: string, commandData: Object) => any) | undefined} execute */
+    /** @param {((manager: Proxima, message: Message, args: string[], prefixUsed: string, commandData: Object) => any) | undefined} execute */
     runLegacyRun(execute) { if (execute && typeof execute == "function") this.LegacyRun = execute; return this; }
 
-    /** @param {((manager: BrayanBot, interaction: ChatInputCommandInteraction, commandData: Object) => any) | undefined} execute */
+    /** @param {((manager: Proxima, interaction: ChatInputCommandInteraction, commandData: Object) => any) | undefined} execute */
     runInteractionRun(execute) { if (execute && typeof execute == "function") this.InteractionRun = execute; return this; }
 
-    /** @param {((manager: BrayanBot, interaction: AutocompleteInteraction) => any) | undefined} execute */
+    /** @param {((manager: Proxima, interaction: AutocompleteInteraction) => any) | undefined} execute */
     runAutoComplete(execute) { if (execute && typeof execute == "function") this.AutoComplete = execute; return this; }
 
     registerCommand() {

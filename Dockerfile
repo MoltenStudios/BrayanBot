@@ -36,4 +36,3 @@ RUN mkdir -p /opt/proxima/data
 # This allows the bot to decide the correct error message(s)
 RUN export BOT_PLATFORM=Docker
 CMD [ "pnpm", "start" ]
-

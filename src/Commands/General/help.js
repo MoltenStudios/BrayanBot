@@ -101,8 +101,8 @@ export default new Command({
                     }
 
                     const getRow = (disabled) => new Discord.ActionRowBuilder().addComponents([
-                        new Discord.ButtonBuilder({ customId: "brayanbot_help_next", style: 1, emoji: "⏮" }).setDisabled(disabled ? disabled : pageIndex == 0),
-                        new Discord.ButtonBuilder({ customId: "brayanbot_help_last", style: 1, emoji: "⏭" }).setDisabled(disabled ? disabled : pageIndex == messages.length - 1),
+                        new Discord.ButtonBuilder({ customId: "proxima_help_next", style: 1, emoji: "⏮" }).setDisabled(disabled ? disabled : pageIndex == 0),
+                        new Discord.ButtonBuilder({ customId: "proxima_help_last", style: 1, emoji: "⏭" }).setDisabled(disabled ? disabled : pageIndex == messages.length - 1),
                     ]);
                     let queueMSG = { ...messages[pageIndex], components: [getRow()] };
 
@@ -113,11 +113,11 @@ export default new Command({
                             componentType: "BUTTON"
                         });
                         collector.on("collect", async (interaction) => {
-                            if (!["brayanbot_help_next", "brayanbot_help_last"].includes(interaction.customId)) return;
+                            if (!["proxima_help_next", "proxima_help_last"].includes(interaction.customId)) return;
 
-                            if (interaction.customId == "brayanbot_help_last" && pageIndex > 0) {
+                            if (interaction.customId == "proxima_help_last" && pageIndex > 0) {
                                 --pageIndex;
-                            } else if (interaction.customId == "brayanbot_help_next" && pageIndex < maxPages - 1) {
+                            } else if (interaction.customId == "proxima_help_next" && pageIndex < maxPages - 1) {
                                 ++pageIndex;
                             }
 

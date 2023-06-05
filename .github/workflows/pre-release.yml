@@ -22,7 +22,7 @@ jobs:
 
       # Fetch pterodactyl egg
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-brayan-bot.json
+        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-proxima-bot.json
 
       # Create a prerelease
       - uses: "marvinpinto/action-automatic-releases@latest"

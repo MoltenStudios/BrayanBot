@@ -1,18 +1,18 @@
 import BetterSql3 from "better-sqlite3"
 const { Database: BtrDatabase } = BetterSql3;
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import { manager } from "../../../index.js";
 import path from "path";
 
 export class DatabaseHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ databaseDir;
     /** @type {BtrDatabase} */ defaultDatabase;
 
-    /** @param {BrayanBot} manager @param {string} databaseDir */
+    /** @param {Proxima} manager @param {string} databaseDir */
     constructor(manager, databaseDir) {
-        if (!manager) throw new Error("[BrayanBot/DatabaseHandler] Missing manager parameter.");
-        if (!databaseDir) throw new Error("[BrayanBot/DatabaseHandler] Missing databaseDir parameter.");
+        if (!manager) throw new Error("[NeuShore/DatabaseHandler] Missing manager parameter.");
+        if (!databaseDir) throw new Error("[NeuShore/DatabaseHandler] Missing databaseDir parameter.");
 
         this.manager = manager;
         this.databaseDir = databaseDir;
@@ -39,7 +39,7 @@ export class Database {
 
     /** @param {string} databaseDir */
     constructor(name) {
-        if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
+        if (!name) throw new Error("[NeuShore/Database] Missing name parameter.");
 
         this.name = name;
         this.fileName = this.name.includes(".db") || this.name.includes(".sqlite") ? this.name : `${this.name}.db`;
@@ -55,8 +55,8 @@ export class Database {
 
     /** @param {string} name @param {string} values */
     createTable(name, values) {
-        if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
-        if (!values) throw new Error("[BrayanBot/Database] Missing values parameter.");
+        if (!name) throw new Error("[NeuShore/Database] Missing name parameter.");
+        if (!values) throw new Error("[NeuShore/Database] Missing values parameter.");
 
         this.database.prepare(Database.createTableQuery(name, values)).run();
 
@@ -65,7 +65,7 @@ export class Database {
 
     /** @param {{ name: string, values: string }[]} tables */
     createTables(tables) {
-        if (!tables) throw new Error("[BrayanBot/Database] Missing tables parameter.");
+        if (!tables) throw new Error("[NeuShore/Database] Missing tables parameter.");
 
         for (const table of tables) this.createTable(table.name, table.values);
 
@@ -74,7 +74,7 @@ export class Database {
 
     /** @param {string} name */
     deleteTable(name) {
-        if (!name) throw new Error("[BrayanBot/Database] Missing name parameter.");
+        if (!name) throw new Error("[NeuShore/Database] Missing name parameter.");
 
         this.database.prepare(`DROP TABLE IF EXISTS ${name}`).run();
 
@@ -83,7 +83,7 @@ export class Database {
 
     /** @param {string[]} */
     deleteTables(names) {
-        if (!names) throw new Error("[BrayanBot/Database] Missing names parameter.");
+        if (!names) throw new Error("[NeuShore/Database] Missing names parameter.");
 
         for (const name of names) this.deleteTable(name);
 

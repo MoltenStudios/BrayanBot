@@ -1,4 +1,4 @@
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import { manager } from "../../../index.js"
 import { createRequire } from "module";
 import path from "path";
@@ -6,14 +6,14 @@ import yaml from "yaml";
 import fs from "fs";
 
 export class ConfigHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ configDir;
     /** @type {string[]} */ configFiles;
 
-    /** @param {BrayanBot} manager @param {string} configDir */
+    /** @param {Proxima} manager @param {string} configDir */
     constructor(manager, configDir) {
-        if (!manager) throw new Error("[BrayanBot/ConfigHandler] Missing manager parameter.");
-        if (!configDir) throw new Error("[BrayanBot/ConfigHandler] Missing configDir parameter.");
+        if (!manager) throw new Error("[NeuShore/ConfigHandler] Missing manager parameter.");
+        if (!configDir) throw new Error("[NeuShore/ConfigHandler] Missing configDir parameter.");
 
         this.manager = manager;
         this.configDir = configDir;
@@ -50,8 +50,8 @@ export class Config {
 
     /** @param {string} storagePath @param {Object | Array} configData */
     constructor(storagePath, configData) {
-        if (!storagePath) throw new Error("[BrayanBot/ConfigHandler] storagePath manager parameter.");
-        if (!configData) throw new Error("[BrayanBot/ConfigHandler] configData manager parameter.");
+        if (!storagePath) throw new Error("[NeuShore/ConfigHandler] storagePath manager parameter.");
+        if (!configData) throw new Error("[NeuShore/ConfigHandler] configData manager parameter.");
 
         this.storagePath = storagePath;
         this.configData = configData;

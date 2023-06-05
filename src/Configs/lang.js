@@ -39,10 +39,10 @@ const defaultConfig = {
         Embeds: [{
             Author: "{brand-name}",
             AuthorIcon: "{brand-logo}",
-            Description: "> [**BrayanBot's Website**]({brand-link})",
+            Description: "> [**NeuShore's Website**]({brand-link})",
             Fields: [{
                 Name: "📖 Open Source",
-                Value: "> This bot's base is open source, you can find the source code [here](https://github.com/brayanbot/brayanbot)."
+                Value: "> This bot's base is open source, you can find the source code [here](https://github.com/NeuShore/Proxima)."
             }, {
                 Name: "⚡ Blazing fast!",
                 Value: "> No unnecessary packages or dependencies! Doesn't get any more lightweight."
@@ -77,13 +77,13 @@ const defaultConfig = {
                 Embeds: [{
                     Author: "{brand-name}",
                     AuthorIcon: "{brand-logo}",
-                    Description: "> BrayanBot is a modern Discord bot written with latest DiscordJS features in mind that provide an easy-to-use ecosystem for developers and a robust bot base for Server Owners.",
+                    Description: "> Proxima is a modern Discord bot written with latest DiscordJS features in mind that provide an easy-to-use ecosystem for developers and a robust bot base for Server Owners.",
                     Fields: [{
                         Name: "• Information",
                         Value: [
-                            "> [**BrayanBot's Website**]({brand-link})",
-                            "> [**BrayanBot's GitHub**](https://github.com/brayanbot/brayanbot)",
-                            "> [**BrayanBot's Discord**](https://discord.gg/G4AV33KeqF)",
+                            "> [**Proxima's Website**]({brand-link})",
+                            "> [**Proxima's GitHub**](https://github.com/NeuShore/Proxima)",
+                            "> [**Proxima's Discord**](https://neushore.dev/discord)",
                         ].join("\n")
                     }, {
                         Name: "• Statistics",

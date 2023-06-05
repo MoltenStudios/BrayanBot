@@ -1,19 +1,19 @@
-import { BrayanBot } from "../BrayanBot.js";
+import { Proxima } from "../Proxima.js";
 import { manager } from "../../../index.js";
 import { readdirSync } from "fs";
 import path from "path";
 
 export class EventHandler {
-    /** @type {BrayanBot} */ manager;
+    /** @type {Proxima} */ manager;
     /** @type {string} */ eventDir;
     /** @type {string[]} */ eventFiles;
 
     /**
-     * @param {BrayanBot} manager @param {string} eventDir 
+     * @param {Proxima} manager @param {string} eventDir 
      */
     constructor(manager, eventDir) {
-        if (!manager) throw new Error("[BrayanBot/EventHandler] Missing manager parameter.");
-        if (!eventDir) throw new Error("[BrayanBot/EventHandler] Missing eventDir parameter.");
+        if (!manager) throw new Error("[NeuShore/EventHandler] Missing manager parameter.");
+        if (!eventDir) throw new Error("[NeuShore/EventHandler] Missing eventDir parameter.");
 
         this.manager = manager;
         this.eventDir = eventDir;
@@ -37,11 +37,11 @@ export class EventHandler {
 export class EventListener {
     /** @type {string} */
     name;
-    /** @type {(client: BrayanBot) => any} */
+    /** @type {(client: Proxima) => any} */
     handler;
 
     /**
-     * @param {string} name @param {(client: BrayanBot, ...params: any) => { }} handler 
+     * @param {string} name @param {(client: Proxima, ...params: any) => { }} handler 
      */
     constructor(name, handler) {
         this.name = name;

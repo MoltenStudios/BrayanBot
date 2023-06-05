@@ -38,8 +38,8 @@ const setupMessage = (settings) => {
 
     variables.push(...[
         { searchFor: /{brand-color}/g, replaceWith: manager.configs.config?.Branding.Color || "#2f3136" },
-        { searchFor: /{brand-name}/g, replaceWith: manager.configs.config?.Branding.Name || "BrayanBot" },
-        { searchFor: /{brand-link}/g, replaceWith: manager.configs.config?.Branding.Link || "https://brayanbot.dev" },
+        { searchFor: /{brand-name}/g, replaceWith: manager.configs.config?.Branding.Name || "Proxima" },
+        { searchFor: /{brand-link}/g, replaceWith: manager.configs.config?.Branding.Link || "https://neushore.dev" },
         { searchFor: /{brand-logo}/g, replaceWith: manager.configs.config?.Branding.Logo || "https://avatars.githubusercontent.com/u/99198112" },
     ])
 

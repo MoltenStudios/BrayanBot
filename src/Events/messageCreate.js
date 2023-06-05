@@ -1,11 +1,11 @@
 import { EventListener } from "../Modules/Structures/Handlers/Events.js";
 import Cooldown from "../Modules/Structures/Handlers/Cooldown.js";
-import { BrayanBot } from "../Modules/Structures/BrayanBot.js";
+import { Proxima } from "../Modules/Structures/Proxima.js";
 import { ChannelType, Message } from "discord.js";
 import Utils from "../Modules/Utils.js";
 import ms from "ms"
 
-/** @param {BrayanBot} bot @param {Message} message */
+/** @param {Proxima} bot @param {Message} message */
 const execute = async (bot, message) => {
     const { config, lang } = bot.configs;
 
