@@ -1,6 +1,6 @@
-# Proxima Dockerfile v2.0.1
+# Proxima Dockerfile v2.0.2
 # authors:
-#  - NotAShelf <me@notashelf.dev>
+#  - NotAShelf <raf@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
 # Node 18.2.0
 
@@ -25,7 +25,7 @@ COPY . ./
 RUN pnpm fetch 
 
 # Install dependencies
-RUN pnpm install -r 
+RUN pnpm install -r --no-frozen-lockfile
 
 FROM dependencies as deploy
 
@@ -36,4 +36,3 @@ RUN mkdir -p /opt/proxima/data
 # This allows the bot to decide the correct error message(s)
 RUN export BOT_PLATFORM=Docker
 CMD [ "pnpm", "start" ]
-

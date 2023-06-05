@@ -1,14 +1,13 @@
-# Proxima docker-compose.yaml v2.0.1
+# Proxima docker-compose.yaml v2.0.2
 # authors:
-#  - NotAShelf <me@notashelf.dev> 
+#  - NotAShelf <raf@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
 
 services:
-  proxima:
+  brayanbot:
     tty: true
     working_dir: /opt/proxima
-    build: .
-    #image: proxima/proxima:latest
+    image: Neushore/Proxima:latest
     command: pnpm start
     container_name: Proxima
     restart: unless-stopped
