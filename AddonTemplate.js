@@ -19,14 +19,7 @@ const addon = new Addon("test", "v1.1.1"), addonConfig = {
             Permission: ["@everyone"],
             Description: "This is a test command",
             DeleteCommand: false,
-            SlashCommand: {
-                Enabled: true,
-                Data: {
-                    Name: "test",
-                    Description: "This is a test command",
-                    Options: [],
-                }
-            }
+            Arguments: [],
         }
     }
 };
