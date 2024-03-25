@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://automating.pw/data/assets/logo/Asset8.png" alt="Logo"  width="200">
+  <img src="https://imgur.com/kJogGxU.png" alt="Logo"  width="200">
   <h1>Proxima</h1>
   <a href="https://discord.gg/automating/">
     <img border="0" alt="Discord" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
