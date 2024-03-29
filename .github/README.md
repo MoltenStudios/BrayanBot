@@ -14,9 +14,9 @@
 
 <div align="center">
     <img src="https://img.shields.io/badge/discord.js-v14-7354F6?logo=discord&logoColor=white&style=flat-square" />
-    <img src="https://img.shields.io/github/stars/neushore/proxima.svg?logo=github&style=flat-square" />
-    <img src="https://img.shields.io/github/license/neushore/proxima.svg?logo=github&style=flat-square" />
-    <img src="https://img.shields.io/github/actions/workflow/status/neushore/proxima/nodejs.yml?branch=v2?label=test&logo=circleci&style=flat-square" />
+    <img src="https://img.shields.io/github/stars/neushore/bryanbot.svg?logo=github&style=flat-square" />
+    <img src="https://img.shields.io/github/license/neushore/bryanbot.svg?logo=github&style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/neushore/bryanbot/nodejs.yml?branch=v2?label=test&logo=circleci&style=flat-square" />
 </div>
 
 <h2 align="center">📢 About BrayanBot</h2>

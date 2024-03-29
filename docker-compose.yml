@@ -1,4 +1,4 @@
-# Proxima docker-compose.yaml v2.0.2
+# BryanBot docker-compose.yaml v2.0.2
 # authors:
 #  - NotAShelf <raf@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
@@ -6,12 +6,12 @@
 services:
   brayanbot:
     tty: true
-    working_dir: /opt/proxima
-    image: Neushore/Proxima:latest
+    working_dir: /opt/bryanbot
+    image: Neushore/BryanBot:latest
     command: pnpm start
-    container_name: Proxima
+    container_name: BryanBot
     restart: unless-stopped
     volumes:
-      - ./data:/opt/proxima/data
-      - ./src:/opt/proxima/src
+      - ./data:/opt/bryanbot/data
+      - ./src:/opt/bryanbot/src
     environment: []

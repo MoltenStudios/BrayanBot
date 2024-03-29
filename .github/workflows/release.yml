@@ -19,26 +19,26 @@ jobs:
 
         # Zip up necessary files
       - name: Archive Source code
-        run: zip -r Proxima-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
+        run: zip -r BryanBot-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
 
         # Fetch the pterodactyl egg
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodactyl-egg.json https://cdn.zorino.in/egg-proxima-bot.json
+        run: wget -O pterodactyl-egg.json https://cdn.zorino.in/egg-bryanbot-bot.json
 
         # Generate checksums for all files and log them to the appropriate file
       - name: Generate Checksums
         run: |
-          md5sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > md5-checksums.txt
-          sha256sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha256-checksums.txt
-          sha512sum Proxima-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha512-checksums.txt
+          md5sum BryanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > md5-checksums.txt
+          sha256sum BryanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha256-checksums.txt
+          sha512sum BryanBot-v${{ steps.vars.outputs.version }}.zip pterodactyl-egg.json Dockerfile docker-compose.yml .dockerignore > sha512-checksums.txt
       # Release Public Build
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          title: "Proxima v${{ steps.vars.outputs.version }}"
+          title: "BryanBot v${{ steps.vars.outputs.version }}"
           files: |
-            Proxima-*.zip
+            BryanBot-*.zip
             pterodactyl-egg.json
             Dockerfile
             docker-compose.yml

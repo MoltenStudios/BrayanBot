@@ -18,11 +18,11 @@ jobs:
 
       # Zip up everything excluding Dockerfile and docker-compose.yml
       - name: Archive Source code
-        run: zip -r Proxima-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
+        run: zip -r BryanBot-v${{ steps.vars.outputs.version }}.zip * -x Dockerfile docker-compose.yml Dockerignore
 
       # Fetch pterodactyl egg
       - name: Receive Pterodactyl Egg
-        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-proxima-bot.json
+        run: wget -O pterodacytl-egg.json https://cdn.zorino.in/egg-bryanbot-bot.json
 
       # Create a prerelease
       - uses: "marvinpinto/action-automatic-releases@latest"
@@ -32,7 +32,7 @@ jobs:
           prerelease: true
           title: "Development Build (${{ steps.vars.outputs.version }})"
           files: |
-            Proxima-*.zip
+            BryanBot-*.zip
             Dockerfile
             docker-compose.yml
             pterodacytl-egg.json

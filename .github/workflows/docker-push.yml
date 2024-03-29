@@ -48,4 +48,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/proxima:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bryanbot:latest

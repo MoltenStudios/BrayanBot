@@ -1,4 +1,4 @@
-import { Proxima } from "./Modules/Structures/Proxima.js";
+import { BryanBot } from "./Modules/Structures/BryanBot.js";
 import { GatewayIntentBits } from "discord.js";
 import consoleStamp from "console-stamp";
 import Utils from "./Modules/Utils.js";
@@ -9,7 +9,7 @@ import fs from "fs";
 consoleStamp(console, { format: ":date(HH:MM:ss).bold.grey" })
 
 const __dirname = path.resolve();
-const manager = new Proxima({
+const manager = new BryanBot({
     intents: Object.values(GatewayIntentBits).filter(value => typeof value == "string"),
     failIfNotExists: false,
 }, {

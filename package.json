@@ -1,46 +1,47 @@
 {
-	"name": "proxima",
-	"version": "2.0.0",
-	"description": "A modular Discord bot for your server management needs.",
-	"homepage": "https://github.com/NeuShore/Proxima#readme",
-	"author": "https://github.com/NeuShore",
-	"license": "Apache-2.0",
-	"main": "src/index.js",
-	"type": "module",
-	"keywords": [
-		"discord",
-		"discord.js",
-		"node.js",
-		"discordbot",
-		"discord-bot"
-	],
-	"maintainers": [
-		"@DakshNamdev (Zorino) <zorino@neushore.dev> ",
-		"@NotAShelf (raf) <raf@neushore.dev> "
-	],
-	"scripts": {
-		"dev": "nodemon --exec \"node src/index.js --debug --devmode --show-errors --reset-configs --reset-slashCommands\" -e js",
-		"start": "node src/index.js"
-	},
-	"bugs": {
-		"url": "https://github.com/NeuShore/Proxima/issues"
-	},
-	"engines": {
-		"node": ">=16.15.0"
-	},
-	"dependencies": {
-		"archiver": "^5.3.1",
-		"axios": "^0.27.2",
-		"better-sqlite3": "^8.2.0",
-		"chalk": "^4.1.2",
-		"console-stamp": "^3.1.1",
-		"discord.js": "^14.9.0",
-		"fast-folder-size": "^1.7.1",
-		"ms": "^2.1.3",
-		"mysql": "^2.18.1",
-		"yaml": "^2.2.2"
-	},
-	"devDependencies": {
-		"nodemon": "^2.0.22"
-	}
+  "name": "bryanbot",
+  "version": "2.0.0",
+  "description": "A modular Discord bot for your server management needs.",
+  "homepage": "https://github.com/DevAutomating/BrayanBot#readme",
+  "author": "https://github.com/DevAutomating",
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "type": "module",
+  "keywords": [
+    "discord",
+    "discord.js",
+    "node.js",
+    "discordbot",
+    "discord-bot"
+  ],
+  "maintainers": [
+    "@DakshNamdev (Zorino) <zorino@neushore.dev> ",
+    "@NotAShelf (raf) <raf@neushore.dev> ",
+    "@XCraftMan52 (CraftMan) <lucas@automating.pw>"
+  ],
+  "scripts": {
+    "dev": "nodemon --exec \"node src/index.js --debug --devmode --show-errors --reset-configs --reset-slashCommands\" -e js",
+    "start": "node src/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/DevAutomating/BrayanBot/issues"
+  },
+  "engines": {
+    "node": ">=16.15.0"
+  },
+  "dependencies": {
+    "archiver": "^5.3.1",
+    "axios": "^0.27.2",
+    "better-sqlite3": "^8.2.0",
+    "chalk": "^4.1.2",
+    "console-stamp": "^3.1.1",
+    "discord.js": "^14.9.0",
+    "fast-folder-size": "^1.7.1",
+    "ms": "^2.1.3",
+    "mysql": "^2.18.1",
+    "yaml": "^2.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }

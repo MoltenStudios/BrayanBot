@@ -1,4 +1,4 @@
-# Proxima Dockerfile v2.0.2
+# BryanBot Dockerfile v2.0.2
 # authors:
 #  - NotAShelf <raf@notashelf.dev>
 #  - XCraftMan52 <lucas@lucaswebber.net>
@@ -16,7 +16,7 @@ RUN npm i -g pnpm
 FROM base as dependencies
 
 # Set working directory
-WORKDIR /opt/proxima
+WORKDIR /opt/bryanbot
 
 # And copy files into that directory
 COPY . ./
@@ -30,7 +30,7 @@ RUN pnpm install -r --no-frozen-lockfile
 FROM dependencies as deploy
 
 # Make sure the data directory exists so that we can mount it
-RUN mkdir -p /opt/proxima/data
+RUN mkdir -p /opt/bryanbot/data
 
 # Start the bot with the BOT_PLATFORM environment variable set to Docker
 # This allows the bot to decide the correct error message(s)
