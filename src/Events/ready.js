@@ -44,7 +44,7 @@ const execute = async (bot) => {
     chalk.whiteBright(`       Join our Discord Server if you face any issues.`),
     chalk.whiteBright(
       `               ${chalk.blueBright.underline(
-        `https://neushore.dev/discord`
+        `https://discord.gg/Automating`
       )}`
     ),
     chalk.whiteBright(
