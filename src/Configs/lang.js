@@ -101,7 +101,7 @@ const defaultConfig = {
                 Value: [
                   "> [**BryanBot's Website**]({brand-link})",
                   "> [**BryanBot's GitHub**](https://github.com/DevAutomating/BrayanBot)",
-                  "> [**BryanBot's Discord**](https://neushore.dev/discord)",
+                  "> [**BryanBot's Discord**](https://discord.gg/Automating)",
                 ].join("\n"),
               },
               {
